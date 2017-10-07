@@ -4,10 +4,11 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-          files: ['src/js/*','src/scss/*'],
+          files: ['src/scss/*', 'src/js/*'],
           tasks: ['build']
         },
 
+        // Stylesheets
         sass: {
             dist: {
                 options: {
@@ -20,6 +21,7 @@ module.exports = function(grunt) {
             }
         },
 
+        // JavaScript
         uglify: {
             options: {
                 // mangle prevent changes to your variable and function names, must be false
