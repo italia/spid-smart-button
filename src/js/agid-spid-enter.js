@@ -12,10 +12,10 @@ function displaySPIDConfiguredProviders() {
 
     agid_spid_enter.innerHTML = spidTpl.spidProviderChoiceModal(spidProvidersButtonsHTML);
 
-    document.getElementById('agid-spid-panel-close-button').addEventListener('click', function() { hidePanel('agid-spid-panel-select') });
-    document.getElementById('agid-spid-cancel-access-button').addEventListener('click', function() { hidePanel('agid-spid-panel-select') });
-    document.getElementById('nospid').addEventListener('click', function(ev) { openModal('Non hai SPID?'); });
-    document.getElementById('cosaspid').addEventListener('click', function(ev) { openModal('Cos\'è SPID?'); });
+    document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function() { hidePanel('agid-spid-panel-select') });
+    document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hidePanel('agid-spid-panel-select') });
+    document.querySelector('#nospid').addEventListener('click', function() { openModal('Non hai SPID?'); });
+    document.querySelector('#cosaspid').addEventListener('click', function() { openModal('Cos\'è SPID?'); });
 }
 
 function renderSPIDbuttons(sizeClass, sizeComment) {
@@ -61,9 +61,9 @@ function animate_element_out(e) {
 
 function showPanel(name) {
     var toshow  = document.getElementById(name),
-        base    = document.getElementById('agid-spid-button-anim-base'),
-        panel   = document.getElementById('agid-spid-button-anim'),
-        buttons = document.getElementsByClassName('agid-spid-enter-button'),
+        base    = document.querySelector('#agid-spid-button-anim-base'),
+        panel   = document.querySelector('#agid-spid-button-anim'),
+        buttons = document.querySelector('.agid-spid-enter-button'),
         hiddenattribute;
 
     shuffleIdp();
@@ -96,10 +96,11 @@ function showPanel(name) {
 
 function hidePanel(name) {
     var tohide          = document.getElementById(name),
-        base            = document.getElementById('agid-spid-button-anim-base'),
-        panel           = document.getElementById('agid-spid-button-anim'),
-        hiddenattribute = document.createAttribute('hidden'),
-        buttons         = document.getElementsByClassName('agid-spid-enter-button');
+        base            = document.querySelector('#agid-spid-button-anim-base'),
+        panel           = document.querySelector('#agid-spid-button-anim'),
+        buttons         = document.querySelector('.agid-spid-enter-button'),
+        hiddenattribute = document.createAttribute('hidden');
+        
 
     tohide.setAttributeNode(hiddenattribute);
     tohide.style.display = 'none';
