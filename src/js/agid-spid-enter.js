@@ -162,36 +162,42 @@ element = document.getElementById(e);
         }
 
 function showPanel(name) {
+    var toshow,
+        base,
+        panel;
 
-shuffleIdp();
-        toshow = document.getElementById(name);
-        toshow.removeAttribute("hidden");
-        // toshow.style.width = "100%";
-        toshow.style.display = "block";
-        buttons = document.getElementsByClassName("agid-spid-enter-button");
-        //    console.log(buttons);
-        for (z = 0; z < buttons.length; z++) {
-buttons[z].style.display = "none";
+    shuffleIdp();
+
+    toshow = document.getElementById(name);
+    toshow.removeAttribute("hidden");
+    toshow.style.display = "block";
+    buttons = document.getElementsByClassName("agid-spid-enter-button");
+    
+    for (z = 0; z < buttons.length; z++) {
+        buttons[z].style.display = "none";
         hiddenattribute = document.createAttribute("hidden");
-buttons[z].setAttributeNode(hiddenattribute);
-        }
+        buttons[z].setAttributeNode(hiddenattribute);
+    }
 
-// show animation panel
-animate_element_in("agid-spid-button-anim");
-        animate_element_in("agid-spid-button-anim-base");
-        animate_element_in("agid-spid-button-anim-icon");
-        animate_element_in("agid-spid-panel-select");
-        var base = document.getElementById("agid-spid-button-anim-base");
-        var panel = document.getElementById("agid-spid-button-anim");
-        base.addEventListener("animationstart", function(e){
+    // show animation panel
+    animate_element_in("agid-spid-button-anim");
+    animate_element_in("agid-spid-button-anim-base");
+    animate_element_in("agid-spid-button-anim-icon");
+    animate_element_in("agid-spid-panel-select");
+
+    base  = document.getElementById("agid-spid-button-anim-base"),
+    panel = document.getElementById("agid-spid-button-anim");
+
+    base.addEventListener("animationstart", function() {
         panel.style.display = "block";
-                base.style.display = "block";
-        }, true);
-        base.addEventListener("animationend", function(e){
+        base.style.display = "block";
+    }, true);
+
+    base.addEventListener("animationend", function() {
         panel.style.display = "block";
-                base.style.display = "block";
-        }, true);
-        }
+        base.style.display = "block";
+    }, true);
+}
 
 function hidePanel(name) {
 
