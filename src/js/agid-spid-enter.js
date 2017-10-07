@@ -60,33 +60,28 @@ function animate_element_out(e) {
 }
 
 function showPanel(name) {
-    var toshow,
-        base,
-        panel,
-        buttons,
+    var toshow  = document.getElementById(name),
+        base    = document.getElementById('agid-spid-button-anim-base'),
+        panel   = document.getElementById('agid-spid-button-anim'),
+        buttons = document.getElementsByClassName('agid-spid-enter-button'),
         hiddenattribute;
 
     shuffleIdp();
 
-    toshow = document.getElementById(name);
     toshow.removeAttribute('hidden');
     toshow.style.display = 'block';
-    buttons = document.getElementsByClassName('agid-spid-enter-button');
     
-    for (z = 0; z < buttons.length; z++) {
-        buttons[z].style.display = 'none';
+    Array.from(buttons).forEach(function (button) {
         hiddenattribute = document.createAttribute('hidden');
-        buttons[z].setAttributeNode(hiddenattribute);
-    }
+        button.style.display = 'none';
+        button.setAttributeNode(hiddenattribute);
+    });
 
     // show animation panel
     animate_element_in('agid-spid-button-anim');
     animate_element_in('agid-spid-button-anim-base');
     animate_element_in('agid-spid-button-anim-icon');
     animate_element_in('agid-spid-panel-select');
-
-    base  = document.getElementById('agid-spid-button-anim-base'),
-    panel = document.getElementById('agid-spid-button-anim');
 
     base.addEventListener('animationstart', function() {
         panel.style.display = 'block';
