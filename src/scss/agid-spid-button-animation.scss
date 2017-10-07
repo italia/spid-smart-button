@@ -1,38 +1,40 @@
-.agid-spid-button-anim-anim-in { 
-    animation-name: anim-panel-in; 
-    animation-duration: 0s; 
-    animation-delay: 0s; 
-    animation-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+$timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+
+.agid-spid-button-anim-anim-in {
+    animation-name: anim-panel-in;
+    animation-duration: 0s;
+    animation-delay: 0s;
+    animation-timing-function: $timingFn;
     animation-iteration-count: 1;
-    animation-direction: normal; 
-    animation-fill-mode: forwards; 
+    animation-direction: normal;
+    animation-fill-mode: forwards;
 }
 
-.agid-spid-button-anim-base-anim-in { 
-    animation-name: anim-base-in; 
-    animation-duration: 2s; 
-    animation-delay: 0s; 
-    animation-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+.agid-spid-button-anim-base-anim-in {
+    animation-name: anim-base-in;
+    animation-duration: 2s;
+    animation-delay: 0s;
+    animation-timing-function: $timingFn;
     animation-iteration-count: 1;
-    animation-direction: normal; 
-    animation-fill-mode: forwards; 
+    animation-direction: normal;
+    animation-fill-mode: forwards;
 }
 
-.agid-spid-button-anim-icon-anim-in { 
-    animation-name: anim-icon-in; 
-    animation-duration: 1s; 
-    animation-delay: 0s; 
-    animation-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+.agid-spid-button-anim-icon-anim-in {
+    animation-name: anim-icon-in;
+    animation-duration: 1s;
+    animation-delay: 0s;
+    animation-timing-function: $timingFn;
     animation-iteration-count: 1;
-    animation-direction: normal; 
-    animation-fill-mode: forwards; 
+    animation-direction: normal;
+    animation-fill-mode: forwards;
 }
 
 .agid-spid-panel-select-anim-in {
     animation-name: anim-panel-in;
     animation-duration: 3s;
     animation-delay: 0s;
-    animation-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    animation-timing-function: $timingFn;
     animation-iteration-count: 1;
     animation-direction: normal;
     animation-fill-mode: forwards;
@@ -42,7 +44,7 @@
     animation-name: anim-panel-out;
     animation-duration: 2s;
     animation-delay: 0s;
-    animation-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    animation-timing-function: $timingFn;
     animation-iteration-count: 1;
     animation-direction: normal;
     animation-fill-mode: forwards;
@@ -52,7 +54,7 @@
     animation-name: anim-base-out;
     animation-duration: 0.5s;
     animation-delay: 0s;
-    animation-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    animation-timing-function: $timingFn;
     animation-iteration-count: 1;
     animation-direction: normal;
     animation-fill-mode: forwards;
@@ -62,7 +64,7 @@
     animation-name: anim-icon-out;
     animation-duration: 1s;
     animation-delay: 0s;
-    animation-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    animation-timing-function: $timingFn;
     animation-iteration-count: 1;
     animation-direction: normal;
     animation-fill-mode: forwards;
@@ -72,7 +74,7 @@
     animation-name: anim-panel-out;
     animation-duration: 3s;
     animation-delay: 0s;
-    animation-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    animation-timing-function: $timingFn;
     animation-iteration-count: 1;
     animation-direction: normal;
     animation-fill-mode: forwards;
@@ -82,7 +84,7 @@
     0% {
         width: 180px;
         height: 48px;
-        position:absolute;
+        position: absolute;
         top: calc((100vh - 48px) / 2);
         left: calc((100vw - 180px) / 2);
         border-radius:100%;
