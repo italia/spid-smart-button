@@ -47,7 +47,7 @@ function displaySPIDConfiguredProviders() {
     panel_html += [
                     '</div>',
                     '<div id="agid-cancel-access-container">',
-                        '<a href="#"  onclick="hidePanel(\'agid-spid-panel-select\')">',
+                        '<a href="#" onclick="hidePanel(\'agid-spid-panel-select\')">',
                             '<div id="agid-cancel-access-button" class="agid-transparent-button" role="button">',
                                 '<span>Annulla l\'accesso</span>',
                             '</div>',
@@ -77,8 +77,8 @@ function displaySPIDConfiguredProviders() {
 
     agid_spid_enter.innerHTML = panel_html;
 
-    document.getElementById("nospid").addEventListener('click', function(ev) { openmodal('Non hai SPID?'); });
-    document.getElementById("cosaspid").addEventListener('click', function(ev) { openmodal('Cos\'è SPID?');});
+    document.getElementById("nospid").addEventListener('click', function(ev) { openModal('Non hai SPID?'); });
+    document.getElementById("cosaspid").addEventListener('click', function(ev) { openModal('Cos\'è SPID?');});
 }
 
 function buildSPIDbuttonHtml(sizeClass, sizeComment) {
@@ -250,8 +250,8 @@ function agid_spid_enter() {
 
 agid_spid_enter();
         
-function openmodal(text){
-    console.log("Openmodal " + text);
+function openModal(text){
+    console.log("openModal " + text);
 
     var modal = document.getElementById("infomodal");
 
@@ -266,12 +266,12 @@ function openmodal(text){
 
     var span = document.getElementById("closemodalbutton");
 
-    span.addEventListener("click", function(ev) { closemodal(); });
+    span.addEventListener("click", function(ev) { closeModal(); });
 
     console.log(span);
 };
 
-function closemodal() {
+function closeModal() {
     console.log("Closingmodal");
 
     var modal = document.getElementById("infomodal");
