@@ -9,10 +9,10 @@ function displaySPIDConfiguredProviders() {
 
         if (!providerData.url) return;
 
-        spidProvidersButtonsHTML += spidProviderButtonTpl(providerData);
+        spidProvidersButtonsHTML += spidTpl.spidProviderButton(providerData);
     };
 
-    spidProviderChoiceModalWithButtonsHTML = spidProviderChoiceModalTpl(spidProvidersButtonsHTML);
+    spidProviderChoiceModalWithButtonsHTML = spidTpl.spidProviderChoiceModal(spidProvidersButtonsHTML);
 
     agid_spid_enter.innerHTML = spidProviderChoiceModalWithButtonsHTML;
 
@@ -20,24 +20,11 @@ function displaySPIDConfiguredProviders() {
     document.getElementById('cosaspid').addEventListener('click', function(ev) { openModal('Cos\'è SPID?'); });
 }
 
-function buildSPIDbuttonHtml(sizeClass, sizeComment) {
-    return [
-        '<!-- AGID - SPID BUTTON ', sizeComment, ' * begin * -->',
-        '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" onclick="showPanel(\'agid-spid-panel-select\')">',
-            '<span aria-hidden="true" class="agid-spid-enter-icon">',
-                '<img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" />',
-            '</span>',
-            '<span class="agid-spid-enter-text">Entra con SPID</span>',
-        '</button>',
-        '<!-- AGID - SPID BUTTON ', sizeComment, ' * end * -->'
-    ].join('');
-}
-
 function renderSPIDbuttons(sizeClass, sizeComment) {
     var agid_spid_enter_button = document.getElementsByClassName('agid-spid-enter-button-size-' + sizeClass);
 
     for (var i = 0; i < agid_spid_enter_button.length; i++) {
-        agid_spid_enter_button[i].innerHTML = buildSPIDbuttonHtml(sizeClass, sizeComment);
+        agid_spid_enter_button[i].innerHTML = spidTpl.spidButton(sizeClass, sizeComment);
     }
 
 }
