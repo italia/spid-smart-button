@@ -1,0 +1,14 @@
+{
+  "name": "spid-smart-button",
+  "version": "1.0.0",
+  "description": "Pulsante SSO per SPID",
+  "author": "Simone Rescio",
+  "email": "simone.rescio@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/italia/spid-smart-button.git"
+  },
+  "devDependencies": {
+    "grunt": "1.0.1"
+  }
+}
