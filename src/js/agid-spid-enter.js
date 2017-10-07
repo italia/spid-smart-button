@@ -1,5 +1,5 @@
 function displaySPIDConfiguredProviders() {
-    var agid_spid_enter = document.getElementById('agid-spid-enter'),
+    var agid_spid_enter = document.querySelector('#agid-spid-enter'),
         spidProvidersButtonsHTML = '';
 
     for (var provider in config) {
@@ -149,7 +149,7 @@ function agid_spid_enter() {
     insertButtonXl();
 
     // Binda gli eventi dopo aver renderizzato i pulsanti SPID
-    Array.from(document.getElementsByClassName('agid-spid-enter')).forEach(function (spidButton) {
+    Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
         spidButton.addEventListener('click', function() {
             showPanel('agid-spid-panel-select')
         });
