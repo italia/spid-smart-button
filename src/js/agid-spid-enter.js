@@ -255,7 +255,13 @@ function openmodal(text){
 
     var modal = document.getElementById("infomodal");
 
-    modal.innerHTML = '<div class=\"modal-content\"><span id="closemodalbutton" class="close" >&times;</span><p>' + text + '</p></div>'
+    modal.innerHTML = [
+        '<div class="modal-content">',
+            '<span id="closemodalbutton" class="close" >&times;</span>',
+            '<p>', text, '</p>',
+        '</div>'
+    ].join('');
+
     modal.style.display = "block";
 
     var span = document.getElementById("closemodalbutton");
@@ -266,7 +272,7 @@ function openmodal(text){
 };
 
 function closemodal() {
-    console.log("Closingmodal ");
+    console.log("Closingmodal");
 
     var modal = document.getElementById("infomodal");
 
