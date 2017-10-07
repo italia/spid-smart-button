@@ -77,8 +77,8 @@ function displaySPIDConfiguredProviders() {
 
     agid_spid_enter.innerHTML = panel_html;
 
-    document.getElementById("nospid").addEventListener('click', function(ev) { openModal('Non hai SPID?'); });
-    document.getElementById("cosaspid").addEventListener('click', function(ev) { openModal('Cos\'è SPID?');});
+    document.getElementById('nospid').addEventListener('click', function(ev) { openModal('Non hai SPID?'); });
+    document.getElementById('cosaspid').addEventListener('click', function(ev) { openModal('Cos\'è SPID?');});
 }
 
 function buildSPIDbuttonHtml(sizeClass, sizeComment) {
@@ -129,18 +129,18 @@ function insertButtonXl() {
 function animate_element_in(e) {
     var element = document.getElementById(e);
 
-    element.style.display = "block";
-    element.classList.remove(e + "-anim-in");
-    element.classList.remove(e + "-anim-out");
-    element.classList.add(e + "-anim-in");
+    element.style.display = 'block';
+    element.classList.remove(e + '-anim-in');
+    element.classList.remove(e + '-anim-out');
+    element.classList.add(e + '-anim-in');
 }
 
 function animate_element_out(e) {
     var element = document.getElementById(e);
 
-    element.classList.remove(e + "-anim-in");
-    element.classList.remove(e + "-anim-out");
-    element.classList.add(e + "-anim-out");
+    element.classList.remove(e + '-anim-in');
+    element.classList.remove(e + '-anim-out');
+    element.classList.add(e + '-anim-out');
 }
 
 function showPanel(name) {
@@ -153,33 +153,33 @@ function showPanel(name) {
     shuffleIdp();
 
     toshow = document.getElementById(name);
-    toshow.removeAttribute("hidden");
-    toshow.style.display = "block";
-    buttons = document.getElementsByClassName("agid-spid-enter-button");
+    toshow.removeAttribute('hidden');
+    toshow.style.display = 'block';
+    buttons = document.getElementsByClassName('agid-spid-enter-button');
     
     for (z = 0; z < buttons.length; z++) {
-        buttons[z].style.display = "none";
-        hiddenattribute = document.createAttribute("hidden");
+        buttons[z].style.display = 'none';
+        hiddenattribute = document.createAttribute('hidden');
         buttons[z].setAttributeNode(hiddenattribute);
     }
 
     // show animation panel
-    animate_element_in("agid-spid-button-anim");
-    animate_element_in("agid-spid-button-anim-base");
-    animate_element_in("agid-spid-button-anim-icon");
-    animate_element_in("agid-spid-panel-select");
+    animate_element_in('agid-spid-button-anim');
+    animate_element_in('agid-spid-button-anim-base');
+    animate_element_in('agid-spid-button-anim-icon');
+    animate_element_in('agid-spid-panel-select');
 
-    base  = document.getElementById("agid-spid-button-anim-base"),
-    panel = document.getElementById("agid-spid-button-anim");
+    base  = document.getElementById('agid-spid-button-anim-base'),
+    panel = document.getElementById('agid-spid-button-anim');
 
-    base.addEventListener("animationstart", function() {
-        panel.style.display = "block";
-        base.style.display = "block";
+    base.addEventListener('animationstart', function() {
+        panel.style.display = 'block';
+        base.style.display = 'block';
     }, true);
 
-    base.addEventListener("animationend", function() {
-        panel.style.display = "block";
-        base.style.display = "block";
+    base.addEventListener('animationend', function() {
+        panel.style.display = 'block';
+        base.style.display = 'block';
     }, true);
 }
 
@@ -191,34 +191,34 @@ function hidePanel(name) {
         buttons;
 
     tohide = document.getElementById(name);
-    hiddenattribute = document.createAttribute("hidden");
+    hiddenattribute = document.createAttribute('hidden');
     tohide.setAttributeNode(hiddenattribute);
-    tohide.style.display = "none";
-    buttons = document.getElementsByClassName("agid-spid-enter-button");
+    tohide.style.display = 'none';
+    buttons = document.getElementsByClassName('agid-spid-enter-button');
 
     for (z = 0; z < buttons.length; z++) {
-        buttons[z].style.display = "block";
-        buttons[z].removeAttribute("hidden");
+        buttons[z].style.display = 'block';
+        buttons[z].removeAttribute('hidden');
     };
     // hide animation panel
-    animate_element_out("agid-spid-button-anim");
-    animate_element_out("agid-spid-button-anim-base");
-    animate_element_out("agid-spid-button-anim-icon");
-    animate_element_out("agid-spid-panel-select");
+    animate_element_out('agid-spid-button-anim');
+    animate_element_out('agid-spid-button-anim-base');
+    animate_element_out('agid-spid-button-anim-icon');
+    animate_element_out('agid-spid-panel-select');
 
-    base = document.getElementById("agid-spid-button-anim-base");
-    panel = document.getElementById("agid-spid-button-anim");
+    base = document.getElementById('agid-spid-button-anim-base');
+    panel = document.getElementById('agid-spid-button-anim');
 
-    base.addEventListener("animationstart", function() {
-        panel.style.display = "block";
-        base.style.display = "block";
+    base.addEventListener('animationstart', function() {
+        panel.style.display = 'block';
+        base.style.display = 'block';
     }, true);
 
-    base.addEventListener("animationend", function() {
+    base.addEventListener('animationend', function() {
         var newone;
 
-        panel.style.display = "none";
-        base.style.display = "none";
+        panel.style.display = 'none';
+        base.style.display = 'none';
 
         newone = base.cloneNode(true);
         base.parentNode.replaceChild(newone, base);
@@ -251,9 +251,9 @@ function agid_spid_enter() {
 agid_spid_enter();
         
 function openModal(text){
-    console.log("openModal " + text);
+    console.log('openModal', text);
 
-    var modal = document.getElementById("infomodal");
+    var modal = document.getElementById('infomodal');
 
     modal.innerHTML = [
         '<div class="modal-content">',
@@ -262,20 +262,20 @@ function openModal(text){
         '</div>'
     ].join('');
 
-    modal.style.display = "block";
+    modal.style.display = 'block';
 
-    var span = document.getElementById("closemodalbutton");
+    var span = document.getElementById('closemodalbutton');
 
-    span.addEventListener("click", function(ev) { closeModal(); });
+    span.addEventListener('click', function(ev) { closeModal(); });
 
     console.log(span);
 };
 
 function closeModal() {
-    console.log("Closingmodal");
+    console.log('closingModal');
 
-    var modal = document.getElementById("infomodal");
+    var modal = document.getElementById('infomodal');
 
-    modal.style.display = "none";
+    modal.style.display = 'none';
     modal.innerHTML = '';
 }
