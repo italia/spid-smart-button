@@ -1,5 +1,27 @@
+var modal = document.createElement('div');
+modal.setAttribute('id', 'infomodal');
+modal.setAttribute('class', 'modal');
+
 function insertCode() {
-var agid_spid_enter = document.getElementById('agid-spid-enter');
+var button = document.getElementsByClassName('agid-spid-enter-button')[0];
+
+if (button == undefined) {
+    console.log('Non è stato trovato alcun elemento con classe CSS .agid-spid-enter-button!');
+    return;
+}
+
+var parentNode = button.parentElement;
+var agid_spid_enter = document.createElement('div');
+agid_spid_enter.setAttribute('id', 'agid-spid-enter');
+parentNode.appendChild(agid_spid_enter);
+parentNode.appendChild(modal);
+
+var head = document.getElementsByTagName('head')[0];
+var css = document.createElement('link');
+css.setAttribute('rel', 'stylesheet');
+css.setAttribute('href', 'css/agid-spid-enter.css');
+head.appendChild(css);
+
         var panel_html = '\
 		<div id="agid-spid-button-anim">\
 			<div id="agid-spid-button-anim-base"></div>\
@@ -219,7 +241,6 @@ insertCode();
         
         function openmodal(text){
         console.log("Openmodal " + text);
-                var modal = document.getElementById("infomodal");
                 modal.innerHTML = '<div class=\"modal-content\"><span id="closemodalbutton" class="close" >&times;</span><p>' + text + '</p></div>'
                 modal.style.display = "block";
                 var span = document.getElementById("closemodalbutton");
@@ -228,7 +249,6 @@ insertCode();
         };
         function closemodal() {
         console.log("Closingmodal ");
-                var modal = document.getElementById("infomodal");
                 modal.style.display = "none";
                 modal.innerHTML = '';
         }
