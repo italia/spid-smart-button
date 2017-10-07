@@ -12,6 +12,8 @@ function displaySPIDConfiguredProviders() {
 
     agid_spid_enter.innerHTML = spidTpl.spidProviderChoiceModal(spidProvidersButtonsHTML);
 
+    document.getElementById('agid-spid-panel-close-button').addEventListener('click', function() { hidePanel('agid-spid-panel-select') });
+    document.getElementById('agid-spid-cancel-access-button').addEventListener('click', function() { hidePanel('agid-spid-panel-select') });
     document.getElementById('nospid').addEventListener('click', function(ev) { openModal('Non hai SPID?'); });
     document.getElementById('cosaspid').addEventListener('click', function(ev) { openModal('Cos\'è SPID?'); });
 }
@@ -155,6 +157,13 @@ function agid_spid_enter() {
     insertButtonM();
     insertButtonL();
     insertButtonXl();
+
+    // Binda gli eventi dopo aver renderizzato i pulsanti SPID
+    Array.from(document.getElementsByClassName('agid-spid-enter')).forEach(function (spidButton) {
+        spidButton.addEventListener('click', function() {
+            showPanel('agid-spid-panel-select')
+        });
+    });
 
     document.addEventListener('keyup', function(e) {
         if (e.keyCode == 27) {

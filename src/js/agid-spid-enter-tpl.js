@@ -9,7 +9,7 @@ var spidTpl = {
 	            '<header id="agid-spid-panel-header">',
 	                '<nav class="agid-spid-panel-back agid-spid-panel-element" aria-controls="agid-spid-panel-select">',
 	                    '<div role="button">',
-	                        '<a href="#" onclick="hidePanel(\'agid-spid-panel-select\')" class="agid-spid-button">',
+	                        '<a id="agid-spid-panel-close-button" href="#" class="agid-spid-button">',
 	                            '<img src="img/x-icon.svg" alt="Torna indietro">',
 	                        '</a>',
 	                    '</div>',
@@ -27,7 +27,7 @@ var spidTpl = {
 	                        spidProvidersButtons,       
 	                    '</div>',
 	                    '<div id="agid-cancel-access-container">',
-	                        '<a href="#" onclick="hidePanel(\'agid-spid-panel-select\')">',
+	                        '<a id="agid-spid-cancel-access-button" href="#">',
 	                            '<div id="agid-cancel-access-button" class="agid-transparent-button" role="button">',
 	                                '<span>Annulla l\'accesso</span>',
 	                            '</div>',
@@ -70,7 +70,7 @@ var spidTpl = {
 	spidButton: function(sizeClass, sizeComment) {
 	    return [
 	        '<!-- AGID - SPID BUTTON ', sizeComment, ' * begin * -->',
-	        '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" onclick="showPanel(\'agid-spid-panel-select\')">',
+	        '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '">',
 	            '<span aria-hidden="true" class="agid-spid-enter-icon">',
 	                '<img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" />',
 	            '</span>',
