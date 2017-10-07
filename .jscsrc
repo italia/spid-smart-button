@@ -1,0 +1,10 @@
+{
+    "preset": "crockford",
+    "fileExtensions": [".js"],
+    "maxErrors": 100,
+    "verbose": false,
+    "excludeFiles": [
+        "node_modules/**",
+        "js/*min.js"
+    ]
+}
