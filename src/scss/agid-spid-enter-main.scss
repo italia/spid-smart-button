@@ -17,54 +17,54 @@
     display: none;
     background-position: bottom -25px right -150px;
 }
+
 #agid-spid-panel-header {
     background-color: #fff;
     color: #fff;
     display: block;
     margin: 0;
     overflow: hidden;
-    padding: 5px 0;
+    padding: 12px 0;
     position: fixed;
     text-align: center;
     width: 100vw;
     z-index: 1;
+
+    .agid-spid-panel-back,
+    .agid-spid-panel-logo {
+        float: left;
+        width: 33.33333vw;
+        padding-top: 3px;
+    }
+    .agid-spid-panel-back a,
+    .agid-spid-panel-back button,
+    .agid-spid-panel-back button a {
+        float: left;
+        width: auto;
+        border: none;
+        outline: none;
+        display: block;
+        cursor: pointer
+    }
+    .agid-spid-panel-back a {
+        padding: 6px 0;
+    }
+    .agid-spid-panel-back a:hover,
+    .agid-spid-panel-back a:focus {
+        opacity: .5;
+    }
+    .agid-spid-panel-back img {
+        max-height: 25px;
+    }
+    .agid-spid-panel-logo img {
+        max-height: 37px;
+    }
+    .agid-spid-panel-element {
+        float: right;
+        min-width: 33.3333vw
+    }
 }
-#agid-spid-panel-header .agid-spid-panel-back,
-#agid-spid-panel-header .agid-spid-panel-logo {
-    float: left;
-    width: 33.33333vw;
-    padding-top: 3px;
-}
-#agid-spid-panel-header .agid-spid-panel-back a,
-#agid-spid-panel-header .agid-spid-panel-back button,
-#agid-spid-panel-header .agid-spid-panel-back button a {
-    float: left;
-    width: auto;
-    border: none;
-    outline: none;
-    display: block;
-    cursor: pointer
-}
-#agid-spid-panel-header {
-    padding: 12px 0;
-}
-#agid-spid-panel-header .agid-spid-panel-back a {
-    padding: 6px 0;
-}
-#agid-spid-panel-header .agid-spid-panel-back a:hover,
-#agid-spid-panel-header .agid-spid-panel-back a:focus {
-    opacity: .5;
-}
-#agid-spid-panel-header .agid-spid-panel-back img {
-    max-height: 25px;
-}
-#agid-spid-panel-header .agid-spid-panel-logo img {
-    max-height: 37px;
-}
-#agid-spid-panel-header .agid-spid-panel-element {
-    float: right;
-    min-width: 33.3333vw
-}
+
 #agid-spid-panel-content {
     display: block;
     width: 90vw;
@@ -72,11 +72,13 @@
     overflow: auto;
     margin: 70px auto 100px;
 }
+
 .agid-spid-panel-content-center {
     max-width: 650px;
     text-align: center;
     margin: auto;
 }
+
 #agid-spid-panel-content h1#agid-spid-enter-title-page {
     font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
     font-weight: 600;
@@ -87,6 +89,7 @@
     font-size: 1em;
     margin: 0 auto;
 }
+
 #agid-spid-enter-support-actions {
     list-style-type: none;
     padding: 0;
@@ -97,19 +100,23 @@
     text-align: start;
     display: none
 }
-a.idp-list-link:link {
-    color: #06c;
+
+a.idp-list-link {
+    &:link {
+        color: #06c;
+    }
+    &:visited {
+        color: #06c;
+    }
+    &:hover {
+        color: #036;
+    }
+    &:active {
+        background-color: #06c;
+        color: #fff;
+    }
 }
-a.idp-list-link:visited {
-    color: #06c;
-}
-a.idp-list-link:hover {
-    color: #036;
-}
-a.idp-list-link:active {
-    background-color: #06c;
-    color: #fff;
-}
+
 .agid-spid-idp-button {
     width: 145px;
     height: 55px;
@@ -136,22 +143,24 @@ a.idp-list-link:active {
     -webkit-transition: .5s;
     transition: .5s;
 }
-#ragid-spid-idp-list span:nth-child(odd) {
-    margin-left: 0;
-    margin-right: 5px;
-    margin-top: 0;
-    margin-bottom: 0;
+#ragid-spid-idp-list {
+    span:nth-child(odd) {
+        margin-left: 0;
+        margin-right: 5px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    span:nth-child(even) {
+        margin-left: 5px;
+        margin-right: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }
-#ragid-spid-idp-list span:nth-child(even) {
-    margin-left: 5px;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-}
+
 .agid-spid-idp-button:hover,
 .agid-spid-idp-button:focus {
-    /*border: 2px solid #06C;*/
-    
     box-shadow: 0 5px 0 #0057ae;
     opacity: .8;
 }
