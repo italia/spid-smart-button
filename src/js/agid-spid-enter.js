@@ -85,7 +85,9 @@ function buildSPIDbuttonHtml(sizeClass, sizeComment) {
     return [
         '<!-- AGID - SPID BUTTON ', sizeComment, ' * begin * -->',
         '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" onclick="showPanel(\'agid-spid-panel-select\')">',
-            '<span aria-hidden="true" class="agid-spid-enter-icon"><img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>',
+            '<span aria-hidden="true" class="agid-spid-enter-icon">',
+                '<img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" />',
+            '</span>',
             '<span class="agid-spid-enter-text">Entra con SPID</span>',
         '</button>',
         '<!-- AGID - SPID BUTTON ', sizeComment, ' * end * -->'
