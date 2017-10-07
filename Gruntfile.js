@@ -17,7 +17,8 @@ module.exports = function(grunt) {
                 files: {
                     // 'destination': 'source'
                     // imports and dependecies defined in the SCSS file
-                    'css/agid-spid-enter.min.css': 'src/scss/agid-spid-enter.scss'
+                    'css/agid-spid-enter.min.css': 'src/scss/agid-spid-enter.scss',
+                    'css/agid-spid-demo-page.css': 'src/scss/agid-spid-demo-page.scss'
                 }
             }
         },

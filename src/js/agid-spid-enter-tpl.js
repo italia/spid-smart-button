@@ -1,4 +1,10 @@
 var spidTpl = {
+	spidMainContainers: function() {
+		return [
+            '<div id="infomodal" class="modal"></div>',
+            '<div id="agid-spid-enter"></div>'
+		].join('');
+	},
 	spidProviderChoiceModal: function(spidProvidersButtons) {
 	    return [
 	        '<div id="agid-spid-button-anim">',

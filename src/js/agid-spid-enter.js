@@ -140,7 +140,18 @@ function shuffleIdp() {
     }
 }
 
+function renderSpidModalContainer() {
+    var agidSpidEnterWrapper = document.createElement('SECTION');
+
+    agidSpidEnterWrapper.id  = 'agid-spid-enter-container';
+
+    document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
+
+    agidSpidEnterWrapper.innerHTML = spidTpl.spidMainContainers();
+}
+
 function agid_spid_enter() {
+    renderSpidModalContainer();
     displaySPIDConfiguredProviders();
 
     insertButtonS();
