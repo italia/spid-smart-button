@@ -94,36 +94,29 @@ function buildSPIDbuttonHtml(sizeClass, sizeComment) {
     ].join('');
 }
 
-function insertButtonS() {
-    var agid_spid_enter_button_xl = document.getElementsByClassName('agid-spid-enter-button-size-s');
+function renderSPIDbuttons(sizeClass, sizeComment) {
+    var agid_spid_enter_button = document.getElementsByClassName('agid-spid-enter-button-size-' + sizeClass);
 
-    for (var i = 0; i < agid_spid_enter_button_xl.length; i++) {
-        agid_spid_enter_button_xl[i].innerHTML = buildSPIDbuttonHtml('s', 'SMALL');
+    for (var i = 0; i < agid_spid_enter_button.length; i++) {
+        agid_spid_enter_button[i].innerHTML = buildSPIDbuttonHtml(sizeClass, sizeComment);
     }
+
+}
+
+function insertButtonS() {
+    renderSPIDbuttons('s', 'SMALL');
 }
 
 function insertButtonM() {
-    var agid_spid_enter_button_xl = document.getElementsByClassName('agid-spid-enter-button-size-m');
-
-    for (var i = 0; i < agid_spid_enter_button_xl.length; i++) {
-        agid_spid_enter_button_xl[i].innerHTML = buildSPIDbuttonHtml('m', 'MEDIUM');
-    }
+    renderSPIDbuttons('m', 'MEDIUM');
 }
 
 function insertButtonL() {
-    var agid_spid_enter_button_xl = document.getElementsByClassName('agid-spid-enter-button-size-l');
-
-    for (var i = 0; i < agid_spid_enter_button_xl.length; i++) {
-        agid_spid_enter_button_xl[i].innerHTML = buildSPIDbuttonHtml('l', 'LARGE');
-    }
+    renderSPIDbuttons('l', 'LARGE');
 }
 
 function insertButtonXl() {
-    var agid_spid_enter_button_xl = document.getElementsByClassName('agid-spid-enter-button-size-xl');
-
-    for (var i = 0; i < agid_spid_enter_button_xl.length; i++) {
-        agid_spid_enter_button_xl[i].innerHTML = buildSPIDbuttonHtml('xl', 'EXTRALARGE');
-    }
+    renderSPIDbuttons('xl', 'EXTRALARGE');
 }
 
 function animate_element_in(e) {
