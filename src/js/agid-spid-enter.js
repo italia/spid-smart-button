@@ -24,7 +24,6 @@ function renderSPIDbuttons(sizeClass, sizeComment) {
     for (var i = 0; i < agid_spid_enter_button.length; i++) {
         agid_spid_enter_button[i].innerHTML = spidTpl.spidButton(sizeClass, sizeComment);
     }
-
 }
 
 function insertButtonS() {
