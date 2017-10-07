@@ -78,5 +78,13 @@ var spidTpl = {
 	        '</button>',
 	        '<!-- AGID - SPID BUTTON ', sizeComment, ' * end * -->'
 	    ].join('');
+	},
+	modalCloseButton: function(text) {
+		return [
+	        '<div class="modal-content">',
+	            '<span id="closemodalbutton" class="close" >&times;</span>',
+	            '<p>', text, '</p>',
+	        '</div>'
+	    ].join('');
 	}
 }

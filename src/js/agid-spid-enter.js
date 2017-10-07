@@ -14,6 +14,7 @@ function displaySPIDConfiguredProviders() {
 
     spidProviderChoiceModalWithButtonsHTML = spidTpl.spidProviderChoiceModal(spidProvidersButtonsHTML);
 
+    // Renderizza il modale con i provider di SPID
     agid_spid_enter.innerHTML = spidProviderChoiceModalWithButtonsHTML;
 
     document.getElementById('nospid').addEventListener('click', function(ev) { openModal('Non hai SPID?'); });
@@ -172,12 +173,7 @@ agid_spid_enter();
 function openModal(text){
     var modal = document.getElementById('infomodal');
 
-    modal.innerHTML = [
-        '<div class="modal-content">',
-            '<span id="closemodalbutton" class="close" >&times;</span>',
-            '<p>', text, '</p>',
-        '</div>'
-    ].join('');
+    modal.innerHTML = spidTpl.modalCloseButton(text);
 
     modal.style.display = 'block';
 
