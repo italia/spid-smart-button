@@ -4,8 +4,20 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-          files: ['src/js/*'],
+          files: ['src/js/*','src/scss/*'],
           tasks: ['build']
+        },
+
+        sass: {
+            dist: {
+                options: {
+                    style: 'compressed'
+                },
+                files: {
+                    // 'destination': 'source'
+                    'css/agid-spid-enter.min.css': 'src/scss/agid-spid-enter.scss'
+                }
+            }
         },
 
         uglify: {
@@ -31,9 +43,11 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask('default', ['watch']);
+    grunt.registerTask('css', ['sass']);
     grunt.registerTask('js', ['uglify']);
-    grunt.registerTask('build', ['js']);
+    grunt.registerTask('build', ['css','js']);
 };
