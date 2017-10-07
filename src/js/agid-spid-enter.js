@@ -81,63 +81,46 @@ function displaySPIDConfiguredProviders() {
     document.getElementById("cosaspid").addEventListener('click', function(ev) { openmodal('Cos\'è SPID?');});
 }
 
+function buildSPIDbuttonHtml(sizeClass, sizeComment) {
+    return [
+        '<!-- AGID - SPID BUTTON ', sizeComment, ' * begin * -->',
+        '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" onclick="showPanel(\'agid-spid-panel-select\')">',
+            '<span aria-hidden="true" class="agid-spid-enter-icon"><img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>',
+            '<span class="agid-spid-enter-text">Entra con SPID</span>',
+        '</button>',
+        '<!-- AGID - SPID BUTTON ', sizeComment, ' * end * -->'
+    ].join('');
+}
+
 function insertButtonS() {
-    var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-s");
+    var agid_spid_enter_button_xl = document.getElementsByClassName('agid-spid-enter-button-size-s');
 
     for (var i = 0; i < agid_spid_enter_button_xl.length; i++) {
-        agid_spid_enter_button_xl[i].innerHTML = '\
-    			<!-- AGID - SPID BUTTON SMALL * begin * -->\
-    			<button class="agid-spid-enter agid-spid-enter-size-s" onclick="showPanel(\'agid-spid-panel-select\')">\
-    				<span class="agid-spid-enter-icon"><img aria-hidden="true"  src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-    				<span class="agid-spid-enter-text">Entra con SPID</span>\
-    			</button>\
-    			<!-- AGID - SPID BUTTON SMALL * end * -->		\
-    		';
+        agid_spid_enter_button_xl[i].innerHTML = buildSPIDbuttonHtml('s', 'SMALL');
     }
 }
 
 function insertButtonM() {
-    var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-m");
+    var agid_spid_enter_button_xl = document.getElementsByClassName('agid-spid-enter-button-size-m');
 
     for (var i = 0; i < agid_spid_enter_button_xl.length; i++) {
-        agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON MEDIUM * begin * -->\
-			<button class="agid-spid-enter agid-spid-enter-size-m" onclick="showPanel(\'agid-spid-panel-select\')">\
-				<span class="agid-spid-enter-icon"><img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-				<span class="agid-spid-enter-text">Entra con SPID</span>\
-			</button>\
-			<!-- AGID - SPID BUTTON MEDIUM * end * -->	\
-		';
+        agid_spid_enter_button_xl[i].innerHTML = buildSPIDbuttonHtml('m', 'MEDIUM');
     }
 }
 
 function insertButtonL() {
-    var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-l");
+    var agid_spid_enter_button_xl = document.getElementsByClassName('agid-spid-enter-button-size-l');
 
     for (var i = 0; i < agid_spid_enter_button_xl.length; i++) {
-        agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON LARGE * begin * -->\
-			<button class="agid-spid-enter agid-spid-enter-size-l" onclick="showPanel(\'agid-spid-panel-select\')">\
-				<span class="agid-spid-enter-icon"><img aria-hidden="true"  src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-				<span class="agid-spid-enter-text">Entra con SPID</span>\
-			</button>\
-			<!-- AGID - SPID BUTTON LARGE * end * -->	\
-		';
+        agid_spid_enter_button_xl[i].innerHTML = buildSPIDbuttonHtml('l', 'LARGE');
     }
 }
 
 function insertButtonXl() {
-    var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-xl");
+    var agid_spid_enter_button_xl = document.getElementsByClassName('agid-spid-enter-button-size-xl');
 
     for (var i = 0; i < agid_spid_enter_button_xl.length; i++) {
-        agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON EXTRALARGE * begin * -->\
-			<button  class="agid-spid-enter agid-spid-enter-size-xl agid-spid-idp-list" onclick="showPanel(\'agid-spid-panel-select\')">\
-				<span aria-hidden="true" class="agid-spid-enter-icon"><img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-				<span class="agid-spid-enter-text">Entra con SPID</span>\
-			</button>\
-			<!-- AGID - SPID BUTTON EXTRALARGE * end * -->		\
-		';
+        agid_spid_enter_button_xl[i].innerHTML = buildSPIDbuttonHtml('xl', 'EXTRALARGE');
     }
 }
 
@@ -249,32 +232,42 @@ function shuffleIdp() {
 }
 
 function agid_spid_enter() {
-        displaySPIDConfiguredProviders();
+    displaySPIDConfiguredProviders();
 
-        insertButtonS();
-        insertButtonM();
-        insertButtonL();
-        insertButtonXl();
-        document.addEventListener('keyup', function(e) {
+    insertButtonS();
+    insertButtonM();
+    insertButtonL();
+    insertButtonXl();
+
+    document.addEventListener('keyup', function(e) {
         if (e.keyCode == 27) {
-        hidePanel('agid-spid-panel-select');
+            hidePanel('agid-spid-panel-select');
         }
-        });
-        };
-        agid_spid_enter();
+    });
+};
+
+agid_spid_enter();
         
-        function openmodal(text){
-        console.log("Openmodal " + text);
-                var modal = document.getElementById("infomodal");
-                modal.innerHTML = '<div class=\"modal-content\"><span id="closemodalbutton" class="close" >&times;</span><p>' + text + '</p></div>'
-                modal.style.display = "block";
-                var span = document.getElementById("closemodalbutton");
-                span.addEventListener("click", function(ev) { closemodal(); });
-                console.log(span);
-        };
-        function closemodal() {
-        console.log("Closingmodal ");
-                var modal = document.getElementById("infomodal");
-                modal.style.display = "none";
-                modal.innerHTML = '';
-        }
+function openmodal(text){
+    console.log("Openmodal " + text);
+
+    var modal = document.getElementById("infomodal");
+
+    modal.innerHTML = '<div class=\"modal-content\"><span id="closemodalbutton" class="close" >&times;</span><p>' + text + '</p></div>'
+    modal.style.display = "block";
+
+    var span = document.getElementById("closemodalbutton");
+
+    span.addEventListener("click", function(ev) { closemodal(); });
+
+    console.log(span);
+};
+
+function closemodal() {
+    console.log("Closingmodal ");
+
+    var modal = document.getElementById("infomodal");
+
+    modal.style.display = "none";
+    modal.innerHTML = '';
+}
