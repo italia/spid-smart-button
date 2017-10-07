@@ -6,13 +6,12 @@
 }
 
 .agid-spid-panel {
-    position: relative;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     color: #000;
-    position: fixed!important;
+    position: fixed;
     z-index: 1;
     overflow: auto;
     display: none;
