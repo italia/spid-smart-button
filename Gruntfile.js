@@ -8,7 +8,7 @@ module.exports = function(grunt) {
           tasks: ['build']
         },
 
-        // Stylesheets
+        // Stylesheets minify
         sass: {
             dist: {
                 options: {
@@ -16,12 +16,13 @@ module.exports = function(grunt) {
                 },
                 files: {
                     // 'destination': 'source'
+                    // imports and dependecies defined in the SCSS file
                     'css/agid-spid-enter.min.css': 'src/scss/agid-spid-enter.scss'
                 }
             }
         },
 
-        // JavaScript
+        // JavaScript minify
         uglify: {
             options: {
                 // mangle prevent changes to your variable and function names, must be false
