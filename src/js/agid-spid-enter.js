@@ -180,5 +180,5 @@ function closeModal() {
     var modal = document.getElementById('infomodal');
 
     modal.style.display = 'none';
-    modal.innerHTML = '';
+    modal.innerHTML     = '';
 }
