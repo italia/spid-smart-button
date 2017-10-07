@@ -142,24 +142,21 @@ agid_spid_enter_button_xl[i].innerHTML = '\
 }
 
 function animate_element_in(e) {
-element = document.getElementById(e);
-        element.style.display = "block";
-        element.classList.remove(e + "-anim-in");
-        element.classList.remove(e + "-anim-out");
-        element.classList.add(e + "-anim-in");
-        }
+    var element = document.getElementById(e);
+
+    element.style.display = "block";
+    element.classList.remove(e + "-anim-in");
+    element.classList.remove(e + "-anim-out");
+    element.classList.add(e + "-anim-in");
+}
 
 function animate_element_out(e) {
-element = document.getElementById(e);
-        element.classList.remove(e + "-anim-in");
-        element.classList.remove(e + "-anim-out");
-        element.classList.add(e + "-anim-out");
-        /*
-         var newone = element.cloneNode(true);
-         element.parentNode.replaceChild(newone, element);
-         element.classList.add(e + "-anim-out");	
-         */
-        }
+    var element = document.getElementById(e);
+
+    element.classList.remove(e + "-anim-in");
+    element.classList.remove(e + "-anim-out");
+    element.classList.add(e + "-anim-out");
+}
 
 function showPanel(name) {
     var toshow,
@@ -231,7 +228,7 @@ function hidePanel(name) {
         panel.style.display = "block";
         base.style.display = "block";
     }, true);
-    
+
     base.addEventListener("animationend", function() {
         var newone;
 
