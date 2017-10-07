@@ -216,23 +216,6 @@ a.idp-list-link {
         opacity: 1
     }
 }
-.agid-spid-enter {
-    display: inline-block;
-    padding: 0;
-    color: #FFF;
-    background-color: #06C;
-    font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
-    font-weight: 600;
-    line-height: 1em;
-    text-decoration: none;
-    border: 0;
-    text-align: center;
-    cursor: pointer;
-    outline: 0;
-}
-.agid-spid-enter svg {
-    fill: #FFF
-}
 .agid-spid-enter:hover,
 .agid-spid-enter:focus {
     background-color: #036;
@@ -614,5 +597,30 @@ a.idp-list-link {
     }
     #agid-cancel-access-button {
         margin: 0 12px;
+    }
+}
+
+/*
+ * Deve essere l'ultimo set di regole, così che dopo che i pulsanti sono stati renderizzati con invisibilità inline
+ * si da tempo al browser di caricare e parsare i fogli di stile appena iniettati, di google font e del presente
+ * così da evitare di vedere prima i pulsanti "rotti" che poi si aggiustano gradualmente mentre il CSS viene scaricato e parsato
+ * in questo modo i pulsanti appaiono pochi istanti dopo perfettamente stilizzati
+ */
+.agid-spid-enter {
+    padding: 0;
+    color: #FFF;
+    background-color: #06C;
+    font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+    font-weight: 600;
+    line-height: 1em;
+    text-decoration: none;
+    border: 0;
+    text-align: center;
+    cursor: pointer;
+    outline: 0;
+    display: inline-block !important;
+
+    svg {
+        fill: #FFF
     }
 }

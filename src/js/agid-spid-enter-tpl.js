@@ -1,6 +1,7 @@
 var spidTpl = {
 	spidMainContainers: function() {
 		return [
+			'<link rel="stylesheet" href="css/agid-spid-enter.min.css">',
             '<div id="infomodal" class="modal"></div>',
             '<div id="agid-spid-enter"></div>'
 		].join('');
@@ -76,7 +77,7 @@ var spidTpl = {
 	spidButton: function(sizeClass, sizeComment) {
 	    return [
 	        '<!-- AGID - SPID BUTTON ', sizeComment, ' * begin * -->',
-	        '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '">',
+	        '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" style="display:none">',
 	            '<span aria-hidden="true" class="agid-spid-enter-icon">',
 	                '<img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" />',
 	            '</span>',
