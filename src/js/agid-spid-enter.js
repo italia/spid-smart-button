@@ -1,9 +1,7 @@
 function displaySPIDConfiguredProviders() {
     var agid_spid_enter = document.getElementById('agid-spid-enter'),
-        spidProvidersButtonsHTML = '',
-        spidProviderChoiceModalWithButtonsHTML;
+        spidProvidersButtonsHTML = '';
 
-    // Cicla l'oggetto config e aggiunge i pulsanti dei provider disponibili
     for (var provider in config) {
         var providerData = config[provider];
 
@@ -12,10 +10,7 @@ function displaySPIDConfiguredProviders() {
         spidProvidersButtonsHTML += spidTpl.spidProviderButton(providerData);
     };
 
-    spidProviderChoiceModalWithButtonsHTML = spidTpl.spidProviderChoiceModal(spidProvidersButtonsHTML);
-
-    // Renderizza il modale con i provider di SPID
-    agid_spid_enter.innerHTML = spidProviderChoiceModalWithButtonsHTML;
+    agid_spid_enter.innerHTML = spidTpl.spidProviderChoiceModal(spidProvidersButtonsHTML);
 
     document.getElementById('nospid').addEventListener('click', function(ev) { openModal('Non hai SPID?'); });
     document.getElementById('cosaspid').addEventListener('click', function(ev) { openModal('Cos\'è SPID?'); });
