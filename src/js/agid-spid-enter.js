@@ -144,6 +144,22 @@ function renderSpidModalContainer() {
     agidSpidEnterWrapper.innerHTML = spidTpl.spidMainContainers();
 }
 
+function openModal(text){
+    var modal = document.getElementById('infomodal');
+
+    modal.innerHTML     = spidTpl.modalCloseButton(text);
+    modal.style.display = 'block';
+
+    document.getElementById('closemodalbutton').addEventListener('click', function() { closeModal(); });
+};
+
+function closeModal() {
+    var modal = document.getElementById('infomodal');
+
+    modal.style.display = 'none';
+    modal.innerHTML     = '';
+}
+
 function agid_spid_enter() {
     renderSpidModalContainer();
     displaySPIDConfiguredProviders();
@@ -166,18 +182,3 @@ function agid_spid_enter() {
 
 agid_spid_enter();
         
-function openModal(text){
-    var modal = document.getElementById('infomodal');
-
-    modal.innerHTML     = spidTpl.modalCloseButton(text);
-    modal.style.display = 'block';
-
-    document.getElementById('closemodalbutton').addEventListener('click', function() { closeModal(); });
-};
-
-function closeModal() {
-    var modal = document.getElementById('infomodal');
-
-    modal.style.display = 'none';
-    modal.innerHTML     = '';
-}
