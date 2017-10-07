@@ -62,7 +62,7 @@ function spidProviderButtonTpl(providerData) {
                 // la seconda classe è necessaria? non è in nessun CSS, potrebbe essere messa in config, oppure affidarsi al nome della config
                 'class="agid-spid-idp-button agid-spid-idp-infocertid"',
                 'title="', providerData.title, '"',
-                'style="background-image: url(img/idp-logos/' + providerData.logo, ')">',
+                'style="background-image: url(img/idp-logos/', providerData.logo, ')">',
             '</a>',
         '</span>'
     ].join('');
