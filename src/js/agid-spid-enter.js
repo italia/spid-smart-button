@@ -164,7 +164,9 @@ element = document.getElementById(e);
 function showPanel(name) {
     var toshow,
         base,
-        panel;
+        panel,
+        buttons,
+        hiddenattribute;
 
     shuffleIdp();
 
@@ -200,41 +202,53 @@ function showPanel(name) {
 }
 
 function hidePanel(name) {
+    var base,
+        panel,
+        tohide,
+        hiddenattribute,
+        buttons;
 
-tohide = document.getElementById(name);
-        hiddenattribute = document.createAttribute("hidden");
-        tohide.setAttributeNode(hiddenattribute);
-        tohide.style.display = "none";
-        buttons = document.getElementsByClassName("agid-spid-enter-button");
-        console.log(buttons);
-        for (z = 0; z < buttons.length; z++) {
-buttons[z].style.display = "block";
+    tohide = document.getElementById(name);
+    hiddenattribute = document.createAttribute("hidden");
+    tohide.setAttributeNode(hiddenattribute);
+    tohide.style.display = "none";
+    buttons = document.getElementsByClassName("agid-spid-enter-button");
+
+    for (z = 0; z < buttons.length; z++) {
+        buttons[z].style.display = "block";
         buttons[z].removeAttribute("hidden");
-};
-        // hide animation panel
-        animate_element_out("agid-spid-button-anim");
-        animate_element_out("agid-spid-button-anim-base");
-        animate_element_out("agid-spid-button-anim-icon");
-        animate_element_out("agid-spid-panel-select");
-        var base = document.getElementById("agid-spid-button-anim-base");
-        var panel = document.getElementById("agid-spid-button-anim");
-        base.addEventListener("animationstart", function(e){
+    };
+    // hide animation panel
+    animate_element_out("agid-spid-button-anim");
+    animate_element_out("agid-spid-button-anim-base");
+    animate_element_out("agid-spid-button-anim-icon");
+    animate_element_out("agid-spid-panel-select");
+
+    base = document.getElementById("agid-spid-button-anim-base");
+    panel = document.getElementById("agid-spid-button-anim");
+
+    base.addEventListener("animationstart", function() {
         panel.style.display = "block";
-                base.style.display = "block";
-        }, true);
-        base.addEventListener("animationend", function(e){
+        base.style.display = "block";
+    }, true);
+    
+    base.addEventListener("animationend", function() {
+        var newone;
+
         panel.style.display = "none";
-                base.style.display = "none";
-                var newone = base.cloneNode(true);
-                base.parentNode.replaceChild(newone, base);
-        }, true);
-        }
+        base.style.display = "none";
+
+        newone = base.cloneNode(true);
+        base.parentNode.replaceChild(newone, base);
+    }, true);
+}
 
 function shuffleIdp() {
-var ul = document.querySelector('#agid-spid-idp-list');
-        for (var i = ul.children.length; i >= 0; i--) {
-ul.appendChild(ul.children[Math.random() * i | 0]);
-}
+    var ul = document.querySelector('#agid-spid-idp-list');
+
+    for (var i = ul.children.length; i >= 0; i--) {
+        ul.appendChild(ul.children[Math.random() * i | 0]);
+    }
 }
 
 function agid_spid_enter() {
