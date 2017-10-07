@@ -101,17 +101,14 @@ function showPanel(name) {
 }
 
 function hidePanel(name) {
-    var base,
-        panel,
-        tohide,
-        hiddenattribute,
-        buttons;
+    var tohide          = document.getElementById(name),
+        base            = document.getElementById('agid-spid-button-anim-base'),
+        panel           = document.getElementById('agid-spid-button-anim'),
+        hiddenattribute = document.createAttribute('hidden'),
+        buttons         = document.getElementsByClassName('agid-spid-enter-button');
 
-    tohide = document.getElementById(name);
-    hiddenattribute = document.createAttribute('hidden');
     tohide.setAttributeNode(hiddenattribute);
     tohide.style.display = 'none';
-    buttons = document.getElementsByClassName('agid-spid-enter-button');
 
     for (z = 0; z < buttons.length; z++) {
         buttons[z].style.display = 'block';
@@ -123,19 +120,16 @@ function hidePanel(name) {
     animate_element_out('agid-spid-button-anim-icon');
     animate_element_out('agid-spid-panel-select');
 
-    base = document.getElementById('agid-spid-button-anim-base');
-    panel = document.getElementById('agid-spid-button-anim');
-
     base.addEventListener('animationstart', function() {
         panel.style.display = 'block';
-        base.style.display = 'block';
+        base.style.display  = 'block';
     }, true);
 
     base.addEventListener('animationend', function() {
         var newone;
 
         panel.style.display = 'none';
-        base.style.display = 'none';
+        base.style.display  = 'none';
 
         newone = base.cloneNode(true);
         base.parentNode.replaceChild(newone, base);
@@ -177,13 +171,10 @@ agid_spid_enter();
 function openModal(text){
     var modal = document.getElementById('infomodal');
 
-    modal.innerHTML = spidTpl.modalCloseButton(text);
-
+    modal.innerHTML     = spidTpl.modalCloseButton(text);
     modal.style.display = 'block';
 
-    var span = document.getElementById('closemodalbutton');
-
-    span.addEventListener('click', function(ev) { closeModal(); });
+    document.getElementById('closemodalbutton').addEventListener('click', function() { closeModal(); });
 };
 
 function closeModal() {
