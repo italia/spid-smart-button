@@ -109,10 +109,11 @@ function hidePanel(name) {
     tohide.setAttributeNode(hiddenattribute);
     tohide.style.display = 'none';
 
-    for (z = 0; z < buttons.length; z++) {
-        buttons[z].style.display = 'block';
-        buttons[z].removeAttribute('hidden');
-    };
+    Array.from(buttons).forEach(function (button) {
+        button.style.display = 'block';
+        button.removeAttribute('hidden');
+    });
+
     // hide animation panel
     animate_element_out('agid-spid-button-anim');
     animate_element_out('agid-spid-button-anim-base');
