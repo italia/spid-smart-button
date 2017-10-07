@@ -19,11 +19,11 @@ function displaySPIDConfiguredProviders() {
 }
 
 function renderSPIDbuttons(sizeClass, sizeComment) {
-    var agid_spid_enter_button = document.getElementsByClassName('agid-spid-enter-button-size-' + sizeClass);
+    var agid_spid_enter_buttons = document.querySelectorAll('.agid-spid-enter-button-size-' + sizeClass);
 
-    for (var i = 0; i < agid_spid_enter_button.length; i++) {
-        agid_spid_enter_button[i].innerHTML = spidTpl.spidButton(sizeClass, sizeComment);
-    }
+    Array.from(agid_spid_enter_buttons).forEach(function (spidButton) {
+        spidButton.innerHTML = spidTpl.spidButton(sizeClass, sizeComment);
+    });
 }
 
 function insertButtonS() {
