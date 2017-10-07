@@ -38,6 +38,7 @@ module.exports = function(grunt) {
                 files: {
                     'js/agid-spid-enter.min.js': [
                         'src/js/agid-spid-enter-config.js',
+                        'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter.js'
                     ]
                 }
