@@ -18,28 +18,22 @@ function displaySPIDConfiguredProviders() {
     document.querySelector('#cosaspid').addEventListener('click', function() { openModal('Cos\'è SPID?'); });
 }
 
-function renderSPIDbuttons(sizeClass, sizeComment) {
-    var agid_spid_enter_buttons = document.querySelectorAll('.agid-spid-enter-button-size-' + sizeClass);
+function renderSpidButtons() {
+    var agid_spid_enter_buttons = document.querySelectorAll('.agid-spid-enter-button');
 
     Array.from(agid_spid_enter_buttons).forEach(function (spidButton) {
-        spidButton.innerHTML = spidTpl.spidButton(sizeClass, sizeComment);
+        var foundDataSize   = spidButton.getAttribute('data-size'),
+            dataSize        = foundDataSize.toLowerCase(),
+            supportedSizes  = ['s', 'm', 'l', 'xl'],
+            isSupportedSize = supportedSizes.indexOf(dataSize) != -1;
+
+        if (isSupportedSize) {
+            spidButton.innerHTML = spidTpl.spidButton(dataSize);
+        } else {
+            console.error('Le dimenioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize);
+        }
+        
     });
-}
-
-function insertButtonS() {
-    renderSPIDbuttons('s', 'SMALL');
-}
-
-function insertButtonM() {
-    renderSPIDbuttons('m', 'MEDIUM');
-}
-
-function insertButtonL() {
-    renderSPIDbuttons('l', 'LARGE');
-}
-
-function insertButtonXl() {
-    renderSPIDbuttons('xl', 'EXTRALARGE');
 }
 
 function animate_element_in(e) {
@@ -154,10 +148,7 @@ function agid_spid_enter() {
     renderSpidModalContainer();
     displaySPIDConfiguredProviders();
 
-    insertButtonS();
-    insertButtonM();
-    insertButtonL();
-    insertButtonXl();
+    renderSpidButtons();
 
     // Binda gli eventi dopo aver renderizzato i pulsanti SPID
     Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {

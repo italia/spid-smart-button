@@ -74,16 +74,16 @@ var spidTpl = {
 	        '</span>'
 	    ].join('');		
 	},
-	spidButton: function(sizeClass, sizeComment) {
+	spidButton: function(sizeClass) {
 	    return [
-	        '<!-- AGID - SPID BUTTON ', sizeComment, ' * begin * -->',
+	        '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * begin * -->',
 	        '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" style="display:none">',
 	            '<span aria-hidden="true" class="agid-spid-enter-icon">',
 	                '<img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" />',
 	            '</span>',
 	            '<span class="agid-spid-enter-text">Entra con SPID</span>',
 	        '</button>',
-	        '<!-- AGID - SPID BUTTON ', sizeComment, ' * end * -->'
+	        '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * end * -->'
 	    ].join('');
 	},
 	modalCloseButton: function(text) {
