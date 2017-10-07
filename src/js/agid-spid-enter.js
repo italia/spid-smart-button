@@ -251,8 +251,6 @@ function agid_spid_enter() {
 agid_spid_enter();
         
 function openModal(text){
-    console.log('openModal', text);
-
     var modal = document.getElementById('infomodal');
 
     modal.innerHTML = [
@@ -267,13 +265,9 @@ function openModal(text){
     var span = document.getElementById('closemodalbutton');
 
     span.addEventListener('click', function(ev) { closeModal(); });
-
-    console.log(span);
 };
 
 function closeModal() {
-    console.log('closingModal');
-
     var modal = document.getElementById('infomodal');
 
     modal.style.display = 'none';
