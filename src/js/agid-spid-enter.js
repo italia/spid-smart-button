@@ -32,7 +32,13 @@ function renderSpidButtons() {
         } else {
             console.error('Le dimenioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButton);
         }
-        
+    });
+
+    // Binda gli eventi dopo aver renderizzato i pulsanti SPID
+    Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
+        spidButton.addEventListener('click', function() {
+            showPanel('agid-spid-panel-select')
+        });
     });
 }
 
@@ -165,13 +171,6 @@ function agid_spid_enter() {
     displaySPIDConfiguredProviders();
 
     renderSpidButtons();
-
-    // Binda gli eventi dopo aver renderizzato i pulsanti SPID
-    Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
-        spidButton.addEventListener('click', function() {
-            showPanel('agid-spid-panel-select')
-        });
-    });
 
     document.addEventListener('keyup', function(e) {
         if (e.keyCode == 27) {
