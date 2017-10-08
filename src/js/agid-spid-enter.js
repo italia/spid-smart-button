@@ -152,10 +152,10 @@ window.agidSpidEnter = (function () {
         agidSpidEnterWrapper.innerHTML = agidSpidEnterTpl.spidMainContainers();
     }
 
-    function openInfoModal(text){
+    function openInfoModal(htmlContent){
         var modal = document.querySelector('#infomodal');
 
-        modal.innerHTML     = agidSpidEnterTpl.modalCloseButton(text);
+        modal.innerHTML     = agidSpidEnterTpl.infoModal(htmlContent);
         modal.style.display = 'block';
 
         document.querySelector('#closemodalbutton').addEventListener('click', function() { closeInfoModal() });

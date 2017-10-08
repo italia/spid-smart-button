@@ -86,11 +86,11 @@ window.agidSpidEnterTpl = {
 	        '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * end * -->'
 	    ].join('');
 	},
-	modalCloseButton: function(text) {
+	infoModal: function(htmlContent) {
 		return [
 	        '<div class="modal-content">',
 	            '<span id="closemodalbutton" class="close" >&times;</span>',
-	            '<p>', text, '</p>',
+	            '<div>', htmlContent, '</div>',
 	        '</div>'
 	    ].join('');
 	}
