@@ -181,10 +181,12 @@ window.agidSpidEnter = (function () {
                 isprovidersPanelVisible = providersPanel.style.display !== 'none',
                 isInfoModalVisible      = infoModal.style.display !== 'none';
 
-            if (isEscKeyHit && isInfoModalVisible) {
-                closeInfoModal();
-            } else if (isEscKeyHit && isprovidersPanelVisible) {
-                hideProvidersPanel();
+            if (isEscKeyHit) {
+                if (isInfoModalVisible) {
+                    closeInfoModal();
+                } else if (isprovidersPanelVisible) {
+                    hideProvidersPanel();
+                }
             }
         });
     };
