@@ -16,8 +16,8 @@ window.agidSpidEnter = (function () {
 
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function() { hideProvidersPanel() });
         document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hideProvidersPanel(); });
-        document.querySelector('#nospid').addEventListener('click', function() { openModal('Non hai SPID?'); });
-        document.querySelector('#cosaspid').addEventListener('click', function() { openModal('Cos\'è SPID?'); });
+        document.querySelector('#nospid').addEventListener('click', function() { openInfoModal('Non hai SPID?'); });
+        document.querySelector('#cosaspid').addEventListener('click', function() { openInfoModal('Cos\'è SPID?'); });
     }
 
     function renderSpidButtons() {
@@ -61,7 +61,7 @@ window.agidSpidEnter = (function () {
         element.classList.add(e + '-anim-out');
     }
 
-    function showProvidersPanel(name) {
+    function showProvidersPanel() {
         var toshow  = document.querySelector('#agid-spid-panel-select'),
             base    = document.querySelector('#agid-spid-button-anim-base'),
             panel   = document.querySelector('#agid-spid-button-anim'),
@@ -152,16 +152,16 @@ window.agidSpidEnter = (function () {
         agidSpidEnterWrapper.innerHTML = agidSpidEnterTpl.spidMainContainers();
     }
 
-    function openModal(text){
+    function openInfoModal(text){
         var modal = document.querySelector('#infomodal');
 
         modal.innerHTML     = agidSpidEnterTpl.modalCloseButton(text);
         modal.style.display = 'block';
 
-        document.getElementById('closemodalbutton').addEventListener('click', function() { closeModal(); });
+        document.querySelector('#closemodalbutton').addEventListener('click', function() { closeInfoModal() });
     };
 
-    function closeModal() {
+    function closeInfoModal() {
         var modal = document.querySelector('#infomodal');
 
         modal.style.display = 'none';
