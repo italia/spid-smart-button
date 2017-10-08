@@ -182,8 +182,8 @@ window.agidSpidEnter = (function () {
         // Chiudi gli overlay in sequenza, prima info modal poi i providers
         document.addEventListener('keyup', function(e) {
             var isEscKeyHit             = e.keyCode === 27,
-                isprovidersPanelVisible = isElementVisible('#agid-spid-panel-select'),
-                isInfoModalVisible      = isElementVisible('#agid-infomodal');
+                isInfoModalVisible      = isElementVisible('#agid-infomodal'),
+                isprovidersPanelVisible = isElementVisible('#agid-spid-panel-select');
 
             if (isEscKeyHit) {
                 if (isInfoModalVisible) {
