@@ -227,11 +227,7 @@ window.agidSpidEnter = (function () {
         });
     }
 
-    function  dum (){
-        
-    };
-
-    function init     () {
+    function init() {
         renderSpidModalContainer();
         getAvailableProviders().then(bindEscKeyEvent);
     };
