@@ -44,12 +44,23 @@ module.exports = function(grunt) {
                     ]
                 }
             }
+        },
+
+        // Unit tests
+        jasmine: {
+            agidSpid: {
+                src: 'src/js/*.js',
+                options: {
+                    specs: 'src/test/*.js'
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass']);
