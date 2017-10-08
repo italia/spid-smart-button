@@ -18,10 +18,10 @@ window.agidSpidEnter = (function () {
 
         hasSpidProviders = true;
 
-        document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function() { hideProvidersPanel() });
-        document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hideProvidersPanel() });
-        document.querySelector('#nospid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.nonHaiSpid()) });
-        document.querySelector('#cosaspid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.cosaSpid()) });
+        document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function() { hideProvidersPanel(); });
+        document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hideProvidersPanel(); });
+        document.querySelector('#nospid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.nonHaiSpid()); });
+        document.querySelector('#cosaspid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.cosaSpid()); });
     }
 
     function renderSpidButtons() {
@@ -36,7 +36,7 @@ window.agidSpidEnter = (function () {
             var foundDataSize   = spidButton.getAttribute('data-size'),
                 dataSize        = foundDataSize.toLowerCase(),
                 supportedSizes  = ['s', 'm', 'l', 'xl'],
-                isSupportedSize = supportedSizes.indexOf(dataSize) != -1;
+                isSupportedSize = supportedSizes.indexOf(dataSize) !== -1;
 
             if (isSupportedSize) {
                 spidButton.innerHTML = agidSpidEnterTpl.spidButton(dataSize);
@@ -158,7 +158,7 @@ window.agidSpidEnter = (function () {
         infoModal.innerHTML     = agidSpidEnterTpl.infoModal(htmlContent);
         infoModal.style.display = 'block';
 
-        document.querySelector('#closemodalbutton').addEventListener('click', function() { closeInfoModal() });
+        document.querySelector('#closemodalbutton').addEventListener('click', function() { closeInfoModal(); });
     };
 
     function closeInfoModal() {
@@ -227,7 +227,11 @@ window.agidSpidEnter = (function () {
         });
     }
 
-    function init() {
+    function  dum (){
+        
+    };
+
+    function init     () {
         renderSpidModalContainer();
         getAvailableProviders().then(bindEscKeyEvent);
     };
@@ -237,5 +241,5 @@ window.agidSpidEnter = (function () {
     // Metodi pubblici
     return {
         updateSpidButtons: renderSpidButtons
-    }
+    };
 }());
