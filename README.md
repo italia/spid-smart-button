@@ -4,13 +4,14 @@
 Per gestire l’accesso ai servizi pubblici e privati che utilizzano il sistema SPID, si rende necessario, sia per una questione di user experience che di immagine del sistema, la standardizzazione delle interfacce, della comunicazione e dell’utilizzo del logo SPID.
 
 ## SPID BUTTON
-Il bottone è presentato in 4 dimensioni (s / m / l / xl).
+Il bottone è presentato in 4 dimensioni : **s / m / l / xl** .
 
 ## Utilizzo
 ### Requisiti HTML
 Includere nella pagina uno o più placeholder <div> che abbiano i seguenti attributi:
-	* classe : `agid-spid-enter-button`
-	* dimensione : attributo `data-size` con una delle dimensioni supportate
+
+ - classe : `agid-spid-enter-button` 
+ - dimensione : attributo `data-size` con una delle dimensioni supportate
 
 Esempio completo
 
