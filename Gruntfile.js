@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
         watch: {
           files: ['src/scss/*', 'src/js/*'],
-          tasks: ['build', 'jasmine']
+          tasks: ['build', 'jasmine:agidSpid:build']
         },
 
         // Stylesheets minify
@@ -51,7 +51,8 @@ module.exports = function(grunt) {
             agidSpid: {
                 src: 'src/js/*.js',
                 options: {
-                    specs: 'src/test/*.js'
+                    specs: 'src/test/*.js',
+                    outfile: '_SpecRunner.html'
                 }
             }
         }
