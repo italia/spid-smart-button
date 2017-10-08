@@ -406,11 +406,10 @@ a.idp-list-link {
 #agid-spid-panel-header .agid-spid-panel-back a {
     margin-left: calc(100% - 50px);
 }
-.modal {
+#agid-infomodal {
     display: none;
     position: fixed;
     z-index: 1000;
-    padding-top: 100px;
     left: 0;
     top: 0;
     width: 100%;
@@ -418,31 +417,33 @@ a.idp-list-link {
     overflow: auto;
     background-color: #000;
     background-color: rgba(0, 0, 0, 0.4);
-}
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
 
-    div {
-        font-family: Arial;
-        padding: 16px 20px 12px 0;
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        margin: 3%;
+        
+        div {
+            font-family: Arial;
+            padding: 16px 20px 12px 0;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
     }
 }
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: 700;
-}
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
+
 .agid-spid-visibile {
     display: block !important;
     opacity: 0;

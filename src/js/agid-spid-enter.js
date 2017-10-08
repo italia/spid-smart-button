@@ -15,9 +15,9 @@ window.agidSpidEnter = (function () {
         agid_spid_enter.innerHTML = agidSpidEnterTpl.spidProviderChoiceModal(spidProvidersButtonsHTML);
 
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function() { hideProvidersPanel() });
-        document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hideProvidersPanel(); });
-        document.querySelector('#nospid').addEventListener('click', function() { openInfoModal('Non hai SPID?'); });
-        document.querySelector('#cosaspid').addEventListener('click', function() { openInfoModal('Cos\'è SPID?'); });
+        document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hideProvidersPanel() });
+        document.querySelector('#nospid').addEventListener('click', function() { openInfoModal('Non hai SPID?') });
+        document.querySelector('#cosaspid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.cosaSpid()) });
     }
 
     function renderSpidButtons() {
@@ -143,7 +143,7 @@ window.agidSpidEnter = (function () {
     }
 
     function openInfoModal(htmlContent){
-        var modal = document.querySelector('#infomodal');
+        var modal = document.querySelector('#agid-infomodal');
 
         modal.innerHTML     = agidSpidEnterTpl.infoModal(htmlContent);
         modal.style.display = 'block';
@@ -152,7 +152,7 @@ window.agidSpidEnter = (function () {
     };
 
     function closeInfoModal() {
-        var modal = document.querySelector('#infomodal');
+        var modal = document.querySelector('#agid-infomodal');
 
         modal.style.display = 'none';
         modal.innerHTML     = '';
