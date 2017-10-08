@@ -14,8 +14,8 @@ window.agidSpidEnter = (function () {
 
         agid_spid_enter.innerHTML = agidSpidEnterTpl.spidProviderChoiceModal(spidProvidersButtonsHTML);
 
-        document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function() { hidePanel('agid-spid-panel-select') });
-        document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hidePanel('agid-spid-panel-select') });
+        document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function() { hideProvidersPanel() });
+        document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hideProvidersPanel(); });
         document.querySelector('#nospid').addEventListener('click', function() { openModal('Non hai SPID?'); });
         document.querySelector('#cosaspid').addEventListener('click', function() { openModal('Cos\'è SPID?'); });
     }
@@ -39,7 +39,7 @@ window.agidSpidEnter = (function () {
         // Binda gli eventi dopo aver renderizzato i pulsanti SPID
         Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
             spidButton.addEventListener('click', function() {
-                showPanel('agid-spid-panel-select')
+                showProvidersPanel();
             });
         });
     }
@@ -61,8 +61,8 @@ window.agidSpidEnter = (function () {
         element.classList.add(e + '-anim-out');
     }
 
-    function showPanel(name) {
-        var toshow  = document.getElementById(name),
+    function showProvidersPanel(name) {
+        var toshow  = document.querySelector('#agid-spid-panel-select'),
             base    = document.querySelector('#agid-spid-button-anim-base'),
             panel   = document.querySelector('#agid-spid-button-anim'),
             buttons = document.querySelector('.agid-spid-enter-button'),
@@ -96,8 +96,8 @@ window.agidSpidEnter = (function () {
         }, true);
     }
 
-    function hidePanel(name) {
-        var tohide          = document.getElementById(name),
+    function hideProvidersPanel(name) {
+        var tohide          = document.querySelector('#agid-spid-panel-select'),
             base            = document.querySelector('#agid-spid-button-anim-base'),
             panel           = document.querySelector('#agid-spid-button-anim'),
             buttons         = document.querySelector('.agid-spid-enter-button'),
@@ -176,7 +176,7 @@ window.agidSpidEnter = (function () {
         // Chiudi pannelo con ESC key
         document.addEventListener('keyup', function(e) {
             if (e.keyCode == 27) {
-                hidePanel('agid-spid-panel-select');
+                hideProvidersPanel();
             }
         });
     };
