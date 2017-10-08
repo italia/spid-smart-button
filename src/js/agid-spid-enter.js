@@ -1,11 +1,11 @@
 // Modulo SPID
 window.agidSpidEnter = (function () {
-    function renderConfiguredProviders() {
+    function renderAvailableProviders(data) {
         var agid_spid_enter = document.querySelector('#agid-spid-enter'),
             spidProvidersButtonsHTML = '';
 
-        for (var provider in config) {
-            var providerData = config[provider];
+        for (var provider in data.spidProviders) {
+            var providerData = data.spidProviders[provider];
 
             if (!providerData.url) return;
 
@@ -134,6 +134,7 @@ window.agidSpidEnter = (function () {
         }, true);
     }
 
+    // Randomizza l'ordine dei tasti dei provider prima di mostrarli
     function shuffleIdp() {
         var ul = document.querySelector('#agid-spid-idp-list');
 
@@ -158,6 +159,28 @@ window.agidSpidEnter = (function () {
         infoModal.innerHTML     = '';
     }
 
+    function ajaxRequest(method, url) {
+        return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject(xhr.responseText);
+                    }
+                }
+            }.bind(this);
+            xhr.send();
+        });
+    }
+
+    function getAvailableProviders() {
+        ajaxRequest('GET', agidSpidEnterConfig.spidProvidersEndpoint)
+            .then(renderAvailableProviders);
+    }
+
     function isElementVisible(selector) {
         var element = document.querySelector(selector);
 
@@ -176,7 +199,8 @@ window.agidSpidEnter = (function () {
 
     function init() {
         renderSpidModalContainer();
-        renderConfiguredProviders();
+        getAvailableProviders();
+        //renderConfiguredProviders();
         renderSpidButtons();
 
         // Chiudi gli overlay in sequenza, prima info modal poi i providers
