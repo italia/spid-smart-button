@@ -1,6 +1,6 @@
 // Modulo SPID
 window.agidSpidEnter = (function () {
-    function displaySPIDConfiguredProviders() {
+    function renderConfiguredProviders() {
         var agid_spid_enter = document.querySelector('#agid-spid-enter'),
             spidProvidersButtonsHTML = '';
 
@@ -170,10 +170,10 @@ window.agidSpidEnter = (function () {
 
     function init() {
         renderSpidModalContainer();
-        displaySPIDConfiguredProviders();
-
+        renderConfiguredProviders();
         renderSpidButtons();
 
+        // Chiudi pannelo con ESC key
         document.addEventListener('keyup', function(e) {
             if (e.keyCode == 27) {
                 hidePanel('agid-spid-panel-select');
