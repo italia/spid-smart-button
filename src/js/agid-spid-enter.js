@@ -16,7 +16,7 @@ window.agidSpidEnter = (function () {
 
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function() { hideProvidersPanel() });
         document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hideProvidersPanel() });
-        document.querySelector('#nospid').addEventListener('click', function() { openInfoModal('Non hai SPID?') });
+        document.querySelector('#nospid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.nonHaiSpid()) });
         document.querySelector('#cosaspid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.cosaSpid()) });
     }
 
@@ -173,9 +173,17 @@ window.agidSpidEnter = (function () {
         renderConfiguredProviders();
         renderSpidButtons();
 
-        // Chiudi pannelo dei providers con ESC key
+        // Chiudi gli overlay in sequenza, prima info modal poi i providers
         document.addEventListener('keyup', function(e) {
-            if (e.keyCode == 27) {
+            var providersPanel          = document.querySelector('#agid-spid-panel-select'),
+                infoModal               = document.querySelector('#agid-infomodal'),
+                isEscKeyHit             = e.keyCode === 27,
+                isprovidersPanelVisible = providersPanel.style.display !== 'none',
+                isInfoModalVisible      = infoModal.style.display !== 'none';
+
+            if (isEscKeyHit && isInfoModalVisible) {
+                closeInfoModal();
+            } else if (isEscKeyHit && isprovidersPanelVisible) {
                 hideProvidersPanel();
             }
         });
