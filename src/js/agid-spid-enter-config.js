@@ -4,6 +4,5 @@
  */
 
 window.agidSpidEnterConfig = {
-    spidProvidersEndpoint: '/spid-smart-button/src/data/spidProviders-success.json',
-    selectors: {}
+    spidProvidersEndpoint: '/spid-smart-button/src/data/spidProviders-success.json'
 };
