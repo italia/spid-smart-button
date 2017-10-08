@@ -158,6 +158,12 @@ window.agidSpidEnter = (function () {
         modal.innerHTML     = '';
     }
 
+    function isElementVisible(selector) {
+        var element = document.querySelector(selector);
+
+        return element.style.display !== 'none';
+    }
+
     function renderSpidModalContainer() {
         var agidSpidEnterWrapper = document.createElement('SECTION');
 
@@ -175,11 +181,9 @@ window.agidSpidEnter = (function () {
 
         // Chiudi gli overlay in sequenza, prima info modal poi i providers
         document.addEventListener('keyup', function(e) {
-            var providersPanel          = document.querySelector('#agid-spid-panel-select'),
-                infoModal               = document.querySelector('#agid-infomodal'),
-                isEscKeyHit             = e.keyCode === 27,
-                isprovidersPanelVisible = providersPanel.style.display !== 'none',
-                isInfoModalVisible      = infoModal.style.display !== 'none';
+            var isEscKeyHit             = e.keyCode === 27,
+                isprovidersPanelVisible = isElementVisible('#agid-spid-panel-select'),
+                isInfoModalVisible      = isElementVisible('#agid-infomodal');
 
             if (isEscKeyHit) {
                 if (isInfoModalVisible) {
