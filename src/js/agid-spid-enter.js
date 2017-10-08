@@ -30,7 +30,7 @@ function renderSpidButtons() {
         if (isSupportedSize) {
             spidButton.innerHTML = spidTpl.spidButton(dataSize);
         } else {
-            console.error('Le dimenioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize);
+            console.error('Le dimenioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButton);
         }
         
     });
