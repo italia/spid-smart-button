@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
         watch: {
           files: ['src/scss/*', 'src/js/*'],
-          tasks: ['build']
+          tasks: ['build', 'jasmine']
         },
 
         // Stylesheets minify
