@@ -1,4 +1,4 @@
-var spidTpl = {
+window.agidSpidEnterTpl = {
 	spidMainContainers: function() {
 		return [
 			'<link rel="stylesheet" href="css/agid-spid-enter.min.css">',
