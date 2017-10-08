@@ -1,5 +1,7 @@
 // Modulo SPID
 window.agidSpidEnter = (function () {
+    var hasSpidProviders = false;
+
     function renderAvailableProviders(data) {
         var agid_spid_enter = document.querySelector('#agid-spid-enter'),
             spidProvidersButtonsHTML = '';
@@ -14,6 +16,8 @@ window.agidSpidEnter = (function () {
 
         agid_spid_enter.innerHTML = agidSpidEnterTpl.spidProviderChoiceModal(spidProvidersButtonsHTML);
 
+        hasSpidProviders = true;
+
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function() { hideProvidersPanel() });
         document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hideProvidersPanel() });
         document.querySelector('#nospid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.nonHaiSpid()) });
@@ -21,6 +25,11 @@ window.agidSpidEnter = (function () {
     }
 
     function renderSpidButtons() {
+        if (!hasSpidProviders) {
+            console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
+            return;
+        };
+
         var agid_spid_enter_buttons = document.querySelectorAll('.agid-spid-enter-button');
 
         Array.from(agid_spid_enter_buttons).forEach(function (spidButton) {
