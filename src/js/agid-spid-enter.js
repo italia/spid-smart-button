@@ -173,7 +173,7 @@ window.agidSpidEnter = (function () {
         renderConfiguredProviders();
         renderSpidButtons();
 
-        // Chiudi pannelo con ESC key
+        // Chiudi pannelo dei providers con ESC key
         document.addEventListener('keyup', function(e) {
             if (e.keyCode == 27) {
                 hideProvidersPanel();
