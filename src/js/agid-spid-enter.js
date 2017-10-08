@@ -143,19 +143,19 @@ window.agidSpidEnter = (function () {
     }
 
     function openInfoModal(htmlContent){
-        var modal = document.querySelector('#agid-infomodal');
+        var infoModal = document.querySelector('#agid-infomodal');
 
-        modal.innerHTML     = agidSpidEnterTpl.infoModal(htmlContent);
-        modal.style.display = 'block';
+        infoModal.innerHTML     = agidSpidEnterTpl.infoModal(htmlContent);
+        infoModal.style.display = 'block';
 
         document.querySelector('#closemodalbutton').addEventListener('click', function() { closeInfoModal() });
     };
 
     function closeInfoModal() {
-        var modal = document.querySelector('#agid-infomodal');
+        var infoModal = document.querySelector('#agid-infomodal');
 
-        modal.style.display = 'none';
-        modal.innerHTML     = '';
+        infoModal.style.display = 'none';
+        infoModal.innerHTML     = '';
     }
 
     function isElementVisible(selector) {
