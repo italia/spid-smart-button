@@ -165,7 +165,7 @@ window.agidSpidEnter = (function () {
             xhr.open(method, url);
             xhr.onreadystatechange = function(){
                 if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
+                    if (xhr.status === 200 && xhr.responseText) {
                         resolve(JSON.parse(xhr.responseText));
                     } else {
                         reject(xhr.responseText);
@@ -177,8 +177,12 @@ window.agidSpidEnter = (function () {
     }
 
     function getAvailableProviders() {
-        ajaxRequest('GET', agidSpidEnterConfig.spidProvidersEndpoint)
-            .then(renderAvailableProviders);
+        return ajaxRequest('GET', agidSpidEnterConfig.spidProvidersEndpoint)
+            .then(renderAvailableProviders)
+            .then(renderSpidButtons)
+            .catch(function(e) {
+                console.error('Si è verificato un errore nel caricamento dei provider SPID', e);
+            });
     }
 
     function isElementVisible(selector) {
@@ -197,13 +201,8 @@ window.agidSpidEnter = (function () {
         agidSpidEnterWrapper.innerHTML = agidSpidEnterTpl.spidMainContainers();
     }
 
-    function init() {
-        renderSpidModalContainer();
-        getAvailableProviders();
-        //renderConfiguredProviders();
-        renderSpidButtons();
-
-        // Chiudi gli overlay in sequenza, prima info modal poi i providers
+    // Chiudi gli overlay in sequenza, prima info modal poi i providers
+    function bindEscKeyEvent() {
         document.addEventListener('keyup', function(e) {
             var isEscKeyHit             = e.keyCode === 27,
                 isInfoModalVisible      = isElementVisible('#agid-infomodal'),
@@ -217,6 +216,11 @@ window.agidSpidEnter = (function () {
                 }
             }
         });
+    }
+
+    function init() {
+        renderSpidModalContainer();
+        getAvailableProviders().then(bindEscKeyEvent);
     };
 
     init();
