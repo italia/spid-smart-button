@@ -142,16 +142,6 @@ window.agidSpidEnter = (function () {
         }
     }
 
-    function renderSpidModalContainer() {
-        var agidSpidEnterWrapper = document.createElement('SECTION');
-
-        agidSpidEnterWrapper.id  = 'agid-spid-enter-container';
-
-        document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
-
-        agidSpidEnterWrapper.innerHTML = agidSpidEnterTpl.spidMainContainers();
-    }
-
     function openInfoModal(htmlContent){
         var modal = document.querySelector('#infomodal');
 
@@ -166,6 +156,16 @@ window.agidSpidEnter = (function () {
 
         modal.style.display = 'none';
         modal.innerHTML     = '';
+    }
+
+    function renderSpidModalContainer() {
+        var agidSpidEnterWrapper = document.createElement('SECTION');
+
+        agidSpidEnterWrapper.id  = 'agid-spid-enter-container';
+
+        document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
+
+        agidSpidEnterWrapper.innerHTML = agidSpidEnterTpl.spidMainContainers();
     }
 
     function init() {
