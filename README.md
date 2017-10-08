@@ -5,3 +5,23 @@ Per gestire l’accesso ai servizi pubblici e privati che utilizzano il sistema 
 
 ## SPID BUTTON
 Il bottone è presentato in 4 dimensioni (s / m / l / xl).
+
+## Utilizzo
+### Requisiti HTML
+Includere nella pagina uno o più placeholder <div> che abbiano i seguenti attributi:
+	* classe : `agid-spid-enter-button`
+	* dimensione : attributo `data-size` con una delle dimensioni supportate
+
+Esempio completo
+
+    <div class="agid-spid-enter-button" data-size="xl"></div>
+
+l'attributo data-size viene parsato in maniera case-insensitive quindi può essere sia maiuscolo che minuscolo
+
+### Liberaria JS
+Includere la libreria minifizzata `agid-spid-enter.min.js` nella pagina, si occuperà anche del caricamento degli stili CSS necessari.
+
+### Load time e runtime
+Includendo lo script come ultimo elemento del body, i pulsanti SPID verrano mostrati al termine del caricamento delle risorse, se invece i placeholder vengono inseriti successivamente oppure i pulsanti vengono cancellati e devono essere reinseriti, dopo aver reinserito i placeholder nel DOM invoca il metodo pubblico:
+
+    agidSpidEnter.updateSpidButtons()
