@@ -55,6 +55,13 @@ module.exports = function(grunt) {
                     outfile: '_SpecRunner.html'
                 }
             }
+        },
+
+        // Localhost server per sviluppo
+        serve: {
+            options: {
+                port: 9000
+            }
         }
     });
 
@@ -62,6 +69,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-serve');
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass']);

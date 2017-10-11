@@ -1,8 +1,8 @@
 /*
- * Test url locale valida quando la index è avviata tramite netbeans su browser:
- * '/spid-smart-button/src/data/spidProviders-success.json'
+ * Test url locale valida quando la index è avviata con grunt-serve
+ * sostituire con endpoint reale per produzione
  */
 
 window.agidSpidEnterConfig = {
-    spidProvidersEndpoint: 'http://www.mocky.io/v2/59da22a3100000a411caf1c3'
+    spidProvidersEndpoint: '/src/data/spidProviders-success.json'
 };
