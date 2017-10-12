@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         // JavaScript minify
         uglify: {
             options: {
-                // mangle prevent changes to your variable and function names, must be false
+                // mangle prevent changes to your variable and function names, must be false for debug
                 mangle: false,
                 // beautify should be true for debug
                 beautify: true,
