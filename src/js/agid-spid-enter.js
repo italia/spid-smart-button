@@ -30,15 +30,30 @@ window.agidSpidEnter = (function () {
         });
     }
 
+    function getSpidButtonsPlaceholders() {
+        var spidButtonsPlaceholdersObj   = document.querySelectorAll('.agid-spid-enter-button'),
+            spidButtonsPlaceholdersArray = Array.from(spidButtonsPlaceholdersObj);
+
+        return spidButtonsPlaceholdersArray;
+    }
+
     function renderSpidButtons() {
+        var spidButtonsPlaceholders = getSpidButtonsPlaceholders(),
+            hasButtonsOnPage        = !!spidButtonsPlaceholders.length;
+
         if (!hasSpidProviders) {
             console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
+
             return;
         };
 
-        var agid_spid_enter_buttons = document.querySelectorAll('.agid-spid-enter-button');
+        if (!hasButtonsOnPage) {
+            console.warn('Nessun placeholder HTML trovato nella pagina per i pulsanti SPID');
 
-        Array.from(agid_spid_enter_buttons).forEach(function (spidButton) {
+            return;
+        };
+        
+        spidButtonsPlaceholders.forEach(function (spidButton) {
             var foundDataSize   = spidButton.getAttribute('data-size'),
                 dataSize        = foundDataSize.toLowerCase(),
                 supportedSizes  = ['s', 'm', 'l', 'xl'],
