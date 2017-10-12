@@ -4,8 +4,8 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-          files: ['src/scss/*', 'src/js/*'],
-          tasks: ['build', 'jasmine:agidSpid:build']
+            files: ['src/scss/*', 'src/js/*'],
+            tasks: ['build', 'jasmine:agidSpid:build']
         },
 
         // Stylesheets minify
