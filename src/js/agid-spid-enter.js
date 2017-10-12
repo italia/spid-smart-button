@@ -22,8 +22,12 @@ window.agidSpidEnter = (function () {
 
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', hideProvidersPanel);
-        document.querySelector('#nospid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.nonHaiSpid()); });
-        document.querySelector('#cosaspid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.cosaSpid()); });
+        document.querySelector('#nospid').addEventListener('click', function() {
+            openInfoModal(agidSpidEnterTpl.nonHaiSpid());
+        });
+        document.querySelector('#cosaspid').addEventListener('click', function() {
+            openInfoModal(agidSpidEnterTpl.cosaSpid());
+        });
     }
 
     function renderSpidButtons() {
