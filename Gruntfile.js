@@ -49,9 +49,11 @@ module.exports = function(grunt) {
         // Unit tests
         jasmine: {
             agidSpid: {
-                src: 'src/js/*.js',
+                src: [
+                    'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
+                    'src/js/*.js'],
                 options: {
-                    specs: 'src/test/*.js',
+                    specs: ['src/test/*.js'],
                     outfile: '_SpecRunner.html'
                 }
             }
@@ -86,4 +88,5 @@ module.exports = function(grunt) {
     grunt.registerTask('css', ['sass']);
     grunt.registerTask('js', ['uglify']);
     grunt.registerTask('build', ['css','js']);
+    grunt.registerTask('test', ['jasmine', 'a11y']);
 };

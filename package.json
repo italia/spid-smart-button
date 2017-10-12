@@ -15,6 +15,7 @@
     "grunt-contrib-sass": "1.0.0",
     "grunt-contrib-uglify": "3.1.0",
     "grunt-contrib-watch": "1.0.0",
-    "grunt-serve": "^0.1.6"
+    "grunt-serve": "^0.1.6",
+    "promise-polyfill": "^6.0.2"
   }
 }
