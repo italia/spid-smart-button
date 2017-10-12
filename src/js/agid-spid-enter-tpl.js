@@ -2,8 +2,8 @@ window.agidSpidEnterTpl = {
 	spidMainContainers: function() {
 		return [
 			'<link rel="stylesheet" href="css/agid-spid-enter.min.css">',
-            '<div id="agid-infomodal" class="modal"></div>',
-            '<div id="agid-spid-enter"></div>'
+            '<div id="agid-spid-enter"></div>',
+            '<div id="agid-infomodal" class="modal" aria-live="assertive" hidden></div>'
 		].join('');
 	},
 	spidProviderChoiceModal: function(spidProvidersButtons) {
@@ -12,10 +12,10 @@ window.agidSpidEnterTpl = {
 	            '<div id="agid-spid-button-anim-base"></div>',
 	            '<div id="agid-spid-button-anim-icon"></div>',
 	        '</div>',
-	        '<section id="agid-spid-panel-select" class="agid-spid-panel" aria-labelledby="agid-spid-enter-title-page" hidden>',
+	        '<section id="agid-spid-panel-select" class="agid-spid-panel" aria-modal="true" aria-labelledby="agid-spid-enter-title-page" tabindex="-1" hidden>',
 	            '<header id="agid-spid-panel-header">',
 	                '<nav class="agid-spid-panel-back agid-spid-panel-element" aria-controls="agid-spid-panel-select">',
-	                    '<div role="button">',
+	                    '<div role="button" tabindex="0">',
 	                        '<a id="agid-spid-panel-close-button" href="#" class="agid-spid-button">',
 	                            '<img src="img/x-icon.svg" alt="Torna indietro">',
 	                        '</a>',
@@ -34,8 +34,8 @@ window.agidSpidEnterTpl = {
 	                        spidProvidersButtons,       
 	                    '</div>',
 	                    '<div id="agid-cancel-access-container">',
-	                        '<a id="agid-spid-cancel-access-button" href="#">',
-	                            '<div id="agid-cancel-access-button" class="agid-transparent-button" role="button">',
+	                        '<a id="agid-spid-cancel-access-button" href="#" role="button">',
+	                            '<div id="agid-cancel-access-button" class="agid-transparent-button">',
 	                                '<span>Annulla l\'accesso</span>',
 	                            '</div>',
 	                        '</a>',
@@ -47,13 +47,13 @@ window.agidSpidEnterTpl = {
 	            '</div>',
 	            '<footer id="agid-spid-panel-footer">',
 	                '<div id="agid-action-button-container">',
-	                    '<a href="#">',
-	                        '<div id="nospid" class="agid-action-button" role="button">',
+	                    '<a id="nospid" href="#" role="button">',
+	                        '<div class="agid-action-button">',
 	                            '<span>Non hai SPID?</span>',
 	                        '</div>',
 	                    '</a>',
-	                    '<a href="#">',
-	                        '<div id="cosaspid" class="agid-action-button" role="button">',
+	                    '<a id="cosaspid" href="#" role="button">',
+	                        '<div class="agid-action-button">',
 	                            '<span>Cos\'e SPID?</span>',
 	                        '</div>',
 	                    '</a>',
@@ -89,7 +89,7 @@ window.agidSpidEnterTpl = {
 	infoModal: function(htmlContent) {
 		return [
 	        '<div class="modal-content">',
-	            '<span id="closemodalbutton" class="close" >&times;</span>',
+	            '<span id="closemodalbutton" class="close" role="button" tabindex="0" aria-label="Chiudi modale informativo"><b aria-hidden>&times;</b></span>',
 	            '<div>', htmlContent, '</div>',
 	        '</div>'
 	    ].join('');

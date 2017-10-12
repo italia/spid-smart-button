@@ -62,6 +62,16 @@ module.exports = function(grunt) {
             options: {
                 port: 9000
             }
+        },
+
+        // Test di accessibilità del componente, avviare prima grunt serve
+        a11y: {
+            agidSpidButton: {
+                options: {
+                    urls: ['http://localhost:9000/index.html'],
+                    failOnError: true
+                }
+            }
         }
     });
 
@@ -70,6 +80,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-serve');
+    grunt.loadNpmTasks('grunt-a11y');
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass']);

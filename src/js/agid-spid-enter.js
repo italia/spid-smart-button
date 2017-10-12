@@ -1,6 +1,8 @@
 // Modulo SPID
 window.agidSpidEnter = (function () {
-    var hasSpidProviders = false;
+    var hasSpidProviders = false,
+        infoModal,
+        spidPanelSelect;
 
     function renderAvailableProviders(data) {
         var agid_spid_enter = document.querySelector('#agid-spid-enter'),
@@ -71,7 +73,7 @@ window.agidSpidEnter = (function () {
     }
 
     function showProvidersPanel() {
-        var toshow  = document.querySelector('#agid-spid-panel-select'),
+        var toshow  = spidPanelSelect,
             base    = document.querySelector('#agid-spid-button-anim-base'),
             panel   = document.querySelector('#agid-spid-button-anim'),
             buttons = document.querySelector('.agid-spid-enter-button'),
@@ -102,19 +104,21 @@ window.agidSpidEnter = (function () {
         base.addEventListener('animationend', function() {
             panel.style.display = 'block';
             base.style.display = 'block';
+            // a11y: porta il focus sul pannello appena mostrato
+            toshow.focus();        
         }, true);
     }
 
     function hideProvidersPanel(name) {
-        var tohide          = document.querySelector('#agid-spid-panel-select'),
+        var toHide          = spidPanelSelect,
             base            = document.querySelector('#agid-spid-button-anim-base'),
             panel           = document.querySelector('#agid-spid-button-anim'),
             buttons         = document.querySelector('.agid-spid-enter-button'),
             hiddenattribute = document.createAttribute('hidden');
             
 
-        tohide.setAttributeNode(hiddenattribute);
-        tohide.style.display = 'none';
+        toHide.setAttributeNode(hiddenattribute);
+        toHide.style.display = 'none';
 
         Array.from(buttons).forEach(function (button) {
             button.style.display = 'block';
@@ -153,19 +157,19 @@ window.agidSpidEnter = (function () {
     }
 
     function openInfoModal(htmlContent){
-        var infoModal = document.querySelector('#agid-infomodal');
-
         infoModal.innerHTML     = agidSpidEnterTpl.infoModal(htmlContent);
         infoModal.style.display = 'block';
+        // a11y: porta il focus sulla finestra informa
+        infoModal.focus();
 
         document.querySelector('#closemodalbutton').addEventListener('click', function() { closeInfoModal(); });
     };
 
     function closeInfoModal() {
-        var infoModal = document.querySelector('#agid-infomodal');
-
         infoModal.style.display = 'none';
         infoModal.innerHTML     = '';
+        // a11y: Ritorna il focus al modale dei providers
+        spidPanelSelect.focus();
     }
 
     function ajaxRequest(method, url) {
@@ -194,9 +198,7 @@ window.agidSpidEnter = (function () {
             });
     }
 
-    function isElementVisible(selector) {
-        var element = document.querySelector(selector);
-
+    function isElementVisible(element) {
         return element.style.display !== 'none';
     }
 
@@ -214,8 +216,8 @@ window.agidSpidEnter = (function () {
     function bindEscKeyEvent() {
         document.addEventListener('keyup', function(e) {
             var isEscKeyHit             = e.keyCode === 27,
-                isInfoModalVisible      = isElementVisible('#agid-infomodal'),
-                isprovidersPanelVisible = isElementVisible('#agid-spid-panel-select');
+                isInfoModalVisible      = isElementVisible(infoModal),
+                isprovidersPanelVisible = isElementVisible(spidPanelSelect);
 
             if (isEscKeyHit) {
                 if (isInfoModalVisible) {
@@ -227,9 +229,16 @@ window.agidSpidEnter = (function () {
         });
     }
 
+    function getSelectors() {
+       infoModal       = document.querySelector('#agid-infomodal');
+       spidPanelSelect = document.querySelector('#agid-spid-panel-select');
+    }
+
     function init() {
         renderSpidModalContainer();
-        getAvailableProviders().then(bindEscKeyEvent);
+        getAvailableProviders()
+            .then(getSelectors)
+            .then(bindEscKeyEvent);
     };
 
     init();

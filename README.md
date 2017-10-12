@@ -10,12 +10,13 @@ Il bottone è presentato in 4 dimensioni : **s / m / l / xl** .
 ### Requisiti HTML
 Includere nella pagina uno o più placeholder <div> che abbiano i seguenti attributi:
 
- - classe : `agid-spid-enter-button` 
+ - classe : `agid-spid-enter-button` sarà ricercato dallo script per stampare tutti i pulsanti SPID
+ - accessibilità : attributo `aria-live` con valore `polite` per evitare che il rendering disturbi la navigazione
  - dimensione : attributo `data-size` con una delle dimensioni supportate
 
 Esempio completo
 
-    <div class="agid-spid-enter-button" data-size="xl"></div>
+    <div class="agid-spid-enter-button" aria-live="polite" data-size="xl"></div>
 
 l'attributo data-size viene parsato in maniera case-insensitive quindi può essere sia maiuscolo che minuscolo
 
