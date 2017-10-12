@@ -22,10 +22,10 @@ window.agidSpidEnter = (function () {
 
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', hideProvidersPanel);
-        document.querySelector('#nospid').addEventListener('click', function() {
+        document.querySelector('#nospid').addEventListener('click', function () {
             openInfoModal(agidSpidEnterTpl.nonHaiSpid());
         });
-        document.querySelector('#cosaspid').addEventListener('click', function() {
+        document.querySelector('#cosaspid').addEventListener('click', function () {
             openInfoModal(agidSpidEnterTpl.cosaSpid());
         });
     }
@@ -98,12 +98,12 @@ window.agidSpidEnter = (function () {
         animate_element_in('agid-spid-button-anim-icon');
         animate_element_in('agid-spid-panel-select');
 
-        base.addEventListener('animationstart', function() {
+        base.addEventListener('animationstart', function () {
             panel.style.display = 'block';
             base.style.display = 'block';
         }, true);
 
-        base.addEventListener('animationend', function() {
+        base.addEventListener('animationend', function () {
             panel.style.display = 'block';
             base.style.display = 'block';
             // a11y: porta il focus sul pannello appena mostrato
@@ -133,12 +133,12 @@ window.agidSpidEnter = (function () {
         animate_element_out('agid-spid-button-anim-icon');
         animate_element_out('agid-spid-panel-select');
 
-        base.addEventListener('animationstart', function() {
+        base.addEventListener('animationstart', function () {
             panel.style.display = 'block';
             base.style.display  = 'block';
         }, true);
 
-        base.addEventListener('animationend', function() {
+        base.addEventListener('animationend', function () {
             var newone;
 
             panel.style.display = 'none';
@@ -178,7 +178,7 @@ window.agidSpidEnter = (function () {
         return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
             xhr.open(method, url);
-            xhr.onreadystatechange = function(){
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200 && xhr.responseText) {
                         resolve(JSON.parse(xhr.responseText));
