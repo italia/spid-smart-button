@@ -39,7 +39,7 @@ window.agidSpidEnter = (function () {
 
     function renderSpidButtons() {
         var spidButtonsPlaceholders = getSpidButtonsPlaceholders(),
-            hasButtonsOnPage        = !!spidButtonsPlaceholders.length;
+            hasButtonsOnPage        = spidButtonsPlaceholders.length;
 
         if (!hasSpidProviders) {
             console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
