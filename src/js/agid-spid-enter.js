@@ -20,8 +20,8 @@ window.agidSpidEnter = (function () {
 
         hasSpidProviders = true;
 
-        document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function() { hideProvidersPanel(); });
-        document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', function() { hideProvidersPanel(); });
+        document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
+        document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#nospid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.nonHaiSpid()); });
         document.querySelector('#cosaspid').addEventListener('click', function() { openInfoModal(agidSpidEnterTpl.cosaSpid()); });
     }
@@ -49,9 +49,7 @@ window.agidSpidEnter = (function () {
 
         // Binda gli eventi dopo aver renderizzato i pulsanti SPID
         Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
-            spidButton.addEventListener('click', function() {
-                showProvidersPanel();
-            });
+            spidButton.addEventListener('click', showProvidersPanel);
         });
     }
 
@@ -162,7 +160,7 @@ window.agidSpidEnter = (function () {
         // a11y: porta il focus sulla finestra informa
         infoModal.focus();
 
-        document.querySelector('#closemodalbutton').addEventListener('click', function() { closeInfoModal(); });
+        document.querySelector('#closemodalbutton').addEventListener('click', closeInfoModal);
     };
 
     function closeInfoModal() {
