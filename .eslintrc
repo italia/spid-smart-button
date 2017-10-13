@@ -8,5 +8,10 @@
 		"Promise": true,
 		"agidSpidEnterConfig": true,
 		"agidSpidEnterTpl": true
+	},
+	"rules": {
+		"no-plusplus": 0,
+		"no-mixed-spaces-and-tabs": 0,
+		"indent": 1
 	}
 }

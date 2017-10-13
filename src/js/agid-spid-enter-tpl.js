@@ -1,12 +1,13 @@
 window.agidSpidEnterTpl = {
-	spidMainContainers: function() {
-		return [
-			'<link rel="stylesheet" href="css/agid-spid-enter.min.css">',
+    spidMainContainers: function () {
+        return [
+            '<link rel="stylesheet" href="css/agid-spid-enter.min.css">',
             '<div id="agid-spid-enter"></div>',
             '<div id="agid-infomodal" class="modal" aria-live="assertive" hidden></div>'
-		].join('');
-	},
-	spidProviderChoiceModal: function(spidProvidersButtons) {
+        ].join('');
+    },
+
+    spidProviderChoiceModal: function (spidProvidersButtons) {
 	    return [
 	        '<div id="agid-spid-button-anim">',
 	            '<div id="agid-spid-button-anim-base"></div>',
@@ -31,7 +32,7 @@ window.agidSpidEnterTpl = {
 	                        '<h1 id="agid-spid-enter-title-page">Scegli il tuo provider SPID</h1>',
 	                    '</div>',
 	                    '<div id="agid-spid-idp-list" class="agid-spid-row">',
-	                        spidProvidersButtons,       
+	                        spidProvidersButtons,
 	                    '</div>',
 	                    '<div id="agid-cancel-access-container">',
 	                        '<a id="agid-spid-cancel-access-button" href="#" role="button">',
@@ -60,9 +61,10 @@ window.agidSpidEnterTpl = {
 	                '</div>',
 	            '</footer>',
 	        '</section>'
-		].join('');
-	},
-	spidProviderButton: function(providerData) {
+        ].join('');
+    },
+
+    spidProviderButton: function (providerData) {
 	    return [
 	        '<span class="agid-spid-col l3 m6 s6 xs12" role="button">',
 	            '<a href="', providerData.url, '"',
@@ -72,9 +74,10 @@ window.agidSpidEnterTpl = {
 	                'style="background-image: url(img/idp-logos/', providerData.logo, ')">',
 	            '</a>',
 	        '</span>'
-	    ].join('');		
-	},
-	spidButton: function(sizeClass) {
+	    ].join('');
+    },
+
+    spidButton: function (sizeClass) {
 	    return [
 	        '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * begin * -->',
 	        '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" style="display:none">',
@@ -85,40 +88,43 @@ window.agidSpidEnterTpl = {
 	        '</button>',
 	        '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * end * -->'
 	    ].join('');
-	},
-	infoModal: function(htmlContent) {
-		return [
+    },
+
+    infoModal: function (htmlContent) {
+        return [
 	        '<div class="modal-content">',
 	            '<span id="closemodalbutton" class="close" role="button" tabindex="0" aria-label="Chiudi modale informativo"><b aria-hidden>&times;</b></span>',
 	            '<div>', htmlContent, '</div>',
 	        '</div>'
 	    ].join('');
-	},
-	nonHaiSpid: function() {
-		return [
-			'<ul>',
-			   '<li>Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat.</li>',
-			   '<li>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</li>',
-			   '<li>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.</li>',
-			   '<li>Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate, nunc.</li>',
-			'</ul>'
+    },
+
+    nonHaiSpid: function () {
+        return [
+            '<ul>',
+                '<li>Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat.</li>',
+                '<li>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</li>',
+                '<li>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.</li>',
+                '<li>Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate, nunc.</li>',
+            '</ul>'
 	    ].join('');
-	},
-	cosaSpid: function() {
-		return [
-			'<h1>HTML Ipsum Presents</h1>',
-			'<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>',
-			'<h2>Header Level 2</h2>',
-			'<ol>',
+    },
+
+    cosaSpid: function () {
+        return [
+            '<h1>HTML Ipsum Presents</h1>',
+            '<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>',
+            '<h2>Header Level 2</h2>',
+            '<ol>',
 			   '<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>',
 			   '<li>Aliquam tincidunt mauris eu risus.</li>',
-			'</ol>',
-			'<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>',
-			'<h3>Header Level 3</h3>',
-			'<ul>',
+            '</ol>',
+            '<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>',
+            '<h3>Header Level 3</h3>',
+            '<ul>',
 			   '<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>',
 			   '<li>Aliquam tincidunt mauris eu risus.</li>',
-			'</ul>'
+            '</ul>'
 	    ].join('');
-	}
-}
+    }
+};
