@@ -107,7 +107,7 @@ window.agidSpidEnterTpl = {
                 '<li>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.</li>',
                 '<li>Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate, nunc.</li>',
             '</ul>'
-	    ].join('');
+        ].join('');
     },
 
     cosaSpid: function () {
