@@ -8,6 +8,11 @@
     "type": "git",
     "url": "https://github.com/italia/spid-smart-button.git"
   },
+  "scripts": {
+    "test": "grunt jasmine",
+    "precommit": "npm test",
+    "prepush": "npm test"
+  },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-a11y": "^0.1.4",
@@ -16,6 +21,7 @@
     "grunt-contrib-uglify": "3.1.0",
     "grunt-contrib-watch": "1.0.0",
     "grunt-serve": "^0.1.6",
+    "husky": "^0.14.3",
     "promise-polyfill": "^6.0.2"
   }
 }
