@@ -1,4 +1,12 @@
 {
-    "preset": "crockford",
-    "fileExtensions": [".js"]
+	"extends": "crockford",
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"globals": {
+		"Promise": true,
+		"agidSpidEnterConfig": true,
+		"agidSpidEnterTpl": true
+	}
 }

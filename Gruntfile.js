@@ -1,4 +1,6 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+
+    require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -6,6 +8,11 @@ module.exports = function(grunt) {
         watch: {
             files: ['src/scss/*', 'src/js/*'],
             tasks: ['build', 'jasmine:agidSpid:build']
+        },
+
+        // Code style linting
+        eslint: {
+            target: ['src/js/*']
         },
 
         // Stylesheets minify
@@ -77,16 +84,9 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-serve');
-    grunt.loadNpmTasks('grunt-a11y');
-
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass']);
     grunt.registerTask('js', ['uglify']);
-    grunt.registerTask('build', ['css','js']);
+    grunt.registerTask('build', ['css', 'js']);
     grunt.registerTask('test', ['jasmine', 'a11y']);
 };

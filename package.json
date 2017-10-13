@@ -14,14 +14,17 @@
     "prepush": "npm test"
   },
   "devDependencies": {
+    "eslint-config-crockford": "^2.0.0",
     "grunt": "^1.0.1",
     "grunt-a11y": "^0.1.4",
     "grunt-contrib-jasmine": "1.1.0",
     "grunt-contrib-sass": "1.0.0",
     "grunt-contrib-uglify": "3.1.0",
     "grunt-contrib-watch": "1.0.0",
+    "grunt-eslint": "^20.1.0",
     "grunt-serve": "^0.1.6",
     "husky": "^0.14.3",
+    "load-grunt-tasks": "^3.5.2",
     "promise-polyfill": "^6.0.2"
   }
 }
