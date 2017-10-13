@@ -9,8 +9,9 @@
     "url": "https://github.com/italia/spid-smart-button.git"
   },
   "scripts": {
-    "test": "grunt jasmine",
-    "precommit": "npm test",
+    "lint": "grunt eslint",
+    "test": "grunt test",
+    "precommit": "npm run lint",
     "prepush": "npm test"
   },
   "devDependencies": {

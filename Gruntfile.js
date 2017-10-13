@@ -88,5 +88,5 @@ module.exports = function (grunt) {
     grunt.registerTask('css', ['sass']);
     grunt.registerTask('js', ['uglify']);
     grunt.registerTask('build', ['css', 'js']);
-    grunt.registerTask('test', ['eslint', 'jasmine', 'a11y']);
+    grunt.registerTask('test', ['jasmine', 'a11y']);
 };
