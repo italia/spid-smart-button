@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/italia/spid-smart-button.git"
   },
+  "license": "CPL-1.0",
   "scripts": {
     "lint": "grunt eslint",
     "test": "grunt test",
