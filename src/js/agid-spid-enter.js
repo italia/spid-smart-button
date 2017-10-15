@@ -30,21 +30,21 @@ window.agidSpidEnter = (function () {
         }
     }
 
-    function animate_element_in(e) {
-        var element = document.getElementById(e);
+    function animate_element_in(elementId) {
+        var element = document.getElementById(elementId);
 
         element.style.display = 'block';
-        element.classList.remove(e + '-anim-in');
-        element.classList.remove(e + '-anim-out');
-        element.classList.add(e + '-anim-in');
+        element.classList.remove(elementId + '-anim-in');
+        element.classList.remove(elementId + '-anim-out');
+        element.classList.add(elementId + '-anim-in');
     }
 
-    function animate_element_out(e) {
-        var element = document.getElementById(e);
+    function animate_element_out(elementId) {
+        var element = document.getElementById(elementId);
 
-        element.classList.remove(e + '-anim-in');
-        element.classList.remove(e + '-anim-out');
-        element.classList.add(e + '-anim-out');
+        element.classList.remove(elementId + '-anim-in');
+        element.classList.remove(elementId + '-anim-out');
+        element.classList.add(elementId + '-anim-out');
     }
 
     function showProvidersPanel() {
@@ -216,15 +216,15 @@ window.agidSpidEnter = (function () {
             .then(function (i18nData) {
                 window.agidSpidEnterI18n = i18nData;
             })
-            .catch(function (e) {
-                console.error('Si è verificato un errore nel caricamento dei messaggi i18n dal servizio AGID', e);
+            .catch(function (error) {
+                console.error('Si è verificato un errore nel caricamento dei messaggi i18n dal servizio AGID', error);
             });
     }
 
     function getAvailableProviders() {
         return ajaxRequest('GET', agidSpidEnterConfig.spidProvidersEndpoint)
-            .catch(function (e) {
-                console.error('Si è verificato un errore nel caricamento dei provider SPID', e);
+            .catch(function (error) {
+                console.error('Si è verificato un errore nel caricamento dei provider SPID', error);
             });
     }
 
@@ -244,8 +244,8 @@ window.agidSpidEnter = (function () {
 
     // Chiudi gli overlay in sequenza, prima info modal poi i providers
     function bindEscKeyEvent() {
-        document.addEventListener('keyup', function (e) {
-            var isEscKeyHit             = e.keyCode === 27,
+        document.addEventListener('keyup', function (event) {
+            var isEscKeyHit             = event.keyCode === 27,
                 isInfoModalVisible      = isElementVisible(infoModal),
                 isProvidersPanelVisible = isElementVisible(spidPanelSelect);
 
