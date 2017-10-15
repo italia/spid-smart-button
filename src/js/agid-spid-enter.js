@@ -212,7 +212,7 @@ window.agidSpidEnter = (function () {
     }
 
     function getLocalisedMessages() {
-        return ajaxRequest('GET', agidSpidEnterConfig.spidLocalisationEndpoint)
+        return ajaxRequest('GET', agidSpidEnterConfig.localisationEndpoint)
             .then(function (i18nData) {
                 window.agidSpidEnterI18n = i18nData;
             })
@@ -222,7 +222,7 @@ window.agidSpidEnter = (function () {
     }
 
     function getAvailableProviders() {
-        return ajaxRequest('GET', agidSpidEnterConfig.spidProvidersEndpoint)
+        return ajaxRequest('GET', agidSpidEnterConfig.providersEndpoint)
             .catch(function (error) {
                 console.error('Si è verificato un errore nel caricamento dei provider SPID', error);
             });
