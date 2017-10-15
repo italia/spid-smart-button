@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "eslint-config-crockford": "^2.0.0",
+    "eslint-plugin-jasmine": "^2.9.1",
     "grunt": "^1.0.1",
     "grunt-a11y": "https://github.com/srescio/grunt-a11y/tarball/master",
     "grunt-contrib-jasmine": "1.1.0",

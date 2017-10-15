@@ -2,7 +2,8 @@
 	"extends": "crockford",
 	"env": {
 		"browser": true,
-		"node": true
+		"node": true,
+        "jasmine": true
 	},
 	"globals": {
 		"Promise": true,
