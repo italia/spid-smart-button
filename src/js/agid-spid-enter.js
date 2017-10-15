@@ -84,7 +84,7 @@ window.agidSpidEnter = (function () {
         }, true);
     }
 
-    function hideProvidersPanel(name) {
+    function hideProvidersPanel() {
         var toHide          = spidPanelSelect,
             base            = document.querySelector('#agid-spid-button-anim-base'),
             panel           = document.querySelector('#agid-spid-button-anim'),
