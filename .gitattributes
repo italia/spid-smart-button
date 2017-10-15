@@ -1,2 +1,2 @@
-# Declare files that will always have CRLF line endings on checkout.
+# Gestione line ending a livello di progetto
 * text=auto eol=CRLF
