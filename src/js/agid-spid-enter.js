@@ -263,10 +263,10 @@ window.agidSpidEnter = (function () {
                 window.agidSpidEnterI18n = data[0];
                 renderSpidModalContainer();
                 renderAvailableProviders(data[1]);
+                renderSpidButtons();
+                getSelectors();
+                bindEscKeyEvent();
             })
-            .then(renderSpidButtons)
-            .then(getSelectors)
-            .then(bindEscKeyEvent)
             .catch(function (error) {
                 console.error('Si è verificato un errore nel caricamento dei dati', error);
             });
