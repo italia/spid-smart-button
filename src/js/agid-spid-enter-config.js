@@ -4,5 +4,6 @@
  */
 
 window.agidSpidEnterConfig = {
-    spidProvidersEndpoint: '/src/data/spidProviders-success.json'
+    spidProvidersEndpoint: '/src/data/spidProviders-success.json',
+    spidLocalisationEndpoint: '/src/data/spidI18n.json'
 };

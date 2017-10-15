@@ -7,7 +7,8 @@
 	"globals": {
 		"Promise": true,
 		"agidSpidEnterConfig": true,
-		"agidSpidEnterTpl": true
+		"agidSpidEnterTpl": true,
+        "getSpidI18n": true
 	},
 	"rules": {
 		"no-plusplus": 0,

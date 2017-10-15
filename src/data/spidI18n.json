@@ -1,0 +1,18 @@
+{
+  "spid-texts": {
+    "version": "1.2",
+    "default": "it"
+  },
+  "language": {
+    "it": {
+      "naviga_indietro": "Torna indietro",
+      "alt_logo_SPID": "Logo SPID",
+      "scegli_provider_SPID": "Scegli il tuo provider SPID",
+      "annulla_accesso": "Annulla l'accesso",
+      "non_hai_SPID": "Non hai SPID?",
+      "cosa_SPID": "Cos'é SPID",
+      "entra_con_SPID": "Entra con SPID",
+      "aria_chiudi_modale": "Chiudi modale informativo"
+    }
+  }
+}

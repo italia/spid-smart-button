@@ -164,13 +164,11 @@ window.agidSpidEnter = (function () {
 
         if (!hasSpidProviders) {
             console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
-
             return;
         };
 
         if (!hasButtonsOnPage) {
             console.warn('Nessun placeholder HTML trovato nella pagina per i pulsanti SPID');
-
             return;
         };
 
@@ -193,6 +191,9 @@ window.agidSpidEnter = (function () {
         });
     }
 
+    /*
+     * Helper function per gestire tramite promise il risultato asincrono di success/fail
+     */
     function ajaxRequest(method, url) {
         return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
@@ -210,10 +211,18 @@ window.agidSpidEnter = (function () {
         });
     }
 
+    function getLocalisedMessages() {
+        return ajaxRequest('GET', agidSpidEnterConfig.spidLocalisationEndpoint)
+            .then(function (i18nData) {
+                window.agidSpidEnterI18n = i18nData;
+            })
+            .catch(function (e) {
+                console.error('Si è verificato un errore nel caricamento dei messaggi i18n dal servizio AGID', e);
+            });
+    }
+
     function getAvailableProviders() {
         return ajaxRequest('GET', agidSpidEnterConfig.spidProvidersEndpoint)
-            .then(renderAvailableProviders)
-            .then(renderSpidButtons)
             .catch(function (e) {
                 console.error('Si è verificato un errore nel caricamento dei provider SPID', e);
             });
@@ -257,7 +266,10 @@ window.agidSpidEnter = (function () {
 
     function init() {
         renderSpidModalContainer();
-        getAvailableProviders()
+        getLocalisedMessages()
+            .then(getAvailableProviders)
+            .then(renderAvailableProviders)
+            .then(renderSpidButtons)
             .then(getSelectors)
             .then(bindEscKeyEvent);
     };
