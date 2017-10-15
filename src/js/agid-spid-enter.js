@@ -212,20 +212,11 @@ window.agidSpidEnter = (function () {
     }
 
     function getLocalisedMessages() {
-        return ajaxRequest('GET', agidSpidEnterConfig.localisationEndpoint)
-            .then(function (i18nData) {
-                window.agidSpidEnterI18n = i18nData;
-            })
-            .catch(function (error) {
-                console.error('Si è verificato un errore nel caricamento dei messaggi i18n dal servizio AGID', error);
-            });
+        return ajaxRequest('GET', agidSpidEnterConfig.localisationEndpoint);
     }
 
     function getAvailableProviders() {
-        return ajaxRequest('GET', agidSpidEnterConfig.providersEndpoint)
-            .catch(function (error) {
-                console.error('Si è verificato un errore nel caricamento dei provider SPID', error);
-            });
+        return ajaxRequest('GET', agidSpidEnterConfig.providersEndpoint);
     }
 
     function isElementVisible(element) {
@@ -265,13 +256,20 @@ window.agidSpidEnter = (function () {
     }
 
     function init() {
-        renderSpidModalContainer();
-        getLocalisedMessages()
-            .then(getAvailableProviders)
-            .then(renderAvailableProviders)
+        var fetchData = [getLocalisedMessages(), getAvailableProviders()];
+
+        Promise.all(fetchData)
+            .then(function (data) {
+                window.agidSpidEnterI18n = data[0];
+                renderSpidModalContainer();
+                renderAvailableProviders(data[1]);
+            })
             .then(renderSpidButtons)
             .then(getSelectors)
-            .then(bindEscKeyEvent);
+            .then(bindEscKeyEvent)
+            .catch(function (error) {
+                console.error('Si è verificato un errore nel caricamento dei dati', error);
+            });
     };
 
     init();
