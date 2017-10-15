@@ -238,12 +238,12 @@ window.agidSpidEnter = (function () {
         document.addEventListener('keyup', function (e) {
             var isEscKeyHit             = e.keyCode === 27,
                 isInfoModalVisible      = isElementVisible(infoModal),
-                isprovidersPanelVisible = isElementVisible(spidPanelSelect);
+                isProvidersPanelVisible = isElementVisible(spidPanelSelect);
 
             if (isEscKeyHit) {
                 if (isInfoModalVisible) {
                     closeInfoModal();
-                } else if (isprovidersPanelVisible) {
+                } else if (isProvidersPanelVisible) {
                     hideProvidersPanel();
                 }
             }
