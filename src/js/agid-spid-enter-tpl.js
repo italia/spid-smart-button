@@ -1,4 +1,4 @@
-window.agidSpidEnterTpl = {
+window.AgidSpidEnter.prototype.tpl = {
     spidMainContainers: function () {
         return [
             '<link rel="stylesheet" href="css/agid-spid-enter.min.css">',
@@ -18,18 +18,18 @@ window.agidSpidEnterTpl = {
 	                '<nav class="agid-spid-panel-back agid-spid-panel-element" aria-controls="agid-spid-panel-select">',
 	                    '<div role="button" tabindex="0">',
 	                        '<a id="agid-spid-panel-close-button" href="#" class="agid-spid-button">',
-	                            '<img src="img/x-icon.svg" alt="', getSpidI18n('naviga_indietro'), '">',
+	                            '<img src="img/x-icon.svg" alt="', this.getI18n('naviga_indietro'), '">',
 	                        '</a>',
 	                    '</div>',
 	                '</nav>',
 	                '<div class="agid-spid-panel-logo agid-spid-panel-element">',
-	                    '<img aria-hidden="true" src="img/spid-logo-c-lb.svg" alt="', getSpidI18n('alt_logo_SPID'), '">',
+	                    '<img aria-hidden="true" src="img/spid-logo-c-lb.svg" alt="', this.getI18n('alt_logo_SPID'), '">',
 	                '</div>',
 	            '</header>',
 	            '<div id="agid-spid-panel-content">',
 	                '<div class="agid-spid-panel-content-center">',
 	                    '<div id ="agid-spid-enter-title-container">',
-	                        '<h1 id="agid-spid-enter-title-page">', getSpidI18n('scegli_provider_SPID'), '</h1>',
+	                        '<h1 id="agid-spid-enter-title-page">', this.getI18n('scegli_provider_SPID'), '</h1>',
 	                    '</div>',
 	                    '<div id="agid-spid-idp-list" class="agid-spid-row">',
 	                        spidProvidersButtons,
@@ -37,7 +37,7 @@ window.agidSpidEnterTpl = {
 	                    '<div id="agid-cancel-access-container">',
 	                        '<a id="agid-spid-cancel-access-button" href="#" role="button">',
 	                            '<div id="agid-cancel-access-button" class="agid-transparent-button">',
-	                                '<span>', getSpidI18n('annulla_accesso'), '</span>',
+	                                '<span>', this.getI18n('annulla_accesso'), '</span>',
 	                            '</div>',
 	                        '</a>',
 	                    '</div>',
@@ -50,12 +50,12 @@ window.agidSpidEnterTpl = {
 	                '<div id="agid-action-button-container">',
 	                    '<a id="nospid" href="#" role="button">',
 	                        '<div class="agid-action-button">',
-	                            '<span>', getSpidI18n('non_hai_SPID'), '</span>',
+	                            '<span>', this.getI18n('non_hai_SPID'), '</span>',
 	                        '</div>',
 	                    '</a>',
 	                    '<a id="cosaspid" href="#" role="button">',
 	                        '<div class="agid-action-button">',
-	                            '<span>', getSpidI18n('cosa_SPID'), '</span>',
+	                            '<span>', this.getI18n('cosa_SPID'), '</span>',
 	                        '</div>',
 	                    '</a>',
 	                '</div>',
@@ -82,9 +82,9 @@ window.agidSpidEnterTpl = {
 	        '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * begin * -->',
 	        '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" style="display:none">',
 	            '<span aria-hidden="true" class="agid-spid-enter-icon">',
-	                '<img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="', getSpidI18n('entra_con_SPID'), '" />',
+	                '<img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="', this.getI18n('entra_con_SPID'), '" />',
 	            '</span>',
-	            '<span class="agid-spid-enter-text">', getSpidI18n('entra_con_SPID'), '</span>',
+	            '<span class="agid-spid-enter-text">', this.getI18n('entra_con_SPID'), '</span>',
 	        '</button>',
 	        '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * end * -->'
 	    ].join('');
@@ -93,7 +93,7 @@ window.agidSpidEnterTpl = {
     infoModal: function (htmlContent) {
         return [
 	        '<div class="modal-content">',
-	            '<span id="closemodalbutton" class="close" role="button" tabindex="0" aria-label="', getSpidI18n('aria_chiudi_modale'), '"><b aria-hidden="true">&times;</b></span>',
+	            '<span id="closemodalbutton" class="close" role="button" tabindex="0" aria-label="', this.getI18n('aria_chiudi_modale'), '"><b aria-hidden="true">&times;</b></span>',
 	            '<div>', htmlContent, '</div>',
 	        '</div>'
 	    ].join('');

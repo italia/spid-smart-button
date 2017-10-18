@@ -45,10 +45,10 @@ module.exports = function (grunt) {
             my_target: {
                 files: {
                     'js/agid-spid-enter.min.js': [
-                        'src/js/agid-spid-enter-config.js',
-                        'src/js/agid-spid-enter-i18n.js',
+                        'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter.js'
+                        'src/js/agid-spid-enter-i18n.js',
+                        'src/js/agid-spid-enter-config.js'
                     ]
                 }
             }
@@ -82,6 +82,14 @@ module.exports = function (grunt) {
                     failOnError: true
                 }
             }
+        },
+        "axe-webdriver": {
+            chrome: {
+                options: {
+                    browser: "chrome"
+                },
+                urls: ['http://localhost:9000/index.html']
+            }
         }
     });
 
@@ -89,5 +97,5 @@ module.exports = function (grunt) {
     grunt.registerTask('css', ['sass']);
     grunt.registerTask('js', ['uglify']);
     grunt.registerTask('build', ['css', 'js']);
-    grunt.registerTask('test', ['jasmine', 'a11y']);
+    grunt.registerTask('test', ['jasmine', 'a11y', 'axe-webdriver']);
 };

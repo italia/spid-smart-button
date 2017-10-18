@@ -1,8 +1,13 @@
 // Modulo SPID
-window.agidSpidEnter = (function () {
-    var hasSpidProviders = false,
+window.AgidSpidEnter = function () {
+    var self = this,
+        hasSpidProviders = false,
         infoModal,
         spidPanelSelect;
+
+    function getTpl(templateName, content) {
+        return self.tpl[templateName].call(self, content);
+    }
 
     function closeInfoModal() {
         infoModal.style.display = 'none';
@@ -12,7 +17,7 @@ window.agidSpidEnter = (function () {
     }
 
     function openInfoModal(htmlContent) {
-        infoModal.innerHTML     = agidSpidEnterTpl.infoModal(htmlContent);
+        infoModal.innerHTML     = getTpl('infoModal', htmlContent);
         infoModal.style.display = 'block';
         // a11y: porta il focus sulla finestra informa
         infoModal.focus();
@@ -134,20 +139,20 @@ window.agidSpidEnter = (function () {
                 return;
             }
 
-            spidProvidersButtonsHTML += agidSpidEnterTpl.spidProviderButton(providerData);
+            spidProvidersButtonsHTML += getTpl('spidProviderButton', providerData);
         };
 
-        agid_spid_enter.innerHTML = agidSpidEnterTpl.spidProviderChoiceModal(spidProvidersButtonsHTML);
+        agid_spid_enter.innerHTML = getTpl('spidProviderChoiceModal', spidProvidersButtonsHTML);
 
         hasSpidProviders = true;
 
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#nospid').addEventListener('click', function () {
-            openInfoModal(agidSpidEnterTpl.nonHaiSpid());
+            openInfoModal(getTpl('nonHaiSpid'));
         });
         document.querySelector('#cosaspid').addEventListener('click', function () {
-            openInfoModal(agidSpidEnterTpl.cosaSpid());
+            openInfoModal(getTpl('cosaSpid'));
         });
     }
 
@@ -179,7 +184,7 @@ window.agidSpidEnter = (function () {
                 isSupportedSize = supportedSizes.indexOf(dataSize) !== -1;
 
             if (isSupportedSize) {
-                spidButton.innerHTML = agidSpidEnterTpl.spidButton(dataSize);
+                spidButton.innerHTML = getTpl('spidButton', dataSize);
             } else {
                 console.error('Le dimenioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButton);
             }
@@ -212,11 +217,11 @@ window.agidSpidEnter = (function () {
     }
 
     function getLocalisedMessages() {
-        return ajaxRequest('GET', agidSpidEnterConfig.localisationEndpoint);
+        return ajaxRequest('GET', self.config.localisationEndpoint);
     }
 
     function getAvailableProviders() {
-        return ajaxRequest('GET', agidSpidEnterConfig.providersEndpoint);
+        return ajaxRequest('GET', self.config.providersEndpoint);
     }
 
     function isElementVisible(element) {
@@ -230,7 +235,7 @@ window.agidSpidEnter = (function () {
 
         document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
 
-        agidSpidEnterWrapper.innerHTML = agidSpidEnterTpl.spidMainContainers();
+        agidSpidEnterWrapper.innerHTML = getTpl('spidMainContainers');
     }
 
     // Chiudi gli overlay in sequenza, prima info modal poi i providers
@@ -260,7 +265,7 @@ window.agidSpidEnter = (function () {
 
         Promise.all(fetchData)
             .then(function (data) {
-                window.agidSpidEnterI18n = data[0];
+                self.i18n = data[0];
                 renderSpidModalContainer();
                 renderAvailableProviders(data[1]);
                 renderSpidButtons();
@@ -272,10 +277,9 @@ window.agidSpidEnter = (function () {
             });
     };
 
-    init();
-
     // Metodi pubblici
     return {
+        init: init,
         updateSpidButtons: renderSpidButtons
     };
-}());
+};
