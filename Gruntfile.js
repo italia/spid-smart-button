@@ -1,4 +1,6 @@
 module.exports = function (grunt) {
+    var serverPort   = 9000,
+        localhostUrl = 'http://localhost:' + serverPort + '/index.html';
 
     require('load-grunt-tasks')(grunt);
 
@@ -82,7 +84,7 @@ module.exports = function (grunt) {
         // Localhost server per sviluppo e test di accessibilità
         serve: {
             options: {
-                port: 9000
+                port: serverPort
             }
         },
 
@@ -91,7 +93,7 @@ module.exports = function (grunt) {
         a11y: {
             agidSpidButton: {
                 options: {
-                    urls: ['http://localhost:9000/index.html'],
+                    urls: [localhostUrl],
                     failOnError: true
                 }
             }
@@ -101,7 +103,7 @@ module.exports = function (grunt) {
                 options: {
                     browser: "chrome"
                 },
-                urls: ['http://localhost:9000/index.html']
+                urls: [localhostUrl]
             }
         }
     });
