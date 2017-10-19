@@ -32,19 +32,31 @@ module.exports = function (grunt) {
 
         // JavaScript minify
         uglify: {
-            options: {
-                // mangle prevent changes to your variable and function names, must be false for debug
-                mangle: false,
-                // beautify should be true for debug
-                beautify: true,
-                compress: {
-                    //set false for debug
-                    drop_console: false
-                }
-            },
-            my_target: {
+            development: {
+                options: {
+                    mangle: false,
+                    beautify: true,
+                    compress: false
+                },
                 files: {
                     'js/agid-spid-enter.min.js': [
+                        'src/js/agid-spid-enter.js',
+                        'src/js/agid-spid-enter-tpl.js',
+                        'src/js/agid-spid-enter-i18n.js',
+                        'src/js/agid-spid-enter-config.js'
+                    ]
+                }
+            },
+            distribution: {
+                options: {
+                    mangle: true,
+                    beautify: false,
+                    compress: {
+                        drop_console: false
+                    }
+                },
+                files: {
+                    'dist/agid-spid-enter.min.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-i18n.js',
@@ -67,14 +79,15 @@ module.exports = function (grunt) {
             }
         },
 
-        // Localhost server per sviluppo
+        // Localhost server per sviluppo e test di accessibilità
         serve: {
             options: {
                 port: 9000
             }
         },
 
-        // Test di accessibilità del componente, avviare prima grunt serve
+        // Test di accessibilità del componente
+        // avviare prima grunt serve
         a11y: {
             agidSpidButton: {
                 options: {
