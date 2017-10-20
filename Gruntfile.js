@@ -73,7 +73,7 @@ module.exports = function (grunt) {
             agidSpid: {
                 src: [
                     'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
-                    'src/js/*.js'],
+                    'js/agid-spid-enter.min.js'],
                 options: {
                     specs: ['src/test/*.js'],
                     outfile: '_SpecRunner.html'

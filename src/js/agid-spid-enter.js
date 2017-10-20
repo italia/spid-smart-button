@@ -229,13 +229,16 @@ window.AgidSpidEnter = function () {
     }
 
     function renderSpidModalContainer() {
-        var agidSpidEnterWrapper = document.createElement('SECTION');
+        var agidSpidEnterWrapperId = 'agid-spid-enter-container',
+            existentWrapper        = document.getElementById(agidSpidEnterWrapperId),
+            agidSpidEnterWrapper;
 
-        agidSpidEnterWrapper.id  = 'agid-spid-enter-container';
-
-        document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
-
-        agidSpidEnterWrapper.innerHTML = getTpl('spidMainContainers');
+        if (!existentWrapper) {
+            agidSpidEnterWrapper    = document.createElement('SECTION');
+            agidSpidEnterWrapper.id = agidSpidEnterWrapperId;
+            document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
+            agidSpidEnterWrapper.innerHTML = getTpl('spidMainContainers');
+        }
     }
 
     // Chiudi gli overlay in sequenza, prima info modal poi i providers
@@ -263,7 +266,7 @@ window.AgidSpidEnter = function () {
     function init() {
         var fetchData = [getLocalisedMessages(), getAvailableProviders()];
 
-        Promise.all(fetchData)
+        return Promise.all(fetchData)
             .then(function (data) {
                 self.i18n = data[0];
                 renderSpidModalContainer();
