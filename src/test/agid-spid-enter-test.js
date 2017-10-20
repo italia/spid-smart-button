@@ -2,6 +2,10 @@ describe('agidSpidEnter', function () {
     var SUT               = window.agidSpidEnter,
         agidSpidWrapperID = '#agid-spid-enter-container';
 
+    beforeEach(function () {
+        spyOn(console, 'error');
+    });
+
     describe('when script is included in the page', function () {
         it('should create a module instance in the global scope', function () {
             expect(SUT).toBeDefined();

@@ -1,6 +1,7 @@
 module.exports = function (grunt) {
-    var serverPort   = 9000,
-        localhostUrl = 'http://localhost:' + serverPort + '/index.html';
+    var serverPort     = 9000,
+        localhostUrl   = 'http://localhost:' + serverPort,
+        localhostIndex = localhostUrl + '/index.html';
 
     require('load-grunt-tasks')(grunt);
 
@@ -76,7 +77,9 @@ module.exports = function (grunt) {
                     'js/agid-spid-enter.min.js'],
                 options: {
                     specs: ['src/test/*.js'],
-                    outfile: '_SpecRunner.html'
+                    outfile: '_SpecRunner.html',
+                    keepRunner: true,
+                    host: localhostUrl
                 }
             }
         },
@@ -93,7 +96,7 @@ module.exports = function (grunt) {
         a11y: {
             agidSpidButton: {
                 options: {
-                    urls: [localhostUrl],
+                    urls: [localhostIndex],
                     failOnError: true
                 }
             }
@@ -103,7 +106,7 @@ module.exports = function (grunt) {
                 options: {
                     browser: "chrome"
                 },
-                urls: [localhostUrl]
+                urls: [localhostIndex]
             }
         }
     });
