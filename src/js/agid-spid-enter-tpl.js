@@ -18,9 +18,9 @@ window.AgidSpidEnter.prototype.tpl = {
 
     spidProviderChoiceModal: function (spidProvidersButtons) {
         return [
-            '<div id="agid-spid-button-anim">',
-                '<div id="agid-spid-button-anim-base"></div>',
-                '<div id="agid-spid-button-anim-icon"></div>',
+            '<div id="agid-spid-button-anim" hidden>',
+                '<div id="agid-spid-button-anim-base" hidden></div>',
+                '<div id="agid-spid-button-anim-icon" hidden></div>',
             '</div>',
             '<section id="agid-spid-panel-select" class="agid-spid-panel" aria-modal="true" aria-labelledby="agid-spid-enter-title-page" tabindex="-1" hidden>',
                 '<header id="agid-spid-panel-header">',

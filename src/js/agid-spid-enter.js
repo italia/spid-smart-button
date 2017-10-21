@@ -11,16 +11,25 @@ window.AgidSpidEnter = function () {
         return self.tpl[templateName].call(self, content);
     }
 
+    function showElement(dom) {
+        dom.removeAttribute('hidden');
+    }
+
+    function hideElement(dom) {
+        var hiddenAttribute = document.createAttribute("hidden");
+        dom.setAttributeNode(hiddenAttribute);
+    }
+
     function closeInfoModal() {
-        infoModal.style.display = 'none';
-        infoModal.innerHTML     = '';
+        hideElement(infoModal);
+        infoModal.innerHTML = '';
         // a11y: Restituisci il focus al modale dei providers
         spidPanelSelect.focus();
     }
 
     function openInfoModal(htmlContent) {
-        infoModal.innerHTML     = getTpl('infoModal', htmlContent);
-        infoModal.style.display = 'block';
+        infoModal.innerHTML = getTpl('infoModal', htmlContent);
+        showElement(infoModal);
         // a11y: porta il focus sulla finestra informa
         infoModal.focus();
         // Viene distrutto e ricreato, non necessita unbind
@@ -40,7 +49,7 @@ window.AgidSpidEnter = function () {
     function animate_element_in(elementId) {
         var element = document.getElementById(elementId);
 
-        element.style.display = 'block';
+        showElement(element);
         element.classList.remove(elementId + '-anim-in');
         element.classList.remove(elementId + '-anim-out');
         element.classList.add(elementId + '-anim-in');
@@ -55,7 +64,7 @@ window.AgidSpidEnter = function () {
     }
 
     function isElementVisible(element) {
-        return element.style.display !== 'none';
+        return !element.hasAttribute('hidden') || element.style.display !== "" && element.style.display !== "none";
     }
 
     // Chiudi gli overlay in sequenza, prima info modal poi i providers
@@ -76,8 +85,7 @@ window.AgidSpidEnter = function () {
 
     function showProvidersPanel() {
         shuffleIdp();
-        spidPanelSelect.removeAttribute('hidden');
-        spidPanelSelect.style.display = 'block';
+        showElement(spidPanelSelect);
         // Mostra modale providers con animazione splash-in
         animate_element_in('agid-spid-button-anim');
         animate_element_in('agid-spid-button-anim-base');
@@ -88,7 +96,7 @@ window.AgidSpidEnter = function () {
     }
 
     function hideProvidersPanel() {
-        spidPanelSelect.style.display = 'none';
+        hideElement(spidPanelSelect);
         // Nascondi modale providers con animazione splash-out
         animate_element_out('agid-spid-button-anim');
         animate_element_out('agid-spid-button-anim-base');

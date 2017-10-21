@@ -27,7 +27,6 @@
   position: fixed;
   z-index: 1;
   overflow: auto;
-  display: none;
   background-position: bottom -25px right -150px;
 }
 
@@ -467,7 +466,6 @@ a.idp-list-link:active {
 }
 
 #agid-infomodal {
-  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -510,7 +508,6 @@ a.idp-list-link:active {
 }
 
 #agid-spid-button-anim {
-  display: none;
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -518,7 +515,6 @@ a.idp-list-link:active {
 }
 
 #agid-spid-button-anim-base {
-  display: none;
   width: 180px;
   height: 48px;
   background-color: #075fc5;
@@ -526,7 +522,6 @@ a.idp-list-link:active {
 }
 
 #agid-spid-button-anim-icon {
-  display: none;
   width: 30px;
   height: 30px;
   background: #fff;
