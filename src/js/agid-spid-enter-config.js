@@ -22,8 +22,8 @@ unless you know what you're doing... :)
 window.AgidSpidEnter.prototype.config = {
     assetsBaseUrl: 'https://raw.githubusercontent.com/srescio/spid-smart-button/issue-2/separate-html-js/',
     stylesheetUrl: 'https://raw.githubusercontent.com/srescio/spid-smart-button/issue-2/separate-html-js/css/agid-spid-enter.min.css',
-    providersEndpoint: 'http://www.mocky.io/v2/59eaffa31100000a0326783c',
-    localisationEndpoint: 'http://www.mocky.io/v2/59eaffcd110000ed0226783d'
+    providersEndpoint: 'https://raw.githubusercontent.com/srescio/spid-smart-button/issue-2/separate-html-js/src/data/spidProviders.json',
+    localisationEndpoint: 'https://raw.githubusercontent.com/srescio/spid-smart-button/issue-2/separate-html-js/src/data/spidI18n.json'
 };
 
 /*
