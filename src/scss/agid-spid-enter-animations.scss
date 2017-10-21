@@ -80,26 +80,28 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
     animation-fill-mode: forwards;
 }
 
+$animBaseWidth: 180px;
+$animBaseHeight: 48px;
 @keyframes anim-base-in {
     0% {
-        width: 180px;
-        height: 48px;
-        top: calc((100vh - 48px) / 2);
-        left: calc((100vw - 180px) / 2);
-        border-radius:100%;
+        width: $animBaseWidth;
+        height: $animBaseHeight;
+        top: calc((100vh - $animBaseHeight) / 2);
+        left: calc((100vw - $animBaseWidth) / 2);
+        border-radius: 100%;
         opacity: 0;
     }
     50% {
-        width: 180px;
-        height: 48px;
-        top: calc((100vh - 48px) / 2);
-        left: calc((100vw - 180px) / 2);
-        border-radius:100%;
+        width: $animBaseWidth;
+        height: $animBaseHeight;
+        top: calc((100vh - $animBaseHeight) / 2);
+        left: calc((100vw - $animBaseWidth) / 2);
+        border-radius: 100%;
         opacity: 1;
     }
     100% {
-        top: calc((100vh - 48px) / 2);
-        left: calc((100vw - 180px) / 2);
+        top: calc((100vh - $animBaseHeight) / 2);
+        left: calc((100vw - $animBaseWidth) / 2);
         transform: scale(30);
         border-radius: 100%;
         opacity: 1;
@@ -108,26 +110,26 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 
 @keyframes anim-base-out {
     0% {
-        top: calc((100vh - 48px) / 2);
-        left: calc((100vw - 180px) / 2);
+        top: calc((100vh - $animBaseHeight) / 2);
+        left: calc((100vw - $animBaseWidth) / 2);
         transform: scale(30);
-        border-radius:100%;
+        border-radius: 100%;
         opacity: 1;
     }
     50% {
-        width: 180px;
-        height: 48px;
-        top: calc((100vh - 48px) / 2);
-        left: calc((100vw - 180px) / 2);
+        width: $animBaseWidth;
+        height: $animBaseHeight;
+        top: calc((100vh - $animBaseHeight) / 2);
+        left: calc((100vw - $animBaseWidth) / 2);
         border-radius: 100%;
         opacity: 0.5;
     }
     100% {
-        width: 180px;
-        height: 48px;
-        top: calc((100vh - 48px) / 2);
-        left: calc((100vw - 180px) / 2);
-        border-radius:100%;
+        width: $animBaseWidth;
+        height: $animBaseHeight;
+        top: calc((100vh - $animBaseHeight) / 2);
+        left: calc((100vw - $animBaseWidth) / 2);
+        border-radius: 100%;
         opacity: 0;
     }
 }
