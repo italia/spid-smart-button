@@ -7,6 +7,10 @@
     left: 0;
 }
 
+#agid-spid-enter {
+    position: relative;
+}
+
 .agid-spid-panel {
     top: 0;
     left: 0;
@@ -412,7 +416,7 @@ a.idp-list-link {
 #agid-infomodal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
@@ -427,6 +431,8 @@ a.idp-list-link {
         padding: 20px;
         border: 1px solid #888;
         margin: 3%;
+        max-height: 90vh;
+        overflow: scroll;
 
         div {
             font-family: Arial;
