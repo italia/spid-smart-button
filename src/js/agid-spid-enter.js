@@ -203,7 +203,7 @@ window.AgidSpidEnter = function () {
         return ajaxRequest('GET', self.config.providersEndpoint);
     }
 
-    function addStylesheet(url) {
+    function loadStylesheet(url) {
         var linkElement  = document.createElement('link');
 
         linkElement.rel  = 'stylesheet';
@@ -231,7 +231,7 @@ window.AgidSpidEnter = function () {
             agidSpidEnterWrapper;
 
         if (!existentWrapper) {
-            addStylesheet(self.config.stylesheetUrl);
+            loadStylesheet(self.config.stylesheetUrl);
             addContainersWrapper(agidSpidEnterWrapperId);
         }
     }
