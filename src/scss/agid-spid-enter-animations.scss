@@ -86,22 +86,22 @@ $animBaseHeight: 48px;
     0% {
         width: $animBaseWidth;
         height: $animBaseHeight;
-        top: calc((100vh - $animBaseHeight) / 2);
-        left: calc((100vw - $animBaseWidth) / 2);
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
         border-radius: 100%;
         opacity: 0;
     }
     50% {
         width: $animBaseWidth;
         height: $animBaseHeight;
-        top: calc((100vh - $animBaseHeight) / 2);
-        left: calc((100vw - $animBaseWidth) / 2);
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
         border-radius: 100%;
         opacity: 1;
     }
     100% {
-        top: calc((100vh - $animBaseHeight) / 2);
-        left: calc((100vw - $animBaseWidth) / 2);
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
         transform: scale(30);
         border-radius: 100%;
         opacity: 1;
@@ -110,8 +110,8 @@ $animBaseHeight: 48px;
 
 @keyframes anim-base-out {
     0% {
-        top: calc((100vh - $animBaseHeight) / 2);
-        left: calc((100vw - $animBaseWidth) / 2);
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
         transform: scale(30);
         border-radius: 100%;
         opacity: 1;
@@ -119,34 +119,37 @@ $animBaseHeight: 48px;
     50% {
         width: $animBaseWidth;
         height: $animBaseHeight;
-        top: calc((100vh - $animBaseHeight) / 2);
-        left: calc((100vw - $animBaseWidth) / 2);
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
         border-radius: 100%;
         opacity: 0.5;
     }
     100% {
         width: $animBaseWidth;
         height: $animBaseHeight;
-        top: calc((100vh - $animBaseHeight) / 2);
-        left: calc((100vw - $animBaseWidth) / 2);
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
         border-radius: 100%;
         opacity: 0;
     }
 }
 
+$animIconSize: 30px;
+$animIconDistanceStart: 50;
+$animIconDistanceEnd: 120;
 @keyframes anim-icon-in {
     0% {
-        width: 30px;
-        height: 30px;
-        top: 50vh;
-        left: 50vw;
+        width: $animIconSize;
+        height: $animIconSize;
+        top:  $animIconDistanceStart * 1vh;
+        left: $animIconDistanceStart * 1vw;
         opacity:0;
     }
     5% {
-        width: 30px;
-        height: 30px;
-        top: 50vh;
-        left: 50vw;
+        width: $animIconSize;
+        height: $animIconSize;
+        top:  $animIconDistanceStart * 1vh;
+        left: $animIconDistanceStart * 1vw;
         opacity: 0.2;
     }
     100% {
@@ -167,17 +170,17 @@ $animBaseHeight: 48px;
         opacity: 0.1;
     }
     50% {
-        width: 30px;
-        height: 30px;
-        top: 50vh;
-        left: 50vw;
+        width: $animIconSize;
+        height: $animIconSize;
+        top:  $animIconDistanceStart * 1vh;
+        left: $animIconDistanceStart * 1vw;
         opacity: 0;
     }
     100% {
-        width: 30px;
-        height: 30px;
-        top: 50vh;
-        left: 50vw;
+        width: $animIconSize;
+        height: $animIconSize;
+        top:  $animIconDistanceStart * 1vh;
+        left: $animIconDistanceStart * 1vw;
         opacity: 0;
     }
 }

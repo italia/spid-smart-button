@@ -804,22 +804,22 @@ a.idp-list-link:active {
   0% {
     width: 180px;
     height: 48px;
-    top: calc((100vh - $animBaseHeight) / 2);
-    left: calc((100vw - $animBaseWidth) / 2);
+    top: calc((100vh - 48px) / 2);
+    left: calc((100vw - 180px) / 2);
     border-radius: 100%;
     opacity: 0;
   }
   50% {
     width: 180px;
     height: 48px;
-    top: calc((100vh - $animBaseHeight) / 2);
-    left: calc((100vw - $animBaseWidth) / 2);
+    top: calc((100vh - 48px) / 2);
+    left: calc((100vw - 180px) / 2);
     border-radius: 100%;
     opacity: 1;
   }
   100% {
-    top: calc((100vh - $animBaseHeight) / 2);
-    left: calc((100vw - $animBaseWidth) / 2);
+    top: calc((100vh - 48px) / 2);
+    left: calc((100vw - 180px) / 2);
     transform: scale(30);
     border-radius: 100%;
     opacity: 1;
@@ -827,8 +827,8 @@ a.idp-list-link:active {
 }
 @keyframes anim-base-out {
   0% {
-    top: calc((100vh - $animBaseHeight) / 2);
-    left: calc((100vw - $animBaseWidth) / 2);
+    top: calc((100vh - 48px) / 2);
+    left: calc((100vw - 180px) / 2);
     transform: scale(30);
     border-radius: 100%;
     opacity: 1;
@@ -836,16 +836,16 @@ a.idp-list-link:active {
   50% {
     width: 180px;
     height: 48px;
-    top: calc((100vh - $animBaseHeight) / 2);
-    left: calc((100vw - $animBaseWidth) / 2);
+    top: calc((100vh - 48px) / 2);
+    left: calc((100vw - 180px) / 2);
     border-radius: 100%;
     opacity: 0.5;
   }
   100% {
     width: 180px;
     height: 48px;
-    top: calc((100vh - $animBaseHeight) / 2);
-    left: calc((100vw - $animBaseWidth) / 2);
+    top: calc((100vh - 48px) / 2);
+    left: calc((100vw - 180px) / 2);
     border-radius: 100%;
     opacity: 0;
   }
