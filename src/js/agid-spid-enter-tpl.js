@@ -99,7 +99,7 @@ window.AgidSpidEnter.prototype.tpl = {
 	    ].join('');
     },
 
-    // Fake content, Lipsum HTML, ripiazzare con contenuto/etichette reali
+    // Fake content, Lipsum HTML, rimpiazzare con contenuti/etichette reali
     nonHaiSpid: function () {
         return [
             '<ul>',
@@ -111,7 +111,7 @@ window.AgidSpidEnter.prototype.tpl = {
         ].join('');
     },
 
-    // Fake content, Lipsum HTML, ripiazzare con contenuto/etichette reali
+    // Fake content, Lipsum HTML, rimpiazzare con contenuti/etichette reali
     cosaSpid: function () {
         return [
             '<h1>HTML Ipsum Presents</h1>',

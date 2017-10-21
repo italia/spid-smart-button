@@ -46,7 +46,7 @@ module.exports = function (grunt) {
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-i18n.js',
-                        'src/js/agid-spid-enter-config.js'
+                        'src/js/agid-spid-enter-config-dev.js'
                     ]
                 }
             },

@@ -228,16 +228,30 @@ window.AgidSpidEnter = function () {
         return element.style.display !== 'none';
     }
 
-    function renderSpidModalContainer() {
+    function addStylesheet(url) {
+        var linkElement  = document.createElement('link');
+
+        linkElement.rel  = 'stylesheet';
+        linkElement.href = url;
+        document.head.appendChild(linkElement);
+    }
+
+    function addContainersWrapper(wrapperID) {
+        var agidSpidEnterWrapper = document.createElement('section');
+
+        agidSpidEnterWrapper.id  = wrapperID;
+        document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
+        agidSpidEnterWrapper.innerHTML = getTpl('spidMainContainers');
+    }
+
+    function renderSpidModalContainers() {
         var agidSpidEnterWrapperId = 'agid-spid-enter-container',
             existentWrapper        = document.getElementById(agidSpidEnterWrapperId),
             agidSpidEnterWrapper;
 
         if (!existentWrapper) {
-            agidSpidEnterWrapper    = document.createElement('SECTION');
-            agidSpidEnterWrapper.id = agidSpidEnterWrapperId;
-            document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
-            agidSpidEnterWrapper.innerHTML = getTpl('spidMainContainers');
+            addStylesheet(self.config.stylesheetUrl);
+            addContainersWrapper(agidSpidEnterWrapperId);
         }
     }
 
@@ -269,7 +283,7 @@ window.AgidSpidEnter = function () {
         return Promise.all(fetchData)
             .then(function (data) {
                 self.i18n = data[0];
-                renderSpidModalContainer();
+                renderSpidModalContainers();
                 renderAvailableProviders(data[1]);
                 renderSpidButtons();
                 getSelectors();

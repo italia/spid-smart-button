@@ -1,8 +1,21 @@
 describe('agidSpidEnter', function () {
     var SUT               = window.agidSpidEnter,
-        agidSpidWrapperID = '#agid-spid-enter-container';
+        agidSpidWrapperID = '#agid-spid-enter-container',
+        ajaxSuccess       = {
+            providersEndpoint: '/src/data/spidProviders.json',
+            localisationEndpoint: '/src/data/spidI18n.json'
+        },
+        ajaxFail          = {
+            providersEndpoint: '/src/data/spidProviders-fail.json',
+            localisationEndpoint: '/src/data/spidI18n-fail.json'
+        };
+
+    function setSUTconfig(config) {
+        window.AgidSpidEnter.prototype.config = config;
+    }
 
     beforeEach(function () {
+        setSUTconfig(ajaxSuccess);
         spyOn(console, 'warn');
         spyOn(console, 'error');
     });
