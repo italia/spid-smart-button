@@ -3,7 +3,15 @@ describe('agidSpidEnter', function () {
         agidSpidWrapperID = '#agid-spid-enter-container';
 
     beforeEach(function () {
+        spyOn(console, 'warn');
         spyOn(console, 'error');
+    });
+
+    afterEach(function () {
+        // Pulisci il DOM
+        var agidSpidWrapper = document.querySelector('body > section');
+
+        agidSpidWrapper && agidSpidWrapper.remove();
     });
 
     describe('when script is included in the page', function () {
@@ -24,9 +32,7 @@ describe('agidSpidEnter', function () {
 
         it('should inject the modal wrapper HTML needed to print the providers popup', function (done) {
             // GIVEN
-            var agidSpidWrapper = document.querySelector('body > section');
-            // rimuovi container se già presenti da altri test
-            agidSpidWrapper && agidSpidWrapper.remove();
+            var agidSpidWrapper;
             // WHEN
             SUT.init().then(function () {
                 agidSpidWrapper = document.querySelector(agidSpidWrapperID);
@@ -38,10 +44,8 @@ describe('agidSpidEnter', function () {
 
         it('should NOT inject the modal wrapper HTML more than once', function (done) {
             // GIVEN
-            var agidSpidWrapper = document.querySelector('body > section'),
-                initCalls       = [SUT.init(), SUT.init(), SUT.init()];
-            // rimuovi container se già presenti da altri test
-            agidSpidWrapper && agidSpidWrapper.remove();
+            var initCalls       = [SUT.init(), SUT.init(), SUT.init()],
+                agidSpidWrapper;
             // WHEN
             Promise.all(initCalls).then(function () {
                 agidSpidWrapper = document.querySelectorAll(agidSpidWrapperID);
