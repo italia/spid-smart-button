@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
         // Code style linting
         eslint: {
-            target: ['src/js/*', 'test/*.js']
+            target: ['src/js/*', 'test/*.js', '!src/js/*-tpl.js']
         },
 
         // Stylesheets minify
