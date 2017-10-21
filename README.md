@@ -1,6 +1,6 @@
 # SPID - Sistema Pubblico di Identità Digitale
 
-[![devDependency Status](https://david-dm.org/italia/spid-smart-button/dev-status.svg)](https://david-dm.org/italia/spid-smart-button#info=devDependencies)
+[![devDependency Status](https://david-dm.org/srescio/spid-smart-button/dev-status.svg?branch=issue-2/separate-html-js)](https://david-dm.org/srescio/spid-smart-button?branch=issue-2/separate-html-js#info=devDependencies)
 
 ## Repository componenti
 
