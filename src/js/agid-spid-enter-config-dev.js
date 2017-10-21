@@ -3,7 +3,7 @@
  */
 
 window.AgidSpidEnter.prototype.config = {
-    assetsBaseUrl: 'https://raw.githubusercontent.com/srescio/spid-smart-button/issue-2/separate-html-js/',
+    assetsBaseUrl: '',
     stylesheetUrl: 'css/agid-spid-enter.min.css',
     providersEndpoint: '/src/data/spidProviders.json',
     localisationEndpoint: '/src/data/spidI18n.json'
