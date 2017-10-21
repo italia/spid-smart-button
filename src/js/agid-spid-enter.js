@@ -21,7 +21,7 @@ window.AgidSpidEnter = function () {
         infoModal.style.display = 'block';
         // a11y: porta il focus sulla finestra informa
         infoModal.focus();
-
+        // Viene distrutto e ricreato, non necessita unbind
         document.querySelector('#closemodalbutton').addEventListener('click', closeInfoModal);
     };
 
@@ -73,21 +73,21 @@ window.AgidSpidEnter = function () {
     }
 
     function showProvidersPanel() {
-        var toshow  = spidPanelSelect,
+        var toShow  = spidPanelSelect,
             base    = document.querySelector('#agid-spid-button-anim-base'),
             panel   = document.querySelector('#agid-spid-button-anim'),
             buttons = document.querySelector('.agid-spid-enter-button'),
-            hiddenattribute;
+            hiddenAttribute;
 
         shuffleIdp();
 
-        toshow.removeAttribute('hidden');
-        toshow.style.display = 'block';
+        toShow.removeAttribute('hidden');
+        toShow.style.display = 'block';
 
         Array.from(buttons).forEach(function (button) {
-            hiddenattribute = document.createAttribute('hidden');
+            hiddenAttribute = document.createAttribute('hidden');
             button.style.display = 'none';
-            button.setAttributeNode(hiddenattribute);
+            button.setAttributeNode(hiddenAttribute);
         });
 
         // show animation panel
@@ -105,7 +105,7 @@ window.AgidSpidEnter = function () {
             panel.style.display = 'block';
             base.style.display = 'block';
             // a11y: porta il focus sul pannello appena mostrato
-            toshow.focus();
+            toShow.focus();
         }, true);
 
         document.addEventListener('keyup', handleEscKeyEvent);
@@ -116,9 +116,9 @@ window.AgidSpidEnter = function () {
             base            = document.querySelector('#agid-spid-button-anim-base'),
             panel           = document.querySelector('#agid-spid-button-anim'),
             buttons         = document.querySelector('.agid-spid-enter-button'),
-            hiddenattribute = document.createAttribute('hidden');
+            hiddenAttribute = document.createAttribute('hidden');
 
-        toHide.setAttributeNode(hiddenattribute);
+        toHide.setAttributeNode(hiddenAttribute);
         toHide.style.display = 'none';
 
         Array.from(buttons).forEach(function (button) {
@@ -169,7 +169,7 @@ window.AgidSpidEnter = function () {
         agid_spid_enter.innerHTML = getTpl('spidProviderChoiceModal', spidProvidersButtonsHTML);
 
         hasSpidProviders = true;
-
+        // Vengono creati una sola volta all'init, non necessitano unbind
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#nospid').addEventListener('click', function () {
