@@ -89,7 +89,7 @@ window.AgidSpidEnter.prototype.tpl = {
     spidButton: function (sizeClass) {
         return [
             '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * begin * -->',
-            '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" style="display:none">',
+            '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" hidden>',
                 '<span aria-hidden="true" class="agid-spid-enter-icon">',
                     this.tpl.svgWithPngFallback.call(this, 'img/spid-ico-circle-bb', this.getI18n('entra_con_SPID')),
                 '</span>',

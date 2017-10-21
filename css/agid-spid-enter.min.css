@@ -719,7 +719,7 @@ a.idp-list-link:active {
   text-align: center;
   cursor: pointer;
   outline: 0;
-  display: inline-block !important;
+  display: inline-block;
 }
 .agid-spid-enter svg {
   fill: #FFF;
