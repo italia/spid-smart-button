@@ -1,4 +1,6 @@
-// Modulo SPID
+/*
+ * Modulo SPID smart button
+ */
 window.AgidSpidEnter = function () {
     var self = this,
         hasSpidProviders = false,
@@ -12,7 +14,7 @@ window.AgidSpidEnter = function () {
     function closeInfoModal() {
         infoModal.style.display = 'none';
         infoModal.innerHTML     = '';
-        // a11y: Ritorna il focus al modale dei providers
+        // a11y: Restituisci il focus al modale dei providers
         spidPanelSelect.focus();
     }
 
@@ -73,79 +75,25 @@ window.AgidSpidEnter = function () {
     }
 
     function showProvidersPanel() {
-        var toShow  = spidPanelSelect,
-            base    = document.querySelector('#agid-spid-button-anim-base'),
-            panel   = document.querySelector('#agid-spid-button-anim'),
-            buttons = document.querySelector('.agid-spid-enter-button'),
-            hiddenAttribute;
-
         shuffleIdp();
-
-        toShow.removeAttribute('hidden');
-        toShow.style.display = 'block';
-
-        Array.from(buttons).forEach(function (button) {
-            hiddenAttribute = document.createAttribute('hidden');
-            button.style.display = 'none';
-            button.setAttributeNode(hiddenAttribute);
-        });
-
-        // show animation panel
+        spidPanelSelect.removeAttribute('hidden');
+        spidPanelSelect.style.display = 'block';
+        // Mostra modale providers con animazione splash-in
         animate_element_in('agid-spid-button-anim');
         animate_element_in('agid-spid-button-anim-base');
         animate_element_in('agid-spid-button-anim-icon');
         animate_element_in('agid-spid-panel-select');
 
-        base.addEventListener('animationstart', function () {
-            panel.style.display = 'block';
-            base.style.display = 'block';
-        }, true);
-
-        base.addEventListener('animationend', function () {
-            panel.style.display = 'block';
-            base.style.display = 'block';
-            // a11y: porta il focus sul pannello appena mostrato
-            toShow.focus();
-        }, true);
-
         document.addEventListener('keyup', handleEscKeyEvent);
     }
 
     function hideProvidersPanel() {
-        var toHide          = spidPanelSelect,
-            base            = document.querySelector('#agid-spid-button-anim-base'),
-            panel           = document.querySelector('#agid-spid-button-anim'),
-            buttons         = document.querySelector('.agid-spid-enter-button'),
-            hiddenAttribute = document.createAttribute('hidden');
-
-        toHide.setAttributeNode(hiddenAttribute);
-        toHide.style.display = 'none';
-
-        Array.from(buttons).forEach(function (button) {
-            button.style.display = 'block';
-            button.removeAttribute('hidden');
-        });
-
-        // hide animation panel
+        spidPanelSelect.style.display = 'none';
+        // Nascondi modale providers con animazione splash-out
         animate_element_out('agid-spid-button-anim');
         animate_element_out('agid-spid-button-anim-base');
         animate_element_out('agid-spid-button-anim-icon');
         animate_element_out('agid-spid-panel-select');
-
-        base.addEventListener('animationstart', function () {
-            panel.style.display = 'block';
-            base.style.display  = 'block';
-        }, true);
-
-        base.addEventListener('animationend', function () {
-            var newone;
-
-            panel.style.display = 'none';
-            base.style.display  = 'none';
-
-            newone = base.cloneNode(true);
-            base.parentNode.replaceChild(newone, base);
-        }, true);
 
         document.removeEventListener('keyup', handleEscKeyEvent);
     }
@@ -213,7 +161,6 @@ window.AgidSpidEnter = function () {
                 console.error('Le dimenioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButton);
             }
         });
-
         // Binda gli eventi dopo aver renderizzato i pulsanti SPID
         Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
             spidButton.addEventListener('click', showProvidersPanel);
@@ -265,6 +212,11 @@ window.AgidSpidEnter = function () {
         agidSpidEnterWrapper.innerHTML = getTpl('spidMainContainers');
     }
 
+    function getSelectors() {
+        infoModal       = document.querySelector('#agid-infomodal');
+        spidPanelSelect = document.querySelector('#agid-spid-panel-select');
+    }
+
     function renderSpidModalContainers() {
         var agidSpidEnterWrapperId = 'agid-spid-enter-container',
             existentWrapper        = document.getElementById(agidSpidEnterWrapperId),
@@ -274,11 +226,6 @@ window.AgidSpidEnter = function () {
             addStylesheet(self.config.stylesheetUrl);
             addContainersWrapper(agidSpidEnterWrapperId);
         }
-    }
-
-    function getSelectors() {
-        infoModal       = document.querySelector('#agid-infomodal');
-        spidPanelSelect = document.querySelector('#agid-spid-panel-select');
     }
 
     function init() {
@@ -291,13 +238,21 @@ window.AgidSpidEnter = function () {
                 renderAvailableProviders(data[1]);
                 renderSpidButtons();
                 getSelectors();
+
+                document.querySelector('#agid-spid-button-anim')
+                    .addEventListener('animationend', function () {
+                        // a11y: porta il focus sul pannello appena mostrato
+                        spidPanelSelect.focus();
+                    }, true);
             })
             .catch(function (error) {
                 console.error('Si è verificato un errore nel caricamento dei dati', error);
             });
     };
 
-    // Metodi pubblici
+    /*
+     * Metodi Pubblici
+     */
     return {
         init: init,
         updateSpidButtons: renderSpidButtons

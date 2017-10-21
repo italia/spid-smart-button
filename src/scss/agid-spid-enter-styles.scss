@@ -8,7 +8,7 @@
 }
 
 #agid-spid-enter {
-    position: relative;
+    height: 0; // fix Safari, non comprime l'altezza del div quando i figli sono nascosti
 }
 
 .agid-spid-panel {

@@ -84,23 +84,20 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
     0% {
         width: 180px;
         height: 48px;
-        position: absolute;
         top: calc((100vh - 48px) / 2);
         left: calc((100vw - 180px) / 2);
         border-radius:100%;
         opacity: 0;
-    }	
+    }
     50% {
         width: 180px;
         height: 48px;
-        position: absolute;
         top: calc((100vh - 48px) / 2);
         left: calc((100vw - 180px) / 2);
         border-radius:100%;
         opacity: 1;
     }
     100% {
-        position: absolute;
         top: calc((100vh - 48px) / 2);
         left: calc((100vw - 180px) / 2);
         transform: scale(30);
@@ -111,7 +108,6 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 
 @keyframes anim-base-out {
     0% {
-        position: absolute;
         top: calc((100vh - 48px) / 2);
         left: calc((100vw - 180px) / 2);
         transform: scale(30);
@@ -121,7 +117,6 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
     50% {
         width: 180px;
         height: 48px;
-        position: absolute;
         top: calc((100vh - 48px) / 2);
         left: calc((100vw - 180px) / 2);
         border-radius: 100%;
@@ -130,7 +125,6 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
     100% {
         width: 180px;
         height: 48px;
-        position: absolute;
         top: calc((100vh - 48px) / 2);
         left: calc((100vw - 180px) / 2);
         border-radius:100%;
@@ -142,7 +136,6 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
     0% {
         width: 30px;
         height: 30px;
-        position: absolute;
         top: 50vh;
         left: 50vw;
         opacity:0;
@@ -150,13 +143,11 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
     5% {
         width: 30px;
         height: 30px;
-        position: absolute;
         top: 50vh;
         left: 50vw;
         opacity: 0.2;
     }
     100% {
-        position: absolute;
         top: 0vh;
         left: 20vw;
         width: 120vw;
@@ -167,7 +158,6 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 
 @keyframes anim-icon-out {
     0% {
-        position: absolute;
         top: 0vh;
         left: 20vw;
         width: 120vw;
@@ -177,15 +167,13 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
     50% {
         width: 30px;
         height: 30px;
-        position: absolute;
         top: 50vh;
         left: 50vw;
         opacity: 0;
-    }		
+    }
     100% {
         width: 30px;
         height: 30px;
-        position: absolute;
         top: 50vh;
         left: 50vw;
         opacity: 0;
@@ -195,10 +183,10 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 @keyframes anim-panel-in {
     0% {
         opacity: 0;
-    }	
+    }
     15% {
         opacity: 0;
-    }		
+    }
     100% {
         opacity: 1;
     }
@@ -209,7 +197,6 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
         opacity: 1;
     }
     100% {
-        position:absolute;
         left: -200vw;
         opacity: 0;
     }
