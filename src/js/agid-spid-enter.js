@@ -52,6 +52,26 @@ window.AgidSpidEnter = function () {
         element.classList.add(elementId + '-anim-out');
     }
 
+    function isElementVisible(element) {
+        return element.style.display !== 'none';
+    }
+
+    // Chiudi gli overlay in sequenza, prima info modal poi i providers
+    function handleEscKeyEvent(event) {
+        var isEscKeyHit             = event.keyCode === 27,
+            isInfoModalVisible      = isElementVisible(infoModal),
+            isProvidersPanelVisible = isElementVisible(spidPanelSelect);
+
+        if (isEscKeyHit) {
+            if (isInfoModalVisible) {
+                closeInfoModal();
+            } else if (isProvidersPanelVisible) {
+                // eslint-disable-next-line no-use-before-define
+                hideProvidersPanel();
+            }
+        }
+    }
+
     function showProvidersPanel() {
         var toshow  = spidPanelSelect,
             base    = document.querySelector('#agid-spid-button-anim-base'),
@@ -87,6 +107,8 @@ window.AgidSpidEnter = function () {
             // a11y: porta il focus sul pannello appena mostrato
             toshow.focus();
         }, true);
+
+        document.addEventListener('keyup', handleEscKeyEvent);
     }
 
     function hideProvidersPanel() {
@@ -124,6 +146,8 @@ window.AgidSpidEnter = function () {
             newone = base.cloneNode(true);
             base.parentNode.replaceChild(newone, base);
         }, true);
+
+        document.removeEventListener('keyup', handleEscKeyEvent);
     }
 
     function renderAvailableProviders(data) {
@@ -224,10 +248,6 @@ window.AgidSpidEnter = function () {
         return ajaxRequest('GET', self.config.providersEndpoint);
     }
 
-    function isElementVisible(element) {
-        return element.style.display !== 'none';
-    }
-
     function addStylesheet(url) {
         var linkElement  = document.createElement('link');
 
@@ -256,23 +276,6 @@ window.AgidSpidEnter = function () {
         }
     }
 
-    // Chiudi gli overlay in sequenza, prima info modal poi i providers
-    function bindEscKeyEvent() {
-        document.addEventListener('keyup', function (event) {
-            var isEscKeyHit             = event.keyCode === 27,
-                isInfoModalVisible      = isElementVisible(infoModal),
-                isProvidersPanelVisible = isElementVisible(spidPanelSelect);
-
-            if (isEscKeyHit) {
-                if (isInfoModalVisible) {
-                    closeInfoModal();
-                } else if (isProvidersPanelVisible) {
-                    hideProvidersPanel();
-                }
-            }
-        });
-    }
-
     function getSelectors() {
         infoModal       = document.querySelector('#agid-infomodal');
         spidPanelSelect = document.querySelector('#agid-spid-panel-select');
@@ -288,7 +291,6 @@ window.AgidSpidEnter = function () {
                 renderAvailableProviders(data[1]);
                 renderSpidButtons();
                 getSelectors();
-                bindEscKeyEvent();
             })
             .catch(function (error) {
                 console.error('Si è verificato un errore nel caricamento dei dati', error);
