@@ -191,10 +191,15 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
         opacity: 1;
     }
 }
-
+// safari richiede che una proprietà animata sia presente in tutti gli steps
 @keyframes anim-panel-out {
     0% {
+        left: 0vw;
         opacity: 1;
+    }
+    50% {
+        left: -100vw;
+        opacity: 0.5;
     }
     100% {
         left: -200vw;
