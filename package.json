@@ -10,6 +10,7 @@
   },
   "license": "BSD-3-Clause",
   "scripts": {
+    "start": "grunt serve",
     "lint": "grunt eslint",
     "test": "grunt test",
     "precommit": "npm run lint",
