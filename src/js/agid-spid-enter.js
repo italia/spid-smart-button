@@ -170,7 +170,7 @@ window.AgidSpidEnter = function () {
     }
 
     /*
-     * Helper function per gestire tramite promise il risultato asincrono di success/fail
+     * Helper function per gestire tramite promise il risultato asincrono di success/fail, come $.ajax
      */
     function ajaxRequest(method, url) {
         return new Promise(function (resolve, reject) {
