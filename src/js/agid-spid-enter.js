@@ -232,6 +232,7 @@ window.AgidSpidEnter = function () {
         var linkElement  = document.createElement('link');
 
         linkElement.rel  = 'stylesheet';
+        linkElement.type = 'text/css';
         linkElement.href = url;
         document.head.appendChild(linkElement);
     }
