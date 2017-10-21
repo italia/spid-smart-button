@@ -20,17 +20,30 @@ module.exports = function (grunt) {
 
         // Stylesheets minify
         sass: {
-            dist: {
+            // 'destination': 'source'
+            // imports and dependecies defined in the SCSS file
+            development: {
                 options: {
-                    style: 'compressed'
+                    style: 'expanded'
                 },
                 files: {
-                    // 'destination': 'source'
-                    // imports and dependecies defined in the SCSS file
-                    'css/agid-spid-enter.min.css': 'src/scss/agid-spid-enter.scss',
-                    'css/agid-spid-demo-page.css': 'src/scss/agid-spid-demo-page.scss'
+                    'css/agid-spid-enter.min.css': [
+                        'src/scss/agid-spid-enter-dev.scss'
+                    ]
+                }
+            },
+            production: {
+                options: {
+                    style: 'compressed',
+                    sourcemap: 'none'
+                },
+                files: {
+                    'prod/agid-spid-enter.min.css': [
+                        'src/scss/agid-spid-enter-prod.scss'
+                    ]
                 }
             }
+
         },
 
         // JavaScript minify
@@ -50,7 +63,7 @@ module.exports = function (grunt) {
                     ]
                 }
             },
-            distribution: {
+            production: {
                 options: {
                     mangle: true,
                     beautify: false,
@@ -59,7 +72,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    'dist/agid-spid-enter.min.js': [
+                    'prod/agid-spid-enter.min.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-i18n.js',

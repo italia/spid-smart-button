@@ -1,8 +1,10 @@
-﻿@import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700,900);
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700,900);
 
 #agid-spid-enter-container {
     position: fixed;
     z-index: 999;
+    top: 0;
+    left: 0;
 }
 
 .agid-spid-panel {
@@ -424,7 +426,7 @@ a.idp-list-link {
         padding: 20px;
         border: 1px solid #888;
         margin: 3%;
-        
+
         div {
             font-family: Arial;
             padding: 16px 20px 12px 0;
@@ -468,7 +470,7 @@ a.idp-list-link {
     height: 30px;
     background: #fff;
     border-radius: 50%;
-    background: url("../img/spid-ico-circle-bb.svg") center center no-repeat;
+    background: url($assetsBaseUrl + "img/spid-ico-circle-bb.svg") center center no-repeat;
 }
 @media (min-width: 361px) {
     .agid-spid-col.s2 {
@@ -523,6 +525,11 @@ a.idp-list-link {
     #agid-cancel-access-container,
     #agid-logo-container {
         display: block;
+
+        img {
+            padding-top: 10px;
+            height: 35px;
+        }
     }
     #agid-cancel-access-button {
         background-color: transparent;
@@ -547,12 +554,6 @@ a.idp-list-link {
         text-transform: uppercase;
         font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
         color: #fff;
-    }
-    #agid-logo {
-        padding-top: 10px;
-    }
-    #agid-logo {
-        height: 35px;
     }
 }
 @media (min-width: 769px) {

@@ -1,9 +1,17 @@
 window.AgidSpidEnter.prototype.tpl = {
     spidMainContainers: function () {
         return [
-            '<link rel="stylesheet" href="css/agid-spid-enter.min.css">',
             '<div id="agid-spid-enter"></div>',
             '<div id="agid-infomodal" class="modal" aria-live="assertive" hidden></div>'
+        ].join('');
+    },
+
+    svgWithPngFallback: function (imagePath, altText) {
+        return [
+            '<img aria-hidden="true"',
+            'src="', this.config.assetsBaseUrl, imagePath, '.svg"',
+            'onerror="this.src=\'', this.config.assetsBaseUrl, imagePath, '.png\'; this.onerror=null;"',
+            'alt="', altText, '" />'
         ].join('');
     },
 
@@ -18,12 +26,12 @@ window.AgidSpidEnter.prototype.tpl = {
 	                '<nav class="agid-spid-panel-back agid-spid-panel-element" aria-controls="agid-spid-panel-select">',
 	                    '<div role="button" tabindex="0">',
 	                        '<a id="agid-spid-panel-close-button" href="#" class="agid-spid-button">',
-	                            '<img src="img/x-icon.svg" alt="', this.getI18n('naviga_indietro'), '">',
+            this.tpl.svgWithPngFallback.call(this, 'img/x-icon', this.getI18n('naviga_indietro')),
 	                        '</a>',
 	                    '</div>',
 	                '</nav>',
 	                '<div class="agid-spid-panel-logo agid-spid-panel-element">',
-	                    '<img aria-hidden="true" src="img/spid-logo-c-lb.svg" alt="', this.getI18n('alt_logo_SPID'), '">',
+            this.tpl.svgWithPngFallback.call(this, 'img/spid-logo-c-lb', this.getI18n('alt_logo_SPID')),
 	                '</div>',
 	            '</header>',
 	            '<div id="agid-spid-panel-content">',
@@ -42,7 +50,7 @@ window.AgidSpidEnter.prototype.tpl = {
 	                        '</a>',
 	                    '</div>',
 	                    '<div id="agid-logo-container" aria-hidden="true">',
-	                        '<img id="agid-logo" class="agid-logo" src="./img/agid-logo-bb-short.png" aria-hidden="true" />',
+            this.tpl.svgWithPngFallback.call(this, 'img/agid-logo-bb-short'),
 	                    '</div>',
 	                '</div>',
 	            '</div>',
@@ -82,7 +90,7 @@ window.AgidSpidEnter.prototype.tpl = {
 	        '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * begin * -->',
 	        '<button class="agid-spid-enter agid-spid-enter-size-', sizeClass, '" style="display:none">',
 	            '<span aria-hidden="true" class="agid-spid-enter-icon">',
-	                '<img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="', this.getI18n('entra_con_SPID'), '" />',
+	                this.tpl.svgWithPngFallback.call(this, 'img/spid-ico-circle-bb', this.getI18n('entra_con_SPID')),
 	            '</span>',
 	            '<span class="agid-spid-enter-text">', this.getI18n('entra_con_SPID'), '</span>',
 	        '</button>',
