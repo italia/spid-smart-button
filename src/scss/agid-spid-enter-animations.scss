@@ -1,83 +1,53 @@
-$timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+// Seleziona le classi che iniziano con 'agid-spid-' e terminano in '-anim-in' e '-anim-out'
+[class^='agid-spid-'] {
+    &[class$='-anim-in'],
+    &[class$='-anim-out'] {
+        animation-delay: 0s;
+        animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+        animation-iteration-count: 1;
+        animation-direction: normal;
+        animation-fill-mode: forwards;
+    }
+}
 
 .agid-spid-button-anim-anim-in {
     animation-name: anim-panel-in;
     animation-duration: 0s;
-    animation-delay: 0s;
-    animation-timing-function: $timingFn;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
 }
 
 .agid-spid-button-anim-base-anim-in {
     animation-name: anim-base-in;
     animation-duration: 2s;
-    animation-delay: 0s;
-    animation-timing-function: $timingFn;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
 }
 
 .agid-spid-button-anim-icon-anim-in {
     animation-name: anim-icon-in;
     animation-duration: 1s;
-    animation-delay: 0s;
-    animation-timing-function: $timingFn;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
 }
 
 .agid-spid-panel-select-anim-in {
     animation-name: anim-panel-in;
     animation-duration: 3s;
-    animation-delay: 0s;
-    animation-timing-function: $timingFn;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
 }
 
 .agid-spid-button-anim-anim-out {
     animation-name: anim-panel-out;
     animation-duration: 2s;
-    animation-delay: 0s;
-    animation-timing-function: $timingFn;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
 }
 
 .agid-spid-button-anim-base-anim-out {
     animation-name: anim-base-out;
     animation-duration: 0.5s;
-    animation-delay: 0s;
-    animation-timing-function: $timingFn;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
 }
 
 .agid-spid-button-anim-icon-anim-out {
     animation-name: anim-icon-out;
     animation-duration: 1s;
-    animation-delay: 0s;
-    animation-timing-function: $timingFn;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
 }
 
 .agid-spid-panel-select-anim-out {
     animation-name: anim-panel-out;
     animation-duration: 3s;
-    animation-delay: 0s;
-    animation-timing-function: $timingFn;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
 }
 
 $animBaseWidth: 180px;
