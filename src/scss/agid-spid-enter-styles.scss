@@ -123,10 +123,6 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 80%;
-    -o-transition: 0.5s;
-    -ms-transition: 0.5s;
-    -moz-transition: 0.5s;
-    -webkit-transition: 0.5s;
     transition: 0.5s;
 
     &:hover,
@@ -158,7 +154,7 @@
     text-align: center;
     color: #fff;
     background-color: #06c;
-    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 
     & img {
         max-width: 200px;
@@ -192,9 +188,6 @@
 
 .agid-spid-enter-size-s {
     font-size: 0.625em;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -khtml-border-radius: 5px;
     border-radius: 5px;
 
     & > span img {
@@ -206,9 +199,6 @@
 
 .agid-spid-enter-size-m {
     font-size: 0.95em;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -khtml-border-radius: 6px;
     border-radius: 6px;
 
     & > span img {
@@ -220,9 +210,6 @@
 
 .agid-spid-enter-size-l {
     font-size: 1.25em;
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    -khtml-border-radius: 7px;
     border-radius: 7px;
 
     & > span img {
@@ -234,9 +221,6 @@
 
 .agid-spid-enter-size-xl {
     font-size: 1.55em;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    -khtml-border-radius: 8px;
     border-radius: 8px;
 
     & > span img {
@@ -333,8 +317,6 @@
         text-align: center;
         position: relative;
         top: 25%;
-        -ms-transform: translateY(-50%);
-        -webkit-transform: translateY(-50%);
         transform: translateY(-50%);
     }
 }
@@ -520,8 +502,6 @@
         text-align: center;
         position: relative;
         top: 25%;
-        -ms-transform: translateY(-50%);
-        -webkit-transform: translateY(-50%);
         transform: translateY(-50%);
         text-transform: uppercase;
         color: #fff;

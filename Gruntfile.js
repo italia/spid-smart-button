@@ -53,6 +53,30 @@ module.exports = function (grunt) {
 
         },
 
+        // Processa i CSS prodotti da sass e aggiunge vendor prefix sulle proprietà per browser obsoleti
+        postcss: {
+            options: {
+                failOnError: true,
+                processors: [
+                    require('autoprefixer')()
+                ]
+            },
+            development: {
+                options: {
+                    map: true
+                },
+                src: 'css/agid-spid-enter.min.css',
+                dest: 'css/agid-spid-enter.min.css'
+            },
+            production: {
+                options: {
+                    map: false
+                },
+                src: 'prod/agid-spid-enter.min.css',
+                dest: 'prod/agid-spid-enter.min.css'
+            }
+        },
+
         // JavaScript minify
         uglify: {
             development: {
@@ -132,7 +156,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('css', ['sass']);
+    grunt.registerTask('css', ['sass', 'postcss']);
     grunt.registerTask('js', ['uglify']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
