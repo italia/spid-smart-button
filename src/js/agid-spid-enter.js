@@ -32,7 +32,7 @@ window.AgidSpidEnter = function () {
     function openInfoModal(htmlContent) {
         infoModal.innerHTML = getTpl('infoModal', htmlContent);
         showElement(infoModal);
-        // a11y: porta il focus sulla finestra informa
+        // a11y: porta il focus sulla finestra informativa
         infoModal.focus();
         // Viene distrutto e ricreato, non necessita unbind
         document.querySelector('#closemodalbutton').addEventListener('click', closeInfoModal);
@@ -66,10 +66,11 @@ window.AgidSpidEnter = function () {
         showElement(agidSpidEnterWrapper);
         document.addEventListener('keyup', handleEscKeyEvent);
         // a11y: porta il focus sul pannello appena mostrato
-        spidPanelSelect.addEventListener('animationend', function () {
+        function focusSpidPanel() {
             spidPanelSelect.focus();
-            spidPanelSelect.removeEventListener('animationend');
-        }, true);
+            spidPanelSelect.removeEventListener('animationend', focusSpidPanel);
+        }
+        spidPanelSelect.addEventListener('animationend', focusSpidPanel);
     }
 
     function hideProvidersPanel() {
