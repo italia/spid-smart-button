@@ -14,7 +14,7 @@
     transition-duration: 1s;
     transition-property: visibility;
     transition-delay: 0s;
-
+    // FadeOut
     &[hidden] {
         // visibility è animabile diversamente da display
         // pointer events evita che l'elemento riceva eventi durante e l'animazione
@@ -45,7 +45,7 @@
             animation-duration: 1s;
         }
     }
-
+    // FadeIn
     &:not([hidden]) {
         #agid-spid-enter-anim {
             animation-name: anim-panel-in;
@@ -64,7 +64,7 @@
 
         #agid-spid-panel-select {
             animation-name: anim-panel-in;
-            animation-duration: 3s;
+            animation-duration: 2s;
         }
     }
 }

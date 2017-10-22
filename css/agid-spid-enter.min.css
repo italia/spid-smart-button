@@ -622,7 +622,7 @@
 }
 #agid-spid-enter-container:not([hidden]) #agid-spid-panel-select {
   animation-name: anim-panel-in;
-  animation-duration: 3s;
+  animation-duration: 2s;
 }
 
 @keyframes anim-base-in {
