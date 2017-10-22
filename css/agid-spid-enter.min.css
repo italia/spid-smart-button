@@ -60,9 +60,6 @@
   display: block;
   cursor: pointer;
 }
-#agid-spid-panel-header .agid-spid-panel-back a {
-  padding: 6px 0;
-}
 #agid-spid-panel-header .agid-spid-panel-back a:hover, #agid-spid-panel-header .agid-spid-panel-back a:focus {
   opacity: 0.5;
 }
@@ -75,6 +72,11 @@
 #agid-spid-panel-header .agid-spid-panel-element {
   float: right;
   min-width: 33.3333vw;
+}
+
+#agid-spid-panel-close-button {
+  padding: 6px 10px;
+  margin-left: calc(100% - 60px);
 }
 
 #agid-spid-panel-content {
@@ -320,10 +322,6 @@
   display: none;
 }
 
-#agid-spid-panel-header .agid-spid-panel-back a {
-  margin-left: calc(100% - 50px);
-}
-
 #agid-infomodal {
   position: fixed;
   z-index: 1;
@@ -331,7 +329,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
   background-color: #000;
   background-color: rgba(0, 0, 0, 0.4);
 }
@@ -339,8 +337,9 @@
   background-color: #fefefe;
   padding: 20px;
   border: 1px solid #888;
-  margin: 3%;
-  max-height: 90vh;
+  margin: 3vh 6vw 0;
+  max-height: 93vh;
+  box-sizing: border-box;
   overflow: scroll;
 }
 #agid-infomodal .modal-content div {
@@ -348,9 +347,13 @@
 }
 #agid-infomodal .modal-content .close {
   color: #aaa;
-  float: right;
-  font-size: 28px;
   font-weight: 700;
+  position: fixed;
+  font-size: 2em;
+  right: 6vw;
+  width: 1.7em;
+  text-align: center;
+  top: 5vh;
 }
 #agid-infomodal .modal-content .close:hover, #agid-infomodal .modal-content .close:focus {
   color: #000;
@@ -424,9 +427,6 @@
   }
   #agid-spid-panel-header .agid-spid-panel-logo img {
     max-height: 33px;
-  }
-  #agid-spid-panel-header .agid-spid-panel-back a {
-    padding: 6px 0;
   }
 
   #agid-spid-enter-title-container {
