@@ -372,6 +372,7 @@
   height: 48px;
   background-color: #075fc5;
   border-radius: 4px;
+  position: absolute;
 }
 
 #agid-spid-button-anim-icon {
