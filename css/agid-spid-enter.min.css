@@ -139,12 +139,6 @@
 #agid-spid-idp-list {
   padding: 1em 0 0;
 }
-#agid-spid-idp-list span:nth-child(odd) {
-  margin: 0 5px 0 0;
-}
-#agid-spid-idp-list span:nth-child(even) {
-  margin: 0 0 0 5px;
-}
 
 #agid-spid-panel-footer {
   display: block;
@@ -385,7 +379,7 @@
   height: 30px;
   border-radius: 50%;
   position: absolute;
-  background: #fff url("../img/spid-ico-circle-bb.svg") center center no-repeat;
+  background: url("../img/spid-ico-circle-bb.svg") center center no-repeat;
 }
 
 @media (min-width: 361px) {

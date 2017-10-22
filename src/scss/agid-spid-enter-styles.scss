@@ -147,14 +147,6 @@
 
 #agid-spid-idp-list {
     padding: 1em 0 0;
-
-    span:nth-child(odd) {
-        margin: 0 5px 0 0;
-    }
-
-    span:nth-child(even) {
-        margin: 0 0 0 5px;
-    }
 }
 
 #agid-spid-panel-footer {
@@ -423,7 +415,8 @@
     height: 30px;
     border-radius: 50%;
     position: absolute;
-    background: #fff url($assetsBaseUrl + "img/spid-ico-circle-bb.svg") center center no-repeat;
+    // la prorietà bk-color non può essere specificata pena un bug di rendering del path circolare estero dell'SVG
+    background: url($assetsBaseUrl + "img/spid-ico-circle-bb.svg") center center no-repeat;
 }
 
 @media (min-width: 361px) {
