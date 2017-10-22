@@ -5,6 +5,7 @@ window.AgidSpidEnter = function () {
     var self = this,
         hasSpidProviders = false,
         agidSpidEnterWrapper,
+        spidIdpList,
         infoModal,
         spidPanelSelect;
 
@@ -39,11 +40,9 @@ window.AgidSpidEnter = function () {
 
     // Randomizza l'ordine dei tasti dei provider prima di mostrarli
     function shuffleIdp() {
-        var ul = document.querySelector('#agid-spid-idp-list'),
-            i;
-
-        for (i = ul.children.length; i >= 0; i--) {
-            ul.appendChild(ul.children[Math.random() * i | 0]);
+        // eslint-disable-next-line vars-on-top
+        for (var i = spidIdpList.children.length; i >= 0; i--) {
+            spidIdpList.appendChild(spidIdpList.children[Math.random() * i | 0]);
         }
     }
 
@@ -188,6 +187,7 @@ window.AgidSpidEnter = function () {
     }
 
     function getSelectors() {
+        spidIdpList     = document.querySelector('#agid-spid-idp-list');
         infoModal       = document.querySelector('#agid-infomodal');
         spidPanelSelect = document.querySelector('#agid-spid-panel-select');
     }
