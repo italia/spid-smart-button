@@ -363,6 +363,10 @@
             text-align: center;
             top: 5vh;
 
+            &:link {
+                text-decoration: none;
+            }
+
             &:hover,
             &:focus {
                 color: #000;

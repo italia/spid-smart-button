@@ -341,6 +341,9 @@
   text-align: center;
   top: 5vh;
 }
+#agid-infomodal .modal-content .close:link {
+  text-decoration: none;
+}
 #agid-infomodal .modal-content .close:hover, #agid-infomodal .modal-content .close:focus {
   color: #000;
   text-decoration: none;

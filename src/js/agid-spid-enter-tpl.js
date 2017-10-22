@@ -70,11 +70,12 @@ window.AgidSpidEnter.prototype.tpl = {
 
     spidProviderButton: function (providerData) {
         return [
-            '<span class="agid-spid-col l3 m6 s6 xs12" role="button">',
+            '<span class="agid-spid-col l3 m6 s6 xs12">',
                 '<a href="', providerData.url, '"',
                     // la seconda classe è necessaria? non è in nessun CSS, potrebbe essere messa in config, oppure affidarsi al nome della config
                     'class="agid-spid-idp-button agid-spid-idp-infocertid"',
                     'title="', providerData.title, '"',
+                    'role="button"',
                     'style="background-image: url(', this.config.assetsBaseUrl, 'img/idp-logos/', providerData.logo, ')">',
                 '</a>',
             '</span>'
@@ -97,8 +98,10 @@ window.AgidSpidEnter.prototype.tpl = {
     infoModal: function (htmlContent) {
         return [
             '<div class="modal-content agid-font">',
-                '<span id="closemodalbutton" class="close" role="button" tabindex="0" aria-label="', this.getI18n('aria_chiudi_modale'), '"><b aria-hidden="true">&times;</b></span>',
-                '<div>', htmlContent, '</div>',
+                '<a id="closemodalbutton" class="close" role="button" tabindex="0" aria-label="', this.getI18n('aria_chiudi_modale'), '" href="#"><b aria-hidden="true">&times;</b></a>',
+                '<div role="main" tabindex="0" aria-labelledby="agid-infomodal-title">',
+                    htmlContent,
+                '</div>',
             '</div>'
         ].join('');
     },
@@ -106,6 +109,7 @@ window.AgidSpidEnter.prototype.tpl = {
     // Fake content, Lipsum HTML, rimpiazzare con contenuti/etichette reali
     nonHaiSpid: function () {
         return [
+            '<h1 id="agid-infomodal-title">Non hai Spid?</h1>',
             '<ul>',
                 '<li>Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat.</li>',
                 '<li>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</li>',
@@ -118,7 +122,7 @@ window.AgidSpidEnter.prototype.tpl = {
     // Fake content, Lipsum HTML, rimpiazzare con contenuti/etichette reali
     cosaSpid: function () {
         return [
-            '<h1>HTML Ipsum Presents</h1>',
+            '<h1 id="agid-infomodal-title">Cosa è SPID</h1>',
             '<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>',
             '<h2>Header Level 2</h2>',
             '<ol>',
