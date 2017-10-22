@@ -4,6 +4,7 @@
 window.AgidSpidEnter = function () {
     var self = this,
         hasSpidProviders = false,
+        agidSpidEnterWrapper,
         infoModal,
         spidPanelSelect;
 
@@ -46,37 +47,15 @@ window.AgidSpidEnter = function () {
         }
     }
 
-    function animate_element_in(elementId) {
-        var element = document.getElementById(elementId);
-
-        showElement(element);
-        element.classList.remove(elementId + '-anim-in');
-        element.classList.remove(elementId + '-anim-out');
-        element.classList.add(elementId + '-anim-in');
-    }
-
-    function animate_element_out(elementId) {
-        var element = document.getElementById(elementId);
-
-        element.classList.remove(elementId + '-anim-in');
-        element.classList.remove(elementId + '-anim-out');
-        element.classList.add(elementId + '-anim-out');
-    }
-
-    function isElementVisible(element) {
-        return !element.hasAttribute('hidden') || element.style.display !== "" && element.style.display !== "none";
-    }
-
     // Chiudi gli overlay in sequenza, prima info modal poi i providers
     function handleEscKeyEvent(event) {
         var isEscKeyHit             = event.keyCode === 27,
-            isInfoModalVisible      = isElementVisible(infoModal),
-            isProvidersPanelVisible = isElementVisible(spidPanelSelect);
+            isInfoModalVisible      = !infoModal.hasAttribute('hidden');
 
         if (isEscKeyHit) {
             if (isInfoModalVisible) {
                 closeInfoModal();
-            } else if (isProvidersPanelVisible) {
+            } else {
                 // eslint-disable-next-line no-use-before-define
                 hideProvidersPanel();
             }
@@ -85,24 +64,17 @@ window.AgidSpidEnter = function () {
 
     function showProvidersPanel() {
         shuffleIdp();
-        showElement(spidPanelSelect);
-        // Mostra modale providers con animazione splash-in
-        animate_element_in('agid-spid-button-anim');
-        animate_element_in('agid-spid-button-anim-base');
-        animate_element_in('agid-spid-button-anim-icon');
-        animate_element_in('agid-spid-panel-select');
-
+        showElement(agidSpidEnterWrapper);
         document.addEventListener('keyup', handleEscKeyEvent);
+        // a11y: porta il focus sul pannello appena mostrato
+        spidPanelSelect.addEventListener('animationend', function () {
+            spidPanelSelect.focus();
+            spidPanelSelect.removeEventListener('animationend');
+        }, true);
     }
 
     function hideProvidersPanel() {
-        hideElement(spidPanelSelect);
-        // Nascondi modale providers con animazione splash-out
-        animate_element_out('agid-spid-button-anim');
-        animate_element_out('agid-spid-button-anim-base');
-        animate_element_out('agid-spid-button-anim-icon');
-        animate_element_out('agid-spid-panel-select');
-
+        hideElement(agidSpidEnterWrapper);
         document.removeEventListener('keyup', handleEscKeyEvent);
     }
 
@@ -207,9 +179,10 @@ window.AgidSpidEnter = function () {
     }
 
     function addContainersWrapper(wrapperID) {
-        var agidSpidEnterWrapper = document.createElement('section');
+        agidSpidEnterWrapper = document.createElement('section');
 
         agidSpidEnterWrapper.id  = wrapperID;
+        hideElement(agidSpidEnterWrapper);
         document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
         agidSpidEnterWrapper.innerHTML = getTpl('spidMainContainers');
     }
@@ -240,12 +213,6 @@ window.AgidSpidEnter = function () {
                 renderAvailableProviders(data[1]);
                 renderSpidButtons();
                 getSelectors();
-
-                document.querySelector('#agid-spid-button-anim')
-                    .addEventListener('animationend', function () {
-                        // a11y: porta il focus sul pannello appena mostrato
-                        spidPanelSelect.focus();
-                    }, true);
             })
             .catch(function (error) {
                 console.error('Si è verificato un errore nel caricamento dei dati', error);

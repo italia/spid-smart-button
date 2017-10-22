@@ -1,53 +1,72 @@
-// Seleziona le classi che iniziano con 'agid-spid-' e terminano in '-anim-in' e '-anim-out'
-[class^='agid-spid-'] {
-    &[class$='-anim-in'],
-    &[class$='-anim-out'] {
-        animation-delay: 0s;
-        animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-        animation-iteration-count: 1;
-        animation-direction: normal;
-        animation-fill-mode: forwards;
+#agid-spid-enter-anim,
+#agid-spid-enter-anim::before,
+#agid-spid-enter-anim::after,
+#agid-spid-panel-select {
+    animation-delay: 0s;
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+#agid-spid-enter-container {
+    display: block;
+    transition-duration: 1s;
+    transition-property: visibility;
+    transition-delay: 0s;
+
+    &[hidden] {
+        // visibility è animabile diversamente da display
+        // pointer events evita che l'elemento riceva eventi durante e l'animazione
+        // gli elementi con visibility hidden non ricevono comunque gli eventi
+        visibility: hidden;
+        transition-duration: 0s;
+        transition-property: visibility;
+        transition-delay: 1s;
+        pointer-events: none;
+
+        #agid-spid-enter-anim {
+            animation-name: anim-panel-out;
+            animation-duration: 2s;
+
+            &::before {
+                animation-name: anim-base-out;
+                animation-duration: 0.5s;
+            }
+
+            &::after {
+                animation-name: anim-icon-out;
+                animation-duration: 1s;
+            }
+        }
+
+        #agid-spid-panel-select {
+            animation-name: anim-panel-out;
+            animation-duration: 1s;
+        }
     }
-}
 
-.agid-spid-button-anim-anim-in {
-    animation-name: anim-panel-in;
-    animation-duration: 0s;
-}
+    &:not([hidden]) {
+        #agid-spid-enter-anim {
+            animation-name: anim-panel-in;
+            animation-duration: 0s;
 
-.agid-spid-button-anim-base-anim-in {
-    animation-name: anim-base-in;
-    animation-duration: 2s;
-}
+            &::before {
+                animation-name: anim-base-in;
+                animation-duration: 2s;
+            }
 
-.agid-spid-button-anim-icon-anim-in {
-    animation-name: anim-icon-in;
-    animation-duration: 1s;
-}
+            &::after {
+                animation-name: anim-icon-in;
+                animation-duration: 1s;
+            }
+        }
 
-.agid-spid-panel-select-anim-in {
-    animation-name: anim-panel-in;
-    animation-duration: 3s;
-}
-
-.agid-spid-button-anim-anim-out {
-    animation-name: anim-panel-out;
-    animation-duration: 2s;
-}
-
-.agid-spid-button-anim-base-anim-out {
-    animation-name: anim-base-out;
-    animation-duration: 0.5s;
-}
-
-.agid-spid-button-anim-icon-anim-out {
-    animation-name: anim-icon-out;
-    animation-duration: 1s;
-}
-
-.agid-spid-panel-select-anim-out {
-    animation-name: anim-panel-out;
-    animation-duration: 3s;
+        #agid-spid-panel-select {
+            animation-name: anim-panel-in;
+            animation-duration: 3s;
+        }
+    }
 }
 
 $animBaseWidth: 180px;
@@ -181,17 +200,24 @@ $animIconDistanceEnd: 120;
 // safari richiede che una proprietà animata sia presente in tutti gli steps
 @keyframes anim-panel-out {
     0% {
-        left: 0;
         opacity: 1;
     }
 
-    50% {
-        left: -100vw;
-        opacity: 0.5;
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes hide-on-end {
+    0% {
+        height: 100vh;
+    }
+
+    99.9% {
+        height: 100vh;
     }
 
     100% {
-        left: -200vw;
-        opacity: 0;
+        height: 0;
     }
 }

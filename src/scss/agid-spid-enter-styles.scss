@@ -15,7 +15,7 @@
     height: 0; // fix Safari, non comprime l'altezza del div quando i figli sono nascosti
 }
 
-.agid-spid-panel {
+#agid-spid-panel-select {
     top: 0;
     left: 0;
     width: 100vw;
@@ -396,28 +396,33 @@
     opacity: 0;
 }
 
-#agid-spid-button-anim {
+#agid-spid-enter-anim {
     position: relative;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-}
 
-#agid-spid-button-anim-base {
-    width: 180px;
-    height: 48px;
-    background-color: #075fc5;
-    border-radius: 4px;
-    position: absolute;
-}
+    &::before,
+    &::after {
+        content: '';
+    }
 
-#agid-spid-button-anim-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    position: absolute;
-    // la prorietà bk-color non può essere specificata pena un bug di rendering del path circolare estero dell'SVG
-    background: url($assetsBaseUrl + "img/spid-ico-circle-bb.svg") center center no-repeat;
+    &::before {
+        width: 180px;
+        height: 48px;
+        background-color: #075fc5;
+        border-radius: 4px;
+        position: absolute;
+    }
+
+    &::after {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        position: absolute;
+        // la prorietà bk-color non può essere specificata pena un bug di rendering del path circolare estero dell'SVG
+        background: url($assetsBaseUrl + "img/spid-ico-circle-bb.svg") center center no-repeat;
+    }
 }
 
 @media (min-width: 361px) {
