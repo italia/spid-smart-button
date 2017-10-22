@@ -384,6 +384,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  position: absolute;
   background: #fff url("../img/spid-ico-circle-bb.svg") center center no-repeat;
 }
 
