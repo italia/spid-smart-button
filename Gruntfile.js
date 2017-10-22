@@ -10,10 +10,17 @@ module.exports = function (grunt) {
 
         watch: {
             files: ['src/scss/*', 'src/js/*'],
-            tasks: ['build', 'jasmine:agidSpid:build']
+            tasks: ['build', 'jasmine']
         },
 
-        // Code style linting
+        // SCSS code style linting
+        stylelint: {
+            src: [
+                'src/scss/*'
+            ]
+        },
+
+        // JS code style linting
         eslint: {
             target: ['src/js/*', 'test/*.js', '!src/js/*-tpl.js']
         },
@@ -84,7 +91,7 @@ module.exports = function (grunt) {
 
         // Unit tests
         jasmine: {
-            agidSpid: {
+            unitTest: {
                 src: [
                     'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
                     'js/agid-spid-enter.min.js'],
@@ -107,7 +114,7 @@ module.exports = function (grunt) {
         // Test di accessibilità del componente
         // avviare prima grunt serve
         a11y: {
-            agidSpidButton: {
+            accessibility: {
                 options: {
                     urls: [localhostIndex],
                     failOnError: true
@@ -127,6 +134,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass']);
     grunt.registerTask('js', ['uglify']);
+    grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
     grunt.registerTask('test', ['jasmine', 'a11y', 'axe-webdriver']);
 };

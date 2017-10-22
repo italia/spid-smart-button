@@ -82,6 +82,7 @@ $timingFn: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 
 $animBaseWidth: 180px;
 $animBaseHeight: 48px;
+
 @keyframes anim-base-in {
     0% {
         width: $animBaseWidth;
@@ -91,6 +92,7 @@ $animBaseHeight: 48px;
         border-radius: 100%;
         opacity: 0;
     }
+
     50% {
         width: $animBaseWidth;
         height: $animBaseHeight;
@@ -99,6 +101,7 @@ $animBaseHeight: 48px;
         border-radius: 100%;
         opacity: 1;
     }
+
     100% {
         top: calc((100vh - #{$animBaseHeight}) / 2);
         left: calc((100vw - #{$animBaseWidth}) / 2);
@@ -116,6 +119,7 @@ $animBaseHeight: 48px;
         border-radius: 100%;
         opacity: 1;
     }
+
     50% {
         width: $animBaseWidth;
         height: $animBaseHeight;
@@ -124,6 +128,7 @@ $animBaseHeight: 48px;
         border-radius: 100%;
         opacity: 0.5;
     }
+
     100% {
         width: $animBaseWidth;
         height: $animBaseHeight;
@@ -137,23 +142,26 @@ $animBaseHeight: 48px;
 $animIconSize: 30px;
 $animIconDistanceStart: 50;
 $animIconDistanceEnd: 120;
+
 @keyframes anim-icon-in {
     0% {
         width: $animIconSize;
         height: $animIconSize;
-        top:  $animIconDistanceStart * 1vh;
+        top: $animIconDistanceStart * 1vh;
         left: $animIconDistanceStart * 1vw;
-        opacity:0;
+        opacity: 0;
     }
+
     5% {
         width: $animIconSize;
         height: $animIconSize;
-        top:  $animIconDistanceStart * 1vh;
+        top: $animIconDistanceStart * 1vh;
         left: $animIconDistanceStart * 1vw;
         opacity: 0.2;
     }
+
     100% {
-        top: 0vh;
+        top: 0;
         left: 20vw;
         width: 120vw;
         height: 120vh;
@@ -163,23 +171,25 @@ $animIconDistanceEnd: 120;
 
 @keyframes anim-icon-out {
     0% {
-        top: 0vh;
+        top: 0;
         left: 20vw;
         width: 120vw;
         height: 120vh;
         opacity: 0.1;
     }
+
     50% {
         width: $animIconSize;
         height: $animIconSize;
-        top:  $animIconDistanceStart * 1vh;
+        top: $animIconDistanceStart * 1vh;
         left: $animIconDistanceStart * 1vw;
         opacity: 0;
     }
+
     100% {
         width: $animIconSize;
         height: $animIconSize;
-        top:  $animIconDistanceStart * 1vh;
+        top: $animIconDistanceStart * 1vh;
         left: $animIconDistanceStart * 1vw;
         opacity: 0;
     }
@@ -189,9 +199,11 @@ $animIconDistanceEnd: 120;
     0% {
         opacity: 0;
     }
+
     15% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -199,13 +211,15 @@ $animIconDistanceEnd: 120;
 // safari richiede che una proprietà animata sia presente in tutti gli steps
 @keyframes anim-panel-out {
     0% {
-        left: 0vw;
+        left: 0;
         opacity: 1;
     }
+
     50% {
         left: -100vw;
         opacity: 0.5;
     }
+
     100% {
         left: -200vw;
         opacity: 0;

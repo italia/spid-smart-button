@@ -1,0 +1,7 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "number-no-trailing-zeros": null,
+    "indentation": null
+  }
+}
