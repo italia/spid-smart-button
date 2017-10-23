@@ -7,6 +7,7 @@ window.AgidSpidEnter = function () {
         agidSpidEnterWrapper,
         spidIdpList,
         infoModal,
+        infoModalContent,
         spidPanelSelect;
 
     function getTpl(templateName, content) {
@@ -24,13 +25,13 @@ window.AgidSpidEnter = function () {
 
     function closeInfoModal() {
         hideElement(infoModal);
-        infoModal.innerHTML = '';
+        infoModalContent.innerHTML = '';
         // a11y: Restituisci il focus al modale dei providers
         spidPanelSelect.focus();
     }
 
     function openInfoModal(htmlContent) {
-        infoModal.innerHTML = getTpl('infoModal', htmlContent);
+        infoModalContent.innerHTML = htmlContent;
         showElement(infoModal);
         // a11y: porta il focus sulla finestra informativa
         infoModal.focus();
@@ -188,9 +189,10 @@ window.AgidSpidEnter = function () {
     }
 
     function getSelectors() {
-        spidIdpList     = document.querySelector('#agid-spid-idp-list');
-        infoModal       = document.querySelector('#agid-infomodal');
-        spidPanelSelect = document.querySelector('#agid-spid-panel-select');
+        spidIdpList      = document.querySelector('#agid-spid-idp-list');
+        infoModal        = document.querySelector('#agid-infomodal');
+        infoModalContent = document.querySelector('#agid-infomodal-content');
+        spidPanelSelect  = document.querySelector('#agid-spid-panel-select');
     }
 
     function renderSpidModalContainers() {
@@ -214,6 +216,12 @@ window.AgidSpidEnter = function () {
                 renderAvailableProviders(data[1]);
                 renderSpidButtons();
                 getSelectors();
+                // Evita salti nella pagina sottostante causati dal cambio hash nella url
+                Array.from(document.querySelectorAll('.agid-navigable')).forEach(function (link) {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault();
+                    });
+                });
             })
             .catch(function (error) {
                 console.error('Si è verificato un errore nel caricamento dei dati', error);

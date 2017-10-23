@@ -3,7 +3,19 @@ window.AgidSpidEnter.prototype.tpl = {
     spidMainContainers: function () {
         return [
             '<div id="agid-spid-enter"></div>',
-            '<div id="agid-infomodal" class="modal" aria-live="assertive" hidden></div>'
+            '<div id="agid-infomodal" class="modal" aria-live="assertive" hidden>',
+                '<div class="modal-content agid-font">',
+                    '<a id="closemodalbutton"',
+                        'class="close agid-navigable"',
+                        'role="button"',
+                        'tabindex="0"',
+                        'aria-label="', this.getI18n('aria_chiudi_modale'), '" href="#">',
+                        '<b aria-hidden="true">&times;</b>',
+                    '</a>',
+                    '<div id="agid-infomodal-content" role="main" tabindex="0" aria-labelledby="agid-infomodal-title">',
+                    '</div>',
+                '</div>',
+            '</div>'
         ].join('');
     },
 
@@ -22,7 +34,7 @@ window.AgidSpidEnter.prototype.tpl = {
             '<section id="agid-spid-panel-select" aria-modal="true" aria-labelledby="agid-spid-enter-title-page" tabindex="-1">',
                 '<header id="agid-spid-panel-header">',
                     '<nav class="agid-spid-panel-back agid-spid-panel-element" aria-controls="agid-spid-panel-select">',
-                        '<a role="button" tabindex="0" id="agid-spid-panel-close-button" href="#" class="agid-spid-button" aria-labelledby="agid-cancel-access-button">',
+                        '<a role="button" tabindex="0" id="agid-spid-panel-close-button" href="#" class="agid-spid-button agid-navigable" aria-labelledby="agid-cancel-access-button">',
                             this.tpl.svgWithPngFallback.call(this, 'img/x-icon', this.getI18n('naviga_indietro')),
                         '</a>',
                     '</nav>',
@@ -36,10 +48,12 @@ window.AgidSpidEnter.prototype.tpl = {
                             '<h1 id="agid-spid-enter-title-page" class="agid-font">', this.getI18n('scegli_provider_SPID'), '</h1>',
                         '</div>',
                         '<div id="agid-spid-idp-list" class="agid-spid-row">',
-                            spidProvidersButtons,
+                            '<form method="POST">',
+                                spidProvidersButtons,
+                            '</form>',
                         '</div>',
                         '<div id="agid-cancel-access-container">',
-                            '<a id="agid-spid-cancel-access-button" href="#" role="button">',
+                            '<a id="agid-spid-cancel-access-button" class="agid-navigable" href="#" role="button">',
                                 '<div id="agid-cancel-access-button" class="agid-transparent-button agid-font">',
                                     '<span>', this.getI18n('annulla_accesso'), '</span>',
                                 '</div>',
@@ -52,12 +66,12 @@ window.AgidSpidEnter.prototype.tpl = {
                 '</div>',
                 '<footer id="agid-spid-panel-footer">',
                     '<div id="agid-action-button-container">',
-                        '<a id="nospid" href="#" role="button">',
+                        '<a id="nospid" class="agid-navigable" href="#" role="button">',
                             '<div class="agid-action-button agid-font">',
                                 '<span>', this.getI18n('non_hai_SPID'), '</span>',
                             '</div>',
                         '</a>',
-                        '<a id="cosaspid" href="#" role="button">',
+                        '<a id="cosaspid" class="agid-navigable" href="#" role="button">',
                             '<div class="agid-action-button agid-font">',
                                 '<span>', this.getI18n('cosa_SPID'), '</span>',
                             '</div>',
@@ -71,13 +85,11 @@ window.AgidSpidEnter.prototype.tpl = {
     spidProviderButton: function (providerData) {
         return [
             '<span class="agid-spid-col l3 m6 s6 xs12">',
-                '<a href="', providerData.url, '"',
-                    // la seconda classe è necessaria? non è in nessun CSS, potrebbe essere messa in config, oppure affidarsi al nome della config
-                    'class="agid-spid-idp-button agid-spid-idp-infocertid"',
+                '<button type="submit" formaction="', providerData.url, '"',
+                    'class="agid-spid-idp-button"',
                     'title="', providerData.title, '"',
-                    'role="button"',
                     'style="background-image: url(', this.config.assetsBaseUrl, 'img/idp-logos/', providerData.logo, ')">',
-                '</a>',
+                '</button>',
             '</span>'
         ].join('');
     },
@@ -92,17 +104,6 @@ window.AgidSpidEnter.prototype.tpl = {
                 '<span class="agid-spid-enter-text">', this.getI18n('entra_con_SPID'), '</span>',
             '</button>',
             '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * end * -->'
-        ].join('');
-    },
-
-    infoModal: function (htmlContent) {
-        return [
-            '<div class="modal-content agid-font">',
-                '<a id="closemodalbutton" class="close" role="button" tabindex="0" aria-label="', this.getI18n('aria_chiudi_modale'), '" href="#"><b aria-hidden="true">&times;</b></a>',
-                '<div role="main" tabindex="0" aria-labelledby="agid-infomodal-title">',
-                    htmlContent,
-                '</div>',
-            '</div>'
         ].join('');
     },
 

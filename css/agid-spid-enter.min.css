@@ -102,9 +102,10 @@
 }
 
 .agid-spid-idp-button {
+  border: none;
   width: 145px;
   height: 55px;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   display: inline-block;
   position: relative;
   line-height: 0;
