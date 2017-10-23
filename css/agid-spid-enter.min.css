@@ -469,51 +469,46 @@
   .agid-spid-col.m1 {
     width: 8.33333%;
   }
-
   .agid-spid-col.m2 {
     width: 16.66666%;
   }
-
   .agid-spid-col.m3 {
     width: 24.99999%;
   }
-
   .agid-spid-col.m4 {
     width: 33.33333%;
   }
-
   .agid-spid-col.m5 {
     width: 41.66666%;
   }
-
-  .agid-spid-col.m6,
-  .agid-spid-half {
+  .agid-spid-col.m6, .agid-spid-half {
     width: 49.99999%;
   }
-
   .agid-spid-col.m7 {
     width: 58.33333%;
   }
-
-  .agid-spid-col.m8,
-  .agid-spid-twothird {
+  .agid-spid-col.m8, .agid-spid-twothird {
     width: 66.66666%;
   }
-
   .agid-spid-col.m9 {
     width: 74.99999%;
   }
-
   .agid-spid-col.m10 {
     width: 83.33333%;
   }
-
   .agid-spid-col.m11 {
     width: 91.66666%;
   }
-
   .agid-spid-col.m12 {
     width: 99.99999%;
+  }
+
+  .agid-spid-half {
+    /* stylelint-disable-line at-rule-no-unknown */
+  }
+
+  .agid-spid-twothird {
+    /* stylelint-disable-line at-rule-no-unknown */
   }
 
   .agid-spid-panel-content-center {
