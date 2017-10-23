@@ -145,7 +145,7 @@ window.AgidSpidEnter = function () {
     /*
      * Helper function per gestire tramite promise il risultato asincrono di success/fail, come $.ajax
      */
-    function ajaxRequest(method, url) {
+    function ajaxRequest(method, url, payload) {
         return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
             xhr.open(method, url);
@@ -158,16 +158,20 @@ window.AgidSpidEnter = function () {
                     }
                 }
             }.bind(this);
-            xhr.send();
+            xhr.send(JSON.stringify(payload));
         });
     }
 
     function getLocalisedMessages() {
-        return ajaxRequest('GET', self.config.localisationEndpoint);
+        var languageRequest = {
+            language: self.language
+        };
+
+        return ajaxRequest('POST', self.config.localisationEndpoint, languageRequest);
     }
 
     function getAvailableProviders() {
-        return ajaxRequest('GET', self.config.providersEndpoint);
+        return ajaxRequest('POST', self.config.providersEndpoint);
     }
 
     function loadStylesheet(url) {
@@ -206,8 +210,20 @@ window.AgidSpidEnter = function () {
         }
     }
 
-    function init() {
-        var fetchData = [getLocalisedMessages(), getAvailableProviders()];
+    function setOptions(options) {
+        if (options.language) {
+            self.language = options.language;
+        }
+    }
+
+    function init(options) {
+        var fetchData;
+
+        if (options) {
+            setOptions(options);
+        }
+
+        fetchData = [getLocalisedMessages(), getAvailableProviders()];
 
         return Promise.all(fetchData)
             .then(function (data) {

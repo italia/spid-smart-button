@@ -1,11 +1,11 @@
+// Lingua delle etichette sostituibile all'init, default Italiano
+window.AgidSpidEnter.prototype.language = 'it';
 // L'oggeto viene popolato dalla chiamata ajax getLocalisedMessages()
 window.AgidSpidEnter.prototype.i18n = {};
 
 // Null safe access, se la label non è trovata non si verificano errori runtime, suggerimento in console
 window.AgidSpidEnter.prototype.getI18n = function (labelKey) {
-    var locale = document.getElementsByTagName('html')[0].getAttribute('lang') ||
-                 this.i18n['spid-texts'].default,
-
+    var locale = this.language,
         copy   = this.i18n.language &&
                  this.i18n.language[locale] &&
                  this.i18n.language[locale][labelKey];

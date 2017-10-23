@@ -13,6 +13,16 @@
       "cosa_SPID": "Cos'é SPID?",
       "entra_con_SPID": "Entra con SPID",
       "aria_chiudi_modale": "Chiudi modale informativo"
+    },
+    "en": {
+      "naviga_indietro": "Go back",
+      "alt_logo_SPID": "SPID logo",
+      "scegli_provider_SPID": "Choose your SPID provider",
+      "annulla_accesso": "Cancel access",
+      "non_hai_SPID": "Don't have SPID?",
+      "cosa_SPID": "What is SPID?",
+      "entra_con_SPID": "Sign in with SPID",
+      "aria_chiudi_modale": "Close informative modal"
     }
   }
 }
