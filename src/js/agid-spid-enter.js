@@ -88,10 +88,6 @@ window.AgidSpidEnter = function () {
         for (provider in data.spidProviders) {
             providerData = data.spidProviders[provider];
 
-            if (!providerData.url) {
-                return;
-            }
-
             spidProvidersButtonsHTML += getTpl('spidProviderButton', providerData);
         };
 
@@ -212,7 +208,9 @@ window.AgidSpidEnter = function () {
 
     function setOptions(options) {
         if (options.language) {
-            self.language = options.language;
+            self.language         = options.language;
+            self.formActionUrl    = options.formActionUrl;
+            self.formSubmitMethod = options.formSubmitMethod;
         }
     }
 

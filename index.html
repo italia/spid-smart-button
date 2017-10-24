@@ -17,7 +17,12 @@
         </section>
         <script type="text/javascript" src="js/agid-spid-enter.min.js" ></script>
 
-        <script type="text/javascript">window.agidSpidEnter.init();
+        <script type="text/javascript">
+window.agidSpidEnter.init({
+    language: 'en',
+    formActionUrl: 'https://google.com',
+    formSubmitMethod: 'POST'
+});
         </script>
     </body>
 </html>

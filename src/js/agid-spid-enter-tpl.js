@@ -48,9 +48,7 @@ window.AgidSpidEnter.prototype.tpl = {
                             '<h1 id="agid-spid-enter-title-page" class="agid-font">', this.getI18n('scegli_provider_SPID'), '</h1>',
                         '</div>',
                         '<div id="agid-spid-idp-list" class="agid-spid-row">',
-                            '<form method="POST">',
-                                spidProvidersButtons,
-                            '</form>',
+                            spidProvidersButtons,
                         '</div>',
                         '<div id="agid-cancel-access-container">',
                             '<a id="agid-spid-cancel-access-button" class="agid-navigable" href="#" role="button">',
@@ -82,14 +80,29 @@ window.AgidSpidEnter.prototype.tpl = {
         ].join('');
     },
 
+    hiddenField: function (name, value) {
+        return ['<input type="hidden" name="', name, '" value="', value, '" />'].join('');
+    },
+
     spidProviderButton: function (providerData) {
+        var providerPayload,
+            title = (providerData.isActive)?
+                    this.getI18n('accedi_con_idp', providerData.title):
+                    this.getI18n('idp_disabled');
+
+        providerPayload = this.tpl.hiddenField('provider', providerData.provider);
+
         return [
             '<span class="agid-spid-col l3 m6 s6 xs12">',
-                '<button type="submit" formaction="', providerData.url, '"',
-                    'class="agid-spid-idp-button"',
-                    'title="', providerData.title, '"',
-                    'style="background-image: url(', this.config.assetsBaseUrl, 'img/idp-logos/', providerData.logo, ')">',
-                '</button>',
+                '<form action="', this.formActionUrl,'" method="', this.formSubmitMethod, '">',
+                    '<button type="submit"',
+                        'class="agid-spid-idp-button agid-spid-idp-', providerData.provider,'"',
+                        'title="', title, '"',
+                        'style="background-image: url(', this.config.assetsBaseUrl, 'img/idp-logos/', providerData.logo, ')"',
+                        (providerData.isActive)?'':'disabled', '>',
+                    '</button>',
+                    providerPayload,
+                '</form>',
             '</span>'
         ].join('');
     },

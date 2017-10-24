@@ -2,51 +2,48 @@
     "spidProviders": [
         {
             "provider": "aruba",
-            "url": "#http://aruba",
-            "title": "Accedi a SPID con Aruba",
-            "logo": "spid-idp-aruba.svg"
+            "title": "Aruba",
+            "logo": "spid-idp-aruba.svg",
+            "isActive": true
         },
         {
             "provider": "infocert",
-            "url": "#http://infocert",
-            "title": "Accedi a SPID con Infocert",
-            "logo": "spid-idp-infocertid.svg"
+            "title": "Infocert",
+            "logo": "spid-idp-infocertid.svg",
+            "isActive": true
         },
         {
             "provider": "poste",
-            "url": "#http://poste",
-            "title": "Accedi a SPID con Poste",
-            "logo": "spid-idp-posteid.svg"
+            "title": "Poste",
+            "logo": "spid-idp-posteid.svg",
+            "isActive": true
         },
         {
             "provider": "sielte",
-            "url": "#http://sielte",
-            "title": "Accedi a SPID con Sielte",
-            "logo": "spid-idp-sielteid.svg"
+            "title": "Sielte",
+            "logo": "spid-idp-sielteid.svg",
+            "isActive": true
         },
         {
             "provider": "tim",
-            "url": "#http://tim",
-            "title": "Accedi a SPID con Tim",
-            "logo": "spid-idp-timid.svg"
+            "title": "Tim",
+            "logo": "spid-idp-timid.svg",
+            "isActive": true
         },
         {
             "provider": "newidp1",
-            "url": "#1",
-            "title": "Fornitore non attivo",
-            "logo": "spid-idp-dummy.svg"
+            "logo": "spid-idp-dummy.svg",
+            "isActive": false
         },
         {
             "provider": "newidp2",
-            "url": "#2",
-            "title": "Fornitore non attivo",
-            "logo": "spid-idp-dummy.svg"
+            "logo": "spid-idp-dummy.svg",
+            "isActive": false
         },
         {
             "provider": "newidp3",
-            "url": "#3",
-            "title": "Fornitore non attivo",
-            "logo": "spid-idp-dummy.svg"
-        }            
+            "logo": "spid-idp-dummy.svg",
+            "isActive": false
+        }
     ]
 }

@@ -135,8 +135,10 @@
       -ms-transform: translateY(3px);
           transform: translateY(3px);
 }
-.agid-spid-idp-button img {
-  width: 100vw;
+.agid-spid-idp-button[disabled] {
+  cursor: not-allowed;
+  -webkit-filter: grayscale(1);
+          filter: grayscale(1);
 }
 
 #agid-spid-idp-list {

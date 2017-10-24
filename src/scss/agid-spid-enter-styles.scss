@@ -137,8 +137,9 @@
         transform: translateY(3px);
     }
 
-    & img {
-        width: 100vw;
+    &[disabled] {
+        cursor: not-allowed;
+        filter: grayscale(1);
     }
 }
 
