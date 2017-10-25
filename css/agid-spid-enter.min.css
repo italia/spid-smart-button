@@ -11,6 +11,12 @@
   font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
 }
 
+.agid-navigable {
+  background: transparent;
+  cursor: pointer;
+  font-size: 1em;
+}
+
 #agid-spid-enter-container {
   position: fixed;
   z-index: 999;
@@ -60,7 +66,7 @@
   display: block;
   cursor: pointer;
 }
-#agid-spid-panel-header .agid-spid-panel-back a:hover, #agid-spid-panel-header .agid-spid-panel-back a:focus {
+#agid-spid-panel-header .agid-spid-panel-back button:hover, #agid-spid-panel-header .agid-spid-panel-back button:focus, #agid-spid-panel-header .agid-spid-panel-back a:hover, #agid-spid-panel-header .agid-spid-panel-back a:focus {
   opacity: 0.5;
 }
 #agid-spid-panel-header .agid-spid-panel-back img {
@@ -106,12 +112,7 @@
   width: 145px;
   height: 55px;
   margin-bottom: 18px;
-  display: inline-block;
-  position: relative;
-  line-height: 0;
-  text-align: center;
   cursor: pointer;
-  overflow: hidden;
   background: #fff;
   border-radius: 3px;
   color: #a00;
@@ -279,8 +280,8 @@
 #agid-action-button-container {
   width: 100%;
 }
-#agid-action-button-container a, #agid-action-button-container a:visited, #agid-action-button-container a:link {
-  text-decoration: none;
+#agid-action-button-container button {
+  border: none;
 }
 
 .agid-action-button {
@@ -292,14 +293,6 @@
   background-color: #fff;
   display: block;
   float: left;
-}
-.agid-action-button span {
-  text-align: center;
-  position: relative;
-  top: 25%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
 }
 
 #agid-cancel-access-container {
@@ -335,7 +328,9 @@
   padding: 16px 20px 12px 0;
 }
 #agid-infomodal .modal-content .close {
+  border: none;
   color: #aaa;
+  cursor: pointer;
   font-weight: 700;
   position: fixed;
   font-size: 2em;
@@ -344,13 +339,8 @@
   text-align: center;
   top: 5vh;
 }
-#agid-infomodal .modal-content .close:link {
-  text-decoration: none;
-}
 #agid-infomodal .modal-content .close:hover, #agid-infomodal .modal-content .close:focus {
   color: #000;
-  text-decoration: none;
-  cursor: pointer;
 }
 
 .agid-spid-visibile {
@@ -447,24 +437,16 @@
     background-color: transparent;
     border-radius: 5px;
     border: 1px solid #80afe4;
-    height: 45px;
+    height: 46px;
     vertical-align: middle;
-    margin: 3px 6px 0;
+    margin: 3px 0 0;
+    width: 98%;
+    text-transform: uppercase;
+    color: #fff;
   }
 
   #agid-cancel-access-container a, #agid-cancel-access-container a:visited, #agid-cancel-access-container a:link {
     text-decoration: none;
-  }
-
-  #agid-cancel-access-button span {
-    text-align: center;
-    position: relative;
-    top: 25%;
-    -webkit-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-            transform: translateY(-50%);
-    text-transform: uppercase;
-    color: #fff;
   }
 }
 @media (min-width: 769px) {
@@ -540,7 +522,6 @@
   line-height: 1em;
   text-decoration: none;
   border: 0;
-  text-align: center;
   cursor: pointer;
   outline: 0;
   display: inline-block;

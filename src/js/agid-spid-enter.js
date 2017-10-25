@@ -10,6 +10,8 @@ window.AgidSpidEnter = function () {
         infoModalContent,
         spidPanelSelect;
 
+    self.availableProviders = null;
+
     function getTpl(templateName, content) {
         return self.tpl[templateName].call(self, content);
     }
@@ -79,8 +81,9 @@ window.AgidSpidEnter = function () {
         document.removeEventListener('keyup', handleEscKeyEvent);
     }
 
-    function renderAvailableProviders(data) {
+    function renderAvailableProviders() {
         var agid_spid_enter = document.querySelector('#agid-spid-enter'),
+            data = self.availableProviders,
             spidProvidersButtonsHTML = '',
             provider,
             providerData;
@@ -96,7 +99,7 @@ window.AgidSpidEnter = function () {
         hasSpidProviders = true;
         // Vengono creati una sola volta all'init, non necessitano unbind
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
-        document.querySelector('#agid-spid-cancel-access-button').addEventListener('click', hideProvidersPanel);
+        document.querySelector('#agid-cancel-access-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#nospid').addEventListener('click', function () {
             openInfoModal(getTpl('nonHaiSpid'));
         });
@@ -206,13 +209,35 @@ window.AgidSpidEnter = function () {
         }
     }
 
+    function renderModule() {
+        renderSpidModalContainers();
+        renderAvailableProviders();
+        renderSpidButtons();
+        getSelectors();
+    }
+
     function setOptions(options) {
         if (options.language) {
-            self.language         = options.language;
-            self.formActionUrl    = options.formActionUrl;
-            self.formSubmitMethod = options.formSubmitMethod;
+            self.language         = options.language || self.language;
+            self.formActionUrl    = options.formActionUrl || self.formActionUrl;
+            self.formSubmitMethod = options.formSubmitMethod || self.formSubmitMethod;
         }
     }
+
+    function changeLanguage(language) {
+        setOptions({
+            language: language
+        });
+
+        return getLocalisedMessages()
+            .then(function (data) {
+                self.i18n = data;
+                renderModule();
+            })
+            .catch(function (error) {
+                console.error('Si è verificato un errore nel caricamento dei dati', error);
+            });
+    };
 
     function init(options) {
         var fetchData;
@@ -226,16 +251,8 @@ window.AgidSpidEnter = function () {
         return Promise.all(fetchData)
             .then(function (data) {
                 self.i18n = data[0];
-                renderSpidModalContainers();
-                renderAvailableProviders(data[1]);
-                renderSpidButtons();
-                getSelectors();
-                // Evita salti nella pagina sottostante causati dal cambio hash nella url
-                Array.from(document.querySelectorAll('.agid-navigable')).forEach(function (link) {
-                    link.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                });
+                self.availableProviders = data[1];
+                renderModule();
             })
             .catch(function (error) {
                 console.error('Si è verificato un errore nel caricamento dei dati', error);
@@ -247,6 +264,7 @@ window.AgidSpidEnter = function () {
      */
     return {
         init: init,
+        changeLanguage: changeLanguage,
         updateSpidButtons: renderSpidButtons
     };
 };
