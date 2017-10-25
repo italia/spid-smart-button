@@ -294,6 +294,10 @@
   display: block;
   float: left;
 }
+.agid-action-button span {
+  position: relative;
+  top: -4px;
+}
 
 #agid-cancel-access-container {
   display: none;

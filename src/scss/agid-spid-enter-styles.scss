@@ -315,6 +315,11 @@
     background-color: #fff;
     display: block;
     float: left;
+
+    span {
+        position: relative;
+        top: -4px;
+    }
 }
 
 #agid-cancel-access-container {
