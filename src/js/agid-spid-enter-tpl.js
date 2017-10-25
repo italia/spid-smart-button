@@ -2,19 +2,8 @@
 window.AgidSpidEnter.prototype.tpl = {
     spidMainContainers: function () {
         return [
-            '<div id="agid-spid-enter"></div>',
-            '<div id="agid-infomodal" class="modal" aria-live="assertive" hidden>',
-                '<div class="modal-content agid-font">',
-                    '<button id="closemodalbutton"',
-                        'class="close agid-navigable"',
-                        'tabindex="0"',
-                        'aria-label="', this.getI18n('aria_chiudi_modale'), '">',
-                        '<b aria-hidden="true">&times;</b>',
-                    '</button>',
-                    '<div id="agid-infomodal-content" role="main" tabindex="0" aria-labelledby="agid-infomodal-title">',
-                    '</div>',
-                '</div>',
-            '</div>'
+            '<div id="agid-spid-enter">', '</div>',
+            '<div id="agid-infomodal" class="modal" aria-live="assertive" hidden>', '</div>'
         ].join('');
     },
 
@@ -110,6 +99,22 @@ window.AgidSpidEnter.prototype.tpl = {
                 '<span class="agid-spid-enter-text">', this.getI18n('entra_con_SPID'), '</span>',
             '</button>',
             '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * end * -->'
+        ].join('');
+    },
+
+    infoModalContent: function (htmlContent) {
+        return [
+                '<div class="modal-content agid-font">',
+                    '<button id="closemodalbutton"',
+                        'class="close agid-navigable"',
+                        'tabindex="0"',
+                        'aria-label="', this.getI18n('aria_chiudi_modale'), '">',
+                        '<b aria-hidden="true">&times;</b>',
+                    '</button>',
+                    '<div id="agid-infomodal-content" role="main" tabindex="0" aria-labelledby="agid-infomodal-title">',
+                        htmlContent,
+                    '</div>',
+                '</div>'
         ].join('');
     },
 

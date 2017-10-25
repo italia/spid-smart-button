@@ -7,7 +7,6 @@ window.AgidSpidEnter = function () {
         agidSpidEnterWrapper,
         spidIdpList,
         infoModal,
-        infoModalContent,
         spidPanelSelect;
 
     self.availableProviders = null;
@@ -27,13 +26,13 @@ window.AgidSpidEnter = function () {
 
     function closeInfoModal() {
         hideElement(infoModal);
-        infoModalContent.innerHTML = '';
+        infoModal.innerHTML = '';
         // a11y: Restituisci il focus al modale dei providers
         spidPanelSelect.focus();
     }
 
     function openInfoModal(htmlContent) {
-        infoModalContent.innerHTML = htmlContent;
+        infoModal.innerHTML = getTpl('infoModalContent', htmlContent);
         showElement(infoModal);
         // a11y: porta il focus sulla finestra informativa
         infoModal.focus();
@@ -194,7 +193,6 @@ window.AgidSpidEnter = function () {
     function getSelectors() {
         spidIdpList      = document.querySelector('#agid-spid-idp-list');
         infoModal        = document.querySelector('#agid-infomodal');
-        infoModalContent = document.querySelector('#agid-infomodal-content');
         spidPanelSelect  = document.querySelector('#agid-spid-panel-select');
     }
 
