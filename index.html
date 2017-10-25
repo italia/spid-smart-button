@@ -21,7 +21,13 @@
 window.agidSpidEnter.init({
     language: 'en',
     formActionUrl: 'https://google.com',
-    formSubmitMethod: 'POST'
+    formSubmitMethod: 'POST',
+    providersPayload: {
+        aruba: {
+            data: 'test',
+            'a-nother': false
+        }
+    }
 });
         </script>
     </body>

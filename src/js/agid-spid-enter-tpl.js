@@ -67,23 +67,27 @@ window.AgidSpidEnter.prototype.tpl = {
     },
 
     spidProviderButton: function (providerData) {
-        var providerPayload,
-            title = (providerData.isActive)?
-                    this.getI18n('accedi_con_idp', providerData.title):
-                    this.getI18n('idp_disabled');
-
-        providerPayload = this.tpl.hiddenField('provider', providerData.provider);
+        var providerPayloadInputs = this.tpl.hiddenField('provider', providerData.provider),
+            providerTitle         = (providerData.isActive)?
+                                    this.getI18n('accedi_con_idp', providerData.title):
+                                    this.getI18n('idp_disabled');
+        // Crea gli input field chiave=valore dall'oggetto
+        if (providerData.payload) {
+            for (property in providerData.payload) {
+                providerPayloadInputs += this.tpl.hiddenField(property, providerData.payload[property]);
+            }
+        }
 
         return [
             '<span class="agid-spid-col l3 m6 s6 xs12">',
                 '<form action="', this.formActionUrl,'" method="', this.formSubmitMethod, '">',
                     '<button type="submit"',
                         'class="agid-spid-idp-button agid-spid-idp-', providerData.provider,'"',
-                        'title="', title, '"',
+                        'title="', providerTitle, '"',
                         'style="background-image: url(', this.config.assetsBaseUrl, 'img/idp-logos/', providerData.logo, ')"',
                         (providerData.isActive)?'':'disabled', '>',
                     '</button>',
-                    providerPayload,
+                    providerPayloadInputs,
                 '</form>',
             '</span>'
         ].join('');

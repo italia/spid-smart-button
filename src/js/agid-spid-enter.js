@@ -82,16 +82,11 @@ window.AgidSpidEnter = function () {
 
     function renderAvailableProviders() {
         var agid_spid_enter = document.querySelector('#agid-spid-enter'),
-            data = self.availableProviders,
-            spidProvidersButtonsHTML = '',
-            provider,
-            providerData;
+            spidProvidersButtonsHTML = '';
 
-        for (provider in data.spidProviders) {
-            providerData = data.spidProviders[provider];
-
-            spidProvidersButtonsHTML += getTpl('spidProviderButton', providerData);
-        };
+        self.availableProviders.forEach(function (provider) {
+            spidProvidersButtonsHTML += getTpl('spidProviderButton', provider);
+        });
 
         agid_spid_enter.innerHTML = getTpl('spidProviderChoiceModal', spidProvidersButtonsHTML);
 
@@ -214,6 +209,24 @@ window.AgidSpidEnter = function () {
         getSelectors();
     }
 
+    function mergeProvidersData(agidProvidersList, providersPayload) {
+        var availableProviders = [];
+
+        if (!providersPayload) {
+            availableProviders = agidProvidersList;
+        } else {
+            agidProvidersList.forEach(function (agidIdpConfig) {
+                if (agidIdpConfig.isActive) {
+                    agidIdpConfig.payload = providersPayload[agidIdpConfig.provider];
+                }
+
+                availableProviders.push(agidIdpConfig);
+            });
+        }
+
+        self.availableProviders = availableProviders;
+    }
+
     function setOptions(options) {
         if (options.language) {
             self.language         = options.language || self.language;
@@ -249,7 +262,7 @@ window.AgidSpidEnter = function () {
         return Promise.all(fetchData)
             .then(function (data) {
                 self.i18n = data[0];
-                self.availableProviders = data[1];
+                mergeProvidersData(data[1].spidProviders, options && options.providersPayload);
                 renderModule();
             })
             .catch(function (error) {
