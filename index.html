@@ -23,9 +23,19 @@ window.agidSpidEnter.init({
     formActionUrl: 'https://google.com',
     formSubmitMethod: 'POST',
     providersPayload: {
+        common: {
+            atr: 1
+        },
         aruba: {
             data: 'test',
             'a-nother': false
+        },
+        poste: {
+            atr: 2
+        },
+        tim: {
+            atr: 3,
+            flag: true
         }
     }
 });

@@ -217,7 +217,7 @@ window.AgidSpidEnter = function () {
         } else {
             agidProvidersList.forEach(function (agidIdpConfig) {
                 if (agidIdpConfig.isActive) {
-                    agidIdpConfig.payload = providersPayload[agidIdpConfig.provider];
+                    agidIdpConfig.payload = Object.assign({}, providersPayload.common, providersPayload[agidIdpConfig.provider]);
                 }
 
                 availableProviders.push(agidIdpConfig);
