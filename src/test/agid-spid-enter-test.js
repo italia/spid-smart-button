@@ -72,6 +72,22 @@ describe('agidSpidEnter', function () {
         });
     });
 
+    describe('changeLanguage method', function () {
+        it('should call only the i18n endpoint for the new copy', function (done) {
+            // GIVEN
+            SUT.init().then(function () {
+                spyOn(XMLHttpRequest.prototype, 'open').and.callThrough();
+                spyOn(XMLHttpRequest.prototype, 'send').and.callThrough();
+                // WHEN
+                SUT.changeLanguage('en');
+                // THEN
+                expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('POST', '/src/data/spidI18n.json');
+                expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"language":"en"}');
+                done();
+            });
+        });
+    });
+
     // A11y accessibility testing
     describe('axe accessibility check', function () {
         it('should not find any violation in the module HTML', function (done) {
