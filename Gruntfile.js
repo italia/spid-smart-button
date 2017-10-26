@@ -118,7 +118,8 @@ module.exports = function (grunt) {
             unitTest: {
                 src: [
                     'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
-                    'js/agid-spid-enter.min.js'],
+                    'node_modules/axe-core/axe.js', // A11y accessibility testing library
+                    'js/agid-spid-enter.min.js'], // Modulo minifizzato da testare
                 options: {
                     specs: ['src/test/*.js'],
                     outfile: '_SpecRunner.html',
@@ -128,29 +129,10 @@ module.exports = function (grunt) {
             }
         },
 
-        // Localhost server per sviluppo e test di accessibilità
+        // Localhost server per sviluppo
         serve: {
             options: {
                 port: serverPort
-            }
-        },
-
-        // Test di accessibilità del componente
-        // avviare prima grunt serve
-        a11y: {
-            accessibility: {
-                options: {
-                    urls: [localhostIndex],
-                    failOnError: true
-                }
-            }
-        },
-        "axe-webdriver": {
-            chrome: {
-                options: {
-                    browser: "chrome"
-                },
-                urls: [localhostIndex]
             }
         }
     });
@@ -160,5 +142,5 @@ module.exports = function (grunt) {
     grunt.registerTask('js', ['uglify']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
-    grunt.registerTask('test', ['jasmine', 'a11y', 'axe-webdriver']);
+    grunt.registerTask('test', ['jasmine']);
 };

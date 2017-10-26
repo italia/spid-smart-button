@@ -19,7 +19,7 @@ window.AgidSpidEnter.prototype.tpl = {
     spidProviderChoiceModal: function (spidProvidersButtons) {
         return [
             '<div id="agid-spid-enter-anim"></div>',
-            '<section id="agid-spid-panel-select" aria-modal="true" aria-labelledby="agid-spid-enter-title-page" tabindex="-1">',
+            '<section id="agid-spid-panel-select" aria-labelledby="agid-spid-enter-title-page" tabindex="-1">',
                 '<header id="agid-spid-panel-header">',
                     '<nav class="agid-spid-panel-back agid-spid-panel-element" aria-controls="agid-spid-panel-select">',
                         '<button tabindex="0" id="agid-spid-panel-close-button" class="agid-spid-button agid-navigable" aria-labelledby="agid-cancel-access-button">',

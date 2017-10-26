@@ -1,6 +1,9 @@
 describe('agidSpidEnter', function () {
     var SUT               = window.agidSpidEnter,
+        axe               = window.axe,
         agidSpidWrapperID = '#agid-spid-enter-container',
+        agidInfoModalID   = '#agid-infomodal',
+        agidModalButtonID = '#nospid',
         ajaxSuccess       = {
             providersEndpoint: '/src/data/spidProviders.json',
             localisationEndpoint: '/src/data/spidI18n.json'
@@ -65,6 +68,35 @@ describe('agidSpidEnter', function () {
                 // THEN
                 expect(agidSpidWrapper.length).toBe(1);
                 done();
+            });
+        });
+    });
+
+    // A11y accessibility testing
+    describe('axe accessibility check', function () {
+        it('should not find any violation in the module HTML', function (done) {
+            // GIVEN
+            var agidSpidWrapper,
+                agidInfoModal,
+                agidModalButton,
+                report;
+            // WHEN
+            SUT.init().then(function () {
+                // Mostra il modale dei provide
+                agidSpidWrapper = document.querySelector(agidSpidWrapperID);
+                agidSpidWrapper.removeAttribute('hidden');
+                // Mostra modale informativo per avere tutti gli elementi HTML visibili e testabili
+                agidModalButton = document.querySelector(agidModalButtonID);
+                agidModalButton.click();
+                // THEN
+                axe.run(agidSpidWrapper, {}, function (error, result) {
+                    if (result.violations.length) {
+                        report = JSON.stringify(result.violations, null, 4);
+                    }
+
+                    expect(result.violations.length).toBe(0, report);
+                    done();
+                });
             });
         });
     });

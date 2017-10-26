@@ -2,6 +2,8 @@
  * Modulo SPID smart button
  */
 window.AgidSpidEnter = function () {
+    "use strict";
+
     var self = this,
         hasSpidProviders = false,
         agidSpidEnterWrapper,
