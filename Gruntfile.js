@@ -1,7 +1,6 @@
 module.exports = function (grunt) {
-    var serverPort     = 9000,
-        localhostUrl   = 'http://localhost:' + serverPort,
-        localhostIndex = localhostUrl + '/index.html';
+    var serverPort   = 9000,
+        localhostUrl = 'http://localhost:' + serverPort;
 
     require('load-grunt-tasks')(grunt);
 
@@ -119,7 +118,8 @@ module.exports = function (grunt) {
                 src: [
                     'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
                     'node_modules/axe-core/axe.js', // A11y accessibility testing library
-                    'js/agid-spid-enter.min.js'], // Modulo minifizzato da testare
+                    'js/agid-spid-enter.min.js' // Modulo minifizzato da testare
+                ],
                 options: {
                     specs: ['src/test/*.js'],
                     outfile: '_SpecRunner.html',
@@ -129,7 +129,7 @@ module.exports = function (grunt) {
             }
         },
 
-        // Localhost server per sviluppo
+        // Localhost server per sviluppo e unit test
         serve: {
             options: {
                 port: serverPort

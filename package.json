@@ -13,6 +13,7 @@
     "start": "grunt serve",
     "lint": "grunt lint",
     "test": "grunt test",
+    "coverage": "node_modules/.bin/karma start karma.config.js",
     "precommit": "npm run lint",
     "prepush": "npm test"
   },
@@ -30,6 +31,10 @@
     "grunt-serve": "^0.1.6",
     "grunt-stylelint": "^0.9.0",
     "husky": "^0.14.3",
+    "karma": "^1.7.1",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
     "load-grunt-tasks": "^3.5.2",
     "promise-polyfill": "^6.0.2",
     "stylelint": "^8.2.0",
