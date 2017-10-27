@@ -1,5 +1,7 @@
 // Configurazione per Karma, coverage report su unit test jasmine
 module.exports = function (config) {
+    var gruntServeHost = 'http://localhost:9000';
+
     config.set({
         basePath: '.',
         frameworks: ['jasmine'],
@@ -10,12 +12,13 @@ module.exports = function (config) {
             'src/test/*.js' // File specs
         ],
         proxies: {
-            '/src/': 'http://localhost:9000/src/',
-            '/img/': 'http://localhost:9000/img/'
+            '/src/': gruntServeHost + '/src/',
+            '/img/': gruntServeHost + '/img/'
         },
         browsers: ['PhantomJS'],
         singleRun: true,
         reporters: ['progress', 'coverage'],
+        port: 9876,
         preprocessors: {
             "./js/agid-spid-enter.min.js": ["coverage"] // modulo su cui effettuare la coverage
         },
@@ -24,7 +27,8 @@ module.exports = function (config) {
                 istanbul: { noCompact: true }
             },
             type: 'html',
-            dir: 'coverage/'
+            dir: 'coverage/',
+            subdir: '.'
         }
     });
 };

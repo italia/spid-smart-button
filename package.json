@@ -13,9 +13,9 @@
     "start": "grunt serve",
     "lint": "grunt lint",
     "test": "grunt test",
-    "coverage": "node_modules/.bin/karma start karma.config.js",
+    "coverage": "node_modules/.bin/karma start karma.config.js && grunt log-coverage",
     "precommit": "npm run lint",
-    "prepush": "npm test"
+    "prepush": "npm test && npm run coverage"
   },
   "devDependencies": {
     "axe-core": "^2.4.2",

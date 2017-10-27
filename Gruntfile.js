@@ -137,6 +137,16 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask('log-coverage', function () {
+        grunt.log.writeln('il report della coverage si trova in:');
+        grunt.log.writeln(localhostUrl + '/coverage/js/agid-spid-enter.min.js.html');
+    });
+
+    grunt.registerTask('log-coverage', function () {
+        grunt.log.writeln('Il report della code coverage si trova in:');
+        grunt.log.writeln(localhostUrl + '/coverage/js/agid-spid-enter.min.js.html');
+    });
+
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass', 'postcss']);
     grunt.registerTask('js', ['uglify']);
