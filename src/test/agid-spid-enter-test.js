@@ -66,7 +66,7 @@ describe('agidSpidEnter', function () {
             SUT.init().then(function () {
                 // THEN
                 expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('POST', '/src/data/spidI18n.json');
-                expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"language":"it"}'. undefined);
+                expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"language":"it"}');
                 done();
             });
         });
@@ -92,6 +92,25 @@ describe('agidSpidEnter', function () {
                 // THEN
                 expect(console.error).toHaveBeenCalled();
                 done();
+            });
+        });
+
+        describe('when inited with a configuration object', function () {
+            it('should request the provided language in the config', function (done) {
+                // GIVEN
+                var config = {
+                    language: 'de'
+                };
+
+                spyOn(XMLHttpRequest.prototype, 'open').and.callThrough();
+                spyOn(XMLHttpRequest.prototype, 'send').and.callThrough();
+                // WHEN
+                SUT.init(config).then(function () {
+                    // THEN
+                    expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('POST', '/src/data/spidI18n.json');
+                    expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"language":"de"}');
+                    done();
+                });
             });
         });
     });
