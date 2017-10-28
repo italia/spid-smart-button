@@ -44,7 +44,7 @@ module.exports = function (grunt) {
                     sourcemap: 'none'
                 },
                 files: {
-                    'prod/agid-spid-enter.min.css': [
+                    'prod/agid-spid-enter.min.<%= pkg.version %>.css': [
                         'src/scss/agid-spid-enter-prod.scss'
                     ]
                 }
@@ -71,7 +71,7 @@ module.exports = function (grunt) {
                 options: {
                     map: false
                 },
-                src: 'prod/agid-spid-enter.min.css',
+                src: 'prod/agid-spid-enter.min.<%= pkg.version %>.css',
                 dest: 'prod/agid-spid-enter.min.css'
             }
         },
@@ -102,7 +102,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    'prod/agid-spid-enter.min.js': [
+                    'prod/agid-spid-enter.min.<%= pkg.version %>.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-i18n.js',
@@ -129,6 +129,20 @@ module.exports = function (grunt) {
             }
         },
 
+        'string-replace': {
+            version: {
+                files: {
+                    'prod/': ['prod/agid-spid-enter.min.<%= pkg.version %>.js']
+                },
+                options: {
+                    replacements: [{
+                        pattern: /{{ VERSION }}/g,
+                        replacement: '<%= pkg.version %>'
+                    }]
+                }
+            }
+        },
+
         // Localhost server per sviluppo e unit test
         serve: {
             options: {
@@ -137,9 +151,9 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('log-coverage', function () {
-        grunt.log.writeln('il report della coverage si trova in:');
-        grunt.log.writeln(localhostUrl + '/coverage/js/agid-spid-enter.min.js.html');
+    grunt.registerTask('log-jasmine', function () {
+        grunt.log.writeln('La pagina specrunner di jasmine si trova in:');
+        grunt.log.writeln(localhostUrl + '/_SpecRunner.html');
     });
 
     grunt.registerTask('log-coverage', function () {
@@ -149,7 +163,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass', 'postcss']);
-    grunt.registerTask('js', ['uglify']);
+    grunt.registerTask('js', ['uglify', 'string-replace']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
     grunt.registerTask('test', ['jasmine']);
