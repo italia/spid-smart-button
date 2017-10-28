@@ -230,11 +230,9 @@ window.AgidSpidEnter = function () {
     }
 
     function setOptions(options) {
-        if (options.language) {
-            self.language         = options.language || self.language;
-            self.formActionUrl    = options.formActionUrl || self.formActionUrl;
-            self.formSubmitMethod = options.formSubmitMethod || self.formSubmitMethod;
-        }
+        self.language         = options.language || self.language;
+        self.formActionUrl    = options.formActionUrl || self.formActionUrl;
+        self.formSubmitMethod = options.formSubmitMethod || self.formSubmitMethod;
     }
 
     function changeLanguage(language) {
