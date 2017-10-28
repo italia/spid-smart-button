@@ -34,7 +34,6 @@ describe('agidSpidEnter', function () {
         it('should create a module instance in the global scope', function () {
             expect(SUT).toBeDefined();
         });
-
     });
 
     describe('init method', function () {
@@ -91,6 +90,14 @@ describe('agidSpidEnter', function () {
             SUT.init().then(function () {
                 // THEN
                 expect(console.error).toHaveBeenCalled();
+                done();
+            });
+        });
+
+        it('should warn the dev if no placeholder is found to render the smartbuttons', function (done) {
+            SUT.init().then(function () {
+                // THEN
+                expect(console.warn).toHaveBeenCalled();
                 done();
             });
         });
