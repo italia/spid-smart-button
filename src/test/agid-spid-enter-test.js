@@ -14,7 +14,7 @@ describe('agidSpidEnter', function () {
         };
 
     function setSUTconfig(config) {
-        window.AgidSpidEnter.prototype.config = config;
+        window.AgidSpidEnter.prototype.config = Object.assign({}, window.AgidSpidEnter.prototype.config, config);
     }
 
     beforeEach(function () {
@@ -58,6 +58,19 @@ describe('agidSpidEnter', function () {
             });
         });
 
+        it('should fetch italian language if no option was provided, and not provide payload for the providers call', function (done) {
+            // GIVEN
+            spyOn(XMLHttpRequest.prototype, 'open').and.callThrough();
+            spyOn(XMLHttpRequest.prototype, 'send').and.callThrough();
+            // WHEN
+            SUT.init().then(function () {
+                // THEN
+                expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('POST', '/src/data/spidI18n.json');
+                expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"language":"it"}'. undefined);
+                done();
+            });
+        });
+
         it('should NOT inject the modal wrapper HTML more than once', function (done) {
             // GIVEN
             var initCalls       = [SUT.init(), SUT.init(), SUT.init()],
@@ -67,6 +80,17 @@ describe('agidSpidEnter', function () {
                 agidSpidWrapper = document.querySelectorAll(agidSpidWrapperID);
                 // THEN
                 expect(agidSpidWrapper.length).toBe(1);
+                done();
+            });
+        });
+
+        it('should log failure when ajax calls do not all return data', function (done) {
+            // GIVEN
+            setSUTconfig(ajaxFail);
+
+            SUT.init().then(function () {
+                // THEN
+                expect(console.error).toHaveBeenCalled();
                 done();
             });
         });
@@ -83,6 +107,19 @@ describe('agidSpidEnter', function () {
                 // THEN
                 expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('POST', '/src/data/spidI18n.json');
                 expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"language":"en"}');
+                done();
+            });
+        });
+
+        it('should log failure when ajax call does not return data', function (done) {
+            // GIVEN
+            setSUTconfig(ajaxFail);
+
+            SUT.init().then(function () {
+                // WHEN
+                SUT.changeLanguage('en');
+                // THEN
+                expect(console.error).toHaveBeenCalled();
                 done();
             });
         });
