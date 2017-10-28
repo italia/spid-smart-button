@@ -72,7 +72,7 @@ module.exports = function (grunt) {
                     map: false
                 },
                 src: 'prod/agid-spid-enter.min.<%= pkg.version %>.css',
-                dest: 'prod/agid-spid-enter.min.css'
+                dest: 'prod/agid-spid-enter.min.<%= pkg.version %>css'
             }
         },
 
