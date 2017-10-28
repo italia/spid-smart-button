@@ -166,5 +166,5 @@ module.exports = function (grunt) {
     grunt.registerTask('js', ['uglify', 'string-replace']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
-    grunt.registerTask('test', ['jasmine']);
+    grunt.registerTask('test', ['jasmine', 'log-jasmine']);
 };
