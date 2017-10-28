@@ -67,12 +67,19 @@ window.AgidSpidEnter.prototype.tpl = {
     },
 
     spidProviderButton: function (providerData) {
-        var providerPayloadInputs = this.tpl.hiddenField('provider', providerData.provider),
+        var providerHiddenName    = 'provider',
+            providerPayloadInputs = '',
             providerTitle         = (providerData.isActive)?
                                     this.getI18n('accedi_con_idp', providerData.title):
                                     this.getI18n('idp_disabled');
         // Crea gli input field chiave=valore dall'oggetto
         if (providerData.payload) {
+            // Imposta il name dell'identity provider o fallback su un default
+            providerHiddenName = providerData.payload.providerHiddenName || providerHiddenName;
+            delete providerData.payload.providerHiddenName;
+
+            providerPayloadInputs += this.tpl.hiddenField(providerHiddenName, providerData.provider);
+
             for (property in providerData.payload) {
                 providerPayloadInputs += this.tpl.hiddenField(property, providerData.payload[property]);
             }
