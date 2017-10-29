@@ -127,6 +127,17 @@ describe('agidSpidEnter', function () {
                     done();
                 });
             });
+
+            it('should throw an error if supplied SPID button size is invalid', function (done) {
+                // GIVEN
+                injectSpidPlaceHolder('H');
+                // WHEN
+                SUT.init().then(function () {
+                    // THEN
+                    expect(console.error).toHaveBeenCalled();
+                    done();
+                });
+            });
         });
 
 
