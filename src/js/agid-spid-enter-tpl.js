@@ -3,7 +3,7 @@ window.AgidSpidEnter.prototype.tpl = {
     spidMainContainers: function () {
         return [
             '<div id="agid-spid-enter">', '</div>',
-            '<div id="agid-infomodal" class="modal" aria-live="assertive" hidden>', '</div>'
+            '<div id="agid-infomodal" class="modal" aria-live="assertive" tabindex="0" hidden>', '</div>'
         ].join('');
     },
 

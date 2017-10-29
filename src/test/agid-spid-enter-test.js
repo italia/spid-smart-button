@@ -3,6 +3,7 @@ describe('agidSpidEnter', function () {
         axe               = window.axe,
         agidSpidWrapperID = '#agid-spid-enter-container',
         agidInfoModalID   = '#agid-infomodal',
+        agidModalCosaBtID = '#cosaspid',
         agidModalButtonID = '#nospid',
         ajaxSuccess       = {
             providersEndpoint: '/src/data/spidProviders.json',
@@ -21,6 +22,10 @@ describe('agidSpidEnter', function () {
         var spidButtonPlaceholder = document.createElement('div');
         spidButtonPlaceholder.innerHTML = '<div class="agid-spid-enter-button" aria-live="polite" data-size="' + size + '"></div>';
         document.body.appendChild(spidButtonPlaceholder);
+    }
+
+    function isElementVisible(elementID) {
+        return !document.querySelector(elementID).hasAttribute('hidden');
     }
 
     function triggerEscKey() {
@@ -171,7 +176,7 @@ describe('agidSpidEnter', function () {
         });
 
 
-        describe('when inited with a configuration object', function () {
+        describe('when supplied with a configuration object', function () {
             it('should request the provided language in the config', function (done) {
                 // GIVEN
                 var config = {
@@ -230,7 +235,7 @@ describe('agidSpidEnter', function () {
             SUT.init().then(function () {
                 // WHEN
                 document.querySelector('.agid-spid-enter.agid-spid-enter-size-s').click();
-                isChoiceModalVisible = !document.querySelector(agidSpidWrapperID).hasAttribute('hidden');
+                isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
                 // THEN
                 expect(isChoiceModalVisible).toBeTruthy();
                 done();
@@ -269,7 +274,7 @@ describe('agidSpidEnter', function () {
                 document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
                 // WHEN
                 document.querySelector('#agid-spid-panel-close-button').click();
-                isChoiceModalVisible = !document.querySelector(agidSpidWrapperID).hasAttribute('hidden');
+                isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
                 done();
@@ -286,7 +291,7 @@ describe('agidSpidEnter', function () {
                 document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
                 // WHEN
                 document.querySelector('#agid-cancel-access-button').click();
-                isChoiceModalVisible = !document.querySelector(agidSpidWrapperID).hasAttribute('hidden');
+                isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
                 done();
@@ -303,7 +308,7 @@ describe('agidSpidEnter', function () {
                 document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
                 // WHEN
                 triggerEscKey();
-                isChoiceModalVisible = !document.querySelector(agidSpidWrapperID).hasAttribute('hidden');
+                isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
                 done();
@@ -311,8 +316,87 @@ describe('agidSpidEnter', function () {
         });
     });
 
+    describe('when the informative buttons in the footer are clicked', function () {
+        it('should open the informative modal on top of the providers modal', function (done) {
+            // GIVEN
+            injectSpidPlaceHolder('L');
+
+            SUT.init().then(function () {
+                var isInfoModalVisible;
+
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+                // WHEN
+                document.querySelector(agidModalButtonID).click();
+                isInfoModalVisible = isElementVisible(agidInfoModalID);
+                // THEN
+                expect(isInfoModalVisible).toBeTruthy();
+                done();
+            });
+        });
+
+        it('should give focus to the displayed informative modal for accessibility', function (done) {
+            // If this test fails in Chrome it may be due to focused developer tools:
+            // https://stackoverflow.com/questions/23045172/focus-event-not-firing-via-javascript-in-chrome#answer-23045332
+
+            // GIVEN
+            injectSpidPlaceHolder('M');
+
+            SUT.init().then(function () {
+                var infoModal;
+
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-m').click();
+                document.querySelector(agidModalCosaBtID).click();
+                infoModal = document.querySelector(agidInfoModalID);
+                // WHEN
+                infoModal.addEventListener('focus', function () {
+                    // THEN
+                    expect(infoModal).toBe(document.activeElement);
+                    done();
+                });
+            });
+        });
+    });
+
+    describe('when the informative modal is displayed on top of the providers modal it should allow to close it by', function () {
+        it('click on the top right X button in the modal', function (done) {
+            // GIVEN
+            injectSpidPlaceHolder('Xl');
+
+            SUT.init().then(function () {
+                var isInfoModalVisible;
+
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                document.querySelector(agidModalButtonID).click();
+                // WHEN
+                document.querySelector('#closemodalbutton').click();
+                isInfoModalVisible = isElementVisible(agidInfoModalID);
+                // THEN
+                expect(isInfoModalVisible).toBeFalsy();
+                done();
+            });
+        });
+
+        it('hit on the keyboard esc key', function (done) {
+            // GIVEN
+            injectSpidPlaceHolder('Xl');
+
+            SUT.init().then(function () {
+                var isInfoModalVisible;
+
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                document.querySelector(agidModalButtonID).click();
+                // WHEN
+                triggerEscKey();
+                isInfoModalVisible = isElementVisible(agidInfoModalID);
+                // THEN
+                expect(isInfoModalVisible).toBeFalsy();
+                done();
+            });
+        });
+    });
+
     // A11y accessibility testing
-    describe('axe accessibility check', function () {
+    describe('aXe accessibility check (A11y)', function () {
         it('should not find any violation in the module HTML', function (done) {
             // GIVEN
             var axeOptions = {

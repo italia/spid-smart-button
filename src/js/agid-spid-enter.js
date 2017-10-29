@@ -26,18 +26,24 @@ window.AgidSpidEnter = function () {
         dom.setAttributeNode(hiddenAttribute);
     }
 
+    // a11y: porta il focus sull'elemento interattivo mostrato
+    // il delay con timeout assicura l'applicazione del focus
+    function giveFocusTo(element) {
+        setTimeout(function () {
+            element.focus();
+        }, 1000);
+    }
+
     function closeInfoModal() {
         hideElement(infoModal);
         infoModal.innerHTML = '';
-        // a11y: Restituisci il focus al modale dei providers
-        spidPanelSelect.focus();
+        giveFocusTo(spidPanelSelect);
     }
 
     function openInfoModal(htmlContent) {
         infoModal.innerHTML = getTpl('infoModalContent', htmlContent);
         showElement(infoModal);
-        // a11y: porta il focus sulla finestra informativa
-        infoModal.focus();
+        giveFocusTo(infoModal);
         // Viene distrutto e ricreato, non necessita unbind
         document.querySelector('#closemodalbutton').addEventListener('click', closeInfoModal);
     };
@@ -68,11 +74,8 @@ window.AgidSpidEnter = function () {
     function showProvidersPanel() {
         shuffleIdp();
         showElement(agidSpidEnterWrapper);
+        giveFocusTo(spidPanelSelect);
         document.addEventListener('keyup', handleEscKeyEvent);
-        // a11y: porta il focus sul pannello mostrato senza attendere termine fadeIn
-        setTimeout(function () {
-            spidPanelSelect.focus();
-        }, 500);
     }
 
     function hideProvidersPanel() {
