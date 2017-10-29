@@ -31,7 +31,7 @@ window.AgidSpidEnter = function () {
     function giveFocusTo(element) {
         setTimeout(function () {
             element.focus();
-        }, 800);
+        }, 900);
     }
 
     function closeInfoModal() {
