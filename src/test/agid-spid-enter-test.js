@@ -17,6 +17,12 @@ describe('agidSpidEnter', function () {
         window.AgidSpidEnter.prototype.config = Object.assign({}, window.AgidSpidEnter.prototype.config, config);
     }
 
+    function injectSpidPlaceHolder(size) {
+        var spidButtonPlaceholder = document.createElement('div');
+        spidButtonPlaceholder.innerHTML = '<div class="agid-spid-enter-button" aria-live="polite" data-size="' + size + '"></div>';
+        document.body.appendChild(spidButtonPlaceholder);
+    }
+
     beforeEach(function () {
         setSUTconfig(ajaxSuccess);
         spyOn(console, 'warn');
@@ -25,9 +31,11 @@ describe('agidSpidEnter', function () {
 
     afterEach(function () {
         // Pulisci il DOM
-        var agidSpidWrapper = document.querySelector('body > section');
+        var agidSpidWrapper = document.querySelector('body > section'),
+            spidPlaceholder = document.querySelector('.agid-spid-enter-button');
 
         agidSpidWrapper && agidSpidWrapper.remove();
+        spidPlaceholder && spidPlaceholder.parentElement.remove();
     });
 
     describe('when script is included in the page', function () {
@@ -102,6 +110,26 @@ describe('agidSpidEnter', function () {
             });
         });
 
+        describe('when SPID button placeholder are present in the page', function () {
+            it('should render the SPID button if supplied sizes are valid regardless of the case', function (done) {
+                // GIVEN
+                var spidButtons;
+
+                injectSpidPlaceHolder('S');
+                injectSpidPlaceHolder('m');
+                injectSpidPlaceHolder('L');
+                injectSpidPlaceHolder('xL');
+                // WHEN
+                SUT.init().then(function () {
+                    spidButtons = document.querySelectorAll('.agid-spid-enter');
+                    // THEN
+                    expect(spidButtons.length).toBeTruthy();
+                    done();
+                });
+            });
+        });
+
+
         describe('when inited with a configuration object', function () {
             it('should request the provided language in the config', function (done) {
                 // GIVEN
@@ -155,7 +183,13 @@ describe('agidSpidEnter', function () {
     describe('axe accessibility check', function () {
         it('should not find any violation in the module HTML', function (done) {
             // GIVEN
-            var agidSpidWrapper,
+            var axeOptions = {
+                    "rules": {
+                        "color-contrast": { enabled: false },
+                        "valid-lang": { enabled: false }
+                    }
+                },
+                agidSpidWrapper,
                 agidInfoModal,
                 agidModalButton,
                 report;
@@ -168,7 +202,7 @@ describe('agidSpidEnter', function () {
                 agidModalButton = document.querySelector(agidModalButtonID);
                 agidModalButton.click();
                 // THEN
-                axe.run(agidSpidWrapper, {}, function (error, result) {
+                axe.run(agidSpidWrapper, axeOptions, function (error, result) {
                     if (result.violations.length) {
                         report = JSON.stringify(result.violations, null, 4);
                     }
