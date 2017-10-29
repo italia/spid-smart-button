@@ -23,6 +23,20 @@ describe('agidSpidEnter', function () {
         document.body.appendChild(spidButtonPlaceholder);
     }
 
+    function triggerEscKey() {
+        // Credit to Elger van Boxtel
+        // https://elgervanboxtel.nl/site/blog/simulate-keydown-event-with-javascript
+        var e = new Event("keyup");
+        e.keyCode  = 27;
+        e.which    = e.keyCode;
+        e.altKey   = false;
+        e.ctrlKey  = true;
+        e.shiftKey = false;
+        e.metaKey  = false;
+        e.bubbles  = true;
+        document.dispatchEvent(e);
+    }
+
     beforeEach(function () {
         setSUTconfig(ajaxSuccess);
         spyOn(console, 'warn');
@@ -240,6 +254,59 @@ describe('agidSpidEnter', function () {
                     expect(choiceModal).toBe(document.activeElement);
                     done();
                 });
+            });
+        });
+    });
+
+    describe('when the providers modal is displayed it should allow to close it by', function () {
+        it('click on the top right X button', function (done) {
+            // GIVEN
+            injectSpidPlaceHolder('Xl');
+
+            SUT.init().then(function () {
+                var isChoiceModalVisible;
+
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                // WHEN
+                document.querySelector('#agid-spid-panel-close-button').click();
+                isChoiceModalVisible = !document.querySelector(agidSpidWrapperID).hasAttribute('hidden');
+                // THEN
+                expect(isChoiceModalVisible).toBeFalsy();
+                done();
+            });
+        });
+
+        it('click on the bottom list cancel button', function (done) {
+            // GIVEN
+            injectSpidPlaceHolder('Xl');
+
+            SUT.init().then(function () {
+                var isChoiceModalVisible;
+
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                // WHEN
+                document.querySelector('#agid-cancel-access-button').click();
+                isChoiceModalVisible = !document.querySelector(agidSpidWrapperID).hasAttribute('hidden');
+                // THEN
+                expect(isChoiceModalVisible).toBeFalsy();
+                done();
+            });
+        });
+
+        it('hit on the keyboard esc key', function (done) {
+            // GIVEN
+            injectSpidPlaceHolder('Xl');
+
+            SUT.init().then(function () {
+                var isChoiceModalVisible;
+
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                // WHEN
+                triggerEscKey();
+                isChoiceModalVisible = !document.querySelector(agidSpidWrapperID).hasAttribute('hidden');
+                // THEN
+                expect(isChoiceModalVisible).toBeFalsy();
+                done();
             });
         });
     });
