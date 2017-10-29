@@ -31,7 +31,7 @@ window.AgidSpidEnter = function () {
     function giveFocusTo(element) {
         setTimeout(function () {
             element.focus();
-        }, 1200);
+        }, 500);
     }
 
     function closeInfoModal() {
@@ -74,7 +74,9 @@ window.AgidSpidEnter = function () {
     function showProvidersPanel() {
         shuffleIdp();
         showElement(agidSpidEnterWrapper);
-        giveFocusTo(spidPanelSelect);
+        setTimeout(function () {
+            spidPanelSelect.focus();
+        }, 500);
         document.addEventListener('keyup', handleEscKeyEvent);
     }
 
