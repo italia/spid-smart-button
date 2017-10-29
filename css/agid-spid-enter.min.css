@@ -469,13 +469,13 @@
   .agid-spid-col.m5 {
     width: 41.66666%;
   }
-  .agid-spid-col.m6, .agid-spid-half {
+  .agid-spid-col.m6 {
     width: 49.99999%;
   }
   .agid-spid-col.m7 {
     width: 58.33333%;
   }
-  .agid-spid-col.m8, .agid-spid-twothird {
+  .agid-spid-col.m8 {
     width: 66.66666%;
   }
   .agid-spid-col.m9 {
@@ -492,11 +492,11 @@
   }
 
   .agid-spid-half {
-    /* stylelint-disable-line at-rule-no-unknown */
+    width: 49.99999%;
   }
 
   .agid-spid-twothird {
-    /* stylelint-disable-line at-rule-no-unknown */
+    width: 66.66666%;
   }
 
   .agid-spid-panel-content-center {

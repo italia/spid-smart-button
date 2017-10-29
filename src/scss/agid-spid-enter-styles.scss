@@ -555,11 +555,11 @@
     }
 
     .agid-spid-half {
-        @extend .agid-spid-col.m6; /* stylelint-disable-line at-rule-no-unknown */
+        width: 49.99999%;
     }
 
     .agid-spid-twothird {
-        @extend .agid-spid-col.m8; /* stylelint-disable-line at-rule-no-unknown */
+        width: 66.66666%;
     }
 
     .agid-spid-panel-content-center {
