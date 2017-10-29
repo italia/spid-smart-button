@@ -333,28 +333,6 @@ describe('agidSpidEnter', function () {
                 done();
             });
         });
-
-        it('should give focus to the displayed informative modal for accessibility', function (done) {
-            // If this test fails in Chrome it may be due to focused developer tools:
-            // https://stackoverflow.com/questions/23045172/focus-event-not-firing-via-javascript-in-chrome#answer-23045332
-
-            // GIVEN
-            injectSpidPlaceHolder('M');
-
-            SUT.init().then(function () {
-                var infoModal;
-
-                document.querySelector('.agid-spid-enter.agid-spid-enter-size-m').click();
-                document.querySelector(agidModalCosaBtID).click();
-                infoModal = document.querySelector(agidInfoModalID);
-                // WHEN
-                infoModal.addEventListener('focus', function () {
-                    // THEN
-                    expect(infoModal).toBe(document.activeElement);
-                    done();
-                });
-            });
-        });
     });
 
     describe('when the informative modal is displayed on top of the providers modal it should allow to close it by', function () {

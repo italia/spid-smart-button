@@ -31,7 +31,7 @@ window.AgidSpidEnter = function () {
     function giveFocusTo(element) {
         setTimeout(function () {
             element.focus();
-        }, 1200);
+        }, 800);
     }
 
     function closeInfoModal() {
@@ -43,7 +43,7 @@ window.AgidSpidEnter = function () {
     function openInfoModal(htmlContent) {
         infoModal.innerHTML = getTpl('infoModalContent', htmlContent);
         showElement(infoModal);
-        giveFocusTo(infoModal);
+        // L'attributo aria-live assertive farà leggere il contenuto senza bisogno di focus
         // Viene distrutto e ricreato, non necessita unbind
         document.querySelector('#closemodalbutton').addEventListener('click', closeInfoModal);
     };
