@@ -87,7 +87,8 @@ window.AgidSpidEnter.prototype.tpl = {
 
         return [
             '<span class="agid-spid-col l3 m6 s6 xs12">',
-                '<form action="', this.formActionUrl,'" method="', this.formSubmitMethod, '">',
+                '<form id="agid-spid-provider-', providerData.provider, '"',
+                    'action="', this.formActionUrl,'" method="', this.formSubmitMethod, '">',
                     '<button type="submit"',
                         'class="agid-spid-idp-button agid-spid-idp-', providerData.provider,'"',
                         'title="', providerTitle, '"',
