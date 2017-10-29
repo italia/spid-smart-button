@@ -148,15 +148,13 @@ describe('agidSpidEnter', function () {
         describe('when SPID button placeholder are present in the page', function () {
             it('should render the SPID button if supplied sizes are valid regardless of the case', function (done) {
                 // GIVEN
-                var spidButtons;
-
                 injectSpidPlaceHolder('S');
                 injectSpidPlaceHolder('m');
                 injectSpidPlaceHolder('L');
                 injectSpidPlaceHolder('xL');
                 // WHEN
                 SUT.init().then(function () {
-                    spidButtons = document.querySelectorAll('.agid-spid-enter');
+                    var spidButtons = document.querySelectorAll('.agid-spid-enter');
                     // THEN
                     expect(spidButtons.length).toBeTruthy();
                     done();
@@ -220,6 +218,40 @@ describe('agidSpidEnter', function () {
                 SUT.changeLanguage('en');
                 // THEN
                 expect(console.error).toHaveBeenCalled();
+                done();
+            });
+        });
+    });
+
+    describe('updateSpidButtons method', function () {
+        it('should render again the spidbuttons in the placeholders if data was fetched successfully', function (done) {
+            // GIVEN
+            var spidButtons;
+
+            SUT.init().then(function () {
+                injectSpidPlaceHolder('S');
+                // WHEN
+                SUT.updateSpidButtons();
+                spidButtons = document.querySelectorAll('.agid-spid-enter');
+                // THEN
+                expect(spidButtons.length).toBe(1);
+                done();
+            });
+        });
+
+        it('should not render the spidbuttons if providers data was not fetched and throw error', function (done) {
+            // GIVEN
+            var spidButtons;
+
+            setSUTconfig(ajaxFail);
+
+            SUT.init().then(function () {
+                injectSpidPlaceHolder('S');
+                // WHEN
+                SUT.updateSpidButtons();
+                spidButtons = document.querySelectorAll('.agid-spid-enter');
+                // THEN
+                expect(spidButtons.length).toBe(1);
                 done();
             });
         });
@@ -344,7 +376,7 @@ describe('agidSpidEnter', function () {
                 var isInfoModalVisible;
 
                 document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
-                document.querySelector(agidModalButtonID).click();
+                document.querySelector(agidModalCosaBtID).click();
                 // WHEN
                 document.querySelector('#closemodalbutton').click();
                 isInfoModalVisible = isElementVisible(agidInfoModalID);

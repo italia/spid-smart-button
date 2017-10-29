@@ -32,7 +32,7 @@ window.AgidSpidEnter = function () {
         // a11y: porta il focus sull'elemento interattivo mostrato
         setTimeout(function () {
             spidPanelSelect.focus();
-        }, 500);
+        }, 0);
     }
 
     function openInfoModal(htmlContent) {
