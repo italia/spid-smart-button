@@ -110,6 +110,14 @@ describe('agidSpidEnter', function () {
             });
         });
 
+        it('should warn the dev if no placeholder is found to render the smartbuttons', function (done) {
+            SUT.init().then(function () {
+                // THEN
+                expect(console.warn).toHaveBeenCalled();
+                done();
+            });
+        });
+
         describe('when SPID button placeholder are present in the page', function () {
             it('should render the SPID button if supplied sizes are valid regardless of the case', function (done) {
                 // GIVEN
@@ -186,6 +194,44 @@ describe('agidSpidEnter', function () {
                 // THEN
                 expect(console.error).toHaveBeenCalled();
                 done();
+            });
+        });
+    });
+
+    describe('when a SPID button is clicked', function () {
+        it('should display the provider choice modal', function (done) {
+            // GIVEN
+            var isChoiceModalVisible;
+
+            injectSpidPlaceHolder('S');
+
+            SUT.init().then(function () {
+                // WHEN
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-s').click();
+                isChoiceModalVisible = !document.querySelector(agidSpidWrapperID).hasAttribute('hidden');
+                // THEN
+                expect(isChoiceModalVisible).toBeTruthy();
+                done();
+            });
+        });
+
+        it('should give focus to the displayed modal for accessibility', function (done) {
+            // If this test fails in Chrome it may be due to focused developer tools:
+            // https://stackoverflow.com/questions/23045172/focus-event-not-firing-via-javascript-in-chrome#answer-23045332
+
+            // GIVEN
+            injectSpidPlaceHolder('m');
+
+            SUT.init().then(function () {
+                var choiceModal = document.querySelector('#agid-spid-panel-select');
+
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-m').click();
+                // WHEN
+                choiceModal.addEventListener('focus', function () {
+                    // THEN
+                    expect(choiceModal).toBe(document.activeElement);
+                    done();
+                });
             });
         });
     });

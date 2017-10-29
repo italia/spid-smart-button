@@ -69,12 +69,10 @@ window.AgidSpidEnter = function () {
         shuffleIdp();
         showElement(agidSpidEnterWrapper);
         document.addEventListener('keyup', handleEscKeyEvent);
-        // a11y: porta il focus sul pannello appena mostrato
-        function focusSpidPanel() {
+        // a11y: porta il focus sul pannello mostrato senza attendere termine fadeIn
+        setTimeout(function () {
             spidPanelSelect.focus();
-            spidPanelSelect.removeEventListener('animationend', focusSpidPanel);
-        }
-        spidPanelSelect.addEventListener('animationend', focusSpidPanel);
+        }, 500);
     }
 
     function hideProvidersPanel() {
