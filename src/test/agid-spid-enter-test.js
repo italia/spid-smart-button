@@ -400,7 +400,7 @@ describe('agidSpidEnter', function () {
                     if (result.violations.length) {
                         report = JSON.stringify(result.violations, null, 4);
                     }
-
+                    // Logga il report in caso di errori passandolo come secondo argomento
                     expect(result.violations.length).toBe(0, report);
                     done();
                 });
