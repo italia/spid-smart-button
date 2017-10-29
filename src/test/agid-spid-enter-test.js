@@ -91,22 +91,38 @@ describe('agidSpidEnter', function () {
             });
         });
 
-        it('should log failure when ajax calls do not all return data', function (done) {
-            // GIVEN
-            setSUTconfig(ajaxFail);
-
-            SUT.init().then(function () {
-                // THEN
-                expect(console.error).toHaveBeenCalled();
-                done();
-            });
-        });
-
         it('should warn the dev if no placeholder is found to render the smartbuttons', function (done) {
             SUT.init().then(function () {
                 // THEN
                 expect(console.warn).toHaveBeenCalled();
                 done();
+            });
+        });
+
+        describe('on failure', function () {
+            it('should log failure when ajax calls do not all return data', function (done) {
+                // GIVEN
+                setSUTconfig(ajaxFail);
+
+                SUT.init().then(function () {
+                    // THEN
+                    expect(console.error).toHaveBeenCalled();
+                    done();
+                });
+            });
+
+            it('should NOT inject the modal wrapper HTML at all', function (done) {
+                // GIVEN
+                var agidSpidWrapper;
+
+                setSUTconfig(ajaxFail);
+                // WHEN
+                SUT.init().then(function () {
+                    agidSpidWrapper = document.querySelector(agidSpidWrapperID);
+                    // THEN
+                    expect(!!agidSpidWrapper).toBeFalsy();
+                    done();
+                });
             });
         });
 
