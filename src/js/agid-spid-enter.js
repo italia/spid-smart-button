@@ -26,18 +26,13 @@ window.AgidSpidEnter = function () {
         dom.setAttributeNode(hiddenAttribute);
     }
 
-    // a11y: porta il focus sull'elemento interattivo mostrato
-    // il delay con timeout assicura l'applicazione del focus
-    function giveFocusTo(element) {
-        setTimeout(function () {
-            element.focus();
-        }, 500);
-    }
-
     function closeInfoModal() {
         hideElement(infoModal);
         infoModal.innerHTML = '';
-        giveFocusTo(spidPanelSelect);
+        // a11y: porta il focus sull'elemento interattivo mostrato
+        setTimeout(function () {
+            spidPanelSelect.focus();
+        }, 500);
     }
 
     function openInfoModal(htmlContent) {
@@ -74,6 +69,7 @@ window.AgidSpidEnter = function () {
     function showProvidersPanel() {
         shuffleIdp();
         showElement(agidSpidEnterWrapper);
+        // a11y: porta il focus sull'elemento interattivo mostrato
         setTimeout(function () {
             spidPanelSelect.focus();
         }, 500);

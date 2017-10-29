@@ -373,6 +373,30 @@ describe('agidSpidEnter', function () {
         });
     });
 
+    describe('when provided with a payload in config at init time', function () {
+        it('should add to the active providers the hidden inputs payload from common', function (done) {
+            // GIVEN
+            var config = {
+                providersPayload: {
+                    common: {
+                        testName: 'testValue'
+                    }
+                }
+            };
+            injectSpidPlaceHolder('xL');
+            // WHEN
+            SUT.init(config).then(function () {
+                var providers    = document.querySelectorAll('#agid-spid-idp-list form'),
+                    hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]');
+
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                // THEN
+                expect(hiddenInputs.length).toEqual(5);
+                done();
+            });
+        });
+    });
+
     // A11y accessibility testing
     describe('aXe accessibility check (A11y)', function () {
         it('should not find any violation in the module HTML', function (done) {
