@@ -110,14 +110,6 @@ describe('agidSpidEnter', function () {
             });
         });
 
-        it('should warn the dev if no placeholder is found to render the smartbuttons', function (done) {
-            SUT.init().then(function () {
-                // THEN
-                expect(console.warn).toHaveBeenCalled();
-                done();
-            });
-        });
-
         describe('when SPID button placeholder are present in the page', function () {
             it('should render the SPID button if supplied sizes are valid regardless of the case', function (done) {
                 // GIVEN
