@@ -519,6 +519,19 @@ describe('agidSpidEnter', function () {
         });
     });
 
+    describe('getI18n utility', function () {
+        it('should return the key name when the value cannot be found', function () {
+            // GIVEN
+            var key = 'undefined.key',
+                copy;
+            // WHEN
+            copy = window.AgidSpidEnter.prototype.getI18n(key);
+            // THEN
+            expect(copy).toEqual(key);
+            expect(console.error).toHaveBeenCalled();
+        });
+    });
+
     // A11y accessibility testing
     describe('aXe accessibility check (A11y)', function () {
         it('should not find any violation in the module HTML', function (done) {

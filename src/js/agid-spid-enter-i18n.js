@@ -16,10 +16,8 @@ window.AgidSpidEnter.prototype.getI18n = function (labelKey, placeholderValue) {
     }
 
     // In caso di label mancante fornisci un feedback al dev
-    if (!this.i18n.language[locale]) {
-        console.error('Il locale richiesto non è disponibile:', locale);
-    } else if (!this.i18n.language[locale][labelKey]) {
-        console.error('La chiave richiesta non è disponibile nel locale selezionato:', labelKey);
+    if (!copy) {
+        console.error('La chiave richiesta non è disponibile nel locale selezionato:', locale, labelKey);
     }
 
     return copy || labelKey;
