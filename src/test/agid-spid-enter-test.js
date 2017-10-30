@@ -468,30 +468,6 @@ describe('agidSpidEnter', function () {
             });
         });
 
-        it('should add to the active providers the hidden inputs payload from common and the specific per provider', function (done) {
-            // GIVEN
-            var config = {
-                providersPayload: {
-                    common: {
-                        testName: 'testValue'
-                    },
-                    aruba: {
-                        specific: true
-                    }
-                }
-            };
-            // WHEN
-            SUT.init(config).then(function () {
-                var providers     = document.querySelectorAll('#agid-spid-idp-list form'),
-                    hiddenInputs  = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]'),
-                    specificInput = document.querySelectorAll('#agid-spid-idp-list input[name="specific"]');
-                // THEN
-                expect(hiddenInputs.length).toEqual(5);
-                expect(specificInput.length).toEqual(1);
-                done();
-            });
-        });
-
         it('should change the provider input name when specified', function (done) {
             // GIVEN
             var config = {
