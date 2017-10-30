@@ -28,6 +28,18 @@ describe('agidSpidEnter', function () {
         return !document.querySelector(elementID).hasAttribute('hidden');
     }
 
+    function domCleanup() {
+        var agidSpidWrapper = document.querySelectorAll('body > section'),
+            spidPlaceholder = document.querySelectorAll('.agid-spid-enter-button');
+
+        Array.from(agidSpidWrapper).forEach(function (agidWrapper) {
+            agidWrapper.remove();
+        });
+        Array.from(spidPlaceholder).forEach(function (spidButton) {
+            spidButton.parentElement.remove();
+        });
+    }
+
     function triggerKeyEvent(keyCode) {
         // Credit to Elger van Boxtel
         // https://elgervanboxtel.nl/site/blog/simulate-keydown-event-with-javascript
@@ -54,18 +66,11 @@ describe('agidSpidEnter', function () {
             setSUTconfig(ajaxSuccess);
             spyOn(console, 'warn');
             spyOn(console, 'error');
+            domCleanup();
         });
 
         afterEach(function () {
-            var agidSpidWrapper = document.querySelectorAll('body > section'),
-                spidPlaceholder = document.querySelectorAll('.agid-spid-enter-button');
-
-            Array.from(agidSpidWrapper).forEach(function (agidWrapper) {
-                agidWrapper.remove();
-            });
-            Array.from(spidPlaceholder).forEach(function (spidButton) {
-                spidButton.parentElement.remove();
-            });
+            domCleanup();
             SUT = null;
         });
 
@@ -129,7 +134,7 @@ describe('agidSpidEnter', function () {
                 it('should log failure when ajax calls do not all return data', function (done) {
                     // GIVEN
                     setSUTconfig(ajaxFail);
-
+                    // WHEN
                     SUT.init().then(function () {
                         // THEN
                         expect(console.error).toHaveBeenCalled();
@@ -139,12 +144,11 @@ describe('agidSpidEnter', function () {
 
                 it('should NOT inject the modal wrapper HTML at all', function (done) {
                     // GIVEN
-                    var agidSpidWrapper;
-
+                    domCleanup();
                     setSUTconfig(ajaxFail);
                     // WHEN
                     SUT.init().then(function () {
-                        agidSpidWrapper = document.querySelector(agidSpidWrapperID);
+                        var agidSpidWrapper = document.querySelector(agidSpidWrapperID);
                         // THEN
                         expect(!!agidSpidWrapper).toBeFalsy();
                         done();
@@ -291,11 +295,10 @@ describe('agidSpidEnter', function () {
 
                 SUT.init().then(function () {
                     var choiceModal = document.querySelector('#agid-spid-panel-select');
-
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-m').click();
                     // WHEN
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-m').click();
+                    // THEN
                     choiceModal.addEventListener('focus', function () {
-                        // THEN
                         expect(choiceModal).toBe(document.activeElement);
                         done();
                     });
