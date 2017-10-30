@@ -93,7 +93,7 @@ module.exports = function (grunt) {
                     ]
                 }
             },
-            productionVersioned: {
+            production: {
                 options: {
                     mangle: true,
                     beautify: false,
@@ -107,18 +107,7 @@ module.exports = function (grunt) {
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-i18n.js',
                         'src/js/agid-spid-enter-config.js'
-                    ]
-                }
-            },
-            productionLatest: {
-                options: {
-                    mangle: true,
-                    beautify: false,
-                    compress: {
-                        drop_console: false
-                    }
-                },
-                files: {
+                    ],
                     'prod/agid-spid-enter.min.latest.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
