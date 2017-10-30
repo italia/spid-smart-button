@@ -93,7 +93,7 @@ module.exports = function (grunt) {
                     ]
                 }
             },
-            production: {
+            productionVersioned: {
                 options: {
                     mangle: true,
                     beautify: false,
@@ -103,6 +103,23 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'prod/agid-spid-enter.min.<%= pkg.version %>.js': [
+                        'src/js/agid-spid-enter.js',
+                        'src/js/agid-spid-enter-tpl.js',
+                        'src/js/agid-spid-enter-i18n.js',
+                        'src/js/agid-spid-enter-config.js'
+                    ]
+                }
+            },
+            productionLatest: {
+                options: {
+                    mangle: true,
+                    beautify: false,
+                    compress: {
+                        drop_console: false
+                    }
+                },
+                files: {
+                    'prod/agid-spid-enter.min.latest.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-i18n.js',
@@ -132,6 +149,7 @@ module.exports = function (grunt) {
         'string-replace': {
             version: {
                 files: {
+                    'js/': ['js/agid-spid-enter.min.js'],
                     'prod/': ['prod/agid-spid-enter.min.<%= pkg.version %>.js']
                 },
                 options: {

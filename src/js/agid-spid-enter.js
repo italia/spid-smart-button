@@ -269,12 +269,17 @@ window.AgidSpidEnter = function () {
             });
     };
 
+    function version() {
+        return self.config.version;
+    }
+
     /*
      * Metodi Pubblici
      */
     return {
         init: init,
         changeLanguage: changeLanguage,
-        updateSpidButtons: renderSpidButtons
+        updateSpidButtons: renderSpidButtons,
+        version: version
     };
 };

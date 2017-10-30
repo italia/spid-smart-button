@@ -532,6 +532,19 @@ describe('agidSpidEnter', function () {
         });
     });
 
+    describe('version method', function () {
+        it('should return the semantic version number of the module', function () {
+            // GIVEN
+            var version;
+
+            window.AgidSpidEnter.prototype.config.version = '000';
+            // WHEN
+            version = SUT.version();
+            // THEN
+            expect(version).toEqual('000');
+        });
+    });
+
     // A11y accessibility testing
     describe('aXe accessibility check (A11y)', function () {
         it('should not find any violation in the module HTML', function (done) {
