@@ -236,6 +236,10 @@ window.AgidSpidEnter = function () {
         self.formSubmitMethod = options.formSubmitMethod || self.formSubmitMethod;
     }
 
+    /**
+     * @param {string} language - il locale da caricare, due caratteri eg 'it' | 'en'.
+     * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per le copy
+     */
     function changeLanguage(language) {
         setOptions({
             language: language
@@ -251,6 +255,10 @@ window.AgidSpidEnter = function () {
             });
     };
 
+    /**
+     * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
+     * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per i dati
+     */
     function init(options) {
         var fetchData;
 
