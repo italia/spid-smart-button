@@ -28,11 +28,11 @@ describe('agidSpidEnter', function () {
         return !document.querySelector(elementID).hasAttribute('hidden');
     }
 
-    function triggerEscKey() {
+    function triggerKeyEvent(keyCode) {
         // Credit to Elger van Boxtel
         // https://elgervanboxtel.nl/site/blog/simulate-keydown-event-with-javascript
         var e = new Event("keyup");
-        e.keyCode  = 27;
+        e.keyCode  = keyCode;
         e.which    = e.keyCode;
         e.altKey   = false;
         e.ctrlKey  = true;
@@ -339,7 +339,7 @@ describe('agidSpidEnter', function () {
 
                 document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
                 // WHEN
-                triggerEscKey();
+                triggerKeyEvent(27);
                 isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
@@ -396,10 +396,28 @@ describe('agidSpidEnter', function () {
                 document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
                 document.querySelector(agidModalButtonID).click();
                 // WHEN
-                triggerEscKey();
+                triggerKeyEvent(27);
                 isInfoModalVisible = isElementVisible(agidInfoModalID);
                 // THEN
                 expect(isInfoModalVisible).toBeFalsy();
+                done();
+            });
+        });
+
+        it('should not react to keystrokes different than ESC', function (done) {
+            // GIVEN
+            injectSpidPlaceHolder('Xl');
+
+            SUT.init().then(function () {
+                var isInfoModalVisible;
+
+                document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                document.querySelector(agidModalButtonID).click();
+                // WHEN
+                triggerKeyEvent(7);
+                isInfoModalVisible = isElementVisible(agidInfoModalID);
+                // THEN
+                expect(isInfoModalVisible).toBeTruthy();
                 done();
             });
         });
