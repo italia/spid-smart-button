@@ -25,13 +25,20 @@ window.AgidSpidEnter = function () {
         dom.setAttributeNode(hiddenAttribute);
     }
 
+    // a11y: porta il focus sull'elemento interattivo mostrato
+    function giveFocusTo(element) {
+        var focusElement = setInterval(function () {
+            element.focus();
+        }, 100);
+        spidPanelSelect.addEventListener('focus', function () {
+            clearInterval(focusElement);
+        });
+    }
+
     function closeInfoModal() {
         hideElement(infoModal);
         infoModal.innerHTML = '';
-        // a11y: porta il focus sull'elemento interattivo mostrato
-        setTimeout(function () {
-            spidPanelSelect.focus();
-        }, 0);
+        giveFocusTo(spidPanelSelect);
     }
 
     function openInfoModal(htmlContent) {
@@ -68,10 +75,7 @@ window.AgidSpidEnter = function () {
     function showProvidersPanel() {
         shuffleIdp();
         showElement(agidSpidEnterWrapper);
-        // a11y: porta il focus sull'elemento interattivo mostrato
-        setTimeout(function () {
-            spidPanelSelect.focus();
-        }, 500);
+        giveFocusTo(spidPanelSelect);
         document.addEventListener('keyup', handleEscKeyEvent);
     }
 
