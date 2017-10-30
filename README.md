@@ -1,7 +1,5 @@
 # SPID - Sistema Pubblico di Identità Digitale
 
-[![devDependency Status](https://david-dm.org/srescio/spid-smart-button/dev-status.svg?branch=issue-2/separate-html-js)](https://david-dm.org/srescio/spid-smart-button?branch=issue-2/separate-html-js#info=devDependencies)
-
 ## Repository componenti
 
 Per gestire l’accesso ai servizi pubblici e privati che utilizzano il sistema SPID, si rende necessario, sia per una questione di user experience che di immagine del sistema, la standardizzazione delle interfacce, della comunicazione e dell’utilizzo del logo SPID.
