@@ -69,12 +69,21 @@ Se uno stesso dato è presente sia in `common` che nella configurazione specific
 
 #### `changeLanguage(locale)`
 ritorna una promise che rappresenta lo stato di caricamento delle copy, al termine aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata, la stringa `locale` deve essere costituita da due caratteri eg `it`
+```javascript
+window.agidSpidEnter.changeLanguage('en');
+```
 
 #### `updateSpidButtons()`
 ricerca i placeholders per ripristinare i pulsanti, utilizzabile in caso di aggiornamento dinamico della UI causante la cancellazione dei pulsanti renderizzati in fase di inizializzazione
+```javascript
+window.agidSpidEnter.updateSpidButtons();
+```
 
 #### `version()`
 ritorna la semantic version del modulo in uso, utile caricando il minifizzato *latest*
+```javascript
+window.agidSpidEnter.updateSpidButtons();
+```
 
 ### Libreria JS
-Il minifizzato è disponibili sia con la semantic version scolpita nel nome ad esempio `agid-spid-enter.min.1.0.0.js`, sia senza version affissa che riferisce sempre all'ultima rilasciata eg `agid-spid-enter.min.latest.js`
+Il minifizzato JS, che carica opportunamente il file CSS, è disponibile sotto la cartella prod/ sia con la semantic version scolpita nel nome ad esempio `agid-spid-enter.min.1.0.0.js`, sia senza version affissa che riferisce sempre all'ultima rilasciata eg `agid-spid-enter.min.latest.js`
