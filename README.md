@@ -32,6 +32,7 @@ l'oggetto `config` è opzionale, se omesso le impostazioni predefinite saranno:
  - form action URL verso la pagina in cui è caricato
  - form method GET
  - valore `name` per la sottomissione del provider ID selezionato : `provider`
+
 un esempio in cui tutte le opzioni configurabili vengono esplicitate:
 
 ```javascript
