@@ -251,7 +251,8 @@ describe('agidSpidEnter', function () {
                 SUT.updateSpidButtons();
                 spidButtons = document.querySelectorAll('.agid-spid-enter');
                 // THEN
-                expect(spidButtons.length).toBe(1);
+                expect(spidButtons.length).toBe(0);
+                expect(console.error).toHaveBeenCalled();
                 done();
             });
         });

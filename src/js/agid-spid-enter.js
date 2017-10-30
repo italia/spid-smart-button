@@ -5,7 +5,6 @@ window.AgidSpidEnter = function () {
     "use strict";
 
     var self = this,
-        hasSpidProviders = false,
         agidSpidEnterWrapper,
         spidIdpList,
         infoModal,
@@ -91,7 +90,6 @@ window.AgidSpidEnter = function () {
 
         agid_spid_enter.innerHTML = getTpl('spidProviderChoiceModal', spidProvidersButtonsHTML);
 
-        hasSpidProviders = true;
         // Vengono creati una sola volta all'init, non necessitano unbind
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-cancel-access-button').addEventListener('click', hideProvidersPanel);
@@ -108,7 +106,7 @@ window.AgidSpidEnter = function () {
             spidButtonsPlaceholdersArray = Array.from(spidButtonsPlaceholdersObj),
             hasButtonsOnPage             = spidButtonsPlaceholdersArray.length;
 
-        if (!hasSpidProviders) {
+        if (!self.availableProviders) {
             console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
             return;
         };
@@ -265,6 +263,7 @@ window.AgidSpidEnter = function () {
                 renderModule();
             })
             .catch(function (error) {
+                self.availableProviders = null;
                 console.error('Si è verificato un errore nel caricamento dei dati', error);
             });
     };
