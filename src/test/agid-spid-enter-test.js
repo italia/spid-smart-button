@@ -215,10 +215,10 @@ describe('agidSpidEnter', function () {
                         };
                         // WHEN
                         SUT.init(config).then(function () {
-                            var providers    = document.querySelectorAll('#agid-spid-idp-list form'),
+                            var providers    = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
                                 hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]');
                             // THEN
-                            expect(hiddenInputs.length).toEqual(5);
+                            expect(hiddenInputs.length).toEqual(providers.length);
                             done();
                         });
                     });
@@ -237,11 +237,11 @@ describe('agidSpidEnter', function () {
                         };
                         // WHEN
                         SUT.init(config).then(function () {
-                            var providers     = document.querySelectorAll('#agid-spid-idp-list form'),
+                            var providers     = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
                                 hiddenInputs  = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]'),
                                 specificInput = document.querySelectorAll('#agid-spid-idp-list input[name="specific"]');
                             // THEN
-                            expect(hiddenInputs.length).toEqual(5);
+                            expect(hiddenInputs.length).toEqual(providers.length);
                             expect(specificInput.length).toEqual(1);
                             done();
                         });
