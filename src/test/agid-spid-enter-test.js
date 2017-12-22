@@ -184,6 +184,18 @@ describe('agidSpidEnter', function () {
                 });
             });
 
+            describe('when not supplied with a configuration object', function () {
+                it('should add to the active providers the default hidden inputs payload', function (done) {
+                    // WHEN
+                    SUT.init().then(function () {
+                        var providers    = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
+                            hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="provider"]');
+                        // THEN
+                        expect(hiddenInputs.length).toEqual(providers.length);
+                        done();
+                    });
+                });
+            });
 
             describe('when supplied with a configuration object', function () {
                 it('should request the provided language in the config', function (done) {
