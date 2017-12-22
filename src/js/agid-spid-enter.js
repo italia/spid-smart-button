@@ -215,17 +215,16 @@ window.AgidSpidEnter = function () {
     function mergeProvidersData(agidProvidersList, providersPayload) {
         var availableProviders = [];
 
-        if (!providersPayload) {
-            availableProviders = agidProvidersList;
-        } else {
-            agidProvidersList.forEach(function (agidIdpConfig) {
-                if (agidIdpConfig.isActive) {
+        agidProvidersList.forEach(function (agidIdpConfig) {
+            if (agidIdpConfig.isActive) {
+                if (providersPayload) {
                     agidIdpConfig.payload = Object.assign({}, providersPayload.common, providersPayload[agidIdpConfig.provider]);
+                } else {
+                    agidIdpConfig.payload = {};
                 }
-
-                availableProviders.push(agidIdpConfig);
-            });
-        }
+            }
+            availableProviders.push(agidIdpConfig);
+        });
 
         self.availableProviders = availableProviders;
     }
