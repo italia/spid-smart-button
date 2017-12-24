@@ -1,1 +1,1 @@
-This directory will be used by Grunt task to generate the production minified resource for unit testing, coverage and demo page
+This directory will be used by Grunt task to generate the distributable minified resource for production usage
