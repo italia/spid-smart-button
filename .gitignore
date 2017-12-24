@@ -6,3 +6,4 @@ node_modules/
 _SpecRunner.html
 coverage/
 *.min.*
+*debug.log

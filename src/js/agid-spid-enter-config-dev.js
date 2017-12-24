@@ -5,7 +5,7 @@
 window.AgidSpidEnter.prototype.config = {
     version: '{{ VERSION }}',
     assetsBaseUrl: '',
-    stylesheetUrl: 'css/agid-spid-enter.min.css',
+    stylesheetUrl: 'dev/agid-spid-enter.min.css',
     providersEndpoint: '/src/data/spidProviders.json',
     localisationEndpoint: '/src/data/spidI18n.json'
 };

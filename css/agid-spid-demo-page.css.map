@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,IAAK,CACJ,MAAM,CAAE,CAAC,CACT,OAAO,CAAE,CAAC",
-"sources": ["../src/scss/agid-spid-demo-page.scss"],
-"names": [],
-"file": "agid-spid-demo-page.css"
-}

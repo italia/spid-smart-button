@@ -17,7 +17,7 @@ NOTHING TO TOUCH HERE!!!!
               ▀▄▄▄▄▄░░░░░█
 unless you know what you're doing... :)
 
- * Indirizzi di produzione delle risorse (attualmente test), inserire indirizzi reali
+ * Indirizzi di produzione delle risorse (attualmente test), inserire indirizzi reali di CDN
  * il placeholder '{{ VERSION }}' viene sostituito con la version del package dal task string-replace, non modificare!
  */
 window.AgidSpidEnter.prototype.config = {

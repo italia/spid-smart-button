@@ -8,7 +8,7 @@ module.exports = function (config) {
         files: [
             'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
             'node_modules/axe-core/axe.js', // A11y accessibility testing library
-            'js/agid-spid-enter.min.js', // Modulo minifizzato da testare
+            'dev/agid-spid-enter.min.js', // Modulo minifizzato da testare
             'src/test/*.js' // File specs
         ],
         proxies: {
@@ -20,7 +20,7 @@ module.exports = function (config) {
         reporters: ['progress', 'coverage'],
         port: 9876,
         preprocessors: {
-            "./js/agid-spid-enter.min.js": ["coverage"] // modulo su cui effettuare la coverage
+            "./dev/agid-spid-enter.min.js": ["coverage"] // modulo su cui effettuare la coverage
         },
         coverageReporter: {
             instrumenterOptions: {

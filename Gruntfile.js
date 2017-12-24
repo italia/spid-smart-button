@@ -33,7 +33,7 @@ module.exports = function (grunt) {
                     style: 'expanded'
                 },
                 files: {
-                    'css/agid-spid-enter.min.css': [
+                    'dev/agid-spid-enter.min.css': [
                         'src/scss/agid-spid-enter-dev.scss'
                     ]
                 }
@@ -44,7 +44,7 @@ module.exports = function (grunt) {
                     sourcemap: 'none'
                 },
                 files: {
-                    'prod/agid-spid-enter.min.<%= pkg.version %>.css': [
+                    'dist/agid-spid-enter.min.<%= pkg.version %>.css': [
                         'src/scss/agid-spid-enter-prod.scss'
                     ]
                 }
@@ -64,15 +64,15 @@ module.exports = function (grunt) {
                 options: {
                     map: true
                 },
-                src: 'css/agid-spid-enter.min.css',
-                dest: 'css/agid-spid-enter.min.css'
+                src: 'dev/agid-spid-enter.min.css',
+                dest: 'dev/agid-spid-enter.min.css'
             },
             production: {
                 options: {
                     map: false
                 },
-                src: 'prod/agid-spid-enter.min.<%= pkg.version %>.css',
-                dest: 'prod/agid-spid-enter.min.<%= pkg.version %>.css'
+                src: 'dist/agid-spid-enter.min.<%= pkg.version %>.css',
+                dest: 'dist/agid-spid-enter.min.<%= pkg.version %>.css'
             }
         },
 
@@ -85,7 +85,7 @@ module.exports = function (grunt) {
                     compress: false
                 },
                 files: {
-                    'js/agid-spid-enter.min.js': [
+                    'dev/agid-spid-enter.min.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-i18n.js',
@@ -102,13 +102,13 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    'prod/agid-spid-enter.min.<%= pkg.version %>.js': [
+                    'dist/agid-spid-enter.min.<%= pkg.version %>.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-i18n.js',
                         'src/js/agid-spid-enter-config.js'
                     ],
-                    'prod/agid-spid-enter.min.latest.js': [
+                    'dist/agid-spid-enter.min.latest.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-i18n.js',
@@ -124,7 +124,7 @@ module.exports = function (grunt) {
                 src: [
                     'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
                     'node_modules/axe-core/axe.js', // A11y accessibility testing library
-                    'js/agid-spid-enter.min.js' // Modulo minifizzato da testare
+                    'dev/agid-spid-enter.min.js' // Modulo minifizzato da testare
                 ],
                 options: {
                     specs: ['src/test/*.js'],
@@ -138,10 +138,10 @@ module.exports = function (grunt) {
         'string-replace': {
             version: {
                 files: {
-                    'js/': ['js/agid-spid-enter.min.js'],
-                    'prod/': [
-                        'prod/agid-spid-enter.min.<%= pkg.version %>.js',
-                        'prod/agid-spid-enter.min.latest.js',
+                    'dev/': ['dev/agid-spid-enter.min.js'],
+                    'dist/': [
+                        'dist/agid-spid-enter.min.<%= pkg.version %>.js',
+                        'dist/agid-spid-enter.min.latest.js'
                     ]
                 },
                 options: {
@@ -168,7 +168,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('log-coverage', function () {
         grunt.log.writeln('Il report della code coverage si trova in:');
-        grunt.log.writeln(localhostUrl + '/coverage/js/agid-spid-enter.min.js.html');
+        grunt.log.writeln(localhostUrl + '/coverage/dev/agid-spid-enter.min.js.html');
     });
 
     grunt.registerTask('default', ['watch']);
