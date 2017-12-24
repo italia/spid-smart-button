@@ -11,6 +11,6 @@ window.AgidSpidEnter.prototype.config = {
 };
 
 /*
- + Crea istanza del modulo
+ * Crea istanza del modulo
  */
 window.agidSpidEnter = new window.AgidSpidEnter();
