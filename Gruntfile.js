@@ -139,7 +139,10 @@ module.exports = function (grunt) {
             version: {
                 files: {
                     'js/': ['js/agid-spid-enter.min.js'],
-                    'prod/': ['prod/agid-spid-enter.min.<%= pkg.version %>.js']
+                    'prod/': [
+                        'prod/agid-spid-enter.min.<%= pkg.version %>.js',
+                        'prod/agid-spid-enter.min.latest.js',
+                    ]
                 },
                 options: {
                     replacements: [{
