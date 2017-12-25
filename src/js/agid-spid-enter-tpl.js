@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable indent */
 window.AgidSpidEnter.prototype.tpl = {
     spidMainContainers: function () {
         return [
@@ -69,8 +69,9 @@ window.AgidSpidEnter.prototype.tpl = {
     spidProviderButton: function (providerData) {
         var providerHiddenName    = 'provider',
             providerPayloadInputs = '',
-            providerTitle         = (providerData.isActive)?
-                                    this.getI18n('accedi_con_idp', providerData.title):
+            property,
+            providerTitle         = (providerData.isActive) ?
+                                    this.getI18n('accedi_con_idp', providerData.title) :
                                     this.getI18n('idp_disabled');
         // Crea gli input field chiave=valore dall'oggetto
         if (providerData.payload) {
@@ -88,12 +89,12 @@ window.AgidSpidEnter.prototype.tpl = {
         return [
             '<span class="agid-spid-col l3 m6 s6 xs12">',
                 '<form id="agid-spid-provider-', providerData.provider, '"',
-                    'action="', this.formActionUrl,'" method="', this.formSubmitMethod, '">',
+                    'action="', this.formActionUrl, '" method="', this.formSubmitMethod, '">',
                     '<button type="submit"',
-                        'class="agid-spid-idp-button agid-spid-idp-', providerData.provider,'"',
+                        'class="agid-spid-idp-button agid-spid-idp-', providerData.provider, '"',
                         'title="', providerTitle, '"',
                         'style="background-image: url(', this.config.assetsBaseUrl, 'img/idp-logos/', providerData.logo, ')"',
-                        (providerData.isActive)?'':'disabled', '>',
+                        (providerData.isActive) ? '' : 'disabled', '>',
                     '</button>',
                     providerPayloadInputs,
                 '</form>',
@@ -162,3 +163,4 @@ window.AgidSpidEnter.prototype.tpl = {
         ].join('');
     }
 };
+/* eslint-enable indent */
