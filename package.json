@@ -2,23 +2,33 @@
   "name": "spid-smart-button",
   "version": "1.0.0",
   "description": "Pulsante SSO per SPID",
-  "author": {
-    "name": "Simone Rescio",
-    "email": "info@simonerescio.it",
-    "url" : "https://simonerescio.it"
+  "engines": {
+    "node": ">=6.1.0"
   },
-  "contributors": [
-    {
-        "name": "Davide Porrovecchio",
-        "url": "https://github.com/pdavide"
-    }
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/italia/spid-smart-button.git"
   },
   "license": "BSD-3-Clause",
+  "author": {
+    "name": "Umberto Rosini",
+    "email": "rosini@agid.gov.it",
+    "url": "https://github.com/umbros"
+  },
+  "contributors": [
+    {
+      "name": "Simone Rescio",
+      "email": "info@simonerescio.it",
+      "url": "https://simonerescio.it"
+    },
+    {
+      "name": "Davide Porrovecchio",
+      "email": "davide.porrovecchio@agid.gov.it",
+      "url": "https://github.com/pdavide"
+    }
+  ],
   "scripts": {
+    "preinstall": "node check-node-version.js",
     "start": "grunt build && grunt serve & grunt watch ; fg",
     "postinstall": "npm start",
     "lint": "grunt lint",
