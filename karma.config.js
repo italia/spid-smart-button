@@ -1,6 +1,9 @@
 // Configurazione per Karma, coverage report su unit test jasmine
 module.exports = function (config) {
-    var gruntServeHost = 'http://localhost:9000';
+    var fs           = require('fs'),
+        pkg          = JSON.parse(fs.readFileSync('./package.json', 'utf8')),
+        serverPort   = pkg.localserver.port,
+        localhostUrl = pkg.localserver.url + serverPort;
 
     config.set({
         basePath: '.',
@@ -12,8 +15,8 @@ module.exports = function (config) {
             'src/test/*.js' // File specs
         ],
         proxies: {
-            '/src/': gruntServeHost + '/src/',
-            '/img/': gruntServeHost + '/img/'
+            '/src/': localhostUrl + '/src/',
+            '/img/': localhostUrl + '/img/'
         },
         browsers: ['PhantomJS'],
         singleRun: true,

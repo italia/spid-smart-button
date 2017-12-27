@@ -1,6 +1,8 @@
 module.exports = function (grunt) {
-    var serverPort   = 9090,
-        localhostUrl = 'http://localhost:' + serverPort;
+    var fs           = require('fs'),
+        pkg          = JSON.parse(fs.readFileSync('./package.json', 'utf8')),
+        serverPort   = pkg.localserver.port,
+        localhostUrl = pkg.localserver.url + serverPort;
 
     require('load-grunt-tasks')(grunt);
 
