@@ -1,11 +1,17 @@
 module.exports = function (grunt) {
-    var serverPort   = 9000,
+    var serverPort   = 9090,
         localhostUrl = 'http://localhost:' + serverPort;
 
     require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+
+        // Controllo di sicurezza, rileva vulnerabilità note nel codice e nelle dipendenze
+        retire: {
+            js: ['src/js/*'],
+            node: ['.']
+        },
 
         watch: {
             files: ['src/scss/*', 'src/js/*'],
