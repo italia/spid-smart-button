@@ -64,6 +64,7 @@ describe('agidSpidEnter', function () {
         beforeEach(function () {
             SUT = new window.AgidSpidEnter();
             setSUTconfig(ajaxSuccess);
+            spyOn(console, 'log'); // silenzia log di aXe
             spyOn(console, 'warn');
             spyOn(console, 'error');
             domCleanup();

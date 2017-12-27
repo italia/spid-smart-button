@@ -6,7 +6,7 @@
     "node": ">=6.1.0"
   },
   "localserver": {
-    "url": "http://localhost",
+    "url": "http://localhost:",
     "port": 9090
   },
   "repository": {
