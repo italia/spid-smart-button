@@ -4,6 +4,6 @@ node_modules/
 .sass-cache/
 .grunt/
 _SpecRunner.html
-coverage/
+reports/
 *.min.*
 *debug.log

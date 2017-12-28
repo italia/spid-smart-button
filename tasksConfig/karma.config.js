@@ -6,13 +6,13 @@ module.exports = function (config) {
         localhostUrl = pkg.localserver.url + serverPort;
 
     config.set({
-        basePath: '.',
+        basePath: '../',
         frameworks: ['jasmine'],
         files: [
             'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
             'node_modules/axe-core/axe.js', // A11y accessibility testing library
             'dev/agid-spid-enter.min.js', // Modulo minifizzato da testare
-            'src/test/*.js' // File specs
+            'src/test/agid-*.js' // File specs
         ],
         proxies: {
             '/src/': localhostUrl + '/src/',
@@ -23,14 +23,14 @@ module.exports = function (config) {
         reporters: ['progress', 'coverage'],
         port: 9876,
         preprocessors: {
-            "./dev/agid-spid-enter.min.js": ["coverage"] // modulo su cui effettuare la coverage
+            "dev/agid-spid-enter.min.js": ["coverage"] // modulo su cui effettuare la coverage
         },
         coverageReporter: {
             instrumenterOptions: {
                 istanbul: { noCompact: true }
             },
             type: 'html',
-            dir: 'coverage/',
+            dir: 'reports/coverage/',
             subdir: '.'
         }
     });

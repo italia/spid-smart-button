@@ -32,13 +32,14 @@
     }
   ],
   "scripts": {
-    "preinstall": "node check-node-version.js",
+    "preinstall": "node tasksConfig/check-node-version.js",
     "security": "grunt retire",
     "start": "grunt build && grunt serve & grunt watch ; fg",
     "postinstall": "npm run security; npm start",
     "lint": "grunt lint",
     "test": "grunt test",
-    "coverage": "node_modules/.bin/karma start karma.config.js && grunt log-coverage",
+    "coverage": "karma start tasksConfig/karma.config.js && grunt log-coverage",
+    "performance": "lighthouse http://localhost:9090 --output-path=reports/lighthouse.html",
     "precommit": "npm run lint",
     "prepush": "npm test && npm run coverage"
   },
@@ -62,6 +63,7 @@
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.4",
+    "lighthouse": "^2.7.0",
     "load-grunt-tasks": "^3.5.2",
     "promise-polyfill": "^6.0.2",
     "stylelint": "^8.2.0",

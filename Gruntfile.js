@@ -9,27 +9,36 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        // Controllo di sicurezza, rileva vulnerabilità note nel codice e nelle dipendenze
-        retire: {
-            js: ['src/js/*'],
-            node: ['.']
-        },
-
         watch: {
             files: ['src/scss/*', 'src/js/*'],
             tasks: ['build', 'jasmine']
+        },
+
+        // Controllo di sicurezza, rileva vulnerabilità note nel codice e nelle dipendenze
+        retire: {
+            js: ['src/js/*'],
+            node: ['.'],
+            options: {
+                outputFile: 'reports/retire.json'
+            }
         },
 
         // SCSS code style linting
         stylelint: {
             src: [
                 'src/scss/*'
-            ]
+            ],
+            options: {
+                outputFile: 'reports/stylelint.log'
+            }
         },
 
         // JS code style linting
         eslint: {
-            target: ['src/js/*', 'test/*.js', '!src/js/*-tpl.js']
+            target: ['src/js/*', 'test/*.js', '!src/js/*-tpl.js'],
+            options: {
+                outputFile: 'reports/eslint.log'
+            }
         },
 
         // Stylesheets minify
@@ -135,7 +144,7 @@ module.exports = function (grunt) {
                     'dev/agid-spid-enter.min.js' // Modulo minifizzato da testare
                 ],
                 options: {
-                    specs: ['src/test/*.js'],
+                    specs: ['src/test/agid-*.js'],
                     outfile: '_SpecRunner.html',
                     keepRunner: true,
                     host: localhostUrl
