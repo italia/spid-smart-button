@@ -185,7 +185,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('log-coverage', function () {
         grunt.log.writeln('Il report della code coverage si trova in:');
-        grunt.log.writeln(localhostUrl + '/coverage/dev/agid-spid-enter.min.js.html');
+        grunt.log.writeln(localhostUrl + '/reports/coverage/dev/agid-spid-enter.min.js.html');
     });
 
     grunt.registerTask('default', ['watch']);
