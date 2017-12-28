@@ -56,10 +56,15 @@ Includere nella pagina uno o più placeholder `<div>` che abbiano i seguenti att
  - classe : `agid-spid-enter-button` sarà ricercato dallo script per stampare tutti i pulsanti SPID
  - accessibilità : attributo `aria-live` con valore `polite` per evitare che il rendering disturbi la navigazione
  - dimensione : attributo `data-size` con una delle quattro dimensioni supportate: **s / m / l / xl**
+ - fallback: tag `<noscript>` con messaggio localizzato all'interno del placeholder che avvisa l'utente della necessità di JavaScript abilitato per poter fruire di SPID qualora l'utente stia navigando senza JavaScript
 
 Esempio completo
 
-    <div class="agid-spid-enter-button" aria-live="polite" data-size="xl"></div>
+    <div class="agid-spid-enter-button" aria-live="polite" data-size="xl">
+        <noscript>
+            Il login tramite SPID richiede che JavaScript sia abilitato nel browser
+        </noscript>
+    </div>
 
 l'attributo data-size viene parsato in maniera case-insensitive quindi può essere sia maiuscolo che minuscolo
 

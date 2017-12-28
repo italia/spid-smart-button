@@ -39,7 +39,7 @@
     "lint": "grunt lint",
     "test": "grunt test",
     "coverage": "karma start tasksConfig/karma.config.js && grunt log-coverage",
-    "performance": "lighthouse http://localhost:9090 --output-path=reports/lighthouse.html",
+    "performance": "lighthouse http://localhost:9090/index.html --output-path=reports/lighthouse.html --view",
     "precommit": "npm run lint",
     "prepush": "npm test && npm run coverage"
   },
