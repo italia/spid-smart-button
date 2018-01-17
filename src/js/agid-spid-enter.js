@@ -163,11 +163,11 @@ window.AgidSpidEnter = function () {
             language: self.language
         };
 
-        return ajaxRequest('POST', self.config.localisationEndpoint, languageRequest);
+        return ajaxRequest('GET', self.config.localisationEndpoint, languageRequest);
     }
 
     function getAvailableProviders() {
-        return ajaxRequest('POST', self.config.providersEndpoint);
+        return ajaxRequest('GET', self.config.providersEndpoint);
     }
 
     function loadStylesheet(url) {
