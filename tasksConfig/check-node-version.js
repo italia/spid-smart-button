@@ -1,4 +1,4 @@
-var packageJson          = require('./package.json'),
+var packageJson          = require('../package.json'),
     supportedNodeVersion = packageJson.engines.node,
     currentNodeVersion   = process.version;
 
