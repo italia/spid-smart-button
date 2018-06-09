@@ -5,3 +5,5 @@ Per gestire l’accesso ai servizi pubblici e privati che utilizzano il sistema 
 
 ## SPID BUTTON
 Il bottone è presentato in 4 dimensioni (s / m / l / xl).
+
+La directory _new-mockup/_ contiene un mockup con il restyling grafico come da nuove _Linee Guida UX SPID_ (non ancora entrate in vigore).
