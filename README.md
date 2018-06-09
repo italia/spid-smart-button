@@ -2,7 +2,11 @@
 
 # Smart Button
 
-<span style="color: red">Work in progress</span>
+[![Join the #spid-smart-button channel](https://img.shields.io/badge/Slack%20channel-%23spid--smart--button-blue.svg?logo=slack)](https://developersitalia.slack.com/messages/C7EQLBY9H)
+[![Get invited](https://slack.developers.italia.it/badge.svg)](https://slack.developers.italia.it/)
+[![SPID on forum.italia.it](https://img.shields.io/badge/Forum-SPID-blue.svg)](https://forum.italia.it/c/spid) 
+
+> ⚠️ **WORK IN PROGRESS** ⚠️
 
 Lo Smart Button è un'evoluzione del bottone "Entra con SPID" che tutti i fornitori di servizi devono incorporare nei propri siti web per consentire all'utente la scelta del proprio Identity Provider e quindi l'autenticazione.
 
