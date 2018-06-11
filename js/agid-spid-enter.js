@@ -1,234 +1,187 @@
-function insertCode() {
-var agid_spid_enter = document.getElementById('agid-spid-enter');
-        var panel_html = '\
-		<div id="agid-spid-button-anim">\
-			<div id="agid-spid-button-anim-base"></div>\
-		    <div id="agid-spid-button-anim-icon"></div>\
-		</div>	\
-		<section id="agid-spid-panel-select" class="agid-spid-panel" aria-labelledby="agid-spid-enter-title-page" hidden>\
-			<header id="agid-spid-panel-header">\
-                        <nav class="agid-spid-panel-back agid-spid-panel-element" aria-controls="agid-spid-panel-select">\
-				<div role="button">	<a href="#" onclick="hidePanel(\'agid-spid-panel-select\')" class="agid-spid-button" >\
-						<img src="img/x-icon.svg" alt="Torna indietro">\
-					</a>\
-				</div></nav>\
-				<div class="agid-spid-panel-logo agid-spid-panel-element">\
-					<img aria-hidden="true" src="img/spid-logo-c-lb.svg" alt="Logo SPID">\
-				</div>\
-                                			</header>\
-			<div id="agid-spid-panel-content">\
-				<div class="agid-spid-panel-content-center">\
-                                <div id ="agid-spid-enter-title-container" ><h1 id="agid-spid-enter-title-page">Scegli il tuo provider SPID</h1>\
-                                </div> \
-					<div id="agid-spid-idp-list" class="agid-spid-row">'
-
-        if (config["infocert"]["url"]) panel_html += '<span class="agid-spid-col l3 m6 s6 xs12" role="button"><a href="' + config["infocert"]["url"] + '" class="agid-spid-idp-button agid-spid-idp-infocertid" title="' + config["infocert"]["title"] + '" style="background-image: url(\'img/idp-logos/' + config["infocert"]["logo"] + '\')"></a></span>';
-        if (config["poste"]["url"]) panel_html += '<span class="agid-spid-col l3 m6 s6 xs12" role="button"><a href="' + config["poste"]["url"] + '" class="agid-spid-idp-button agid-spid-idp-posteid" title="' + config["poste"]["title"] + '" style="background-image: url(\'img/idp-logos/' + config["poste"]["logo"] + '\')"></a></span>';
-        if (config["tim"]["url"]) panel_html += '<span class="agid-spid-col l3 m6 s6 xs12" role="button"><a href="' + config["tim"]["url"] + '" class="agid-spid-idp-button agid-spid-idp-timid" title="' + config["tim"]["title"] + '" style="background-image: url(\'img/idp-logos/' + config["tim"]["logo"] + '\')"></a></span>';
-        if (config["sielte"]["url"]) panel_html += '<span class="agid-spid-col l3 m6 s6 xs12" role="button"><a href="' + config["sielte"]["url"] + '" class="agid-spid-idp-button agid-spid-idp-sielteid" title="' + config["sielte"]["title"] + '" style="background-image: url(\'img/idp-logos/' + config["sielte"]["logo"] + '\')"></a></span>';
-        if (config["aruba"]["url"]) panel_html += '<span class="agid-spid-col l3 m6 s6 xs12" role="button"><a href="' + config["aruba"]["url"] + '" class="agid-spid-idp-button agid-spid-idp-arubaid" title="' + config["aruba"]["title"] + '" style="background-image: url(\'img/idp-logos/' + config["aruba"]["logo"] + '\')"></a></span>';
-        if (config["newidp1"]["url"]) panel_html += '<span class="agid-spid-col l3 m6 s6 xs12" role="button"><a href="' + config["newidp1"]["url"] + '" class="agid-spid-idp-button agid-spid-idp-dummy" title="' + config["newidp1"]["title"] + '" style="background-image: url(\'img/idp-logos/' + config["newidp1"]["logo"] + '\')"></a></span>';
-        if (config["newidp2"]["url"]) panel_html += '<span class="agid-spid-col l3 m6 s6 xs12" role="button"><a href="' + config["newidp2"]["url"] + '" class="agid-spid-idp-button agid-spid-idp-dummy" title="' + config["newidp2"]["title"] + '" style="background-image: url(\'img/idp-logos/' + config["newidp2"]["logo"] + '\')"></a></span>';
-        if (config["newidp3"]["url"]) panel_html += '<span class="agid-spid-col l3 m6 s6 xs12" role="button"><a href="' + config["newidp3"]["url"] + '" class="agid-spid-idp-button agid-spid-idp-dummy" title="' + config["newidp3"]["title"] + '" style="background-image: url(\'img/idp-logos/' + config["newidp3"]["logo"] + '\')"></a></span>';
-        panel_html += '\
+function setupHead(){
+  var head_page = document.createElement('link');
+  head_page.href = 'css/agid-spid-enter.css';
+  head_page.rel  = 'stylesheet';
+  head_page.type = 'text/css';
+  $("head").append(head_page);
+}
+function generateButton(size=null,obj_agid=null,lang){
+  if(obj_agid!==undefined || obj_agid!==null){
+    if(size === undefined || size === null) size="m";
+    obj_agid.html('<button class="'+agid_spid_config["btn_agid"]["class"]+size+'" onclick="showPanel()">\
+      <span class="'+agid_spid_config["btn_agid"]["class_enter_icon"]+'"><img aria-hidden="true"  src="'+agid_spid_config["btn_agid"]["img"]+'" onerror="this.src=\''+agid_spid_config["btn_agid"]["img"]+'\'; this.onerror=null;" alt="'+agid_spid_lang[lang]["btn_spid"]["title"]+'" /></span>\
+      <span class="'+agid_spid_config["btn_agid"]["class_enter_text"]+'">'+agid_spid_lang[lang]["btn_spid"]["title"]+'</span>\
+    </button>');
+  }
+}
+function createListHtmlProviders(lang){
+  var list_providers="";
+  $.each(Object.keys(agid_spid_config["providers"]), function( key, value  ) {
+    if (agid_spid_config["providers"][value]["url"]) list_providers += '<span class="'+agid_spid_config["btn_provider"]["class"]+'" role="button"><a href="'+agid_spid_config["providers"][value]["url"][lang]+'" class="'+agid_spid_config["btn_provider"]["class_ahref"]+'" title="'+agid_spid_config["providers"][value]["title"][lang]+'" style="background-image: url(\' '+agid_spid_config["btn_provider"]["root_img"] + agid_spid_config["providers"][value]["logo"] + '\')"></a></span>';
+  });
+  return list_providers;
+}
+function createContent(lang) {
+  var panel_html = '\
+    <div id="'+agid_spid_config["info_modal"]["id"]+'" class="'+agid_spid_config["info_modal"]["class"]+'"></div>\
+    <div id="'+agid_spid_config["agid_enter_conent"]["id"]+'" class="'+agid_spid_config["agid_enter_conent"]["class"]+'">\
+  		<div id="agid-spid-button-anim">\
+  			<div id="agid-spid-button-anim-base"></div>\
+        <div id="agid-spid-button-anim-icon"></div>\
+  		</div>	\
+  		<section id="'+agid_spid_config["agid_enter_conent"]["section"]["id"]+'" class="'+agid_spid_config["agid_enter_conent"]["section"]["class"]+'" aria-labelledby="agid-spid-enter-title-page" hidden>\
+  			<header id="'+agid_spid_config["agid_enter_conent"]["section"]["header"]["id"]+'" class="'+agid_spid_config["agid_enter_conent"]["section"]["header"]["class"]+'">\
+          <nav class="'+agid_spid_config["agid_enter_conent"]["section"]["header"]["nav"]["class"]+'" aria-controls="'+agid_spid_config["agid_enter_conent"]["section"]["id"]+'">\
+    				<div role="button">	\
+              <a href="#" onclick="hidePanel()" class="'+agid_spid_config["agid_enter_conent"]["section"]["header"]["nav"]["back_btn"]["class"]+'" >\
+    						<img src="'+agid_spid_config["agid_enter_conent"]["section"]["header"]["nav"]["back_btn"]["img"]+'" alt="'+agid_spid_lang[lang]["title_back"]+'">\
+    					</a>\
+    				</div>\
+          </nav>\
+  				<div class="'+agid_spid_config["agid_enter_conent"]["section"]["header"]["logo"]["class"]+'">\
+  					<img aria-hidden="true" src="'+agid_spid_config["agid_enter_conent"]["section"]["header"]["logo"]["img"]+'" alt="'+agid_spid_lang[lang]["title"]+'">\
+  				</div>\
+        </header>\
+  			<div id="'+agid_spid_config["agid_enter_conent"]["section"]["content"]["id"]+'" class="'+agid_spid_config["agid_enter_conent"]["section"]["content"]["class"]+'">\
+          <div id="'+agid_spid_config["agid_enter_conent"]["section"]["content"]["id_div_title"]+'"><h1 id="'+agid_spid_config["agid_enter_conent"]["section"]["content"]["id_title"]+'">'+agid_spid_lang[lang]["agid_content"]["title"]+'</h1></div> \
+					<div id="'+agid_spid_config["agid_enter_conent"]["section"]["list_providers"]["id"]+'" class="'+agid_spid_config["agid_enter_conent"]["section"]["list_providers"]["class"]+'">'
+            panel_html+=createListHtmlProviders(lang);
+            panel_html += '\
 					</div>\
-				<div id="agid-cancel-access-container">\
-					<a href="#"  onclick="hidePanel(\'agid-spid-panel-select\')">   <div id="agid-cancel-access-button" class="agid-transparent-button" role="button"><span>Annulla l\'accesso</span></div></a>\
-				</div > \
-                                <div id="agid-logo-container" aria-hidden="true">\
-					<img id="agid-logo" class="agid-logo" src="./img/agid-logo-bb-short.png" aria-hidden="true"/>\
-				</div > \
-			</div>\
-                        </div>\
-			<footer id="agid-spid-panel-footer">\
-                            <div id="agid-action-button-container">\
-                                <a href="#"> <div id="nospid" class="agid-action-button" role="button"><span>Non hai SPID?</span></div></a>\
-                                <a href="#"> <div id="cosaspid" class="agid-action-button" role="button"><span>Cos\'e SPID?</span></div></a>\
-                            </div>\
-                        </footer>\
-		</section>';
-        agid_spid_enter.innerHTML = panel_html;
-        
-        document.getElementById("nospid").addEventListener('click', function(ev) { openmodal('Non hai SPID?'); });
-        document.getElementById("cosaspid").addEventListener('click', function(ev) { openmodal('Cos\'è SPID?');});
-        }
-
-function insertButtonS() {
-var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-s");
-        var i;
-        for (i = 0; i < agid_spid_enter_button_xl.length; i++) {
-agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON SMALL * begin * -->\
-			<button class="agid-spid-enter agid-spid-enter-size-s" onclick="showPanel(\'agid-spid-panel-select\')">\
-				<span class="agid-spid-enter-icon"><img aria-hidden="true"  src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-				<span class="agid-spid-enter-text">Entra con SPID</span>\
-			</button>\
-			<!-- AGID - SPID BUTTON SMALL * end * -->		\
-		';
+  				<div id="'+agid_spid_config["agid_enter_conent"]["section"]["div_cancel"]["id"]+'">\
+  					<a href="#" onclick="hidePanel('+agid_spid_config["agid_enter_conent"]["section"]["div_cancel"]["id"]+')"><div id="'+agid_spid_config["agid_enter_conent"]["section"]["div_cancel"]["id_btn"]+'" class="'+agid_spid_config["agid_enter_conent"]["section"]["div_cancel"]["class_btn"]+'" role="button" onclick="hidePanel()"><span>'+agid_spid_lang[lang]["agid_content"]["cancel_access"]+'</span></div></a>\
+  				</div > \
+          <div id="agid-logo-container" aria-hidden="true">\
+  					<img id="agid-logo" class="agid-logo" src="./img/agid-logo-bb-short.png" aria-hidden="true"/>\
+  				</div > \
+        </div>\
+  			<footer id="agid-spid-panel-footer">\
+          <div id="agid-action-button-container">\
+            <a href="#"> <div id="nospid" class="agid-action-button" role="button"><span>'+agid_spid_lang[lang]["txt_footer_nospid"]+'</span></div></a>\
+            <a href="#"> <div id="cosaspid" class="agid-action-button" role="button"><span>'+agid_spid_lang[lang]["txt_footer_cosaspid"]+'</span></div></a>\
+          </div>\
+        </footer>\
+  	  </section>\
+    </div>';
+  $("body").append(panel_html);
 }
+function showPanel() {
+  shuffleIdp();
+  toshow = $("#"+agid_spid_config["agid_enter_conent"]["section"]["id"]).get(0);
+  toshow.removeAttribute("hidden");
+  toshow.style.display = "block";
+  buttons = document.getElementsByClassName("agid-spid-enter-button");
+  for (z = 0; z < buttons.length; z++) {
+    buttons[z].style.display = "none";
+    hiddenattribute = document.createAttribute("hidden");
+    buttons[z].setAttributeNode(hiddenattribute);
+  }
+  animate_element_in("agid-spid-button-anim");
+  animate_element_in("agid-spid-button-anim-base");
+  animate_element_in("agid-spid-button-anim-icon");
+  animate_element_in(agid_spid_config["agid_enter_conent"]["section"]["id"]);
+  var base = document.getElementById("agid-spid-button-anim-base");
+  var panel = document.getElementById("agid-spid-button-anim");
+  base.addEventListener("animationstart", function(e){
+    panel.style.display = "block";
+    base.style.display = "block";
+  }, true);
+  base.addEventListener("animationend", function(e){
+    panel.style.display = "block";
+    base.style.display = "block";
+  }, true);
 }
-
-function insertButtonM() {
-var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-m");
-        var i;
-        for (i = 0; i < agid_spid_enter_button_xl.length; i++) {
-agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON MEDIUM * begin * -->\
-			<button class="agid-spid-enter agid-spid-enter-size-m" onclick="showPanel(\'agid-spid-panel-select\')">\
-				<span class="agid-spid-enter-icon"><img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-				<span class="agid-spid-enter-text">Entra con SPID</span>\
-			</button>\
-			<!-- AGID - SPID BUTTON MEDIUM * end * -->	\
-		';
+function hidePanel() {
+  tohide = $("#"+agid_spid_config["agid_enter_conent"]["section"]["id"]).get(0);
+  hiddenattribute = document.createAttribute("hidden");
+  tohide.setAttributeNode(hiddenattribute);
+  tohide.style.display = "none";
+  buttons = document.getElementsByClassName("agid-spid-enter-button");
+  for (z = 0; z < buttons.length; z++) {
+    buttons[z].style.display = "block";
+    buttons[z].removeAttribute("hidden");
+  };
+  animate_element_out("agid-spid-button-anim");
+  animate_element_out("agid-spid-button-anim-base");
+  animate_element_out("agid-spid-button-anim-icon");
+  animate_element_out(agid_spid_config["agid_enter_conent"]["section"]["id"]);
+  var base = document.getElementById("agid-spid-button-anim-base");
+  var panel = document.getElementById("agid-spid-button-anim");
+  base.addEventListener("animationstart", function(e){
+    panel.style.display = "block";
+    base.style.display = "block";
+  }, true);
+  base.addEventListener("animationend", function(e){
+    panel.style.display = "none";
+    base.style.display = "none";
+    var newone = base.cloneNode(true);
+    base.parentNode.replaceChild(newone, base);
+  }, true);
 }
-}
-
-function insertButtonL() {
-var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-l");
-        var i;
-        for (i = 0; i < agid_spid_enter_button_xl.length; i++) {
-agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON LARGE * begin * -->\
-			<button class="agid-spid-enter agid-spid-enter-size-l" onclick="showPanel(\'agid-spid-panel-select\')">\
-				<span class="agid-spid-enter-icon"><img aria-hidden="true"  src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-				<span class="agid-spid-enter-text">Entra con SPID</span>\
-			</button>\
-			<!-- AGID - SPID BUTTON LARGE * end * -->	\
-		';
-}
-}
-
-function insertButtonXl() {
-var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-xl");
-        var i;
-        for (i = 0; i < agid_spid_enter_button_xl.length; i++) {
-agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON EXTRALARGE * begin * -->\
-			<button  class="agid-spid-enter agid-spid-enter-size-xl agid-spid-idp-list" onclick="showPanel(\'agid-spid-panel-select\')">\
-				<span aria-hidden="true" class="agid-spid-enter-icon"><img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-				<span class="agid-spid-enter-text">Entra con SPID</span>\
-			</button>\
-			<!-- AGID - SPID BUTTON EXTRALARGE * end * -->		\
-		';
-}
-}
-
 function animate_element_in(e) {
-element = document.getElementById(e);
-        element.style.display = "block";
-        element.classList.remove(e + "-anim-in");
-        element.classList.remove(e + "-anim-out");
-        element.classList.add(e + "-anim-in");
-        }
-
+  element=$("#"+e).get(0);
+  element.style.display = "block";
+  element.classList.remove(e + "-anim-in");
+  element.classList.remove(e + "-anim-out");
+  element.classList.add(e + "-anim-in");
+}
 function animate_element_out(e) {
-element = document.getElementById(e);
-        element.classList.remove(e + "-anim-in");
-        element.classList.remove(e + "-anim-out");
-        element.classList.add(e + "-anim-out");
-        /*
-         var newone = element.cloneNode(true);
-         element.parentNode.replaceChild(newone, element);
-         element.classList.add(e + "-anim-out");	
-         */
-        }
-
-function showPanel(name) {
-
-shuffleIdp();
-        toshow = document.getElementById(name);
-        toshow.removeAttribute("hidden");
-        // toshow.style.width = "100%";
-        toshow.style.display = "block";
-        buttons = document.getElementsByClassName("agid-spid-enter-button");
-        //    console.log(buttons);
-        for (z = 0; z < buttons.length; z++) {
-buttons[z].style.display = "none";
-        hiddenattribute = document.createAttribute("hidden");
-buttons[z].setAttributeNode(hiddenattribute);
-        }
-
-// show animation panel
-animate_element_in("agid-spid-button-anim");
-        animate_element_in("agid-spid-button-anim-base");
-        animate_element_in("agid-spid-button-anim-icon");
-        animate_element_in("agid-spid-panel-select");
-        var base = document.getElementById("agid-spid-button-anim-base");
-        var panel = document.getElementById("agid-spid-button-anim");
-        base.addEventListener("animationstart", function(e){
-        panel.style.display = "block";
-                base.style.display = "block";
-        }, true);
-        base.addEventListener("animationend", function(e){
-        panel.style.display = "block";
-                base.style.display = "block";
-        }, true);
-        }
-
-function hidePanel(name) {
-
-tohide = document.getElementById(name);
-        hiddenattribute = document.createAttribute("hidden");
-        tohide.setAttributeNode(hiddenattribute);
-        tohide.style.display = "none";
-        buttons = document.getElementsByClassName("agid-spid-enter-button");
-        console.log(buttons);
-        for (z = 0; z < buttons.length; z++) {
-buttons[z].style.display = "block";
-        buttons[z].removeAttribute("hidden");
-};
-        // hide animation panel
-        animate_element_out("agid-spid-button-anim");
-        animate_element_out("agid-spid-button-anim-base");
-        animate_element_out("agid-spid-button-anim-icon");
-        animate_element_out("agid-spid-panel-select");
-        var base = document.getElementById("agid-spid-button-anim-base");
-        var panel = document.getElementById("agid-spid-button-anim");
-        base.addEventListener("animationstart", function(e){
-        panel.style.display = "block";
-                base.style.display = "block";
-        }, true);
-        base.addEventListener("animationend", function(e){
-        panel.style.display = "none";
-                base.style.display = "none";
-                var newone = base.cloneNode(true);
-                base.parentNode.replaceChild(newone, base);
-        }, true);
-        }
-
+  element=$("#"+e).get(0);
+  element.classList.remove(e + "-anim-in");
+  element.classList.remove(e + "-anim-out");
+  element.classList.add(e + "-anim-out");
+}
 function shuffleIdp() {
-var ul = document.querySelector('#agid-spid-idp-list');
-        for (var i = ul.children.length; i >= 0; i--) {
-ul.appendChild(ul.children[Math.random() * i | 0]);
+  if(agid_spid_config["config"]["shuffle"]===true){
+    var ul = document.querySelector('#'+agid_spid_config["agid_enter_conent"]["section"]["list_providers"]["id"]);
+    for (var i = ul.children.length; i >= 0; i--)
+      ul.appendChild(ul.children[Math.random() * i | 0]);
+  }
 }
+function openmodal(title,content){
+  var modal = $("#"+agid_spid_config["info_modal"]["id"]);
+  modal.html('<div id="'+agid_spid_config["agid_spid"]["id_modal_content"]+'" class="modal-content"><div><span id="'+agid_spid_config["agid_spid"]["id_modal_close"]+'" class="close">&times;</span><p>' + title + '</p></div><div>'+content+'</div></div>');
+  modal.css("display","block");
+  var span = $("#"+agid_spid_config["agid_spid"]["id_modal_close"]);
+  span.click(function(){ closemodal(); });
+};
+function closemodal() {
+  var modal = $("#"+agid_spid_config["info_modal"]["id"]);
+  modal.css("display","none");
+  modal.html("");
 }
-
-function agid_spid_enter() {
-insertCode();
-        insertButtonS();
-        insertButtonM();
-        insertButtonL();
-        insertButtonXl();
-        document.addEventListener('keyup', function(e) {
-        if (e.keyCode == 27) {
-        hidePanel('agid-spid-panel-select');
-        }
-        });
-        };
-        agid_spid_enter();
-        
-        function openmodal(text){
-        console.log("Openmodal " + text);
-                var modal = document.getElementById("infomodal");
-                modal.innerHTML = '<div class=\"modal-content\"><span id="closemodalbutton" class="close" >&times;</span><p>' + text + '</p></div>'
-                modal.style.display = "block";
-                var span = document.getElementById("closemodalbutton");
-                span.addEventListener("click", function(ev) { closemodal(); });
-                console.log(span);
-        };
-        function closemodal() {
-        console.log("Closingmodal ");
-                var modal = document.getElementById("infomodal");
-                modal.style.display = "none";
-                modal.innerHTML = '';
-        }
+function checkLanguage(lang){
+  if(agid_spid_lang[lang]===undefined || agid_spid_lang[lang]===null) lang="it";
+  return lang;
+}
+function setupAgidSpidEnter(){
+  //Ripulisco eventuali caratteri all'interno del nostro div
+  $("agid-div").html("");
+  //Imposto le risorse css nell'head
+  setupHead();
+  //Creo i componenti AGID
+  $('agid-div').each(function(i, obj) {
+    agid_lang=checkLanguage($(this).attr("agid-lang"));
+    generateButton($(this).attr("agid-size"),$(this),agid_lang);
+  });
+  //Creo il contenuto del div di AGID
+  createContent(agid_lang);
+  //Chiamate funzioni al modal nospid e cosaspid
+  $("#nospid").click(function(){ openmodal(agid_spid_lang[agid_lang]["txt_title_modal_nospid"],agid_spid_lang[agid_lang]["txt_content_modal_cosaspid"]); });
+  $("#cosaspid").click(function(){ openmodal(agid_spid_lang[agid_lang]["txt_title_modal_cosaspid"],agid_spid_lang[agid_lang]["txt_content_modal_cosaspid"]); });
+  //Richiamare la funzione hidePanel() e closemodal() la quale alla pressione del tasto ESC chiude sia il pannello AGID sia l'eventuale modal
+  $(document).keydown(function(e) {
+    if(e.keyCode == 27){
+      hidePanel();
+      closemodal();
+    }
+  });
+  //Richiamare la funzione closemodal() la quale chiude il modal nel momento in cui clicchiamo con il mouse fuori dal modal
+  $(document).mouseup(function(e){
+    var modal_cont = $("#"+agid_spid_config["agid_spid"]["id_modal_content"]);
+    if (!modal_cont.is(e.target) && modal_cont.has(e.target).length === 0) closemodal();
+  });
+}
+$(document).ready(function() {
+  setupAgidSpidEnter();
+});
