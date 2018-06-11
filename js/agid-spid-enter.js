@@ -53,64 +53,19 @@ var agid_spid_enter = document.getElementById('agid-spid-enter');
         document.getElementById("cosaspid").addEventListener('click', function(ev) { openmodal('Cos\'è SPID?');});
         }
 
-function insertButtonS() {
-var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-s");
-        var i;
-        for (i = 0; i < agid_spid_enter_button_xl.length; i++) {
-agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON SMALL * begin * -->\
-			<button class="agid-spid-enter agid-spid-enter-size-s" onclick="showPanel(\'agid-spid-panel-select\')">\
+function insertButton(size) {
+    var agid_spid_enter_button = document.getElementsByClassName("agid-spid-enter-button-size-"+size);
+    var i;
+    for (i = 0; i < agid_spid_enter_button.length; i++) {
+        agid_spid_enter_button[i].innerHTML = '\
+			<!-- AGID - SPID BUTTON * begin * -->\
+			<button class="agid-spid-enter agid-spid-enter-size-'+size+'" onclick="showPanel(\'agid-spid-panel-select\')">\
 				<span class="agid-spid-enter-icon"><img aria-hidden="true"  src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
 				<span class="agid-spid-enter-text">Entra con SPID</span>\
 			</button>\
-			<!-- AGID - SPID BUTTON SMALL * end * -->		\
+			<!-- AGID - SPID BUTTON * end * -->		\
 		';
-}
-}
-
-function insertButtonM() {
-var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-m");
-        var i;
-        for (i = 0; i < agid_spid_enter_button_xl.length; i++) {
-agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON MEDIUM * begin * -->\
-			<button class="agid-spid-enter agid-spid-enter-size-m" onclick="showPanel(\'agid-spid-panel-select\')">\
-				<span class="agid-spid-enter-icon"><img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-				<span class="agid-spid-enter-text">Entra con SPID</span>\
-			</button>\
-			<!-- AGID - SPID BUTTON MEDIUM * end * -->	\
-		';
-}
-}
-
-function insertButtonL() {
-var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-l");
-        var i;
-        for (i = 0; i < agid_spid_enter_button_xl.length; i++) {
-agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON LARGE * begin * -->\
-			<button class="agid-spid-enter agid-spid-enter-size-l" onclick="showPanel(\'agid-spid-panel-select\')">\
-				<span class="agid-spid-enter-icon"><img aria-hidden="true"  src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-				<span class="agid-spid-enter-text">Entra con SPID</span>\
-			</button>\
-			<!-- AGID - SPID BUTTON LARGE * end * -->	\
-		';
-}
-}
-
-function insertButtonXl() {
-var agid_spid_enter_button_xl = document.getElementsByClassName("agid-spid-enter-button-size-xl");
-        var i;
-        for (i = 0; i < agid_spid_enter_button_xl.length; i++) {
-agid_spid_enter_button_xl[i].innerHTML = '\
-			<!-- AGID - SPID BUTTON EXTRALARGE * begin * -->\
-			<button  class="agid-spid-enter agid-spid-enter-size-xl agid-spid-idp-list" onclick="showPanel(\'agid-spid-panel-select\')">\
-				<span aria-hidden="true" class="agid-spid-enter-icon"><img aria-hidden="true" src="img/spid-ico-circle-bb.svg" onerror="this.src=\'img/spid-ico-circle-bb.png\'; this.onerror=null;" alt="Entra con SPID" /></span>\
-				<span class="agid-spid-enter-text">Entra con SPID</span>\
-			</button>\
-			<!-- AGID - SPID BUTTON EXTRALARGE * end * -->		\
-		';
-}
+    }
 }
 
 function animate_element_in(e) {
@@ -205,10 +160,10 @@ ul.appendChild(ul.children[Math.random() * i | 0]);
 
 function agid_spid_enter() {
 insertCode();
-        insertButtonS();
-        insertButtonM();
-        insertButtonL();
-        insertButtonXl();
+        ['s', 'm', 'l', 'xl'].forEach(function(size) {
+            insertButton(size);
+            console.log(size);
+        });
         document.addEventListener('keyup', function(e) {
         if (e.keyCode == 27) {
         hidePanel('agid-spid-panel-select');
