@@ -1,0 +1,616 @@
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700,900);
+
+.agid-font {
+    font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+}
+
+.agid-navigable {
+    background: transparent;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#agid-spid-enter-container {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+}
+
+#agid-spid-enter {
+    height: 0; // fix Safari, non comprime l'altezza del div quando i figli sono nascosti
+}
+
+#agid-spid-panel-select {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    color: #000;
+    position: fixed;
+    z-index: 1;
+    overflow: auto;
+    background-position: bottom -25px right -150px;
+}
+
+#agid-spid-panel-header {
+    background-color: #fff;
+    color: #fff;
+    display: block;
+    margin: 0;
+    overflow: hidden;
+    padding: 12px 0;
+    position: fixed;
+    text-align: center;
+    width: 100vw;
+    z-index: 1;
+
+    .agid-spid-panel-back,
+    .agid-spid-panel-logo {
+        float: left;
+        width: 33.33333vw;
+        padding-top: 3px;
+    }
+
+    .agid-spid-panel-back {
+        & a,
+        & button,
+        & button a {
+            float: left;
+            width: auto;
+            border: none;
+            outline: none;
+            display: block;
+            cursor: pointer;
+        }
+
+        & button:hover,
+        & button:focus,
+        & a:hover,
+        & a:focus {
+            opacity: 0.5;
+        }
+
+        & img {
+            max-height: 25px;
+        }
+    }
+
+    .agid-spid-panel-logo img {
+        max-height: 37px;
+    }
+
+    .agid-spid-panel-element {
+        float: right;
+        min-width: 33.3333vw;
+    }
+}
+
+#agid-spid-panel-close-button {
+    padding: 6px 10px;
+    margin-left: calc(100% - 60px);
+}
+
+#agid-spid-panel-content {
+    display: block;
+    width: 90vw;
+    overflow: auto;
+    margin: 70px auto 100px;
+
+    #agid-spid-enter-title-page {
+        font-weight: 600;
+        background: transparent;
+        color: #fff;
+        text-align: center;
+        display: inline-block;
+        font-size: 1em;
+        margin: 0 auto;
+    }
+}
+
+.agid-spid-panel-content-center {
+    max-width: 650px;
+    text-align: center;
+    margin: auto;
+}
+
+.agid-spid-idp-button {
+    border: none;
+    width: 145px;
+    height: 55px;
+    margin-bottom: 18px;
+    cursor: pointer;
+    background: #fff;
+    border-radius: 3px;
+    color: #a00;
+    outline: 1px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 80%;
+    transition: 0.5s;
+
+    &:hover,
+    &:focus {
+        box-shadow: 0 5px 0 #0057ae;
+        opacity: 0.8;
+    }
+
+    &:active {
+        box-shadow: 0 2px 0 #999;
+        transform: translateY(3px);
+    }
+
+    &[disabled] {
+        cursor: not-allowed;
+        filter: grayscale(1);
+    }
+}
+
+#agid-spid-idp-list {
+    padding: 1em 0 0;
+}
+
+#agid-spid-panel-footer {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    overflow: hidden;
+    text-align: center;
+    color: #fff;
+    background-color: #06c;
+    backface-visibility: hidden;
+
+    & img {
+        max-width: 200px;
+        margin: 5px;
+    }
+}
+
+.agid-spid-enter-icon,
+.agid-spid-enter-text {
+    display: block;
+    float: left;
+}
+
+.agid-spid-enter-icon {
+    margin: 0 -0.4em 0 0;
+    padding: 0.6em 0.8em 0.5em;
+    border-right: rgba(255, 255, 255, 0.1) 0.1em solid;
+
+    & svg {
+        width: 1.8em;
+        height: 1.8em;
+        fill: #fff;
+    }
+}
+
+.agid-spid-enter-text {
+    padding: 0.95em 1em 0.85em;
+    font-size: 1.15em;
+    text-align: center;
+}
+
+.agid-spid-enter-size-s {
+    font-size: 0.625em;
+    border-radius: 5px;
+
+    & > span img {
+        width: 19px;
+        height: 19px;
+        border: 0;
+    }
+}
+
+.agid-spid-enter-size-m {
+    font-size: 0.95em;
+    border-radius: 6px;
+
+    & > span img {
+        width: 29px;
+        height: 29px;
+        border: 0;
+    }
+}
+
+.agid-spid-enter-size-l {
+    font-size: 1.25em;
+    border-radius: 7px;
+
+    & > span img {
+        width: 38px;
+        height: 38px;
+        border: 0;
+    }
+}
+
+.agid-spid-enter-size-xl {
+    font-size: 1.55em;
+    border-radius: 8px;
+
+    & > span img {
+        width: 47px;
+        height: 47px;
+        border: 0;
+    }
+}
+
+.agid-spid-row::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.agid-spid-col {
+    float: left;
+    width: 100vw;
+
+    &.xs1 {
+        width: 8.33333%;
+    }
+
+    &.xs2 {
+        width: 16.66666%;
+    }
+
+    &.xs3 {
+        width: 24.99999%;
+    }
+
+    &.xs4 {
+        width: 33.33333%;
+    }
+
+    &.xs5 {
+        width: 41.66666%;
+    }
+
+    &.xs6 {
+        width: 49.99999%;
+    }
+
+    &.xs7 {
+        width: 58.33333%;
+    }
+
+    &.xs8 {
+        width: 66.66666%;
+    }
+
+    &.xs9 {
+        width: 74.99999%;
+    }
+
+    &.xs10 {
+        width: 83.33333%;
+    }
+
+    &.xs11 {
+        width: 91.66666%;
+    }
+
+    &.xs12 {
+        width: 99.99999%;
+    }
+}
+
+#agid-spid-enter-title-container {
+    padding-top: 1.25em;
+}
+
+#agid-action-button-container {
+    width: 100%;
+
+    & button {
+        border: none;
+    }
+}
+
+.agid-action-button {
+    width: 49.99999%;
+    height: 65px;
+    color: #06c;
+    font-weight: 700;
+    vertical-align: middle;
+    background-color: #fff;
+    display: block;
+    float: left;
+
+    span {
+        position: relative;
+        top: -4px;
+    }
+}
+
+#agid-cancel-access-container {
+    display: none;
+}
+
+#agid-logo-container {
+    display: none;
+}
+
+#agid-infomodal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.4);
+
+    .modal-content {
+        background-color: #fefefe;
+        padding: 20px;
+        border: 1px solid #888;
+        margin: 3vh 6vw 0;
+        max-height: 93vh;
+        box-sizing: border-box;
+        overflow: scroll;
+
+        div {
+            padding: 16px 20px 12px 0;
+        }
+
+        .close {
+            border: none;
+            color: #aaa;
+            cursor: pointer;
+            font-weight: 700;
+            position: fixed;
+            font-size: 2em;
+            right: 6vw;
+            width: 1.7em;
+            text-align: center;
+            top: 5vh;
+
+            &:hover,
+            &:focus {
+                color: #000;
+            }
+        }
+    }
+}
+
+.agid-spid-visibile {
+    display: block !important;
+    opacity: 0;
+}
+
+#agid-spid-enter-anim {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+
+    &::before,
+    &::after {
+        content: '';
+    }
+
+    &::before {
+        width: 180px;
+        height: 48px;
+        background-color: #075fc5;
+        border-radius: 4px;
+        position: absolute;
+    }
+
+    &::after {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        position: absolute;
+        // la prorietà bk-color non può essere specificata pena un bug di rendering del path circolare estero dell'SVG
+        background: url($assetsBaseUrl + "img/spid-ico-circle-bb.svg") center center no-repeat;
+    }
+}
+
+@media (min-width: 361px) {
+    .agid-spid-col {
+        &.s2 {
+            width: 16.66666%;
+        }
+
+        &.s3 {
+            width: 24.99999%;
+        }
+
+        &.s4 {
+            width: 33.33333%;
+        }
+
+        &.s5 {
+            width: 41.66666%;
+        }
+
+        &.s6 {
+            width: 49.99999%;
+        }
+
+        &.s7 {
+            width: 58.33333%;
+        }
+
+        &.s8 {
+            width: 66.66666%;
+        }
+
+        &.s9 {
+            width: 74.99999%;
+        }
+
+        &.s10 {
+            width: 83.33333%;
+        }
+
+        &.s11 {
+            width: 91.66666%;
+        }
+
+        &.s12 {
+            width: 99.99999%;
+        }
+    }
+
+    #agid-spid-panel-header {
+        padding: 4px 0;
+
+        & .agid-spid-panel-logo img {
+            max-height: 33px;
+        }
+    }
+
+    #agid-spid-enter-title-container {
+        padding-top: 0.813em;
+    }
+
+    .agid-spid-idp-button {
+        width: 155px;
+        height: 48px;
+    }
+
+    #agid-cancel-access-container,
+    #agid-logo-container {
+        display: block;
+
+        img {
+            padding-top: 10px;
+            height: 35px;
+        }
+    }
+
+    #agid-cancel-access-button {
+        background-color: transparent;
+        border-radius: 5px;
+        border: 1px solid #80afe4;
+        height: 46px;
+        vertical-align: middle;
+        margin: 3px 0 0;
+        width: 98%;
+        text-transform: uppercase;
+        color: #fff;
+    }
+
+    #agid-cancel-access-container {
+        & a,
+        & a:visited,
+        & a:link {
+            text-decoration: none;
+        }
+    }
+}
+
+@media (min-width: 769px) {
+    .agid-spid-col {
+        &.m1 {
+            width: 8.33333%;
+        }
+
+        &.m2 {
+            width: 16.66666%;
+        }
+
+        &.m3 {
+            width: 24.99999%;
+        }
+
+        &.m4 {
+            width: 33.33333%;
+        }
+
+        &.m5 {
+            width: 41.66666%;
+        }
+
+        &.m6 {
+            width: 49.99999%;
+        }
+
+        &.m7 {
+            width: 58.33333%;
+        }
+
+        &.m8 {
+            width: 66.66666%;
+        }
+
+        &.m9 {
+            width: 74.99999%;
+        }
+
+        &.m10 {
+            width: 83.33333%;
+        }
+
+        &.m11 {
+            width: 91.66666%;
+        }
+
+        &.m12 {
+            width: 99.99999%;
+        }
+    }
+
+    .agid-spid-half {
+        width: 49.99999%;
+    }
+
+    .agid-spid-twothird {
+        width: 66.66666%;
+    }
+
+    .agid-spid-panel-content-center {
+        max-width: 380px;
+        padding-top: 100px;
+    }
+
+    .agid-spid-idp-button {
+        width: 165px;
+    }
+
+    #agid-cancel-access-button {
+        margin: 0 12px;
+    }
+}
+
+/*
+ * Deve essere l'ultimo set di regole, così che dopo che i pulsanti sono stati renderizzati con invisibilità inline
+ * si da tempo al browser di caricare e parsare i fogli di stile appena iniettati, di google font e del presente
+ * così da evitare di vedere prima i pulsanti "rotti" che poi si aggiustano gradualmente mentre il CSS viene scaricato e parsato
+ * in questo modo i pulsanti appaiono pochi istanti dopo correttamente stilizzati, sovrascrivendo l'attributo hidden
+ */
+.agid-spid-enter {
+    padding: 0;
+    color: #fff;
+    background-color: #06c;
+    font-weight: 600;
+    line-height: 1em;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+    display: inline-block;
+
+    &:hover,
+    &:focus {
+        background-color: #036;
+        color: #fff;
+    }
+
+    &:active {
+        background-color: #83beed;
+        color: #036;
+    }
+
+    &:visited {
+        background-color: #06c;
+        color: #fff;
+    }
+
+    svg {
+        fill: #fff;
+    }
+}
