@@ -1,73 +1,74 @@
 {
-    "name": "spid-smart-button",
-    "version": "1.0.0",
-    "description": "Pulsante SSO per SPID",
-    "engines": {
-      "node": ">=6.1.0"
+  "name": "spid-smart-button",
+  "version": "1.0.0",
+  "description": "Pulsante SSO per SPID",
+  "engines": {
+    "node": ">=6.1.0"
+  },
+  "localserver": {
+    "url": "http://localhost:",
+    "port": 9090
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/italia/spid-smart-button.git"
+  },
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "Umberto Rosini",
+    "email": "rosini@agid.gov.it",
+    "url": "https://github.com/umbros"
+  },
+  "contributors": [
+    {
+      "name": "Simone Rescio",
+      "email": "info@simonerescio.it",
+      "url": "https://simonerescio.it"
     },
-    "localserver": {
-      "url": "http://localhost:",
-      "port": 9090
-    },
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/italia/spid-smart-button.git"
-    },
-    "license": "BSD-3-Clause",
-    "author": {
-      "name": "Umberto Rosini",
-      "email": "rosini@agid.gov.it",
-      "url": "https://github.com/umbros"
-    },
-    "contributors": [
-      {
-        "name": "Simone Rescio",
-        "email": "info@simonerescio.it",
-        "url": "https://simonerescio.it"
-      },
-      {
-        "name": "Davide Porrovecchio",
-        "email": "davide.porrovecchio@agid.gov.it",
-        "url": "https://github.com/pdavide"
-      }
-    ],
-    "scripts": {
-      "preinstall": "node tasksConfig/check-node-version.js",
-      "security": "grunt retire",
-      "start": "grunt build && grunt serve & grunt watch ; fg",
-      "postinstall": "npm run security; npm start",
-      "lint": "grunt lint",
-      "test": "grunt test",
-      "coverage": "karma start tasksConfig/karma.config.js && grunt log-coverage",
-      "performance": "lighthouse $npm_package_localserver_url$npm_package_localserver_port/index.html --output-path=reports/lighthouse.html --view",
-      "precommit": "npm run lint",
-      "prepush": "npm test && npm run coverage"
-    },
-    "devDependencies": {
-      "axe-core": "^2.4.2",
-      "eslint-config-crockford": "^2.0.0",
-      "eslint-plugin-jasmine": "^2.9.1",
-      "grunt": "^1.0.1",
-      "grunt-contrib-jasmine": "1.1.0",
-      "grunt-contrib-uglify": "3.1.0",
-      "grunt-contrib-watch": "1.0.0",
-      "grunt-eslint": "^20.1.0",
-      "grunt-postcss": "^0.9.0",
-      "grunt-retire": "^1.0.7",
-      "grunt-serve": "git@github.com:srescio/grunt-serve.git#bump-deps-fix-security-warns",
-      "grunt-sass": "^2.1.0",
-      "grunt-string-replace": "^1.3.1",
-      "grunt-stylelint": "^0.9.0",
-      "husky": "^0.14.3",
-      "karma": "^1.7.1",
-      "karma-coverage": "^1.1.1",
-      "karma-jasmine": "^1.1.0",
-      "karma-phantomjs-launcher": "^1.0.4",
-      "lighthouse": "^2.7.0",
-      "load-grunt-tasks": "^3.5.2",
-      "node-sass": "^4.9.0",
-      "promise-polyfill": "^6.0.2",
-      "stylelint": "^8.2.0",
-      "stylelint-config-standard": "^17.0.0"
+    {
+      "name": "Davide Porrovecchio",
+      "email": "davide.porrovecchio@agid.gov.it",
+      "url": "https://github.com/pdavide"
     }
+  ],
+  "scripts": {
+    "preinstall": "node tasksConfig/check-node-version.js",
+    "security": "grunt retire",
+    "start": "grunt build && grunt serve & grunt watch:build",
+    "postinstall": "npm run security; npm start",
+    "lint": "grunt lint",
+    "test-watch": "grunt watch:test",
+    "test": "grunt test",
+    "coverage": "karma start tasksConfig/karma.config.js && grunt log-coverage",
+    "performance": "lighthouse $npm_package_localserver_url$npm_package_localserver_port/index.html --output-path=reports/lighthouse.html --view",
+    "precommit": "npm run lint",
+    "prepush": "npm test && npm run coverage"
+  },
+  "devDependencies": {
+    "axe-core": "^2.4.2",
+    "eslint-config-crockford": "^2.0.0",
+    "eslint-plugin-jasmine": "^2.9.1",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jasmine": "1.1.0",
+    "grunt-contrib-uglify": "3.1.0",
+    "grunt-contrib-watch": "1.0.0",
+    "grunt-eslint": "^20.1.0",
+    "grunt-postcss": "^0.9.0",
+    "grunt-retire": "^1.0.7",
+    "grunt-serve": "git@github.com:srescio/grunt-serve.git#bump-deps-fix-security-warns",
+    "grunt-sass": "^2.1.0",
+    "grunt-string-replace": "^1.3.1",
+    "grunt-stylelint": "^0.9.0",
+    "husky": "^0.14.3",
+    "karma": "^1.7.1",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "lighthouse": "^2.7.0",
+    "load-grunt-tasks": "^3.5.2",
+    "node-sass": "^4.9.0",
+    "promise-polyfill": "^6.0.2",
+    "stylelint": "^8.2.0",
+    "stylelint-config-standard": "^17.0.0"
   }
+}

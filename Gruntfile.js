@@ -9,9 +9,17 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+
         watch: {
-            files: ['src/scss/*', 'src/js/*'],
-            tasks: ['build', 'jasmine']
+            build: {
+                files: ['src/scss/*', 'src/js/*'],
+                tasks: ['build']
+            },
+
+            test: {
+                files: ['src/scss/*', 'src/js/*'],
+                tasks: ['build', 'jasmine']
+            }
         },
 
         // Controllo di sicurezza, rileva vulnerabilità note nel codice e nelle dipendenze
