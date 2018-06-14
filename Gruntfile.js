@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
-    var fs           = require('fs'),
-        pkg          = JSON.parse(fs.readFileSync('./package.json', 'utf8')),
-        serverPort   = pkg.localserver.port,
+    var fs = require('fs'),
+        pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8')),
+        serverPort = pkg.localserver.port,
         localhostUrl = pkg.localserver.url + serverPort;
 
     require('load-grunt-tasks')(grunt);
@@ -90,7 +90,7 @@ module.exports = function (grunt) {
                 options: {
                     map: false
                 },
-                src:   'dist/agid-spid-enter.min.<%= pkg.version %>.css',
+                src: 'dist/agid-spid-enter.min.<%= pkg.version %>.css',
                 dest: 'dist/agid-spid-enter.min.<%= pkg.version %>.css'
             }
         },

@@ -2,7 +2,7 @@
 
 [![Join the #spid-smart-button channel](https://img.shields.io/badge/Slack%20channel-%23spid--smart--button-blue.svg?logo=slack)](https://developersitalia.slack.com/messages/C7EQLBY9H)
 [![Get invited](https://slack.developers.italia.it/badge.svg)](https://slack.developers.italia.it/)
-[![SPID on forum.italia.it](https://img.shields.io/badge/Forum-SPID-blue.svg)](https://forum.italia.it/c/spid) 
+[![SPID on forum.italia.it](https://img.shields.io/badge/Forum-SPID-blue.svg)](https://forum.italia.it/c/spid)
 
 > ⚠️ **WORK IN PROGRESS** ⚠️
 
@@ -95,7 +95,7 @@ Esempio completo
 
 l'attributo data-size viene parsato in maniera case-insensitive quindi può essere sia maiuscolo che minuscolo
 
-### Metodi pubblici del modulo agidSpidEnter
+### Metodi pubblici del modulo SPID
 Il modulo espone 4 metodi pubblici
 
 #### `init(config)`
@@ -110,7 +110,7 @@ l'oggetto `config` è opzionale, se omesso le impostazioni predefinite saranno:
 un esempio in cui tutte le opzioni configurabili vengono esplicitate:
 
 ```javascript
-window.agidSpidEnter.init({
+window.SPID.init({
     language: 'en',
     formActionUrl: 'https://hack.developers.italia.it/',
     formSubmitMethod: 'POST',
@@ -143,17 +143,17 @@ Se uno stesso dato è presente sia in `common` che nella configurazione specific
 #### `changeLanguage(locale)`
 ritorna una promise che rappresenta lo stato di caricamento delle copy, al termine aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata, la stringa `locale` deve essere costituita da due caratteri eg `it`
 ```javascript
-window.agidSpidEnter.changeLanguage('en');
+window.SPID.changeLanguage('en');
 ```
 
 #### `updateSpidButtons()`
 ricerca i placeholders per ripristinare i pulsanti, utilizzabile in caso di aggiornamento dinamico della UI causante la cancellazione dei pulsanti renderizzati in fase di inizializzazione
 ```javascript
-window.agidSpidEnter.updateSpidButtons();
+window.SPID.updateSpidButtons();
 ```
 
 #### `version()`
 ritorna la semantic version del modulo in uso, utile caricando il minifizzato *latest*
 ```javascript
-window.agidSpidEnter.version();
+window.SPID.version();
 ```

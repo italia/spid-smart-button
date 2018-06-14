@@ -1,24 +1,36 @@
 /*
  * Modulo SPID smart button
  */
-window.AgidSpidEnter = function () {
+window.SPID = function () {
     "use strict";
 
+    /** VARIABILI PRIVATE */
+
+    /* eslint no-underscore-dangle: 0 */
     var self = this,
-        agidSpidEnterWrapper,
-        spidIdpList,
-        infoModal,
-        spidPanelSelect;
+        _agidSpidEnterWrapper,
+        _spidIdpList,
+        _infoModal,
+        _spidPanelSelect,
+        _version = '{{ VERSION }}', // il placeholder '{{ VERSION }}' viene sostituito con la version del package dal task string-replace, non modificare!
+        _language = 'it', // Lingua delle etichette sostituibile all'init, default Italiano
+        _i18n = {}, // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
+        _availableProviders;
 
-    self.availableProviders = null;
+    /** VARIABILI PUBBLICHE */
 
-    function getTpl(templateName, content) {
-        return self.tpl[templateName].call(self, content);
-    }
+    this.resources = {};
+    this.templates = {};
+
+    /** FUNZIONI PRIVATE */
+
+    function getTemplate(templateName, content) {
+        return self.templates[templateName].call(self, content);
+    };
 
     function showElement(dom) {
         dom.removeAttribute('hidden');
-    }
+    };
 
     function hideElement(dom) {
         var hiddenAttribute = document.createAttribute("hidden");
@@ -30,20 +42,20 @@ window.AgidSpidEnter = function () {
         var focusElement = setInterval(function () {
             element.focus();
         }, 100);
-        spidPanelSelect.addEventListener('focus', function () {
+        _spidPanelSelect.addEventListener('focus', function () {
             clearInterval(focusElement);
         });
     }
 
     function closeInfoModal() {
-        hideElement(infoModal);
-        infoModal.innerHTML = '';
-        giveFocusTo(spidPanelSelect);
+        hideElement(_infoModal);
+        _infoModal.innerHTML = '';
+        giveFocusTo(_spidPanelSelect);
     }
 
     function openInfoModal(htmlContent) {
-        infoModal.innerHTML = getTpl('infoModalContent', htmlContent);
-        showElement(infoModal);
+        _infoModal.innerHTML = getTemplate('infoModalContent', htmlContent);
+        showElement(_infoModal);
         // L'attributo aria-live assertive farà leggere il contenuto senza bisogno di focus
         // Viene distrutto e ricreato, non necessita unbind
         document.querySelector('#closemodalbutton').addEventListener('click', closeInfoModal);
@@ -52,15 +64,15 @@ window.AgidSpidEnter = function () {
     // Randomizza l'ordine dei tasti dei provider prima di mostrarli
     function shuffleIdp() {
         // eslint-disable-next-line vars-on-top
-        for (var i = spidIdpList.children.length; i >= 0; i--) {
-            spidIdpList.appendChild(spidIdpList.children[Math.random() * i | 0]);
+        for (var i = _spidIdpList.children.length; i >= 0; i--) {
+            _spidIdpList.appendChild(_spidIdpList.children[Math.random() * i | 0]);
         }
     }
 
     // Chiudi gli overlay in sequenza, prima info modal poi i providers
     function handleEscKeyEvent(event) {
-        var isEscKeyHit             = event.keyCode === 27,
-            isInfoModalVisible      = !infoModal.hasAttribute('hidden');
+        var isEscKeyHit = event.keyCode === 27,
+            isInfoModalVisible = !_infoModal.hasAttribute('hidden');
 
         if (isEscKeyHit) {
             if (isInfoModalVisible) {
@@ -74,13 +86,13 @@ window.AgidSpidEnter = function () {
 
     function showProvidersPanel() {
         shuffleIdp();
-        showElement(agidSpidEnterWrapper);
-        giveFocusTo(spidPanelSelect);
+        showElement(_agidSpidEnterWrapper);
+        giveFocusTo(_spidPanelSelect);
         document.addEventListener('keyup', handleEscKeyEvent);
     }
 
     function hideProvidersPanel() {
-        hideElement(agidSpidEnterWrapper);
+        hideElement(_agidSpidEnterWrapper);
         document.removeEventListener('keyup', handleEscKeyEvent);
     }
 
@@ -88,53 +100,20 @@ window.AgidSpidEnter = function () {
         var agid_spid_enter = document.querySelector('#agid-spid-enter'),
             spidProvidersButtonsHTML = '';
 
-        self.availableProviders.forEach(function (provider) {
-            spidProvidersButtonsHTML += getTpl('spidProviderButton', provider);
+        _availableProviders.forEach(function (provider) {
+            spidProvidersButtonsHTML += getTemplate('spidProviderButton', provider);
         });
 
-        agid_spid_enter.innerHTML = getTpl('spidProviderChoiceModal', spidProvidersButtonsHTML);
+        agid_spid_enter.innerHTML = getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
 
         // Vengono creati una sola volta all'init, non necessitano unbind
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-cancel-access-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#nospid').addEventListener('click', function () {
-            openInfoModal(getTpl('nonHaiSpid'));
+            openInfoModal(getTemplate('nonHaiSpid'));
         });
         document.querySelector('#cosaspid').addEventListener('click', function () {
-            openInfoModal(getTpl('cosaSpid'));
-        });
-    }
-
-    function renderSpidButtons() {
-        var spidButtonsPlaceholdersObj   = document.querySelectorAll('.agid-spid-enter-button'),
-            spidButtonsPlaceholdersArray = Array.from(spidButtonsPlaceholdersObj),
-            hasButtonsOnPage             = spidButtonsPlaceholdersArray.length;
-
-        if (!self.availableProviders) {
-            console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
-            return;
-        };
-
-        if (!hasButtonsOnPage) {
-            console.warn('Nessun placeholder HTML trovato nella pagina per i pulsanti SPID');
-            return;
-        };
-
-        spidButtonsPlaceholdersArray.forEach(function (spidButton) {
-            var foundDataSize   = spidButton.getAttribute('data-size'),
-                dataSize        = foundDataSize.toLowerCase(),
-                supportedSizes  = ['s', 'm', 'l', 'xl'],
-                isSupportedSize = supportedSizes.indexOf(dataSize) !== -1;
-
-            if (isSupportedSize) {
-                spidButton.innerHTML = getTpl('spidButton', dataSize);
-            } else {
-                console.error('Le dimenioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButton);
-            }
-        });
-        // Binda gli eventi dopo aver renderizzato i pulsanti SPID
-        Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
-            spidButton.addEventListener('click', showProvidersPanel);
+            openInfoModal(getTemplate('cosaSpid'));
         });
     }
 
@@ -160,47 +139,46 @@ window.AgidSpidEnter = function () {
 
     function getLocalisedMessages() {
         var languageRequest = {
-            language: self.language
+            language: _language
         };
 
-        return ajaxRequest('GET', self.config.localisationEndpoint, languageRequest);
+        return ajaxRequest('GET', self.resources.localisationEndpoint, languageRequest);
     }
 
     function getAvailableProviders() {
-        return ajaxRequest('GET', self.config.providersEndpoint);
+        return ajaxRequest('GET', self.resources.providersEndpoint);
     }
 
     function loadStylesheet(url) {
-        var linkElement  = document.createElement('link');
+        var linkElement = document.createElement('link');
 
-        linkElement.rel  = 'stylesheet';
+        linkElement.rel = 'stylesheet';
         linkElement.type = 'text/css';
         linkElement.href = url;
         document.head.appendChild(linkElement);
     }
 
     function addContainersWrapper(wrapperID) {
-        agidSpidEnterWrapper = document.createElement('section');
+        _agidSpidEnterWrapper = document.createElement('section');
 
-        agidSpidEnterWrapper.id  = wrapperID;
-        hideElement(agidSpidEnterWrapper);
-        document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
-        agidSpidEnterWrapper.innerHTML = getTpl('spidMainContainers');
+        _agidSpidEnterWrapper.id = wrapperID;
+        hideElement(_agidSpidEnterWrapper);
+        document.body.insertBefore(_agidSpidEnterWrapper, document.body.firstChild);
+        _agidSpidEnterWrapper.innerHTML = getTemplate('spidMainContainers');
     }
 
     function getSelectors() {
-        spidIdpList      = document.querySelector('#agid-spid-idp-list');
-        infoModal        = document.querySelector('#agid-infomodal');
-        spidPanelSelect  = document.querySelector('#agid-spid-panel-select');
+        _spidIdpList = document.querySelector('#agid-spid-idp-list');
+        _infoModal = document.querySelector('#agid-infomodal');
+        _spidPanelSelect = document.querySelector('#agid-spid-panel-select');
     }
 
     function renderSpidModalContainers() {
         var agidSpidEnterWrapperId = 'agid-spid-enter-container',
-            existentWrapper        = document.getElementById(agidSpidEnterWrapperId),
-            agidSpidEnterWrapper;
+            existentWrapper = document.getElementById(agidSpidEnterWrapperId);
 
         if (!existentWrapper) {
-            loadStylesheet(self.config.stylesheetUrl);
+            loadStylesheet(self.resources.stylesheetUrl);
             addContainersWrapper(agidSpidEnterWrapperId);
         }
     }
@@ -208,7 +186,7 @@ window.AgidSpidEnter = function () {
     function renderModule() {
         renderSpidModalContainers();
         renderAvailableProviders();
-        renderSpidButtons();
+        self.updateSpidButtons();
         getSelectors();
     }
 
@@ -226,70 +204,127 @@ window.AgidSpidEnter = function () {
             availableProviders.push(agidIdpConfig);
         });
 
-        self.availableProviders = availableProviders;
+        _availableProviders = availableProviders;
     }
 
     function setOptions(options) {
-        self.language         = options.language || self.language;
-        self.formActionUrl    = options.formActionUrl || self.formActionUrl;
-        self.formSubmitMethod = options.formSubmitMethod || self.formSubmitMethod;
+        _language = options.language || _language;
+        Object.assign(self.resources, options.resources || {});
+        //self.formActionUrl    = options.formActionUrl || self.formActionUrl;
+        //self.formSubmitMethod = options.formSubmitMethod || self.formSubmitMethod;
     }
 
-    /**
-     * @param {string} language - il locale da caricare, due caratteri eg 'it' | 'en'.
-     * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per le copy
-     */
-    function changeLanguage(language) {
-        setOptions({
-            language: language
-        });
+    /** FUNZIONI PUBBLICHE */
 
-        return getLocalisedMessages()
-            .then(function (data) {
-                self.i18n = data;
-                renderModule();
-            })
-            .catch(function (error) {
-                console.error('Si è verificato un errore nel caricamento dei dati', error);
-            });
+    this.getVersion = function () {
+        return _version;
     };
 
     /**
      * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
      * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per i dati
      */
-    function init(options) {
+    this.init = function (options) {
         var fetchData;
 
-        if (options) {
-            setOptions(options);
-        }
+        self.initResources();
+        options && setOptions(options);
 
         fetchData = [getLocalisedMessages(), getAvailableProviders()];
 
         return Promise.all(fetchData)
             .then(function (data) {
-                self.i18n = data[0];
+                self.initTemplates();
+
+                _i18n = data[0];
                 mergeProvidersData(data[1].spidProviders, options && options.providersPayload);
                 renderModule();
             })
             .catch(function (error) {
-                self.availableProviders = null;
+                _availableProviders = undefined;
                 console.error('Si è verificato un errore nel caricamento dei dati', error);
             });
     };
 
-    function version() {
-        return self.config.version;
-    }
-
-    /*
-     * Metodi Pubblici
+    /**
+     * @param {string} language - il locale da caricare, due caratteri eg 'it' | 'en'.
+     * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per le copy
      */
-    return {
-        init: init,
-        changeLanguage: changeLanguage,
-        updateSpidButtons: renderSpidButtons,
-        version: version
+    this.changeLanguage = function (language) {
+        setOptions({
+            language: language
+        });
+
+        return getLocalisedMessages()
+            .then(function (data) {
+                _i18n = data;
+                renderModule();
+            })
+            .catch(function (error) {
+                console.error('Si è verificato un errore nel caricamento dei dati', error);
+            });
     };
+
+    this.updateSpidButtons = function () {
+        var spidButtonsPlaceholdersObj = document.querySelectorAll('.agid-spid-enter-button'),
+            spidButtonsPlaceholdersArray = Array.from(spidButtonsPlaceholdersObj),
+            hasButtonsOnPage = spidButtonsPlaceholdersArray.length;
+
+        if (!_availableProviders) {
+            console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
+            return;
+        };
+
+        if (!hasButtonsOnPage) {
+            console.warn('Nessun placeholder HTML trovato nella pagina per i pulsanti SPID');
+            return;
+        };
+
+        spidButtonsPlaceholdersArray.forEach(function (spidButton) {
+            var foundDataSize = spidButton.getAttribute('data-size'),
+                dataSize = foundDataSize.toLowerCase(),
+                supportedSizes = ['s', 'm', 'l', 'xl'],
+                isSupportedSize = supportedSizes.indexOf(dataSize) !== -1;
+
+            if (isSupportedSize) {
+                spidButton.innerHTML = getTemplate('spidButton', dataSize);
+            } else {
+                console.error('Le dimenioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButton);
+            }
+        });
+        // Binda gli eventi dopo aver renderizzato i pulsanti SPID
+        Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
+            spidButton.addEventListener('click', showProvidersPanel);
+        });
+    };
+
+    this.setResources = function (resources) {
+        self.resources = resources;
+    };
+
+    this.getResources = function () {
+        // Cloniamo l'oggetto in modo che non sia modificabile dall'esterno
+        return Object.assign({}, self.resources);
+    };
+
+    // Null safe access, se la label non è trovata non si verificano errori runtime, suggerimento in console
+    this.getI18n = function (labelKey, placeholderValue) {
+        var locale = _language,
+            copy = _i18n.language &&
+                _i18n.language[locale] &&
+                _i18n.language[locale][labelKey],
+            placeholder = /\{\d}/;
+
+        if (placeholderValue) {
+            copy = copy.replace(placeholder, placeholderValue);
+        }
+
+        // In caso di label mancante fornisci un feedback al dev
+        if (!copy) {
+            console.error('La chiave richiesta non è disponibile nel locale selezionato:', locale, labelKey);
+        }
+
+        return copy || labelKey;
+    };
+
 };

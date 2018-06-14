@@ -1,60 +1,64 @@
 <!DOCTYPE html>
 <html lang="it">
-    <head>
-        <title lang="en">SPID Smart Button</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/ico" href="img/favicon.ico">
-        <script type="text/javascript" src="dev/agid-spid-enter.min.js" ></script>
-        <script type="text/javascript">
-/* eslint-disable indent */
-            window.agidSpidEnter.init({
-                language: 'it',
-                formActionUrl: 'https://hack.developers.italia.it/',
-                formSubmitMethod: 'POST',
-                providersPayload: {
-                    common: {
-                        providerHiddenName: 'entityId',
-                        atr: 1
-                    },
-                    aruba: {
-                        data: 'test',
-                        'a-nother': false
-                    },
-                    poste: {
-                        atr: 2
-                    },
-                    tim: {
-                        atr: 3,
-                        flag: true
-                    }
+
+<head>
+    <title lang="en">SPID Smart Button</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/ico" href="img/favicon.ico">
+    <script type="text/javascript" src="dev/agid-spid-enter.min.js"></script>
+    <script type="text/javascript">
+        /* eslint-disable indent */
+        var spid = new window.SPID();
+        spid.init({
+            language: 'it',
+            formActionUrl: 'https://hack.developers.italia.it/',
+            formSubmitMethod: 'POST',
+            providersPayload: {
+                common: {
+                    providerHiddenName: 'entityId',
+                    atr: 1
+                },
+                aruba: {
+                    data: 'test',
+                    'a-nother': false
+                },
+                poste: {
+                    atr: 2
+                },
+                tim: {
+                    atr: 3,
+                    flag: true
                 }
-            });
+            }
+        });
 /* eslint-enable indent */
-        </script>
-    </head>
-    <body>
-        <section>
-            <div class="agid-spid-enter-button" aria-live="polite" data-size="s">
-                <noscript>
-                    Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-                </noscript>
-            </div>
-            <div class="agid-spid-enter-button" aria-live="polite" data-size="m">
-                <noscript>
-                    Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-                </noscript>
-            </div>
-            <div class="agid-spid-enter-button" aria-live="polite" data-size="l">
-                <noscript>
-                    Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-                </noscript>
-            </div>
-            <div class="agid-spid-enter-button" aria-live="polite" data-size="xl">
-                <noscript>
-                    Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-                </noscript>
-            </div>
-        </section>
-    </body>
+    </script>
+</head>
+
+<body>
+    <section>
+        <div class="agid-spid-enter-button" aria-live="polite" data-size="s">
+            <noscript>
+                Il login tramite SPID richiede che JavaScript sia abilitato nel browser
+            </noscript>
+        </div>
+        <div class="agid-spid-enter-button" aria-live="polite" data-size="m">
+            <noscript>
+                Il login tramite SPID richiede che JavaScript sia abilitato nel browser
+            </noscript>
+        </div>
+        <div class="agid-spid-enter-button" aria-live="polite" data-size="l">
+            <noscript>
+                Il login tramite SPID richiede che JavaScript sia abilitato nel browser
+            </noscript>
+        </div>
+        <div class="agid-spid-enter-button" aria-live="polite" data-size="xl">
+            <noscript>
+                Il login tramite SPID richiede che JavaScript sia abilitato nel browser
+            </noscript>
+        </div>
+    </section>
+</body>
+
 </html>

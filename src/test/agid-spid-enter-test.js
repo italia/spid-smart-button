@@ -1,22 +1,18 @@
-describe('agidSpidEnter', function () {
-    var SUT               = window.agidSpidEnter,
-        axe               = window.axe,
+describe('SPID', function () {
+    var SUT = window.SPID,
+        axe = window.axe,
         agidSpidWrapperID = '#agid-spid-enter-container',
-        agidInfoModalID   = '#agid-infomodal',
+        agidInfoModalID = '#agid-infomodal',
         agidModalCosaBtID = '#cosaspid',
         agidModalButtonID = '#nospid',
-        ajaxSuccess       = {
+        ajaxSuccess = {
             providersEndpoint: '/src/data/spidProviders.json',
             localisationEndpoint: '/src/data/spidI18n.json'
         },
-        ajaxFail          = {
+        ajaxFail = {
             providersEndpoint: '/src/data/spidProviders-fail.json',
             localisationEndpoint: '/src/data/spidI18n-fail.json'
         };
-
-    function setSUTconfig(config) {
-        window.AgidSpidEnter.prototype.config = Object.assign({}, window.AgidSpidEnter.prototype.config, config);
-    }
 
     function injectSpidPlaceHolder(size) {
         var spidButtonPlaceholder = document.createElement('div');
@@ -44,13 +40,13 @@ describe('agidSpidEnter', function () {
         // Credit to Elger van Boxtel
         // https://elgervanboxtel.nl/site/blog/simulate-keydown-event-with-javascript
         var e = new Event("keyup");
-        e.keyCode  = keyCode;
-        e.which    = e.keyCode;
-        e.altKey   = false;
-        e.ctrlKey  = true;
+        e.keyCode = keyCode;
+        e.which = e.keyCode;
+        e.altKey = false;
+        e.ctrlKey = true;
         e.shiftKey = false;
-        e.metaKey  = false;
-        e.bubbles  = true;
+        e.metaKey = false;
+        e.bubbles = true;
         document.dispatchEvent(e);
     }
 
@@ -62,8 +58,7 @@ describe('agidSpidEnter', function () {
 
     describe('when module instance is available', function () {
         beforeEach(function () {
-            SUT = new window.AgidSpidEnter();
-            setSUTconfig(ajaxSuccess);
+            SUT = new window.SPID();
             spyOn(console, 'log'); // silenzia log di aXe
             spyOn(console, 'warn');
             spyOn(console, 'error');
@@ -79,7 +74,7 @@ describe('agidSpidEnter', function () {
             it('should return an observable promise for flow control', function () {
                 // WHEN
                 var returnedObj = SUT.init(),
-                    isPromise   = returnedObj instanceof Promise;
+                    isPromise = returnedObj instanceof Promise;
                 // THEN
                 expect(isPromise).toBeTruthy();
             });
@@ -111,7 +106,7 @@ describe('agidSpidEnter', function () {
 
             it('should NOT inject the modal wrapper HTML more than once', function (done) {
                 // GIVEN
-                var initCalls       = [SUT.init(), SUT.init(), SUT.init()],
+                var initCalls = [SUT.init(), SUT.init(), SUT.init()],
                     agidSpidWrapper;
                 // WHEN
                 Promise.all(initCalls).then(function () {
@@ -134,9 +129,11 @@ describe('agidSpidEnter', function () {
             describe('on failure', function () {
                 it('should log failure when ajax calls do not all return data', function (done) {
                     // GIVEN
-                    setSUTconfig(ajaxFail);
+                    var options = {
+                        resources: ajaxFail
+                    };
                     // WHEN
-                    SUT.init().then(function () {
+                    SUT.init(options).then(function () {
                         // THEN
                         expect(console.error).toHaveBeenCalled();
                         done();
@@ -146,9 +143,11 @@ describe('agidSpidEnter', function () {
                 it('should NOT inject the modal wrapper HTML at all', function (done) {
                     // GIVEN
                     domCleanup();
-                    setSUTconfig(ajaxFail);
+                    var options = {
+                        resources: ajaxFail
+                    };
                     // WHEN
-                    SUT.init().then(function () {
+                    SUT.init(options).then(function () {
                         var agidSpidWrapper = document.querySelector(agidSpidWrapperID);
                         // THEN
                         expect(!!agidSpidWrapper).toBeFalsy();
@@ -189,7 +188,7 @@ describe('agidSpidEnter', function () {
                 it('should add to the active providers the default hidden inputs payload', function (done) {
                     // WHEN
                     SUT.init().then(function () {
-                        var providers    = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
+                        var providers = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
                             hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="provider"]');
                         // THEN
                         expect(hiddenInputs.length).toEqual(providers.length);
@@ -228,7 +227,7 @@ describe('agidSpidEnter', function () {
                         };
                         // WHEN
                         SUT.init(config).then(function () {
-                            var providers    = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
+                            var providers = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
                                 hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]');
                             // THEN
                             expect(hiddenInputs.length).toEqual(providers.length);
@@ -250,8 +249,8 @@ describe('agidSpidEnter', function () {
                         };
                         // WHEN
                         SUT.init(config).then(function () {
-                            var providers     = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
-                                hiddenInputs  = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]'),
+                            var providers = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
+                                hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]'),
                                 specificInput = document.querySelectorAll('#agid-spid-idp-list input[name="specific"]');
                             // THEN
                             expect(hiddenInputs.length).toEqual(providers.length);
@@ -296,7 +295,7 @@ describe('agidSpidEnter', function () {
                         SUT.init(config).then(function () {
                             var posteData = document.querySelector('#agid-spid-provider-poste input[name="data"]'),
                                 arubaData = document.querySelector('#agid-spid-provider-aruba input[name="data"]'),
-                                timData   = document.querySelector('#agid-spid-provider-tim input[name="data"]');
+                                timData = document.querySelector('#agid-spid-provider-tim input[name="data"]');
                             // THEN
                             expect(posteData.value).toEqual('common');
                             expect(arubaData.value).toEqual('common');
@@ -325,9 +324,11 @@ describe('agidSpidEnter', function () {
 
             it('should log failure when ajax call does not return data', function (done) {
                 // GIVEN
-                setSUTconfig(ajaxFail);
+                var options = {
+                    resources: ajaxFail
+                };
 
-                SUT.init().then(function () {
+                SUT.init(options).then(function () {
                     // WHEN
                     SUT.changeLanguage('en');
                     // THEN
@@ -356,10 +357,11 @@ describe('agidSpidEnter', function () {
             it('should not render the spidbuttons if providers data was not fetched and throw error', function (done) {
                 // GIVEN
                 var spidButtons;
+                var options = {
+                    resources: ajaxFail
+                };
 
-                setSUTconfig(ajaxFail);
-
-                SUT.init().then(function () {
+                SUT.init(options).then(function () {
                     injectSpidPlaceHolder('S');
                     // WHEN
                     SUT.updateSpidButtons();
@@ -543,23 +545,10 @@ describe('agidSpidEnter', function () {
                 var key = 'undefined.key',
                     copy;
                 // WHEN
-                copy = window.AgidSpidEnter.prototype.getI18n(key);
+                copy = SUT.getI18n(key);
                 // THEN
                 expect(copy).toEqual(key);
                 expect(console.error).toHaveBeenCalled();
-            });
-        });
-
-        describe('version method', function () {
-            it('should return the semantic version number of the module', function () {
-                // GIVEN
-                var version;
-
-                window.AgidSpidEnter.prototype.config.version = '000';
-                // WHEN
-                version = SUT.version();
-                // THEN
-                expect(version).toEqual('000');
             });
         });
 
@@ -568,11 +557,11 @@ describe('agidSpidEnter', function () {
             it('should not find any violation in the module HTML', function (done) {
                 // GIVEN
                 var axeOptions = {
-                        "rules": {
-                            "color-contrast": { enabled: false },
-                            "valid-lang": { enabled: false }
-                        }
-                    },
+                    "rules": {
+                        "color-contrast": { enabled: false },
+                        "valid-lang": { enabled: false }
+                    }
+                },
                     agidSpidWrapper,
                     agidInfoModal,
                     agidModalButton,
