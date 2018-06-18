@@ -107,7 +107,6 @@ module.exports = function (grunt) {
                     'dev/agid-spid-enter.min.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
                         'src/js/agid-spid-enter-config-dev.js'
                     ]
                 }
@@ -124,13 +123,11 @@ module.exports = function (grunt) {
                     'dist/agid-spid-enter.min.<%= pkg.version %>.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
                         'src/js/agid-spid-enter-config.js'
                     ],
                     'dist/agid-spid-enter.min.latest.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
                         'src/js/agid-spid-enter-config.js'
                     ]
                 }

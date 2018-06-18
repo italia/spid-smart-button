@@ -24,6 +24,10 @@ window.SPID = function () {
 
     /** FUNZIONI PRIVATE */
 
+    function defaultGetUrl() {
+        return '/Login?entityId={{entityID}}';
+    }
+
     function getTemplate(templateName, content) {
         return self.templates[templateName].call(self, content);
     };
@@ -190,16 +194,26 @@ window.SPID = function () {
         getSelectors();
     }
 
-    function mergeProvidersData(agidProvidersList, providersPayload) {
+    function mergeProvidersData(agidProvidersList, options) {
         var availableProviders = [];
 
         agidProvidersList.forEach(function (agidIdpConfig) {
-            if (agidIdpConfig.isActive) {
-                if (providersPayload) {
-                    agidIdpConfig.payload = Object.assign({}, providersPayload.common, providersPayload[agidIdpConfig.provider]);
+            if (options && options.providers) {
+                if (options.providers[agidIdpConfig.provider]) {
+                    if (options.providers[agidIdpConfig.provider].get) {
+                        agidIdpConfig.get = options.providers[agidIdpConfig.provider].get;
+                    } else if (options.providers[agidIdpConfig.provider].post) {
+                        agidIdpConfig.post = options.providers[agidIdpConfig.provider].post;
+                    }
+                } else if (options.providers.get) {
+                    agidIdpConfig.get = options.providers.get;
+                } else if (options.providers.post) {
+                    agidIdpConfig.post = Object.assign({}, options.providers.post);
                 } else {
-                    agidIdpConfig.payload = {};
+                    agidIdpConfig.get = defaultGetUrl();
                 }
+            } else {
+                agidIdpConfig.get = defaultGetUrl();
             }
             availableProviders.push(agidIdpConfig);
         });
@@ -209,6 +223,7 @@ window.SPID = function () {
 
     function setOptions(options) {
         _language = options.language || _language;
+        //_url = options.get || options.post || this.defaultUrl;
         Object.assign(self.resources, options.resources || {});
         //self.formActionUrl    = options.formActionUrl || self.formActionUrl;
         //self.formSubmitMethod = options.formSubmitMethod || self.formSubmitMethod;
@@ -237,7 +252,8 @@ window.SPID = function () {
                 self.initTemplates();
 
                 _i18n = data[0];
-                mergeProvidersData(data[1].spidProviders, options && options.providersPayload);
+                // mergeProvidersData(data[1].spidProviders, options && options.providersPayload);
+                mergeProvidersData(data[1].spidProviders, options);
                 renderModule();
             })
             .catch(function (error) {

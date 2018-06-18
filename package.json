@@ -35,7 +35,6 @@
     "preinstall": "node tasksConfig/check-node-version.js",
     "security": "grunt retire",
     "start": "grunt build && grunt serve & grunt watch:build",
-    "postinstall": "npm run security; npm start",
     "lint": "grunt lint",
     "test-watch": "grunt watch:test",
     "test": "grunt test",

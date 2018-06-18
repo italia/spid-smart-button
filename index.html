@@ -11,24 +11,14 @@
         /* eslint-disable indent */
         var spid = new window.SPID();
         spid.init({
-            language: 'it',
-            formActionUrl: 'https://hack.developers.italia.it/',
-            formSubmitMethod: 'POST',
-            providersPayload: {
-                common: {
-                    providerHiddenName: 'entityId',
-                    atr: 1
-                },
-                aruba: {
-                    data: 'test',
-                    'a-nother': false
-                },
+            language: 'en',
+            providers: {
+                get: '/login?entityId={{entityID}}',
                 poste: {
-                    atr: 2
-                },
-                tim: {
-                    atr: 3,
-                    flag: true
+                    post: {
+                        action: '/login',
+                        fieldName: 'entityID'
+                    }
                 }
             }
         });

@@ -185,13 +185,12 @@ describe('SPID', function () {
             });
 
             describe('when not supplied with a configuration object', function () {
-                it('should add to the active providers the default hidden inputs payload', function (done) {
+                it('should not add to providers hidden inputs payload', function (done) {
                     // WHEN
                     SUT.init().then(function () {
-                        var providers = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
-                            hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="provider"]');
+                        var hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input');
                         // THEN
-                        expect(hiddenInputs.length).toEqual(providers.length);
+                        expect(hiddenInputs.length).toEqual(0);
                         done();
                     });
                 });
@@ -215,19 +214,20 @@ describe('SPID', function () {
                     });
                 });
 
-                describe('when provided with a payload', function () {
-                    it('should add to the active providers the hidden inputs payload from common', function (done) {
+                describe('when provided with a post method', function () {
+                    it('should add to providers the hidden input payload with the correct name', function (done) {
                         // GIVEN
                         var config = {
-                            providersPayload: {
-                                common: {
-                                    testName: 'testValue'
+                            providers: {
+                                post: {
+                                    action: '/login',
+                                    fieldName: 'testName'
                                 }
                             }
                         };
                         // WHEN
                         SUT.init(config).then(function () {
-                            var providers = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
+                            var providers = document.querySelectorAll('#agid-spid-idp-list button'),
                                 hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]');
                             // THEN
                             expect(hiddenInputs.length).toEqual(providers.length);
@@ -235,71 +235,84 @@ describe('SPID', function () {
                         });
                     });
 
-                    it('should add to the active providers the hidden inputs payload from common and the specific per provider', function (done) {
+                    it('should add to providers the hidden inputs payload from common and the specific per provider', function (done) {
                         // GIVEN
                         var config = {
-                            providersPayload: {
-                                common: {
-                                    testName: 'testValue'
+                            providers: {
+                                post: {
+                                    action: '/login',
+                                    fieldName: 'entityName'
                                 },
-                                aruba: {
-                                    specific: true
+                                poste: {
+                                    post: {
+                                        action: '/login',
+                                        fieldName: 'testName'
+                                    }
                                 }
                             }
                         };
                         // WHEN
                         SUT.init(config).then(function () {
-                            var providers = document.querySelectorAll('#agid-spid-idp-list button:enabled'),
-                                hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]'),
-                                specificInput = document.querySelectorAll('#agid-spid-idp-list input[name="specific"]');
+                            var providers = document.querySelectorAll('#agid-spid-idp-list button'),
+                                hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="entityName"]'),
+                                specificInput = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]');
                             // THEN
-                            expect(hiddenInputs.length).toEqual(providers.length);
+                            expect(hiddenInputs.length).toEqual(providers.length - 1);
                             expect(specificInput.length).toEqual(1);
                             done();
                         });
                     });
 
-                    it('should change the provider input name when specified', function (done) {
+                    it('the provider should have the correct input name when specified', function (done) {
                         // GIVEN
                         var config = {
-                            providersPayload: {
-                                common: {
-                                    providerHiddenName: 'entityId'
+                            providers: {
+                                poste: {
+                                    post: {
+                                        action: '/login',
+                                        fieldName: 'testName'
+                                    }
                                 }
                             }
                         };
                         injectSpidPlaceHolder('xL');
                         // WHEN
                         SUT.init(config).then(function () {
-                            var provider = document.querySelector('#agid-spid-provider-poste input[value="poste"]');
+                            var provider = document.querySelector('#agid-spid-provider-poste input');
                             // THEN
-                            expect(provider.name).toEqual('entityId');
+                            expect(provider.name).toEqual('testName');
                             done();
                         });
                     });
 
-                    it('should ovveride attributes from common when present also in the the provider specific config', function (done) {
+                    it('should ovveride general attributes when is present a specific provider config', function (done) {
                         // GIVEN
                         var config = {
-                            providersPayload: {
-                                common: {
-                                    data: 'common'
+                            providers: {
+                                poste: {
+                                    post: {
+                                        action: '/login',
+                                        fieldName: 'posteTestName'
+                                    }
                                 },
                                 tim: {
-                                    data: 'override'
+                                    post: {
+                                        action: '/login',
+                                        fieldName: 'timTestName'
+                                    }
                                 }
                             }
                         };
                         injectSpidPlaceHolder('xL');
                         // WHEN
                         SUT.init(config).then(function () {
-                            var posteData = document.querySelector('#agid-spid-provider-poste input[name="data"]'),
-                                arubaData = document.querySelector('#agid-spid-provider-aruba input[name="data"]'),
-                                timData = document.querySelector('#agid-spid-provider-tim input[name="data"]');
+                            var posteData = document.querySelector('#agid-spid-provider-poste input'),
+                                arubaData = document.querySelector('#agid-spid-provider-aruba input'),
+                                timData = document.querySelector('#agid-spid-provider-tim input');
                             // THEN
-                            expect(posteData.value).toEqual('common');
-                            expect(arubaData.value).toEqual('common');
-                            expect(timData.value).toEqual('override');
+                            expect(posteData.name).toEqual('posteTestName');
+                            expect(arubaData).toBeNull();
+                            expect(timData.name).toEqual('timTestName');
                             done();
                         });
                     });
@@ -349,6 +362,7 @@ describe('SPID', function () {
                     SUT.updateSpidButtons();
                     spidButtons = document.querySelectorAll('.agid-spid-enter');
                     // THEN
+                    console.log(spidButtons);
                     expect(spidButtons.length).toBe(1);
                     done();
                 });
@@ -525,16 +539,16 @@ describe('SPID', function () {
                 injectSpidPlaceHolder('Xl');
 
                 SUT.init().then(function () {
-                    var isInfoModalVisible;
+                        var isInfoModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
-                    document.querySelector(agidModalButtonID).click();
-                    // WHEN
-                    triggerKeyEvent(7);
-                    isInfoModalVisible = isElementVisible(agidInfoModalID);
-                    // THEN
-                    expect(isInfoModalVisible).toBeTruthy();
-                    done();
+                        document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                        document.querySelector(agidModalButtonID).click();
+                        // WHEN
+                        triggerKeyEvent(7);
+                        isInfoModalVisible = isElementVisible(agidInfoModalID);
+                        // THEN
+                        expect(isInfoModalVisible).toBeTruthy();
+                        done();
                 });
             });
         });

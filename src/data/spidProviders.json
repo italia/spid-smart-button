@@ -2,47 +2,58 @@
     "spidProviders": [
         {
             "provider": "aruba",
-            "title": "Aruba",
+            "entityName": "Aruba ID",
             "logo": "spid-idp-aruba.svg",
+            "entityID" : "https://loginspid.aruba.it",
             "isActive": true
         },
         {
             "provider": "infocert",
-            "title": "Infocert",
+            "entityName": "Infocert ",
             "logo": "spid-idp-infocertid.svg",
+            "entityID" : "https://identity.infocert.it",
             "isActive": true
         },
         {
             "provider": "poste",
-            "title": "Poste",
+            "entityName": "Poste ID",
             "logo": "spid-idp-posteid.svg",
+            "entityID" : "https://posteid.poste.it",
             "isActive": true
         },
         {
             "provider": "sielte",
-            "title": "Sielte",
+            "entityName": "Sielte",
             "logo": "spid-idp-sielteid.svg",
+            "entityID" : "",
             "isActive": true
         },
         {
             "provider": "tim",
-            "title": "Tim",
+            "entityName": "Tim ID",
             "logo": "spid-idp-timid.svg",
+            "entityID" : "https://login.id.tim.it/affwebservices/public/saml2sso",
             "isActive": true
         },
         {
-            "provider": "newidp1",
+            "provider": "namirial",
+            "entityName": "Namirial ID",
             "logo": "spid-idp-dummy.svg",
+            "entityID" : "https://idp.namirialtsp.com/idp",
+            "isActive": true
+        },
+        {
+            "provider": "spid",
+            "entityName": "SPIDItalia Register.it",
+            "logo": "spid-idp-dummy.svg",
+            "entityID" : "https://spid.register.it",
             "isActive": false
         },
         {
-            "provider": "newidp2",
+            "provider": "intesa",
+            "entityName": "Intesa ID",
             "logo": "spid-idp-dummy.svg",
-            "isActive": false
-        },
-        {
-            "provider": "newidp3",
-            "logo": "spid-idp-dummy.svg",
+            "entityID" : "https://spid.intesa.it",
             "isActive": false
         }
     ]

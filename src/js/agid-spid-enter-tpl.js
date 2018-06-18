@@ -70,39 +70,33 @@
             },
 
             spidProviderButton: function (providerData) {
-                var providerHiddenName    = 'provider',
-                    providerPayloadInputs = '',
-                    property,
-                    providerTitle         = (providerData.isActive) ?
-                                            this.getI18n('accedi_con_idp', providerData.title) :
-                                            this.getI18n('idp_disabled');
-                // Crea gli input field chiave=valore dall'oggetto
-                if (providerData.payload) {
-                    // Imposta il name dell'identity provider o fallback su un default
-                    providerHiddenName = providerData.payload.providerHiddenName || providerHiddenName;
-                    delete providerData.payload.providerHiddenName;
-
-                    providerPayloadInputs += hiddenField(providerHiddenName, providerData.provider);
-
-                    for (property in providerData.payload) {
-                        providerPayloadInputs += hiddenField(property, providerData.payload[property]);
-                    }
+                var providerPayloadInputs = '',
+                    providerUrl = '',
+                    providerEntityName    = (providerData.isActive) ?
+                                    this.getI18n('accedi_con_idp', providerData.entityName) :
+                                    this.getI18n('idp_disabled');
+                if (providerData.post) {
+                    // Crea gli input field chiave=valore dall'oggetto
+                    var fieldName = providerData.post.fieldName || 'entityID';
+                    providerPayloadInputs += hiddenField(fieldName, providerData.entityID);
+                    providerUrl = providerData.post.action;
+                } else if (providerData.get) {
+                    providerUrl = providerData.get.replace('{{entityID}}', encodeURIComponent(providerData.entityID));
                 }
-
                 return [
                     '<span class="agid-spid-col l3 m6 s6 xs12">',
                         '<form id="agid-spid-provider-', providerData.provider, '"',
-                            'action="', this.formActionUrl, '" method="', this.formSubmitMethod, '">',
+                            'action="', providerUrl, '" method="POST">',
                             '<button type="submit"',
                                 'class="agid-spid-idp-button agid-spid-idp-', providerData.provider, '"',
-                                'title="', providerTitle, '"',
+                                'title="', providerEntityName, '"',
                                 'style="background-image: url(', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, ')"',
                                 (providerData.isActive) ? '' : 'disabled', '>',
                             '</button>',
                             providerPayloadInputs,
                         '</form>',
                     '</span>'
-                ].join('');
+                    ].join('');
             },
 
             spidButton: function (sizeClass) {
