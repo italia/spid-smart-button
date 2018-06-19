@@ -10,18 +10,18 @@
     <script type="text/javascript">
         /* eslint-disable indent */
         var spid = new window.SPID();
-        spid.init({
-            language: 'en',
-            providers: {
-                get: '/login?entityId={{entityID}}',
-                poste: {
-                    post: {
-                        action: '/login',
-                        fieldName: 'entityID'
+            spid.init({
+                language: 'en',
+                providers: {
+                    get: '/login?entityId={{entityID}}',
+                    poste: {
+                        post: {
+                            action: '/login',
+                            fieldName: 'entityID'
+                        }
                     }
                 }
-            }
-        });
+            });
 /* eslint-enable indent */
     </script>
 </head>

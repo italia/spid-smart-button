@@ -77,7 +77,7 @@ Evitare di utilizzare mixins per produrre set di proprietà specifici per determ
 ### Includere minifizzato JS
 Il minifizzato JS, che si occupa di caricare il rispettivo CSS se opportuno, a seguito della **build** è disponibile sotto la cartella `dist/` sia con la semantic version scolpita nel nome ad esempio `agid-spid-enter.min.1.0.0.js`, sia senza versione affissa che riferisce sempre all'ultima rilasciata eg `agid-spid-enter.min.latest.js`, includere uno solo di questi due JS nella pagina.
 
-### Predisporre placeholder HTML
+### Predisporre placeholder HTML per includere lo spid-smart-button
 Includere nella pagina uno o più placeholder `<div>` che abbiano i seguenti attributi:
 
  - classe : `agid-spid-enter-button` sarà ricercato dallo script per stampare tutti i pulsanti SPID
@@ -87,11 +87,13 @@ Includere nella pagina uno o più placeholder `<div>` che abbiano i seguenti att
 
 Esempio completo
 
+```html
     <div class="agid-spid-enter-button" aria-live="polite" data-size="xl">
         <noscript>
             Il login tramite SPID richiede che JavaScript sia abilitato nel browser
         </noscript>
     </div>
+```
 
 l'attributo data-size viene parsato in maniera case-insensitive quindi può essere sia maiuscolo che minuscolo
 
@@ -103,57 +105,76 @@ ritorna una promise che rappresenta lo stato di caricamento delle risorse necess
 
 l'oggetto `config` è opzionale, se omesso le impostazioni predefinite saranno:
  - lingua italiana
- - form action URL verso la pagina in cui è caricato
+ - un url di default `/login?entityId={{entityID}}`, dove il valore del parametro tra parentesi graffe verrà sostituito dalla libreria con il valore dell'entityID del provider corrente
  - form method GET
- - valore `name` per la sottomissione del provider ID selezionato : `provider`
 
-un esempio in cui tutte le opzioni configurabili vengono esplicitate:
-
+ovvero:
 ```javascript
-window.SPID.init({
-    language: 'en',
-    formActionUrl: 'https://hack.developers.italia.it/',
-    formSubmitMethod: 'POST',
-    providersPayload: {
-        common: {
-            providerHiddenName: 'entityId',
-            atr: 1
-        },
-        aruba: {
-            data: 'test',
-            'a-nother': false
-        },
-        poste: {
-            atr: 2
-        },
-        tim: {
-            atr: 3,
-            flag: true
+var spid = new window.SPID();
+    spid.init({
+        language: 'en',
+        providers: {
+            get: '/login?entityId={{entityID}}'
         }
-    }
-});
+    });
 ```
 
-è possibile specificare dati da includere nella submit come `<input type=hidden name value>` per tutti i providers nell'oggetto `common` o per ciascun provider, facendo riferimento alla **mappa ufficiale** degli ID dei providers (TBD).
+E' quindi possibile specificare un altro url per una chiamata GET a condizione che contenga al suo interno `{{entityID}}`, che e' quindi obbligatorio.
 
-Il parametro `providerHiddenName` modifica il valore dell'attributo `name` con cui viene veicolato l'ID del provider, il default è `provider`.
+In alternativa al metodo GET possiamo configurare una chiamata POST, fornendo:
+- un url per la form action
+- e un valore `fieldName` che rappresenta il nome della input nascosta che conterra' l'id del provider
 
-Se uno stesso dato è presente sia in `common` che nella configurazione specifica di un provider, quello specificato nel provider avrà la precedenza.
+ad esempio:
+
+```javascript
+var spid = new window.SPID();
+    spid.init({
+        language: 'en',
+        providers: {
+            post: {
+                action: '/login',
+                fieldName: 'entityID'
+            }
+        }
+    });
+```
+
+Infine e' possibile fornire una customizzazione per singolo provider in modo da fornire un url diverso o configurare una chiamata POST, esplicitando un oggetto che abbia come nome il valore del campo provider all'interno del file `spidProviders.json` (es. 'poste' per poste, 'spid' per SpidItalia etc..)
+
+Un esempio in cui tutte le opzioni configurabili vengono esplicitate:
+
+```javascript
+var spid = new window.SPID();
+    spid.init({
+        language: 'en',
+        providers: {
+            get: '/login?entityId={{entityID}}',
+            poste: {
+                post: {
+                    action: '/login',
+                    fieldName: 'entityID'
+                }
+            }
+        }
+    });
+```
+Dove e' stata fornita ad esempio una configurazione custom per il provider delle Poste.
 
 #### `changeLanguage(locale)`
 ritorna una promise che rappresenta lo stato di caricamento delle copy, al termine aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata, la stringa `locale` deve essere costituita da due caratteri eg `it`
 ```javascript
-window.SPID.changeLanguage('en');
+spid.changeLanguage('en');
 ```
 
 #### `updateSpidButtons()`
 ricerca i placeholders per ripristinare i pulsanti, utilizzabile in caso di aggiornamento dinamico della UI causante la cancellazione dei pulsanti renderizzati in fase di inizializzazione
 ```javascript
-window.SPID.updateSpidButtons();
+spid.updateSpidButtons();
 ```
 
 #### `version()`
 ritorna la semantic version del modulo in uso, utile caricando il minifizzato *latest*
 ```javascript
-window.SPID.version();
+spid.version();
 ```

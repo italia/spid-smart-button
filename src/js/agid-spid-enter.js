@@ -15,7 +15,8 @@ window.SPID = function () {
         _version = '{{ VERSION }}', // il placeholder '{{ VERSION }}' viene sostituito con la version del package dal task string-replace, non modificare!
         _language = 'it', // Lingua delle etichette sostituibile all'init, default Italiano
         _i18n = {}, // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
-        _availableProviders;
+        _availableProviders,
+        _defaultGetUrl = '/login?entityId={{entityID}}';
 
     /** VARIABILI PUBBLICHE */
 
@@ -23,10 +24,6 @@ window.SPID = function () {
     this.templates = {};
 
     /** FUNZIONI PRIVATE */
-
-    function defaultGetUrl() {
-        return '/Login?entityId={{entityID}}';
-    }
 
     function getTemplate(templateName, content) {
         return self.templates[templateName].call(self, content);
@@ -200,20 +197,15 @@ window.SPID = function () {
         agidProvidersList.forEach(function (agidIdpConfig) {
             if (options && options.providers) {
                 if (options.providers[agidIdpConfig.provider]) {
-                    if (options.providers[agidIdpConfig.provider].get) {
-                        agidIdpConfig.get = options.providers[agidIdpConfig.provider].get;
-                    } else if (options.providers[agidIdpConfig.provider].post) {
-                        agidIdpConfig.post = options.providers[agidIdpConfig.provider].post;
-                    }
-                } else if (options.providers.get) {
-                    agidIdpConfig.get = options.providers.get;
-                } else if (options.providers.post) {
-                    agidIdpConfig.post = Object.assign({}, options.providers.post);
+                    agidIdpConfig.url = options.providers[agidIdpConfig.provider].get || options.providers[agidIdpConfig.provider].post;
+                    agidIdpConfig.method = options.providers[agidIdpConfig.provider].get ? 'GET' : 'POST';
                 } else {
-                    agidIdpConfig.get = defaultGetUrl();
+                    agidIdpConfig.url = options.providers.get || options.providers.post || _defaultGetUrl;
+                    agidIdpConfig.method =  !options.providers.get ? (options.providers.post ? 'POST' : 'GET') : 'GET';
                 }
             } else {
-                agidIdpConfig.get = defaultGetUrl();
+                agidIdpConfig.url = _defaultGetUrl;
+                agidIdpConfig.method = 'GET';
             }
             availableProviders.push(agidIdpConfig);
         });
@@ -223,10 +215,7 @@ window.SPID = function () {
 
     function setOptions(options) {
         _language = options.language || _language;
-        //_url = options.get || options.post || this.defaultUrl;
         Object.assign(self.resources, options.resources || {});
-        //self.formActionUrl    = options.formActionUrl || self.formActionUrl;
-        //self.formSubmitMethod = options.formSubmitMethod || self.formSubmitMethod;
     }
 
     /** FUNZIONI PUBBLICHE */

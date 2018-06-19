@@ -75,18 +75,18 @@
                     providerEntityName    = (providerData.isActive) ?
                                     this.getI18n('accedi_con_idp', providerData.entityName) :
                                     this.getI18n('idp_disabled');
-                if (providerData.post) {
+                if (providerData.method === 'POST') {
                     // Crea gli input field chiave=valore dall'oggetto
-                    var fieldName = providerData.post.fieldName || 'entityID';
+                    var fieldName = providerData.url.fieldName || 'entityID';
                     providerPayloadInputs += hiddenField(fieldName, providerData.entityID);
-                    providerUrl = providerData.post.action;
-                } else if (providerData.get) {
-                    providerUrl = providerData.get.replace('{{entityID}}', encodeURIComponent(providerData.entityID));
+                    providerUrl = providerData.url.action;
+                } else if (providerData.method === 'GET') {
+                    providerUrl = providerData.url.replace('{{entityID}}', encodeURIComponent(providerData.entityID));
                 }
                 return [
                     '<span class="agid-spid-col l3 m6 s6 xs12">',
                         '<form id="agid-spid-provider-', providerData.provider, '"',
-                            'action="', providerUrl, '" method="POST">',
+                            'action="', providerUrl, '" method="', providerData.method, '">',
                             '<button type="submit"',
                                 'class="agid-spid-idp-button agid-spid-idp-', providerData.provider, '"',
                                 'title="', providerEntityName, '"',
