@@ -129,11 +129,11 @@ describe('SPID', function () {
             describe('on failure', function () {
                 it('should log failure when ajax calls do not all return data', function (done) {
                     // GIVEN
-                    var options = {
-                        resources: ajaxFail
-                    };
+                    spyOn(SUT, "initResources").and.callFake(function () {
+                        SUT.setResources(ajaxFail);
+                    });
                     // WHEN
-                    SUT.init(options).then(function () {
+                    SUT.init().then(function () {
                         // THEN
                         expect(console.error).toHaveBeenCalled();
                         done();
@@ -142,12 +142,11 @@ describe('SPID', function () {
 
                 it('should NOT inject the modal wrapper HTML at all', function (done) {
                     // GIVEN
-                    domCleanup();
-                    var options = {
-                        resources: ajaxFail
-                    };
+                    spyOn(SUT, "initResources").and.callFake(function () {
+                        SUT.setResources(ajaxFail);
+                    });
                     // WHEN
-                    SUT.init(options).then(function () {
+                    SUT.init().then(function () {
                         var agidSpidWrapper = document.querySelector(agidSpidWrapperID);
                         // THEN
                         expect(!!agidSpidWrapper).toBeFalsy();
@@ -336,15 +335,13 @@ describe('SPID', function () {
             });
 
             it('should log failure when ajax call does not return data', function (done) {
-                // GIVEN
-                var options = {
-                    resources: ajaxFail
-                };
 
-                SUT.init(options).then(function () {
+                spyOn(SUT, "initResources").and.callFake(function () {
+                    SUT.setResources(ajaxFail);
+                });
+                SUT.init().then(function () {
                     // WHEN
                     SUT.changeLanguage('en');
-                    // THEN
                     expect(console.error).toHaveBeenCalled();
                     done();
                 });
@@ -371,11 +368,10 @@ describe('SPID', function () {
             it('should not render the spidbuttons if providers data was not fetched and throw error', function (done) {
                 // GIVEN
                 var spidButtons;
-                var options = {
-                    resources: ajaxFail
-                };
-
-                SUT.init(options).then(function () {
+                spyOn(SUT, "initResources").and.callFake(function () {
+                    SUT.setResources(ajaxFail);
+                });
+                SUT.init().then(function () {
                     injectSpidPlaceHolder('S');
                     // WHEN
                     SUT.updateSpidButtons();
@@ -539,16 +535,16 @@ describe('SPID', function () {
                 injectSpidPlaceHolder('Xl');
 
                 SUT.init().then(function () {
-                        var isInfoModalVisible;
+                    var isInfoModalVisible;
 
-                        document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
-                        document.querySelector(agidModalButtonID).click();
-                        // WHEN
-                        triggerKeyEvent(7);
-                        isInfoModalVisible = isElementVisible(agidInfoModalID);
-                        // THEN
-                        expect(isInfoModalVisible).toBeTruthy();
-                        done();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                    document.querySelector(agidModalButtonID).click();
+                    // WHEN
+                    triggerKeyEvent(7);
+                    isInfoModalVisible = isElementVisible(agidInfoModalID);
+                    // THEN
+                    expect(isInfoModalVisible).toBeTruthy();
+                    done();
                 });
             });
         });

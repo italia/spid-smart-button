@@ -16,7 +16,7 @@ window.SPID = function () {
         _language = 'it', // Lingua delle etichette sostituibile all'init, default Italiano
         _i18n = {}, // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
         _availableProviders,
-        _defaultGetUrl = '/login?entityId={{entityID}}';
+        _defaultGetUri = '/login?entityId={{entityID}}';
 
     /** VARIABILI PUBBLICHE */
 
@@ -191,31 +191,26 @@ window.SPID = function () {
         getSelectors();
     }
 
-    function mergeProvidersData(agidProvidersList, options) {
-        var availableProviders = [];
-
-        agidProvidersList.forEach(function (agidIdpConfig) {
-            if (options && options.providers) {
-                if (options.providers[agidIdpConfig.provider]) {
-                    agidIdpConfig.url = options.providers[agidIdpConfig.provider].get || options.providers[agidIdpConfig.provider].post;
-                    agidIdpConfig.method = options.providers[agidIdpConfig.provider].get ? 'GET' : 'POST';
-                } else {
-                    agidIdpConfig.url = options.providers.get || options.providers.post || _defaultGetUrl;
-                    agidIdpConfig.method =  !options.providers.get ? (options.providers.post ? 'POST' : 'GET') : 'GET';
-                }
+    function getMergedProvidersData(agidProvidersList, options) {
+        return agidProvidersList.map(function (agidIdpConfig) {
+            if (options.providers[agidIdpConfig.provider]) {
+                agidIdpConfig.uri = options.providers[agidIdpConfig.provider].get || options.providers[agidIdpConfig.provider].post;
+                agidIdpConfig.method = options.providers[agidIdpConfig.provider].get ? 'GET' : 'POST';
             } else {
-                agidIdpConfig.url = _defaultGetUrl;
-                agidIdpConfig.method = 'GET';
+                agidIdpConfig.uri = options.providers.get || options.providers.post || _defaultGetUri;
+                agidIdpConfig.method = !options.providers.get ? (options.providers.post ? 'POST' : 'GET') : 'GET';
             }
-            availableProviders.push(agidIdpConfig);
-        });
 
-        _availableProviders = availableProviders;
+            return agidIdpConfig;
+        });
     }
 
-    function setOptions(options) {
-        _language = options.language || _language;
-        Object.assign(self.resources, options.resources || {});
+    function getMergedDefaultOptions(options) {
+        options = options || {};
+        options.language = options.language || _language;
+        options.providers = options.providers || { get: _defaultGetUri };
+
+        return options;
     }
 
     /** FUNZIONI PUBBLICHE */
@@ -232,7 +227,9 @@ window.SPID = function () {
         var fetchData;
 
         self.initResources();
-        options && setOptions(options);
+        options = getMergedDefaultOptions(options);
+
+        _language = options.language;
 
         fetchData = [getLocalisedMessages(), getAvailableProviders()];
 
@@ -241,8 +238,7 @@ window.SPID = function () {
                 self.initTemplates();
 
                 _i18n = data[0];
-                // mergeProvidersData(data[1].spidProviders, options && options.providersPayload);
-                mergeProvidersData(data[1].spidProviders, options);
+                _availableProviders = getMergedProvidersData(data[1].spidProviders, options);
                 renderModule();
             })
             .catch(function (error) {
@@ -256,11 +252,9 @@ window.SPID = function () {
      * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per le copy
      */
     this.changeLanguage = function (language) {
-        setOptions({
-            language: language
-        });
+        _language = language;
 
-        return getLocalisedMessages()
+        getLocalisedMessages()
             .then(function (data) {
                 _i18n = data;
                 renderModule();
@@ -294,7 +288,7 @@ window.SPID = function () {
             if (isSupportedSize) {
                 spidButton.innerHTML = getTemplate('spidButton', dataSize);
             } else {
-                console.error('Le dimenioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButton);
+                console.error('Le dimensioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButton);
             }
         });
         // Binda gli eventi dopo aver renderizzato i pulsanti SPID
