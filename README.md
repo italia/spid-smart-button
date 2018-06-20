@@ -112,7 +112,7 @@ ovvero:
 ```javascript
 var spid = new window.SPID();
     spid.init({
-        language: 'en',
+        lang: 'en',
         providers: {
             get: '/login?entityId={{entityID}}'
         }
@@ -130,7 +130,7 @@ ad esempio:
 ```javascript
 var spid = new window.SPID();
     spid.init({
-        language: 'en',
+        lang: 'en',
         providers: {
             post: {
                 action: '/login',
@@ -147,7 +147,7 @@ Un esempio in cui tutte le opzioni configurabili vengono esplicitate:
 ```javascript
 var spid = new window.SPID();
     spid.init({
-        language: 'en',
+        lang: 'en',
         providers: {
             get: '/login?entityId={{entityID}}',
             poste: {
@@ -161,8 +161,9 @@ var spid = new window.SPID();
 ```
 Dove e' stata fornita ad esempio una configurazione custom per il provider delle Poste.
 
-#### `changeLanguage(locale)`
-ritorna una promise che rappresenta lo stato di caricamento delle copy, al termine aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata, la stringa `locale` deve essere costituita da due caratteri eg `it`
+#### `changelang(lang)`
+ritorna una promise che rappresenta lo stato di caricamento delle copy, al termine aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata, la stringa `lang` deve essere costituita da due caratteri eg `it`.
+Le lingue supportate sono italiano `it`, inglese `en` e tedesco `de`
 ```javascript
 spid.changeLanguage('en');
 ```

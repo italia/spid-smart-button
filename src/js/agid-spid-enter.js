@@ -13,7 +13,7 @@ window.SPID = function () {
         _infoModal,
         _spidPanelSelect,
         _version = '{{ VERSION }}', // il placeholder '{{ VERSION }}' viene sostituito con la version del package dal task string-replace, non modificare!
-        _language = 'it', // Lingua delle etichette sostituibile all'init, default Italiano
+        _lang = 'it', // Lingua delle etichette sostituibile all'init, default Italiano
         _i18n = {}, // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
         _availableProviders,
         _defaultGetUri = '/login?entityId={{entityID}}';
@@ -140,7 +140,7 @@ window.SPID = function () {
 
     function getLocalisedMessages() {
         var languageRequest = {
-            language: _language
+            lang: _lang
         };
 
         return ajaxRequest('GET', self.resources.localisationEndpoint, languageRequest);
@@ -207,7 +207,7 @@ window.SPID = function () {
 
     function getMergedDefaultOptions(options) {
         options = options || {};
-        options.language = options.language || _language;
+        options.lang = options.lang || _lang;
         options.providers = options.providers || { get: _defaultGetUri };
 
         return options;
@@ -229,7 +229,7 @@ window.SPID = function () {
         self.initResources();
         options = getMergedDefaultOptions(options);
 
-        _language = options.language;
+        _lang = options.lang;
 
         fetchData = [getLocalisedMessages(), getAvailableProviders()];
 
@@ -248,11 +248,11 @@ window.SPID = function () {
     };
 
     /**
-     * @param {string} language - il locale da caricare, due caratteri eg 'it' | 'en'.
+     * @param {string} lang - il locale da caricare, due caratteri eg 'it' | 'en' | 'de'.
      * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per le copy
      */
-    this.changeLanguage = function (language) {
-        _language = language;
+    this.changeLanguage = function (lang) {
+        _lang = lang;
 
         getLocalisedMessages()
             .then(function (data) {
@@ -308,10 +308,10 @@ window.SPID = function () {
 
     // Null safe access, se la label non è trovata non si verificano errori runtime, suggerimento in console
     this.getI18n = function (labelKey, placeholderValue) {
-        var locale = _language,
-            copy = _i18n.language &&
-                _i18n.language[locale] &&
-                _i18n.language[locale][labelKey],
+        var locale = _lang,
+            copy = _i18n.lang &&
+                _i18n.lang[locale] &&
+                _i18n.lang[locale][labelKey],
             placeholder = /\{\d}/;
 
         if (placeholderValue) {

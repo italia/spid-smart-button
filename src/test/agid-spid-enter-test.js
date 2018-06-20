@@ -99,7 +99,7 @@ describe('SPID', function () {
                 SUT.init().then(function () {
                     // THEN
                     expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('GET', '/src/data/spidI18n.json');
-                    expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"language":"it"}');
+                    expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"lang":"it"}');
                     done();
                 });
             });
@@ -199,7 +199,7 @@ describe('SPID', function () {
                 it('should request the provided language in the config', function (done) {
                     // GIVEN
                     var config = {
-                        language: 'de'
+                        lang: 'de'
                     };
 
                     spyOn(XMLHttpRequest.prototype, 'open').and.callThrough();
@@ -208,7 +208,7 @@ describe('SPID', function () {
                     SUT.init(config).then(function () {
                         // THEN
                         expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('GET', '/src/data/spidI18n.json');
-                        expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"language":"de"}');
+                        expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"lang":"de"}');
                         done();
                     });
                 });
@@ -329,7 +329,7 @@ describe('SPID', function () {
                     SUT.changeLanguage('en');
                     // THEN
                     expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('GET', '/src/data/spidI18n.json');
-                    expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"language":"en"}');
+                    expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"lang":"en"}');
                     done();
                 });
             });
