@@ -13,7 +13,7 @@ Ad oggi, ciascun fornitore di servizi adatta al proprio sito il bottone fornito 
 Con lo sviluppo di un nuovo bottone si intende:
 
 * facilitare l'integrazione del bottone "Entra con SPID" riducendo il lavoro di adattamento;
-* fornire un bottone ospitato remotamente via CDN senza richiedere dunque l'incorporazione statica dello stesso;
+* fornire un bottone ospitato via CDN senza richiedere l'incorporazione statica dello stesso;
 * semplificare le operazioni di aggiunta/rimozione/modifica degli Identity Provider senza richiedere modifiche manuali a tutti i Service Provider;
 * migliorare l'esperienza utente grazie ad un'interfaccia di accesso più chiara.
 
@@ -33,17 +33,16 @@ Questo repository è mantenuto da AgID - Agenzia per l'Italia Digitale con l'aus
 
 ## Sviluppo del progetto e produzione degli assets
 
-Il progetto ha come hard-dependency **node.js**, la versione con cui è stato sviluppato è la [v6.1.0](https://nodejs.org/dist/v6.1.0/)
+Il progetto ha come hard-dependency **node.js**, la versione con cui è stato sviluppato è la [v8.1.3](https://nodejs.org/dist/v8.1.3/)
 usando *homebrew* puoi installarlo da terminale con il comando:
 ```
-brew install node@6.1.0
+brew install node@8.1.3
 ```
 avendo ora disponibile node.js, entra da terminale nella directory del progetto ed installa le dipendenze con il comando:
 ```
 npm install
 ```
-terminata l'installazione, si avvieranno automaticamente anche la build delle risorse, il server locale di sviluppo e il watch sui sorgenti per ricompilare i minifizzati in caso di cambiamenti,
-in caso di errori in fase di installazione, o comunque per avviare successivamente gli step build/server/watch nella stessa shell eseguire:
+terminata l'installazione è necessario eseguire gli step build/server/watch per mandare in esecuzione l'applicazione. E' sufficiente eseguire il comando:
 ```
 npm start
 ```
@@ -56,11 +55,11 @@ ora puoi visitare la pagina http://localhost:9090/  dalla quale puoi raggiungere
  I sorgenti si trovano nelle cartelle `src/js` ed `src/scss` e ad ogni cambiamento i minifizzati verrano rigenerati dal watcher grunt nelle cartelle `dev` e `dist`
 
 ### Code Style
-Prima di ogni commit verrà eseguito un linter che verificherà che il codice sia stilisticamente uniforme pena il fallimento del commit, in modo da incoraggiare una scrittura da subito coerente, per JavaScript viene utilizzata la convenzione [Crockford](http://crockford.com/javascript/code.html), per i CSS la [Stylelint Standard](https://github.com/stylelint/stylelint-config-standard), inoltre per aspetti comuni quali l'indentazione e il line ending sono presenti i file [EditorConfig](http://editorconfig.org/) e [gitattributes](https://git-scm.com/docs/gitattributes),
+Prima di ogni commit verrà eseguito un linter che verificherà che il codice sia stilisticamente uniforme pena il fallimento del commit, in modo da incoraggiare una scrittura coerente, per JavaScript viene utilizzata la convenzione [Crockford](http://crockford.com/javascript/code.html), per i CSS la [Stylelint Standard](https://github.com/stylelint/stylelint-config-standard), inoltre per aspetti comuni quali l'indentazione e il line ending sono presenti i file [EditorConfig](http://editorconfig.org/) e [gitattributes](https://git-scm.com/docs/gitattributes),
 per velocizzare e migliorare l'esperienza di sviluppo è consigliato installare i rispettivi plugin di linting nel proprio IDE.
 
 ### JavaScript
-Ogni parte del codice *deve essere corredata da unit test Jasmine*, in cui viene testata deterministicamente una singola funzionalità in maniera indipendente dagli altri test, ergo i test devono funzionare anche se eseguiti in ordine randomico, attualmente il flag `random:true` non può essere usato perchè la corrente versione di contrib-jasmine utilizza la versione 2.4.1 in cui vi è un bug che impedisce di usare la randomicità nei test in console, da inserire quando verrà aggiornato alla version 2.5.x o superiore.
+Ogni parte del codice *deve essere corredata da unit test Jasmine*, in cui viene testata deterministicamente una singola funzionalità in maniera indipendente dagli altri test, ergo i test devono funzionare anche se eseguiti in ordine randomico. Attualmente il flag `random:true` non può essere usato perchè la corrente versione di contrib-jasmine utilizza la versione 2.4.1 in cui vi è un bug che impedisce di usare la randomicità nei test in console, da inserire quando verrà aggiornato alla version 2.5.x o superiore.
 Nonostante sia possible committare anche se i test non sono verdi per consentire avanzamenti incrementali, un hook impedirà di *pushare* se i test non sono verdi, questo per impedire di divulgare codice non funzionante ad eventuali collaboratori.
 
 La code coverage Istanbul non è attualmente bloccante ne per i commit ne per i push, viene eseguita automaticamente ad ogni push, può essere eseguita manualmente lanciando il comando:
@@ -95,13 +94,13 @@ Esempio completo
     </div>
 ```
 
-l'attributo data-size viene parsato in maniera case-insensitive quindi può essere sia maiuscolo che minuscolo
+l'attributo `data-size` è case-insensitive quindi può essere sia maiuscolo che minuscolo.
 
 ### Metodi pubblici del modulo SPID
 Il modulo espone 4 metodi pubblici
 
 #### `init(config)`
-ritorna una promise che rappresenta lo stato di caricamento delle risorse necessarie, copy e providers, in caso di successo carica i CSS e mostra gli smartbutton sulla pagina
+Ritorna una promise che rappresenta lo stato di caricamento delle risorse necessarie, copy e providers, in caso di successo carica i CSS e mostra gli smartbutton sulla pagina
 
 l'oggetto `config` è opzionale, se omesso le impostazioni predefinite saranno:
  - lingua italiana
@@ -119,11 +118,11 @@ var spid = new window.SPID();
     });
 ```
 
-E' quindi possibile specificare un altro url per una chiamata GET a condizione che contenga al suo interno `{{entityID}}`, che e' quindi obbligatorio.
+E' possibile specificare un altro url per una chiamata GET a condizione che contenga al suo interno il tag `{{entityID}}`, che è obbligatorio.
 
 In alternativa al metodo GET possiamo configurare una chiamata POST, fornendo:
 - un url per la form action
-- e un valore `fieldName` che rappresenta il nome della input nascosta che conterra' l'id del provider
+- un valore `fieldName` che rappresenta il nome della input nascosta che conterrà l'id del provider
 
 ad esempio:
 
@@ -140,7 +139,7 @@ var spid = new window.SPID();
     });
 ```
 
-Infine e' possibile fornire una customizzazione per singolo provider in modo da fornire un url diverso o configurare una chiamata POST, esplicitando un oggetto che abbia come nome il valore del campo provider all'interno del file `spidProviders.json` (es. 'poste' per poste, 'spid' per SpidItalia etc..)
+Infine è possibile fornire una customizzazione per singolo provider, come ad esempio un url diverso o una configurazione per una chiamata POST, esplicitando un oggetto che abbia come nome il valore del campo provider all'interno del file `spidProviders.json` (es. 'poste' per Poste, 'spid' per SpidItalia etc..)
 
 Un esempio in cui tutte le opzioni configurabili vengono esplicitate:
 
@@ -159,23 +158,23 @@ var spid = new window.SPID();
         }
     });
 ```
-Dove e' stata fornita ad esempio una configurazione custom per il provider delle Poste.
+Dove è stata fornita ad esempio una configurazione custom per il provider delle Poste.
 
 #### `changelang(lang)`
-ritorna una promise che rappresenta lo stato di caricamento delle copy, al termine aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata, la stringa `lang` deve essere costituita da due caratteri eg `it`.
+Ritorna una promise che rappresenta lo stato di caricamento delle copy, al termine aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata, la stringa `lang` deve essere costituita da due caratteri eg `it`.
 Le lingue supportate sono italiano `it`, inglese `en` e tedesco `de`
 ```javascript
 spid.changeLanguage('en');
 ```
 
 #### `updateSpidButtons()`
-ricerca i placeholders per ripristinare i pulsanti, utilizzabile in caso di aggiornamento dinamico della UI causante la cancellazione dei pulsanti renderizzati in fase di inizializzazione
+Ricerca i placeholders per ripristinare i pulsanti, utilizzabile in caso di aggiornamento dinamico della UI causante la cancellazione dei pulsanti renderizzati in fase di inizializzazione
 ```javascript
 spid.updateSpidButtons();
 ```
 
 #### `version()`
-ritorna la semantic version del modulo in uso, utile caricando il minifizzato *latest*
+Ritorna la semantic version del modulo in uso, utile caricando il minifizzato *latest*
 ```javascript
 spid.version();
 ```

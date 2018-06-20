@@ -320,7 +320,7 @@ window.SPID = function () {
 
         // In caso di label mancante fornisci un feedback al dev
         if (!copy) {
-            console.error('La chiave richiesta non è disponibile nel locale selezionato:', locale, labelKey);
+            console.error('La chiave richiesta non è disponibile nella lingua selezionata:', locale, labelKey);
         }
 
         return copy || labelKey;
