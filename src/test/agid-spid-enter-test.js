@@ -71,24 +71,19 @@ describe('SPID', function () {
         });
 
         describe('init method', function () {
-            it('should return an observable promise for flow control', function () {
-                // WHEN
-                var returnedObj = SUT.init(),
-                    isPromise = returnedObj instanceof Promise;
-                // THEN
-                expect(isPromise).toBeTruthy();
-            });
-
             it('should inject the modal wrapper HTML needed to print the providers popup', function (done) {
                 // GIVEN
                 var agidSpidWrapper;
                 // WHEN
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     agidSpidWrapper = document.querySelector(agidSpidWrapperID);
                     // THEN
                     expect(!!agidSpidWrapper).toBeTruthy();
                     done();
-                });
+                })
+
             });
 
             it('should fetch italian language if no option was provided, and not provide payload for the providers call', function (done) {
@@ -96,7 +91,9 @@ describe('SPID', function () {
                 spyOn(XMLHttpRequest.prototype, 'open').and.callThrough();
                 spyOn(XMLHttpRequest.prototype, 'send').and.callThrough();
                 // WHEN
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     // THEN
                     expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('GET', '/src/data/spidI18n.json');
                     expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"lang":"it"}');
@@ -106,7 +103,10 @@ describe('SPID', function () {
 
             it('should NOT inject the modal wrapper HTML more than once', function (done) {
                 // GIVEN
-                var initCalls = [SUT.init(), SUT.init(), SUT.init()],
+                var p1 = new Promise(function (resolve) { SUT.init(null, resolve) });
+                var p2 = new Promise(function (resolve) { SUT.init(null, resolve) });
+                var p3 = new Promise(function (resolve) { SUT.init(null, resolve) });
+                var initCalls = [p1, p2, p3],
                     agidSpidWrapper;
                 // WHEN
                 Promise.all(initCalls).then(function () {
@@ -119,7 +119,9 @@ describe('SPID', function () {
 
             it('should warn the dev if no placeholder is found to render the smartbuttons', function (done) {
                 // WHEN
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     // THEN
                     expect(console.warn).toHaveBeenCalled();
                     done();
@@ -127,13 +129,15 @@ describe('SPID', function () {
             });
 
             describe('on failure', function () {
-                it('should log failure when ajax calls do not all return data', function (done) {
+                it('should log failure when ajax calls do not all  data', function (done) {
                     // GIVEN
                     spyOn(SUT, "initResources").and.callFake(function () {
                         SUT.setResources(ajaxFail);
                     });
                     // WHEN
-                    SUT.init().then(function () {
+                    new Promise(function (resolve, reject) {
+                        SUT.init(null, resolve, reject);
+                    }).catch(function () {
                         // THEN
                         expect(console.error).toHaveBeenCalled();
                         done();
@@ -146,7 +150,9 @@ describe('SPID', function () {
                         SUT.setResources(ajaxFail);
                     });
                     // WHEN
-                    SUT.init().then(function () {
+                    new Promise(function (resolve, reject) {
+                        SUT.init(null, resolve, reject);
+                    }).catch(function () {
                         var agidSpidWrapper = document.querySelector(agidSpidWrapperID);
                         // THEN
                         expect(!!agidSpidWrapper).toBeFalsy();
@@ -163,7 +169,9 @@ describe('SPID', function () {
                     injectSpidPlaceHolder('L');
                     injectSpidPlaceHolder('xL');
                     // WHEN
-                    SUT.init().then(function () {
+                    new Promise(function (resolve) {
+                        SUT.init(null, resolve);
+                    }).then(function () {
                         var spidButtons = document.querySelectorAll('.agid-spid-enter');
                         // THEN
                         expect(spidButtons.length).toBeTruthy();
@@ -175,7 +183,9 @@ describe('SPID', function () {
                     // GIVEN
                     injectSpidPlaceHolder('H');
                     // WHEN
-                    SUT.init().then(function () {
+                    new Promise(function (resolve) {
+                        SUT.init(null, resolve);
+                    }).then(function () {
                         // THEN
                         expect(console.error).toHaveBeenCalled();
                         done();
@@ -186,7 +196,9 @@ describe('SPID', function () {
             describe('when not supplied with a configuration object', function () {
                 it('should not add to providers hidden inputs payload', function (done) {
                     // WHEN
-                    SUT.init().then(function () {
+                    new Promise(function (resolve) {
+                        SUT.init(null, resolve);
+                    }).then(function () {
                         var hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input');
                         // THEN
                         expect(hiddenInputs.length).toEqual(0);
@@ -205,7 +217,9 @@ describe('SPID', function () {
                     spyOn(XMLHttpRequest.prototype, 'open').and.callThrough();
                     spyOn(XMLHttpRequest.prototype, 'send').and.callThrough();
                     // WHEN
-                    SUT.init(config).then(function () {
+                    new Promise(function (resolve) {
+                        SUT.init(config, resolve);
+                    }).then(function () {
                         // THEN
                         expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('GET', '/src/data/spidI18n.json');
                         expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"lang":"de"}');
@@ -225,7 +239,9 @@ describe('SPID', function () {
                             }
                         };
                         // WHEN
-                        SUT.init(config).then(function () {
+                        new Promise(function (resolve) {
+                            SUT.init(config, resolve);
+                        }).then(function () {
                             var providers = document.querySelectorAll('#agid-spid-idp-list button'),
                                 hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]');
                             // THEN
@@ -251,7 +267,9 @@ describe('SPID', function () {
                             }
                         };
                         // WHEN
-                        SUT.init(config).then(function () {
+                        new Promise(function (resolve) {
+                            SUT.init(config, resolve);
+                        }).then(function () {
                             var providers = document.querySelectorAll('#agid-spid-idp-list button'),
                                 hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="entityName"]'),
                                 specificInput = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]');
@@ -276,7 +294,9 @@ describe('SPID', function () {
                         };
                         injectSpidPlaceHolder('xL');
                         // WHEN
-                        SUT.init(config).then(function () {
+                        new Promise(function (resolve) {
+                            SUT.init(config, resolve);
+                        }).then(function () {
                             var provider = document.querySelector('#agid-spid-provider-poste input');
                             // THEN
                             expect(provider.name).toEqual('testName');
@@ -304,7 +324,9 @@ describe('SPID', function () {
                         };
                         injectSpidPlaceHolder('xL');
                         // WHEN
-                        SUT.init(config).then(function () {
+                        new Promise(function (resolve) {
+                            SUT.init(config, resolve);
+                        }).then(function () {
                             var posteData = document.querySelector('#agid-spid-provider-poste input'),
                                 arubaData = document.querySelector('#agid-spid-provider-aruba input'),
                                 timData = document.querySelector('#agid-spid-provider-tim input');
@@ -322,7 +344,9 @@ describe('SPID', function () {
         describe('changeLanguage method', function () {
             it('should call only the i18n endpoint for the new copy', function (done) {
                 // GIVEN
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     spyOn(XMLHttpRequest.prototype, 'open').and.callThrough();
                     spyOn(XMLHttpRequest.prototype, 'send').and.callThrough();
                     // WHEN
@@ -339,7 +363,9 @@ describe('SPID', function () {
                 spyOn(SUT, "initResources").and.callFake(function () {
                     SUT.setResources(ajaxFail);
                 });
-                SUT.init().then(function () {
+                new Promise(function (resolve, reject) {
+                    SUT.init(null, resolve, reject);
+                }).catch(function () {
                     // WHEN
                     SUT.changeLanguage('en');
                     expect(console.error).toHaveBeenCalled();
@@ -353,13 +379,14 @@ describe('SPID', function () {
                 // GIVEN
                 var spidButtons;
 
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     injectSpidPlaceHolder('S');
                     // WHEN
                     SUT.updateSpidButtons();
                     spidButtons = document.querySelectorAll('.agid-spid-enter');
                     // THEN
-                    console.log(spidButtons);
                     expect(spidButtons.length).toBe(1);
                     done();
                 });
@@ -371,7 +398,9 @@ describe('SPID', function () {
                 spyOn(SUT, "initResources").and.callFake(function () {
                     SUT.setResources(ajaxFail);
                 });
-                SUT.init().then(function () {
+                new Promise(function (resolve, reject) {
+                    SUT.init(null, resolve, reject);
+                }).catch(function () {
                     injectSpidPlaceHolder('S');
                     // WHEN
                     SUT.updateSpidButtons();
@@ -391,7 +420,9 @@ describe('SPID', function () {
 
                 injectSpidPlaceHolder('S');
 
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     // WHEN
                     document.querySelector('.agid-spid-enter.agid-spid-enter-size-s').click();
                     isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
@@ -408,7 +439,9 @@ describe('SPID', function () {
                 // GIVEN
                 injectSpidPlaceHolder('m');
 
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     var choiceModal = document.querySelector('#agid-spid-panel-select');
                     // WHEN
                     document.querySelector('.agid-spid-enter.agid-spid-enter-size-m').click();
@@ -426,7 +459,9 @@ describe('SPID', function () {
                 // GIVEN
                 injectSpidPlaceHolder('Xl');
 
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     var isChoiceModalVisible;
 
                     document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
@@ -443,7 +478,9 @@ describe('SPID', function () {
                 // GIVEN
                 injectSpidPlaceHolder('Xl');
 
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     var isChoiceModalVisible;
 
                     document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
@@ -460,7 +497,9 @@ describe('SPID', function () {
                 // GIVEN
                 injectSpidPlaceHolder('Xl');
 
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     var isChoiceModalVisible;
 
                     document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
@@ -479,7 +518,9 @@ describe('SPID', function () {
                 // GIVEN
                 injectSpidPlaceHolder('L');
 
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     var isInfoModalVisible;
 
                     document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
@@ -498,7 +539,9 @@ describe('SPID', function () {
                 // GIVEN
                 injectSpidPlaceHolder('Xl');
 
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     var isInfoModalVisible;
 
                     document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
@@ -516,7 +559,9 @@ describe('SPID', function () {
                 // GIVEN
                 injectSpidPlaceHolder('Xl');
 
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     var isInfoModalVisible;
 
                     document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
@@ -534,7 +579,9 @@ describe('SPID', function () {
                 // GIVEN
                 injectSpidPlaceHolder('Xl');
 
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     var isInfoModalVisible;
 
                     document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
@@ -550,7 +597,7 @@ describe('SPID', function () {
         });
 
         describe('getI18n utility', function () {
-            it('should return the key name when the value cannot be found', function () {
+            it('should  the key name when the value cannot be found', function () {
                 // GIVEN
                 var key = 'undefined.key',
                     copy;
@@ -577,7 +624,9 @@ describe('SPID', function () {
                     agidModalButton,
                     report;
                 // WHEN
-                SUT.init().then(function () {
+                new Promise(function (resolve) {
+                    SUT.init(null, resolve);
+                }).then(function () {
                     // Mostra il modale dei provide
                     agidSpidWrapper = document.querySelector(agidSpidWrapperID);
                     agidSpidWrapper.removeAttribute('hidden');

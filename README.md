@@ -99,10 +99,12 @@ l'attributo `data-size` è case-insensitive quindi può essere sia maiuscolo che
 ### Metodi pubblici del modulo SPID
 Il modulo espone 4 metodi pubblici
 
-#### `init(config)`
-Ritorna una promise che rappresenta lo stato di caricamento delle risorse necessarie, copy e providers, in caso di successo carica i CSS e mostra gli smartbutton sulla pagina
+#### `init(config, success, error)`
+In caso di successo carica i CSS, mostra gli smartbutton sulla pagina e chiama la callback `success` se esiste.
+In caso di errore scrive un messaggio in console e chiama la callback `error` se esiste.
 
-l'oggetto `config` è opzionale, se omesso le impostazioni predefinite saranno:
+######config
+Il parametro `config` è opzionale, se omesso le impostazioni predefinite saranno:
  - lingua italiana
  - un url di default `/login?entityId={{entityID}}`, dove il valore del parametro tra parentesi graffe verrà sostituito dalla libreria con il valore dell'entityID del provider corrente
  - form method GET
@@ -160,12 +162,19 @@ var spid = new window.SPID();
 ```
 Dove è stata fornita ad esempio una configurazione custom per il provider delle Poste.
 
-#### `changelang(lang)`
-Ritorna una promise che rappresenta lo stato di caricamento delle copy, al termine aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata, la stringa `lang` deve essere costituita da due caratteri eg `it`.
+######success e error
+Sono due callback opzionali da fornire in caso sia necessario gestire il caso di successo o di errore.
+
+#### `changelang(lang, success, error)`
+In caso di successo aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata.
+La stringa `lang` deve essere costituita da due caratteri eg `it`.
 Le lingue supportate sono italiano `it`, inglese `en` e tedesco `de`
 ```javascript
 spid.changeLanguage('en');
 ```
+
+######success e error
+Sono due callback opzionali da fornire in caso sia necessario gestire il caso di successo o di errore.
 
 #### `updateSpidButtons()`
 Ricerca i placeholders per ripristinare i pulsanti, utilizzabile in caso di aggiornamento dinamico della UI causante la cancellazione dei pulsanti renderizzati in fase di inizializzazione

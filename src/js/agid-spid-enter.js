@@ -121,33 +121,30 @@ window.SPID = function () {
     /*
      * Helper function per gestire tramite promise il risultato asincrono di success/fail, come $.ajax
      */
-    function ajaxRequest(method, url, payload) {
-        return new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest();
-            xhr.open(method, url);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200 && xhr.responseText) {
-                        resolve(JSON.parse(xhr.responseText));
-                    } else {
-                        reject(xhr.responseText);
-                    }
+    function ajaxRequest(method, url, payload, done, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200 && xhr.responseText) {
+                    done(null, JSON.parse(xhr.responseText), callback);
+                } else {
+                    done(xhr.responseText, null, callback);
                 }
-            }.bind(this);
-            xhr.send(JSON.stringify(payload));
-        });
+            }
+        }.bind(this);
+        xhr.send(JSON.stringify(payload));
     }
 
-    function getLocalisedMessages() {
+    function getLocalisedMessages(setMessages) {
         var languageRequest = {
             lang: _lang
         };
-
-        return ajaxRequest('GET', self.resources.localisationEndpoint, languageRequest);
+        ajaxRequest('GET', self.resources.localisationEndpoint, languageRequest, setMessages);
     }
 
-    function getAvailableProviders() {
-        return ajaxRequest('GET', self.resources.providersEndpoint);
+    function getAvailableProviders(setProviders) {
+        ajaxRequest('GET', self.resources.providersEndpoint, null, setProviders);
     }
 
     function loadStylesheet(url) {
@@ -213,6 +210,11 @@ window.SPID = function () {
         return options;
     }
 
+    function manageError(err, errorCallback) {
+        console.error('Si è verificato un errore nel caricamento dei dati', err);
+        errorCallback && errorCallback();
+    }
+
     /** FUNZIONI PUBBLICHE */
 
     this.getVersion = function () {
@@ -221,53 +223,57 @@ window.SPID = function () {
 
     /**
      * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
-     * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per i dati
+     * @param {function} success - callback opzionale per gestire il caso di successo
+     * @param {function} error - callback opzionale per gestire il caso di errore
      */
-    this.init = function (options) {
-        var fetchData;
+    this.init = function (options, success, error) {
 
         self.initResources();
         options = getMergedDefaultOptions(options);
 
         _lang = options.lang;
 
-        fetchData = [getLocalisedMessages(), getAvailableProviders()];
-
-        return Promise.all(fetchData)
-            .then(function (data) {
-                self.initTemplates();
-
-                _i18n = data[0];
-                _availableProviders = getMergedProvidersData(data[1].spidProviders, options);
+        getLocalisedMessages(function (err, data) {
+            if (err) {
+                manageError(err,error);
+                return;
+            }
+            self.initTemplates();
+            _i18n = data;
+            getAvailableProviders(function (err, data) {
+                if (err) {
+                    manageError(err,error);
+                    return;
+                }
+                _availableProviders = getMergedProvidersData(data.spidProviders, options);
                 renderModule();
-            })
-            .catch(function (error) {
-                _availableProviders = undefined;
-                console.error('Si è verificato un errore nel caricamento dei dati', error);
+                success && success();
             });
+        });
     };
 
     /**
      * @param {string} lang - il locale da caricare, due caratteri eg 'it' | 'en' | 'de'.
-     * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per le copy
+     * @param {function} success - callback opzionale per gestire il caso di successo
+     * @param {function} error - callback opzionale per gestire il caso di errore
      */
-    this.changeLanguage = function (lang) {
+    this.changeLanguage = function (lang, success, error) {
         _lang = lang;
 
-        getLocalisedMessages()
-            .then(function (data) {
-                _i18n = data;
-                renderModule();
-            })
-            .catch(function (error) {
-                console.error('Si è verificato un errore nel caricamento dei dati', error);
-            });
+        getLocalisedMessages(function (err, data) {
+            if (err) {
+                manageError(err,error);
+                return;
+            }
+            _i18n = data;
+            renderModule();
+            success && success();
+        });
     };
 
     this.updateSpidButtons = function () {
-        var spidButtonsPlaceholdersObj = document.querySelectorAll('.agid-spid-enter-button'),
-            spidButtonsPlaceholdersArray = Array.from(spidButtonsPlaceholdersObj),
-            hasButtonsOnPage = spidButtonsPlaceholdersArray.length;
+        var spidButtonsPlaceholders = document.querySelectorAll('.agid-spid-enter-button'),
+            hasButtonsOnPage = spidButtonsPlaceholders.length;
 
         if (!_availableProviders) {
             console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
@@ -279,22 +285,25 @@ window.SPID = function () {
             return;
         };
 
-        spidButtonsPlaceholdersArray.forEach(function (spidButton) {
-            var foundDataSize = spidButton.getAttribute('data-size'),
+        for (var i = 0; i < hasButtonsOnPage; i++) {
+            var foundDataSize = spidButtonsPlaceholders[i].getAttribute('data-size'),
                 dataSize = foundDataSize.toLowerCase(),
                 supportedSizes = ['s', 'm', 'l', 'xl'],
                 isSupportedSize = supportedSizes.indexOf(dataSize) !== -1;
 
             if (isSupportedSize) {
-                spidButton.innerHTML = getTemplate('spidButton', dataSize);
+                spidButtonsPlaceholders[i].innerHTML = getTemplate('spidButton', dataSize);
             } else {
-                console.error('Le dimensioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButton);
+                console.error('Le dimensioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButtonsPlaceholders[i]);
             }
-        });
+        }
+
+        var spidButtons = document.querySelectorAll('.agid-spid-enter');
+
         // Binda gli eventi dopo aver renderizzato i pulsanti SPID
-        Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
-            spidButton.addEventListener('click', showProvidersPanel);
-        });
+        for (var j = 0; j < spidButtons.length; j++) {
+            spidButtons[j].addEventListener('click', showProvidersPanel);
+        }
     };
 
     this.setResources = function (resources) {
@@ -303,7 +312,7 @@ window.SPID = function () {
 
     this.getResources = function () {
         // Cloniamo l'oggetto in modo che non sia modificabile dall'esterno
-        return Object.assign({}, self.resources);
+        return JSON.parse(JSON.stringify(self.resources));
     };
 
     // Null safe access, se la label non è trovata non si verificano errori runtime, suggerimento in console
