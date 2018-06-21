@@ -103,7 +103,7 @@ Il modulo espone 4 metodi pubblici
 In caso di successo carica i CSS, mostra gli smartbutton sulla pagina e chiama la callback `success` se esiste.
 In caso di errore scrive un messaggio in console e chiama la callback `error` se esiste.
 
-######config
+##### config
 Il parametro `config` è opzionale, se omesso le impostazioni predefinite saranno:
  - lingua italiana
  - un url di default `/login?entityId={{entityID}}`, dove il valore del parametro tra parentesi graffe verrà sostituito dalla libreria con il valore dell'entityID del provider corrente
@@ -162,7 +162,7 @@ var spid = new window.SPID();
 ```
 Dove è stata fornita ad esempio una configurazione custom per il provider delle Poste.
 
-######success e error
+##### success e error
 Sono due callback opzionali da fornire in caso sia necessario gestire il caso di successo o di errore.
 
 #### `changelang(lang, success, error)`
@@ -173,7 +173,7 @@ Le lingue supportate sono italiano `it`, inglese `en` e tedesco `de`
 spid.changeLanguage('en');
 ```
 
-######success e error
+##### success e error
 Sono due callback opzionali da fornire in caso sia necessario gestire il caso di successo o di errore.
 
 #### `updateSpidButtons()`
