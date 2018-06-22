@@ -114,6 +114,10 @@
     margin: auto;
 }
 
+.agid-spid-enter-button {
+    text-align: center;
+}
+
 .agid-spid-idp-button {
     border: none;
     width: 145px;
@@ -175,8 +179,7 @@
 
 .agid-spid-enter-icon {
     margin: 0 -0.4em 0 0;
-    padding: 0.6em 0.8em 0.5em;
-    border-right: rgba(255, 255, 255, 0.1) 0.1em solid;
+    padding: 0.6em 0.1em 0.9em 0.7em;
 
     & svg {
         width: 1.8em;
@@ -186,7 +189,7 @@
 }
 
 .agid-spid-enter-text {
-    padding: 0.95em 1em 0.85em;
+    padding: 0.7em 1em 0.85em 0.7em;
     font-size: 1.15em;
     text-align: center;
 }
@@ -194,10 +197,11 @@
 .agid-spid-enter-size-s {
     font-size: 0.625em;
     border-radius: 5px;
+    height: 31px;
 
     & > span img {
         width: 19px;
-        height: 19px;
+        height: 17px;
         border: 0;
     }
 }
@@ -205,10 +209,11 @@
 .agid-spid-enter-size-m {
     font-size: 0.95em;
     border-radius: 6px;
+    height: 48px;
 
     & > span img {
         width: 29px;
-        height: 29px;
+        height: 28px;
         border: 0;
     }
 }
@@ -216,10 +221,11 @@
 .agid-spid-enter-size-l {
     font-size: 1.25em;
     border-radius: 7px;
+    height: 60px;
 
     & > span img {
         width: 38px;
-        height: 38px;
+        height: 36px;
         border: 0;
     }
 }
@@ -227,10 +233,11 @@
 .agid-spid-enter-size-xl {
     font-size: 1.55em;
     border-radius: 8px;
+    height: 77px;
 
     & > span img {
         width: 47px;
-        height: 47px;
+        height: 45px;
         border: 0;
     }
 }
@@ -586,7 +593,7 @@
     padding: 0;
     color: #fff;
     background-color: #06c;
-    font-weight: 600;
+    font-weight: 20;
     line-height: 1em;
     text-decoration: none;
     border: 0;
