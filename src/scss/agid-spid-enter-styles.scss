@@ -490,7 +490,9 @@
     }
 
     #agid-cancel-access-button {
-        background-color: transparent;
+        background-color: #fcfdff;
+        color: #5c6f82;
+        box-shadow: inset 0 0 0 1px #e6e9f2;
         border-radius: 5px;
         border: 1px solid #80afe4;
         height: 46px;
@@ -498,7 +500,6 @@
         margin: 3px 0 0;
         width: 98%;
         text-transform: uppercase;
-        color: #fff;
     }
 
     #agid-cancel-access-container {
