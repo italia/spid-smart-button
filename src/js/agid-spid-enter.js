@@ -113,9 +113,9 @@ window.SPID = function () {
         document.querySelector('#nospid').addEventListener('click', function () {
             openInfoModal(getTemplate('nonHaiSpid'));
         });
-        document.querySelector('#cosaspid').addEventListener('click', function () {
-            openInfoModal(getTemplate('cosaSpid'));
-        });
+        // document.querySelector('#cosaspid').addEventListener('click', function () {
+        //     openInfoModal(getTemplate('cosaSpid'));
+        // });
     }
 
     /*

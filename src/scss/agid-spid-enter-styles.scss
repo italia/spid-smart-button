@@ -400,7 +400,7 @@
     &::before {
         width: 180px;
         height: 48px;
-        background-color: #075fc5;
+        background-color: #fff;
         border-radius: 4px;
         position: absolute;
     }
@@ -411,7 +411,7 @@
         border-radius: 50%;
         position: absolute;
         // la prorietà bk-color non può essere specificata pena un bug di rendering del path circolare estero dell'SVG
-        background: url($assetsBaseUrl + "img/spid-ico-circle-bb.svg") center center no-repeat;
+        //background: url($assetsBaseUrl + "img/spid-ico-circle-bb.svg") center center no-repeat;
     }
 }
 
@@ -494,7 +494,7 @@
         color: #5c6f82;
         box-shadow: inset 0 0 0 1px #e6e9f2;
         border-radius: 5px;
-        border: 1px solid #80afe4;
+        border: 1px solid currentColor;
         height: 46px;
         vertical-align: middle;
         margin: 3px 0 0;
