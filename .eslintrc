@@ -1,0 +1,16 @@
+{
+	"extends": "crockford",
+	"env": {
+		"browser": true,
+		"node": true,
+        "jasmine": true
+	},
+	"globals": {
+		"Promise": true
+	},
+	"rules": {
+		"no-plusplus": 0,
+		"no-mixed-spaces-and-tabs": 0,
+		"indent": 2
+	}
+}

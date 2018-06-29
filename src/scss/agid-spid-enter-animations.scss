@@ -1,0 +1,223 @@
+#agid-spid-enter-anim,
+#agid-spid-enter-anim::before,
+#agid-spid-enter-anim::after,
+#agid-spid-panel-select {
+    animation-delay: 0s;
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+#agid-spid-enter-container {
+    display: block;
+    transition-duration: 1s;
+    transition-property: visibility;
+    transition-delay: 0s;
+    // FadeOut
+    &[hidden] {
+        // visibility è animabile diversamente da display
+        // pointer events evita che l'elemento riceva eventi durante e l'animazione
+        // gli elementi con visibility hidden non ricevono comunque gli eventi
+        visibility: hidden;
+        transition-duration: 0s;
+        transition-property: visibility;
+        transition-delay: 1s;
+        pointer-events: none;
+
+        #agid-spid-enter-anim {
+            animation-name: anim-panel-out;
+            animation-duration: 2s;
+
+            &::before {
+                animation-name: anim-base-out;
+                animation-duration: 0.5s;
+            }
+
+            &::after {
+                animation-name: anim-icon-out;
+                animation-duration: 1s;
+            }
+        }
+
+        #agid-spid-panel-select {
+            animation-name: anim-panel-out;
+            animation-duration: 1s;
+        }
+    }
+    // FadeIn
+    &:not([hidden]) {
+        #agid-spid-enter-anim {
+            animation-name: anim-panel-in;
+            animation-duration: 0s;
+
+            &::before {
+                animation-name: anim-base-in;
+                animation-duration: 2s;
+            }
+
+            &::after {
+                animation-name: anim-icon-in;
+                animation-duration: 1s;
+            }
+        }
+
+        #agid-spid-panel-select {
+            animation-name: anim-panel-in;
+            animation-duration: 2s;
+        }
+    }
+}
+
+$animBaseWidth: 180px;
+$animBaseHeight: 48px;
+
+@keyframes anim-base-in {
+    0% {
+        width: $animBaseWidth;
+        height: $animBaseHeight;
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
+        border-radius: 100%;
+        opacity: 0;
+    }
+
+    50% {
+        width: $animBaseWidth;
+        height: $animBaseHeight;
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
+        border-radius: 100%;
+        opacity: 1;
+    }
+
+    100% {
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
+        transform: scale(30);
+        border-radius: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes anim-base-out {
+    0% {
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
+        transform: scale(30);
+        border-radius: 100%;
+        opacity: 1;
+    }
+
+    50% {
+        width: $animBaseWidth;
+        height: $animBaseHeight;
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
+        border-radius: 100%;
+        opacity: 0.5;
+    }
+
+    100% {
+        width: $animBaseWidth;
+        height: $animBaseHeight;
+        top: calc((100vh - #{$animBaseHeight}) / 2);
+        left: calc((100vw - #{$animBaseWidth}) / 2);
+        border-radius: 100%;
+        opacity: 0;
+    }
+}
+
+$animIconSize: 30px;
+$animIconDistanceStart: 50;
+$animIconDistanceEnd: 120;
+
+@keyframes anim-icon-in {
+    0% {
+        width: $animIconSize;
+        height: $animIconSize;
+        top: $animIconDistanceStart * 1vh;
+        left: $animIconDistanceStart * 1vw;
+        opacity: 0;
+    }
+
+    5% {
+        width: $animIconSize;
+        height: $animIconSize;
+        top: $animIconDistanceStart * 1vh;
+        left: $animIconDistanceStart * 1vw;
+        opacity: 0.2;
+    }
+
+    100% {
+        top: 0;
+        left: 20vw;
+        width: 120vw;
+        height: 120vh;
+        opacity: 0.1;
+    }
+}
+
+@keyframes anim-icon-out {
+    0% {
+        top: 0;
+        left: 20vw;
+        width: 120vw;
+        height: 120vh;
+        opacity: 0.1;
+    }
+
+    50% {
+        width: $animIconSize;
+        height: $animIconSize;
+        top: $animIconDistanceStart * 1vh;
+        left: $animIconDistanceStart * 1vw;
+        opacity: 0;
+    }
+
+    100% {
+        width: $animIconSize;
+        height: $animIconSize;
+        top: $animIconDistanceStart * 1vh;
+        left: $animIconDistanceStart * 1vw;
+        opacity: 0;
+    }
+}
+
+@keyframes anim-panel-in {
+    0% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+// safari richiede che una proprietà animata sia presente in tutti gli steps
+@keyframes anim-panel-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes hide-on-end {
+    0% {
+        height: 100vh;
+    }
+
+    99.9% {
+        height: 100vh;
+    }
+
+    100% {
+        height: 0;
+    }
+}

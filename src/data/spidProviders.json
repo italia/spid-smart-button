@@ -1,0 +1,49 @@
+{
+    "spidProviders": [
+        {
+            "provider": "aruba",
+            "title": "Aruba",
+            "logo": "spid-idp-aruba.svg",
+            "isActive": true
+        },
+        {
+            "provider": "infocert",
+            "title": "Infocert",
+            "logo": "spid-idp-infocertid.svg",
+            "isActive": true
+        },
+        {
+            "provider": "poste",
+            "title": "Poste",
+            "logo": "spid-idp-posteid.svg",
+            "isActive": true
+        },
+        {
+            "provider": "sielte",
+            "title": "Sielte",
+            "logo": "spid-idp-sielteid.svg",
+            "isActive": true
+        },
+        {
+            "provider": "tim",
+            "title": "Tim",
+            "logo": "spid-idp-timid.svg",
+            "isActive": true
+        },
+        {
+            "provider": "newidp1",
+            "logo": "spid-idp-dummy.svg",
+            "isActive": false
+        },
+        {
+            "provider": "newidp2",
+            "logo": "spid-idp-dummy.svg",
+            "isActive": false
+        },
+        {
+            "provider": "newidp3",
+            "logo": "spid-idp-dummy.svg",
+            "isActive": false
+        }
+    ]
+}
