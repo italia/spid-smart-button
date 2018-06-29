@@ -3,6 +3,7 @@ module.exports = (grunt) => {
     const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
     const serverPort = pkg.localserver.port;
     const localhostUrl = `${pkg.localserver.url}:${serverPort}`;
+    const sass = require('node-sass');
 
     require('load-grunt-tasks')(grunt);
 
@@ -47,6 +48,7 @@ module.exports = (grunt) => {
             // imports and dependecies defined in the SCSS file
             development: {
                 options: {
+                    implementation: sass,
                     style: 'expanded'
                 },
                 files: {
@@ -57,6 +59,7 @@ module.exports = (grunt) => {
             },
             production: {
                 options: {
+                    implementation: sass,
                     style: 'compressed',
                     sourcemap: 'none'
                 },
