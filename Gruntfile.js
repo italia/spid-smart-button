@@ -1,8 +1,8 @@
-module.exports = function (grunt) {
-    var fs           = require('fs'),
-        pkg          = JSON.parse(fs.readFileSync('./package.json', 'utf8')),
-        serverPort   = pkg.localserver.port,
-        localhostUrl = pkg.localserver.url + serverPort;
+module.exports = (grunt) => {
+    const fs = require('fs');
+    const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+    const serverPort = pkg.localserver.port;
+    const localhostUrl = `${pkg.localserver.url}:${serverPort}`;
 
     require('load-grunt-tasks')(grunt);
 
@@ -139,15 +139,17 @@ module.exports = function (grunt) {
         jasmine: {
             unitTest: {
                 src: [
-                    'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
-                    'node_modules/axe-core/axe.js', // A11y accessibility testing library
-                    'dev/agid-spid-enter.min.js' // Modulo minifizzato da testare
+                    'node_modules/axe-core/axe.js',
+                    'dev/agid-spid-enter.min.js'
                 ],
                 options: {
                     specs: ['src/test/agid-*.js'],
                     outfile: '_SpecRunner.html',
                     keepRunner: true,
-                    host: localhostUrl
+                    host: localhostUrl,
+                    display: 'short',
+                    summary: true,
+                    random: true
                 }
             }
         },
@@ -178,14 +180,19 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask('log-serve', function () {
+        grunt.log.writeln('La pagina demo si trova in:');
+        grunt.log.writeln(`${localhostUrl}/index.html`);
+    });
+
     grunt.registerTask('log-jasmine', function () {
         grunt.log.writeln('La pagina specrunner di jasmine si trova in:');
-        grunt.log.writeln(localhostUrl + '/_SpecRunner.html');
+        grunt.log.writeln(`${localhostUrl}/_SpecRunner.html`);
     });
 
     grunt.registerTask('log-coverage', function () {
         grunt.log.writeln('Il report della code coverage si trova in:');
-        grunt.log.writeln(localhostUrl + '/reports/coverage/dev/agid-spid-enter.min.js.html');
+        grunt.log.writeln(`${localhostUrl}/reports/coverage/dev/agid-spid-enter.min.js.html`);
     });
 
     grunt.registerTask('default', ['watch']);
