@@ -15,6 +15,20 @@ module.exports = (grunt) => {
             tasks: ['build', 'jasmine']
         },
 
+        // Compila file di produzione per ES5
+        babel: {
+            options: {
+                sourceMap: true
+            },
+            dist: {
+                files: {
+                    'dist/agid-spid-enter.min.<%= pkg.version %>.js': 'dist/agid-spid-enter.min.<%= pkg.version %>.js',
+                    'dist/agid-spid-enter.min.latest.js': 'dist/agid-spid-enter.min.latest.js',
+                    'dev/agid-spid-enter.min.js': 'dev/agid-spid-enter.min.js'
+                }
+            }
+        },
+
         // Controllo di sicurezza, rileva vulnerabilità note nel codice e nelle dipendenze
         retire: {
             js: ['src/js/*'],
@@ -200,7 +214,7 @@ module.exports = (grunt) => {
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass', 'postcss']);
-    grunt.registerTask('js', ['uglify', 'string-replace']);
+    grunt.registerTask('js', ['babel', 'uglify', 'string-replace']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
     grunt.registerTask('test', ['jasmine', 'log-jasmine']);
