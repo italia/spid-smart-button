@@ -42,12 +42,14 @@
     "performance": "lighthouse $npm_package_localserver_url$npm_package_localserver_port/index.html --output-path=reports/lighthouse.html --view"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
     "axe-core": "^3.0.3",
-    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
     "eslint-config-crockford": "^2.0.0",
     "eslint-plugin-jasmine": "^2.9.1",
     "grunt": "^1.0.1",
-    "grunt-babel": "^7.0.0",
+    "grunt-babel": "^8.0.0-beta.0",
     "grunt-contrib-jasmine": "2.0.1",
     "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-contrib-watch": "1.1.0",

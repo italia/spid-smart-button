@@ -1,4 +1,5 @@
 {
+	"root": true,
 	"extends": "crockford",
 	"parserOptions": {
 		"ecmaVersion": 6

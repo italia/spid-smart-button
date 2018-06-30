@@ -4,6 +4,11 @@ module.exports = (grunt) => {
     const serverPort = pkg.localserver.port;
     const localhostUrl = `${pkg.localserver.url}:${serverPort}`;
     const sass = require('node-sass');
+    const sources = [
+        'src/js/agid-spid-enter.js',
+        'src/js/agid-spid-enter-tpl.js',
+        'src/js/agid-spid-enter-i18n.js'
+    ];
 
     require('load-grunt-tasks')(grunt);
 
@@ -11,20 +16,26 @@ module.exports = (grunt) => {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-            files: ['src/scss/*', 'src/js/*'],
-            tasks: ['build', 'jasmine']
+            js: {
+                files: ['src/js/*'],
+                tasks: ['js', 'jasmine']
+            },
+            css: {
+                files: ['src/scss/*'],
+                tasks: ['css']
+            }
         },
 
         // Compila file di produzione per ES5
         babel: {
             options: {
-                sourceMap: true
+                sourceMap: true,
+                presets: ['@babel/preset-env']
             },
             dist: {
                 files: {
                     'dist/agid-spid-enter.min.<%= pkg.version %>.js': 'dist/agid-spid-enter.min.<%= pkg.version %>.js',
-                    'dist/agid-spid-enter.min.latest.js': 'dist/agid-spid-enter.min.latest.js',
-                    'dev/agid-spid-enter.min.js': 'dev/agid-spid-enter.min.js'
+                    'dist/agid-spid-enter.min.latest.js': 'dist/agid-spid-enter.min.latest.js'
                 }
             }
         },
@@ -117,9 +128,7 @@ module.exports = (grunt) => {
                 },
                 files: {
                     'dev/agid-spid-enter.min.js': [
-                        'src/js/agid-spid-enter.js',
-                        'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
+                        ...sources,
                         'src/js/agid-spid-enter-config-dev.js'
                     ]
                 }
@@ -127,24 +136,31 @@ module.exports = (grunt) => {
             production: {
                 options: {
                     mangle: true,
-                    beautify: false,
                     compress: {
                         drop_console: false
                     }
                 },
                 files: {
                     'dist/agid-spid-enter.min.<%= pkg.version %>.js': [
-                        'src/js/agid-spid-enter.js',
-                        'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
+                        ...sources,
                         'src/js/agid-spid-enter-config.js'
                     ],
                     'dist/agid-spid-enter.min.latest.js': [
-                        'src/js/agid-spid-enter.js',
-                        'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
+                        ...sources,
                         'src/js/agid-spid-enter-config.js'
                     ]
+                }
+            },
+            productionBabel: {
+                options: {
+                    mangle: true,
+                    compress: {
+                        drop_console: false
+                    }
+                },
+                files: {
+                    'dist/agid-spid-enter.min.<%= pkg.version %>.js': ['dist/agid-spid-enter.min.<%= pkg.version %>.js'],
+                    'dist/agid-spid-enter.min.latest.js': ['dist/agid-spid-enter.min.latest.js']
                 }
             }
         },
@@ -211,7 +227,7 @@ module.exports = (grunt) => {
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass', 'postcss']);
-    grunt.registerTask('js', ['babel', 'uglify', 'string-replace']);
+    grunt.registerTask('js', ['uglify:development', 'uglify:production', 'babel', 'uglify:productionBabel', 'string-replace']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
     grunt.registerTask('test', ['jasmine', 'log-jasmine']);
