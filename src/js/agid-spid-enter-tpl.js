@@ -63,9 +63,7 @@ window.AgidSpidEnter.prototype.tpl = {
 
     spidProviderButton: function (providerData) {
         const { isActive, title, payload, provider, logo } = providerData;
-        const providerTitle = (isActive) ?
-                                this.getI18n('accedi_con_idp', title) :
-                                this.getI18n('idp_disabled');
+        const providerTitle = (isActive) ? this.getI18n('accedi_con_idp', title) : this.getI18n('idp_disabled');
         let providerHiddenName = 'provider';
         let providerPayloadInputs = '';
 

@@ -50,10 +50,7 @@ module.exports = (grunt) => {
 
         // JS code style linting
         eslint: {
-            target: ['src/js/*', 'test/*.js', '!src/js/*-tpl.js'],
-            options: {
-                outputFile: 'reports/eslint.log'
-            }
+            target: ['src/js/*', 'test/*.js']
         },
 
         // Stylesheets minify
