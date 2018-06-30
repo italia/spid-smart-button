@@ -64,14 +64,14 @@ module.exports = (grunt) => {
             target: ['src/js/*', 'test/*.js']
         },
 
-        // Stylesheets minify
+        // Stylesheets compile and minify
         sass: {
             // 'destination': 'source'
             // imports and dependecies defined in the SCSS file
             development: {
                 options: {
                     implementation: sass,
-                    style: 'expanded'
+                    outputStyle: 'expanded'
                 },
                 files: {
                     'dev/agid-spid-enter.min.css': [
@@ -82,11 +82,14 @@ module.exports = (grunt) => {
             production: {
                 options: {
                     implementation: sass,
-                    style: 'compressed',
+                    outputStyle: 'compressed',
                     sourcemap: 'none'
                 },
                 files: {
                     'dist/agid-spid-enter.min.<%= pkg.version %>.css': [
+                        'src/scss/agid-spid-enter-prod.scss'
+                    ],
+                    'dist/agid-spid-enter.min.latest.css': [
                         'src/scss/agid-spid-enter-prod.scss'
                     ]
                 }
@@ -115,6 +118,13 @@ module.exports = (grunt) => {
                 },
                 src: 'dist/agid-spid-enter.min.<%= pkg.version %>.css',
                 dest: 'dist/agid-spid-enter.min.<%= pkg.version %>.css'
+            },
+            productionLatest: {
+                options: {
+                    map: false
+                },
+                src: 'dist/agid-spid-enter.min.latest.css',
+                dest: 'dist/agid-spid-enter.min.latest.css'
             }
         },
 
