@@ -68,7 +68,6 @@ window.AgidSpidEnter.prototype.tpl = {
                                 this.getI18n('idp_disabled');
         let providerHiddenName = 'provider';
         let providerPayloadInputs = '';
-        let property;
 
         // Crea gli input field chiave=valore dall'oggetto
         if (payload) {
@@ -78,7 +77,7 @@ window.AgidSpidEnter.prototype.tpl = {
 
             providerPayloadInputs += this.tpl.hiddenField(providerHiddenName, provider);
 
-            for (property in payload) {
+            for (let property in payload) {
                 providerPayloadInputs += this.tpl.hiddenField(property, payload[property]);
             }
         }
