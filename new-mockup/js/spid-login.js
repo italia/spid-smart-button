@@ -1,3 +1,4 @@
+/* eslint-disable */
 $(window).load(function () {
 
 	/* Gestione della tastiera virtuale su dispositivi mobili che occultano lo show dei campi di input */
