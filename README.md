@@ -33,7 +33,7 @@ Questo repository è mantenuto da AgID - Agenzia per l'Italia Digitale con l'aus
 
 ## Sviluppo del progetto e produzione degli assets
 
-Il progetto ha come hard-dependency **node.js**, la versione con cui è stato sviluppato è la [v6.1.0](https://nodejs.org/dist/v6.1.0/)
+Il progetto ha come hard-dependency **node.js**, la versione con cui è stato sviluppato è la [v8.11.3](https://nodejs.org/dist/v8.11.3/)
 usando *homebrew* puoi installarlo da terminale con il comando:
 ```
 brew install node@8.11.3
