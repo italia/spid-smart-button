@@ -36,7 +36,7 @@ Questo repository è mantenuto da AgID - Agenzia per l'Italia Digitale con l'aus
 Il progetto ha come hard-dependency **node.js**, la versione con cui è stato sviluppato è la [v6.1.0](https://nodejs.org/dist/v6.1.0/)
 usando *homebrew* puoi installarlo da terminale con il comando:
 ```
-brew install node@6.1.0
+brew install node@8.11.3
 ```
 avendo ora disponibile node.js, entra da terminale nella directory del progetto ed installa le dipendenze con il comando:
 ```
@@ -60,7 +60,8 @@ Prima di ogni commit verrà eseguito un linter che verificherà che il codice si
 per velocizzare e migliorare l'esperienza di sviluppo è consigliato installare i rispettivi plugin di linting nel proprio IDE.
 
 ### JavaScript
-Ogni parte del codice *deve essere corredata da unit test Jasmine*, in cui viene testata deterministicamente una singola funzionalità in maniera indipendente dagli altri test, ergo i test devono funzionare anche se eseguiti in ordine randomico, attualmente il flag `random:true` non può essere usato perchè la corrente versione di contrib-jasmine utilizza la versione 2.4.1 in cui vi è un bug che impedisce di usare la randomicità nei test in console, da inserire quando verrà aggiornato alla version 2.5.x o superiore.
+I sorgenti sono scritti in ES6, il minifizzato di produzione verrà processato da babel producendo un file compatibile con ES5 e comunque conforme alla baseline di browser specificata nel file `.babelrc`.
+Ogni parte del codice *deve essere corredata da unit test Jasmine*, in cui viene testata deterministicamente una singola funzionalità in maniera indipendente dagli altri test, ergo i test devono funzionare anche se eseguiti in ordine randomico.
 Nonostante sia possible committare anche se i test non sono verdi per consentire avanzamenti incrementali, un hook impedirà di *pushare* se i test non sono verdi, questo per impedire di divulgare codice non funzionante ad eventuali collaboratori.
 
 La code coverage Istanbul non è attualmente bloccante ne per i commit ne per i push, viene eseguita automaticamente ad ogni push, può essere eseguita manualmente lanciando il comando:
