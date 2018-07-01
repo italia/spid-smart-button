@@ -39,7 +39,7 @@
     "lint": "grunt lint",
     "test": "grunt test",
     "coverage": "karma start tasksConfig/karma.config.js && grunt log-coverage",
-    "performance": "lighthouse $npm_package_localserver_url$npm_package_localserver_port/index.html --output-path=reports/lighthouse.html --view"
+    "performance": "lighthouse $npm_package_localserver_url:$npm_package_localserver_port/index.html --output-path=reports/lighthouse.html --view"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.51",
