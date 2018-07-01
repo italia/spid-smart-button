@@ -29,7 +29,7 @@ module.exports = (grunt) => {
         // Compila file di produzione per ES5
         babel: {
             options: {
-                sourceMap: true,
+                sourceMap: false,
                 presets: ['@babel/preset-env']
             },
             dist: {

@@ -5,5 +5,5 @@ node_modules/
 .grunt/
 _SpecRunner.html
 reports/
-*.min.*
+dev/*.min.*
 *debug.log
