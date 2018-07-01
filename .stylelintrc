@@ -2,6 +2,7 @@
   "extends": "stylelint-config-standard",
   "rules": {
     "number-no-trailing-zeros": null,
-    "indentation": null
+    "indentation": null,
+    "no-descending-specificity": null
   }
 }

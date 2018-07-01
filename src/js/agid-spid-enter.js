@@ -4,11 +4,11 @@
 window.AgidSpidEnter = function () {
     "use strict";
 
-    var self = this,
-        agidSpidEnterWrapper,
-        spidIdpList,
-        infoModal,
-        spidPanelSelect;
+    const self = this;
+    let agidSpidEnterWrapper;
+    let spidIdpList;
+    let infoModal;
+    let spidPanelSelect;
 
     self.availableProviders = null;
 
@@ -21,18 +21,14 @@ window.AgidSpidEnter = function () {
     }
 
     function hideElement(dom) {
-        var hiddenAttribute = document.createAttribute("hidden");
+        const hiddenAttribute = document.createAttribute("hidden");
         dom.setAttributeNode(hiddenAttribute);
     }
 
     // a11y: porta il focus sull'elemento interattivo mostrato
     function giveFocusTo(element) {
-        var focusElement = setInterval(function () {
-            element.focus();
-        }, 100);
-        spidPanelSelect.addEventListener('focus', function () {
-            clearInterval(focusElement);
-        });
+        const focusElement = setInterval(() => element.focus(), 100);
+        spidPanelSelect.addEventListener('focus', () => clearInterval(focusElement));
     }
 
     function closeInfoModal() {
@@ -52,15 +48,15 @@ window.AgidSpidEnter = function () {
     // Randomizza l'ordine dei tasti dei provider prima di mostrarli
     function shuffleIdp() {
         // eslint-disable-next-line vars-on-top
-        for (var i = spidIdpList.children.length; i >= 0; i--) {
+        for (let i = spidIdpList.children.length; i >= 0; i--) {
             spidIdpList.appendChild(spidIdpList.children[Math.random() * i | 0]);
         }
     }
 
     // Chiudi gli overlay in sequenza, prima info modal poi i providers
     function handleEscKeyEvent(event) {
-        var isEscKeyHit             = event.keyCode === 27,
-            isInfoModalVisible      = !infoModal.hasAttribute('hidden');
+        const isEscKeyHit = event.keyCode === 27;
+        const isInfoModalVisible = !infoModal.hasAttribute('hidden');
 
         if (isEscKeyHit) {
             if (isInfoModalVisible) {
@@ -85,10 +81,10 @@ window.AgidSpidEnter = function () {
     }
 
     function renderAvailableProviders() {
-        var agid_spid_enter = document.querySelector('#agid-spid-enter'),
-            spidProvidersButtonsHTML = '';
+        const agid_spid_enter = document.querySelector('#agid-spid-enter');
+        let spidProvidersButtonsHTML = '';
 
-        self.availableProviders.forEach(function (provider) {
+        self.availableProviders.forEach((provider) => {
             spidProvidersButtonsHTML += getTpl('spidProviderButton', provider);
         });
 
@@ -97,18 +93,14 @@ window.AgidSpidEnter = function () {
         // Vengono creati una sola volta all'init, non necessitano unbind
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-cancel-access-button').addEventListener('click', hideProvidersPanel);
-        document.querySelector('#nospid').addEventListener('click', function () {
-            openInfoModal(getTpl('nonHaiSpid'));
-        });
-        document.querySelector('#cosaspid').addEventListener('click', function () {
-            openInfoModal(getTpl('cosaSpid'));
-        });
+        document.querySelector('#nospid').addEventListener('click', () => openInfoModal(getTpl('nonHaiSpid')));
+        document.querySelector('#cosaspid').addEventListener('click', () => openInfoModal(getTpl('cosaSpid')));
     }
 
     function renderSpidButtons() {
-        var spidButtonsPlaceholdersObj   = document.querySelectorAll('.agid-spid-enter-button'),
-            spidButtonsPlaceholdersArray = Array.from(spidButtonsPlaceholdersObj),
-            hasButtonsOnPage             = spidButtonsPlaceholdersArray.length;
+        const spidButtonsPlaceholdersObj = document.querySelectorAll('.agid-spid-enter-button');
+        const spidButtonsPlaceholdersArray = Array.from(spidButtonsPlaceholdersObj);
+        const hasButtonsOnPage = spidButtonsPlaceholdersArray.length;
 
         if (!self.availableProviders) {
             console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
@@ -120,11 +112,11 @@ window.AgidSpidEnter = function () {
             return;
         };
 
-        spidButtonsPlaceholdersArray.forEach(function (spidButton) {
-            var foundDataSize   = spidButton.getAttribute('data-size'),
-                dataSize        = foundDataSize.toLowerCase(),
-                supportedSizes  = ['s', 'm', 'l', 'xl'],
-                isSupportedSize = supportedSizes.indexOf(dataSize) !== -1;
+        spidButtonsPlaceholdersArray.forEach((spidButton) => {
+            const foundDataSize   = spidButton.getAttribute('data-size');
+            const dataSize        = foundDataSize.toLowerCase();
+            const supportedSizes  = ['s', 'm', 'l', 'xl'];
+            const isSupportedSize = supportedSizes.indexOf(dataSize) !== -1;
 
             if (isSupportedSize) {
                 spidButton.innerHTML = getTpl('spidButton', dataSize);
@@ -133,7 +125,7 @@ window.AgidSpidEnter = function () {
             }
         });
         // Binda gli eventi dopo aver renderizzato i pulsanti SPID
-        Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
+        Array.from(document.querySelectorAll('.agid-spid-enter')).forEach((spidButton) => {
             spidButton.addEventListener('click', showProvidersPanel);
         });
     }
@@ -143,9 +135,9 @@ window.AgidSpidEnter = function () {
      */
     function ajaxRequest(method, url, payload) {
         return new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
             xhr.open(method, url);
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200 && xhr.responseText) {
                         resolve(JSON.parse(xhr.responseText));
@@ -153,13 +145,13 @@ window.AgidSpidEnter = function () {
                         reject(xhr.responseText);
                     }
                 }
-            }.bind(this);
+            };
             xhr.send(JSON.stringify(payload));
         });
     }
 
     function getLocalisedMessages() {
-        var languageRequest = {
+        const languageRequest = {
             language: self.language
         };
 
@@ -171,7 +163,7 @@ window.AgidSpidEnter = function () {
     }
 
     function loadStylesheet(url) {
-        var linkElement  = document.createElement('link');
+        const linkElement  = document.createElement('link');
 
         linkElement.rel  = 'stylesheet';
         linkElement.type = 'text/css';
@@ -195,9 +187,8 @@ window.AgidSpidEnter = function () {
     }
 
     function renderSpidModalContainers() {
-        var agidSpidEnterWrapperId = 'agid-spid-enter-container',
-            existentWrapper        = document.getElementById(agidSpidEnterWrapperId),
-            agidSpidEnterWrapper;
+        const agidSpidEnterWrapperId = 'agid-spid-enter-container';
+        const existentWrapper = document.getElementById(agidSpidEnterWrapperId);
 
         if (!existentWrapper) {
             loadStylesheet(self.config.stylesheetUrl);
@@ -213,9 +204,9 @@ window.AgidSpidEnter = function () {
     }
 
     function mergeProvidersData(agidProvidersList, providersPayload) {
-        var availableProviders = [];
+        let availableProviders = [];
 
-        agidProvidersList.forEach(function (agidIdpConfig) {
+        agidProvidersList.forEach((agidIdpConfig) => {
             if (agidIdpConfig.isActive) {
                 if (providersPayload) {
                     agidIdpConfig.payload = Object.assign({}, providersPayload.common, providersPayload[agidIdpConfig.provider]);
@@ -245,11 +236,11 @@ window.AgidSpidEnter = function () {
         });
 
         return getLocalisedMessages()
-            .then(function (data) {
+            .then((data) => {
                 self.i18n = data;
                 renderModule();
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.error('Si è verificato un errore nel caricamento dei dati', error);
             });
     };
@@ -259,7 +250,7 @@ window.AgidSpidEnter = function () {
      * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per i dati
      */
     function init(options) {
-        var fetchData;
+        let fetchData;
 
         if (options) {
             setOptions(options);
@@ -268,12 +259,12 @@ window.AgidSpidEnter = function () {
         fetchData = [getLocalisedMessages(), getAvailableProviders()];
 
         return Promise.all(fetchData)
-            .then(function (data) {
+            .then((data) => {
                 self.i18n = data[0];
                 mergeProvidersData(data[1].spidProviders, options && options.providersPayload);
                 renderModule();
             })
-            .catch(function (error) {
+            .catch((error) => {
                 self.availableProviders = null;
                 console.error('Si è verificato un errore nel caricamento dei dati', error);
             });
@@ -287,9 +278,9 @@ window.AgidSpidEnter = function () {
      * Metodi Pubblici
      */
     return {
-        init: init,
-        changeLanguage: changeLanguage,
+        init,
+        changeLanguage,
         updateSpidButtons: renderSpidButtons,
-        version: version
+        version
     };
 };

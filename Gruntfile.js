@@ -1,8 +1,14 @@
-module.exports = function (grunt) {
-    var fs           = require('fs'),
-        pkg          = JSON.parse(fs.readFileSync('./package.json', 'utf8')),
-        serverPort   = pkg.localserver.port,
-        localhostUrl = pkg.localserver.url + serverPort;
+module.exports = (grunt) => {
+    const fs = require('fs');
+    const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+    const serverPort = pkg.localserver.port;
+    const localhostUrl = `${pkg.localserver.url}:${serverPort}`;
+    const sass = require('node-sass');
+    const sources = [
+        'src/js/agid-spid-enter.js',
+        'src/js/agid-spid-enter-tpl.js',
+        'src/js/agid-spid-enter-i18n.js'
+    ];
 
     require('load-grunt-tasks')(grunt);
 
@@ -10,8 +16,28 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-            files: ['src/scss/*', 'src/js/*'],
-            tasks: ['build', 'jasmine']
+            js: {
+                files: ['src/js/*'],
+                tasks: ['js', 'jasmine']
+            },
+            css: {
+                files: ['src/scss/*'],
+                tasks: ['css']
+            }
+        },
+
+        // Compila file di produzione per ES5
+        babel: {
+            options: {
+                sourceMap: false,
+                presets: ['@babel/preset-env']
+            },
+            dist: {
+                files: {
+                    'dist/agid-spid-enter.min.<%= pkg.version %>.js': 'dist/agid-spid-enter.min.<%= pkg.version %>.js',
+                    'dist/agid-spid-enter.min.latest.js': 'dist/agid-spid-enter.min.latest.js'
+                }
+            }
         },
 
         // Controllo di sicurezza, rileva vulnerabilità note nel codice e nelle dipendenze
@@ -35,18 +61,16 @@ module.exports = function (grunt) {
 
         // JS code style linting
         eslint: {
-            target: ['src/js/*', 'test/*.js', '!src/js/*-tpl.js'],
-            options: {
-                outputFile: 'reports/eslint.log'
-            }
+            target: ['src/js/*', 'test/*.js']
         },
 
-        // Stylesheets minify
+        // Stylesheets compile and minify
         sass: {
             // imports and dependecies defined in the SCSS file
             dev: {
                 options: {
-                    style: 'expanded'
+                    implementation: sass,
+                    outputStyle: 'expanded'
                 },
                 files: {
                     'dev/agid-spid-enter.min.css': 'src/scss/agid-spid-enter-dev.scss'
@@ -54,13 +78,16 @@ module.exports = function (grunt) {
             },
             prod: {
                 options: {
-                    style: 'compressed',
+                    implementation: sass,
+                    outputStyle: 'compressed',
                     sourcemap: 'none'
                 },
                 files: {
-                    'dist/agid-spid-enter.min.<%= pkg.version %>.css': 'src/scss/agid-spid-enter-prod.scss'
+                    'dist/agid-spid-enter.min.<%= pkg.version %>.css': 'src/scss/agid-spid-enter-prod.scss',
+                    'dist/agid-spid-enter.min.latest.css': 'src/scss/agid-spid-enter-prod.scss'
                 }
             }
+
         },
 
         // Processa i CSS prodotti da sass e aggiunge vendor prefix sulle proprietà per browser obsoleti
@@ -82,8 +109,15 @@ module.exports = function (grunt) {
                 options: {
                     map: false
                 },
-                src:   'dist/agid-spid-enter.min.<%= pkg.version %>.css',
+                src: 'dist/agid-spid-enter.min.<%= pkg.version %>.css',
                 dest: 'dist/agid-spid-enter.min.<%= pkg.version %>.css'
+            },
+            prodLatest: {
+                options: {
+                    map: false
+                },
+                src: 'dist/agid-spid-enter.min.latest.css',
+                dest: 'dist/agid-spid-enter.min.latest.css'
             }
         },
 
@@ -97,9 +131,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dev/agid-spid-enter.min.js': [
-                        'src/js/agid-spid-enter.js',
-                        'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
+                        ...sources,
                         'src/js/agid-spid-enter-config-dev.js'
                     ]
                 }
@@ -107,24 +139,31 @@ module.exports = function (grunt) {
             prod: {
                 options: {
                     mangle: true,
-                    beautify: false,
                     compress: {
                         drop_console: false
                     }
                 },
                 files: {
                     'dist/agid-spid-enter.min.<%= pkg.version %>.js': [
-                        'src/js/agid-spid-enter.js',
-                        'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
+                        ...sources,
                         'src/js/agid-spid-enter-config.js'
                     ],
                     'dist/agid-spid-enter.min.latest.js': [
-                        'src/js/agid-spid-enter.js',
-                        'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
+                        ...sources,
                         'src/js/agid-spid-enter-config.js'
                     ]
+                }
+            },
+            prodBabel: {
+                options: {
+                    mangle: true,
+                    compress: {
+                        drop_console: false
+                    }
+                },
+                files: {
+                    'dist/agid-spid-enter.min.<%= pkg.version %>.js': 'dist/agid-spid-enter.min.<%= pkg.version %>.js',
+                    'dist/agid-spid-enter.min.latest.js': 'dist/agid-spid-enter.min.latest.js'
                 }
             }
         },
@@ -133,15 +172,17 @@ module.exports = function (grunt) {
         jasmine: {
             unitTest: {
                 src: [
-                    'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
-                    'node_modules/axe-core/axe.js', // A11y accessibility testing library
-                    'dev/agid-spid-enter.min.js' // Modulo minifizzato da testare
+                    'node_modules/axe-core/axe.js',
+                    'dev/agid-spid-enter.min.js'
                 ],
                 options: {
                     specs: ['src/test/agid-*.js'],
                     outfile: '_SpecRunner.html',
                     keepRunner: true,
-                    host: localhostUrl
+                    host: localhostUrl,
+                    display: 'short',
+                    summary: true,
+                    random: true
                 }
             }
         },
@@ -172,19 +213,24 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask('log-serve', function () {
+        grunt.log.writeln('La pagina demo si trova in:');
+        grunt.log.writeln(`${localhostUrl}/index.html`);
+    });
+
     grunt.registerTask('log-jasmine', function () {
         grunt.log.writeln('La pagina specrunner di jasmine si trova in:');
-        grunt.log.writeln(localhostUrl + '/_SpecRunner.html');
+        grunt.log.writeln(`${localhostUrl}/_SpecRunner.html`);
     });
 
     grunt.registerTask('log-coverage', function () {
         grunt.log.writeln('Il report della code coverage si trova in:');
-        grunt.log.writeln(localhostUrl + '/reports/coverage/dev/agid-spid-enter.min.js.html');
+        grunt.log.writeln(`${localhostUrl}/reports/coverage/dev/agid-spid-enter.min.js.html`);
     });
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('css', ['sass:dev', 'postcss:dev']);
-    grunt.registerTask('js', ['uglify', 'string-replace']);
+    grunt.registerTask('css', ['sass', 'postcss']);
+    grunt.registerTask('js', ['uglify:dev', 'uglify:prod', 'babel', 'uglify:prodBabel', 'string-replace']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
     grunt.registerTask('test', ['jasmine', 'log-jasmine']);

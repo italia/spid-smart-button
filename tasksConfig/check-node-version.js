@@ -1,6 +1,6 @@
-var packageJson          = require('../package.json'),
-    supportedNodeVersion = packageJson.engines.node,
-    currentNodeVersion   = process.version;
+const packageJson = require('../package.json');
+const supportedNodeVersion = packageJson.engines.node;
+const currentNodeVersion = process.version;
 
 function stripNonDigits(string) {
     return parseInt(string.replace(/\D/g, ''), 10);
