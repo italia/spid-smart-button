@@ -66,32 +66,25 @@ module.exports = (grunt) => {
 
         // Stylesheets compile and minify
         sass: {
-            // 'destination': 'source'
             // imports and dependecies defined in the SCSS file
-            development: {
+            dev: {
                 options: {
                     implementation: sass,
                     outputStyle: 'expanded'
                 },
                 files: {
-                    'dev/agid-spid-enter.min.css': [
-                        'src/scss/agid-spid-enter-dev.scss'
-                    ]
+                    'dev/agid-spid-enter.min.css': 'src/scss/agid-spid-enter-dev.scss'
                 }
             },
-            production: {
+            prod: {
                 options: {
                     implementation: sass,
                     outputStyle: 'compressed',
                     sourcemap: 'none'
                 },
                 files: {
-                    'dist/agid-spid-enter.min.<%= pkg.version %>.css': [
-                        'src/scss/agid-spid-enter-prod.scss'
-                    ],
-                    'dist/agid-spid-enter.min.latest.css': [
-                        'src/scss/agid-spid-enter-prod.scss'
-                    ]
+                    'dist/agid-spid-enter.min.<%= pkg.version %>.css': 'src/scss/agid-spid-enter-prod.scss',
+                    'dist/agid-spid-enter.min.latest.css': 'src/scss/agid-spid-enter-prod.scss'
                 }
             }
 
@@ -105,21 +98,21 @@ module.exports = (grunt) => {
                     require('autoprefixer')()
                 ]
             },
-            development: {
+            dev: {
                 options: {
                     map: true
                 },
                 src: 'dev/agid-spid-enter.min.css',
                 dest: 'dev/agid-spid-enter.min.css'
             },
-            production: {
+            prod: {
                 options: {
                     map: false
                 },
                 src: 'dist/agid-spid-enter.min.<%= pkg.version %>.css',
                 dest: 'dist/agid-spid-enter.min.<%= pkg.version %>.css'
             },
-            productionLatest: {
+            prodLatest: {
                 options: {
                     map: false
                 },
@@ -130,7 +123,7 @@ module.exports = (grunt) => {
 
         // JavaScript minify
         uglify: {
-            development: {
+            dev: {
                 options: {
                     mangle: false,
                     beautify: true,
@@ -143,7 +136,7 @@ module.exports = (grunt) => {
                     ]
                 }
             },
-            production: {
+            prod: {
                 options: {
                     mangle: true,
                     compress: {
@@ -161,7 +154,7 @@ module.exports = (grunt) => {
                     ]
                 }
             },
-            productionBabel: {
+            prodBabel: {
                 options: {
                     mangle: true,
                     compress: {
@@ -169,8 +162,8 @@ module.exports = (grunt) => {
                     }
                 },
                 files: {
-                    'dist/agid-spid-enter.min.<%= pkg.version %>.js': ['dist/agid-spid-enter.min.<%= pkg.version %>.js'],
-                    'dist/agid-spid-enter.min.latest.js': ['dist/agid-spid-enter.min.latest.js']
+                    'dist/agid-spid-enter.min.<%= pkg.version %>.js': 'dist/agid-spid-enter.min.<%= pkg.version %>.js',
+                    'dist/agid-spid-enter.min.latest.js': 'dist/agid-spid-enter.min.latest.js'
                 }
             }
         },
@@ -237,7 +230,7 @@ module.exports = (grunt) => {
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass', 'postcss']);
-    grunt.registerTask('js', ['uglify:development', 'uglify:production', 'babel', 'uglify:productionBabel', 'string-replace']);
+    grunt.registerTask('js', ['uglify:dev', 'uglify:prod', 'babel', 'uglify:prodBabel', 'string-replace']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
     grunt.registerTask('test', ['jasmine', 'log-jasmine']);
