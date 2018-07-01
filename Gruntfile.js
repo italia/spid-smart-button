@@ -43,30 +43,24 @@ module.exports = function (grunt) {
 
         // Stylesheets minify
         sass: {
-            // 'destination': 'source'
             // imports and dependecies defined in the SCSS file
-            development: {
+            dev: {
                 options: {
                     style: 'expanded'
                 },
                 files: {
-                    'dev/agid-spid-enter.min.css': [
-                        'src/scss/agid-spid-enter-dev.scss'
-                    ]
+                    'dev/agid-spid-enter.min.css': 'src/scss/agid-spid-enter-dev.scss'
                 }
             },
-            production: {
+            prod: {
                 options: {
                     style: 'compressed',
                     sourcemap: 'none'
                 },
                 files: {
-                    'dist/agid-spid-enter.min.<%= pkg.version %>.css': [
-                        'src/scss/agid-spid-enter-prod.scss'
-                    ]
+                    'dist/agid-spid-enter.min.<%= pkg.version %>.css': 'src/scss/agid-spid-enter-prod.scss'
                 }
             }
-
         },
 
         // Processa i CSS prodotti da sass e aggiunge vendor prefix sulle proprietà per browser obsoleti
@@ -77,25 +71,25 @@ module.exports = function (grunt) {
                     require('autoprefixer')()
                 ]
             },
-            development: {
+            dev: {
                 options: {
                     map: true
                 },
                 src: 'dev/agid-spid-enter.min.css',
                 dest: 'dev/agid-spid-enter.min.css'
             },
-            production: {
+            prod: {
                 options: {
                     map: false
                 },
-                src: 'dist/agid-spid-enter.min.<%= pkg.version %>.css',
+                src:   'dist/agid-spid-enter.min.<%= pkg.version %>.css',
                 dest: 'dist/agid-spid-enter.min.<%= pkg.version %>.css'
             }
         },
 
         // JavaScript minify
         uglify: {
-            development: {
+            dev: {
                 options: {
                     mangle: false,
                     beautify: true,
@@ -110,7 +104,7 @@ module.exports = function (grunt) {
                     ]
                 }
             },
-            production: {
+            prod: {
                 options: {
                     mangle: true,
                     beautify: false,
@@ -189,7 +183,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('css', ['sass', 'postcss']);
+    grunt.registerTask('css', ['sass:dev', 'postcss:dev']);
     grunt.registerTask('js', ['uglify', 'string-replace']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
