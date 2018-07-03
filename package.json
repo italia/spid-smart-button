@@ -40,7 +40,8 @@
     "test": "grunt test",
     "performance": "lighthouse $npm_package_localserver_url$npm_package_localserver_port/index.html --output-path=reports/lighthouse.html --view",
     "precommit": "npm run lint",
-    "prepush": "npm test"
+    "prepush": "npm test",
+    "grunt": "grunt"
   },
   "devDependencies": {
     "axe-core": "^2.4.2",

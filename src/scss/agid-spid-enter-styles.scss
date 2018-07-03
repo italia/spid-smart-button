@@ -1,7 +1,29 @@
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700,900);
 
+
+h1 {
+    color: #17324d;
+    font-size: 2rem;
+}
+
+.agid-display-logo {
+    float: left;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.agid-display-close {
+    float: right;
+    width: 50%;
+}
+
 .agid-font {
     font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+}
+
+.non-hai-spid-agid-font {
+    font-size: 15px;
+    font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .agid-navigable {
@@ -17,6 +39,14 @@
     left: 0;
 }
 
+#agid-non-hai-spid {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 #agid-spid-enter {
     height: 0; // fix Safari, non comprime l'altezza del div quando i figli sono nascosti
 }
@@ -24,32 +54,37 @@
 #agid-spid-panel-select {
     top: 0;
     left: 0;
+    margin-left: 0%;
+    margin-top: 0%;
+    margin-right: 0%;
     width: 100vw;
     height: 100vh;
     color: #000;
     position: fixed;
     z-index: 1;
     overflow: auto;
-    background-position: bottom -25px right -150px;
+    //background-position: bottom -25px right -150px;
 }
 
 #agid-spid-panel-header {
     background-color: #fff;
     color: #fff;
     display: block;
-    margin: 0;
+    //margin: 0;
     overflow: hidden;
-    padding: 12px 0;
-    position: fixed;
-    text-align: center;
-    width: 100vw;
+    padding: 20px;
+    position: static;
+    text-align: left;
+    width: 90%;
     z-index: 1;
 
-    .agid-spid-panel-back,
+    //.agid-spid-panel-back,
     .agid-spid-panel-logo {
         float: left;
         width: 33.33333vw;
-        padding-top: 3px;
+        //padding-top: 3px;
+        //padding-right: 70%;
+        font-size: 30px;
     }
 
     .agid-spid-panel-back {
@@ -72,7 +107,7 @@
         }
 
         & img {
-            max-height: 25px;
+            max-height: 50px;
         }
     }
 
@@ -81,21 +116,22 @@
     }
 
     .agid-spid-panel-element {
-        float: right;
-        min-width: 33.3333vw;
+        //float: right;
+        min-width: 32px;
     }
 }
 
 #agid-spid-panel-close-button {
-    padding: 6px 10px;
+    //padding: 2px 10px;
     margin-left: calc(100% - 60px);
+    margin-top: 5px;
 }
 
 #agid-spid-panel-content {
     display: block;
     width: 90vw;
     overflow: auto;
-    margin: 70px auto 100px;
+    //margin: 70px auto 100px;
 
     #agid-spid-enter-title-page {
         font-weight: 600;
@@ -112,6 +148,7 @@
     max-width: 650px;
     text-align: center;
     margin: auto;
+    padding: 5%;
 }
 
 .agid-spid-enter-button {
@@ -135,12 +172,12 @@
 
     &:hover,
     &:focus {
-        box-shadow: 0 5px 0 #0057ae;
+        //box-shadow: 0 5px 0 #0057ae;
         opacity: 0.8;
     }
 
     &:active {
-        box-shadow: 0 2px 0 #999;
+        //box-shadow: 0 2px 0 #999;
         transform: translateY(3px);
     }
 
@@ -151,7 +188,7 @@
 }
 
 #agid-spid-idp-list {
-    padding: 1em 0 0;
+    padding: 10px;
 }
 
 #agid-spid-panel-footer {
@@ -242,6 +279,21 @@
     }
 }
 
+button:active {
+    border: 4px solid rgb(247, 145, 13);
+}
+
+@media screen and (max-width: 996px) {
+    .agid-body-list {
+        background-color: #f5f6f7;
+        font-size: 1.2rem;
+    }
+}
+
+#agid-foot-btn {
+    text-align: center;
+}
+
 .agid-spid-row::after {
     content: "";
     display: table;
@@ -318,7 +370,7 @@
     height: 65px;
     color: #06c;
     font-weight: 700;
-    vertical-align: middle;
+    //vertical-align: middle;
     background-color: #fff;
     display: block;
     float: left;
@@ -463,10 +515,10 @@
     }
 
     #agid-spid-panel-header {
-        padding: 4px 0;
+        padding: 2rem;
 
         & .agid-spid-panel-logo img {
-            max-height: 33px;
+            max-height: 50px;
         }
     }
 
@@ -492,14 +544,15 @@
     #agid-cancel-access-button {
         background-color: #fcfdff;
         color: #5c6f82;
+        font-family: "Titillium Web", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: bold;
         box-shadow: inset 0 0 0 1px #e6e9f2;
         border-radius: 5px;
         border: 1px solid currentColor;
         height: 46px;
         vertical-align: middle;
         margin: 3px 0 0;
-        width: 98%;
-        text-transform: uppercase;
+        width: 50%;
     }
 
     #agid-cancel-access-container {
@@ -572,7 +625,7 @@
 
     .agid-spid-panel-content-center {
         max-width: 380px;
-        padding-top: 100px;
+        //padding-top: 100px;
     }
 
     .agid-spid-idp-button {
@@ -581,6 +634,11 @@
 
     #agid-cancel-access-button {
         margin: 0 12px;
+        //A CHE SERVE?
+        //display: block;
+        margin: 10px 0;
+        padding: 10px;
+        width: 100%;
     }
 }
 
@@ -591,7 +649,7 @@
  * in questo modo i pulsanti appaiono pochi istanti dopo correttamente stilizzati, sovrascrivendo l'attributo hidden
  */
 .agid-spid-enter {
-    padding: 0;
+    padding: 0 40px;
     color: #fff;
     background-color: #06c;
     font-weight: 20;

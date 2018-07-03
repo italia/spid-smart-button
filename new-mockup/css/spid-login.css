@@ -351,7 +351,7 @@ input[type="text"], input[type="password"] {
     margin-bottom: 1rem;
   }
   .Providersgrid > div:nth-child(odd){
-    border-right: : 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
   }
   .Providersgrid > div:nth-child(even){
     border-left: 0.3em solid transparent;
