@@ -281,6 +281,13 @@ button:active {
 
 @media screen and (max-width: 996px) {
 
+
+    .agid-body-list {
+        background-color: #f5f6f7;
+    }
+}
+
+@media screen and (max-width: 765px) {
     #agid-foot-btn {
         padding-top: 20px;
         padding-bottom: 20px;
@@ -289,17 +296,7 @@ button:active {
         bottom: 0;
         width: 100%;
     }
-
-    .agid-body-list {
-        background-color: #f5f6f7;
-        //font-size: 1.2rem;
-    }
 }
-
-//#agid-foot-btn {
-    //text-align: right;
-    //background-color: blue;
-//}
 
 .agid-spid-row::after {
     content: "";
