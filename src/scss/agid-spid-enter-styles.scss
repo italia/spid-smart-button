@@ -70,12 +70,11 @@ h1 {
     background-color: #fff;
     color: #fff;
     display: block;
-    //margin: 0;
     overflow: hidden;
-    padding: 20px;
     position: static;
-    text-align: left;
+    text-align: center;
     width: 90%;
+    padding: 10px;
     z-index: 1;
 
     //.agid-spid-panel-back,
@@ -122,16 +121,13 @@ h1 {
 }
 
 #agid-spid-panel-close-button {
-    //padding: 2px 10px;
     margin-left: calc(100% - 60px);
     margin-top: 5px;
 }
 
 #agid-spid-panel-content {
     display: block;
-    width: 90vw;
     overflow: auto;
-    //margin: 70px auto 100px;
 
     #agid-spid-enter-title-page {
         font-weight: 600;
@@ -145,10 +141,10 @@ h1 {
 }
 
 .agid-spid-panel-content-center {
-    max-width: 650px;
+    //max-width: 650px;
     text-align: center;
     margin: auto;
-    padding: 5%;
+    //padding: 5%;
 }
 
 .agid-spid-enter-button {
@@ -284,15 +280,26 @@ button:active {
 }
 
 @media screen and (max-width: 996px) {
+
+    #agid-foot-btn {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        box-shadow: 0px -2px 5px 0px rgba(238,238,238,0.7);
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
     .agid-body-list {
         background-color: #f5f6f7;
-        font-size: 1.2rem;
+        //font-size: 1.2rem;
     }
 }
 
-#agid-foot-btn {
-    text-align: center;
-}
+//#agid-foot-btn {
+    //text-align: right;
+    //background-color: blue;
+//}
 
 .agid-spid-row::after {
     content: "";
@@ -515,7 +522,6 @@ button:active {
     }
 
     #agid-spid-panel-header {
-        padding: 2rem;
 
         & .agid-spid-panel-logo img {
             max-height: 50px;
@@ -543,6 +549,7 @@ button:active {
 
     #agid-cancel-access-button {
         background-color: #fcfdff;
+        display:block;
         color: #5c6f82;
         font-family: "Titillium Web", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
         font-weight: bold;
@@ -550,9 +557,9 @@ button:active {
         border-radius: 5px;
         border: 1px solid currentColor;
         height: 46px;
-        vertical-align: middle;
-        margin: 3px 0 0;
-        width: 50%;
+        display:block;
+        margin: auto;
+        width: 80%;
     }
 
     #agid-cancel-access-container {
@@ -561,6 +568,11 @@ button:active {
         & a:link {
             text-decoration: none;
         }
+    }
+
+    .agid-spid-panel-content-center {
+        max-width: 380px;
+        //padding-top: 100px;
     }
 }
 
@@ -624,7 +636,7 @@ button:active {
     }
 
     .agid-spid-panel-content-center {
-        max-width: 380px;
+        width: 380px;
         //padding-top: 100px;
     }
 
@@ -633,12 +645,9 @@ button:active {
     }
 
     #agid-cancel-access-button {
-        margin: 0 12px;
-        //A CHE SERVE?
-        //display: block;
-        margin: 10px 0;
-        padding: 10px;
-        width: 100%;
+        display: block;
+        margin: auto;
+        width: 50%;       
     }
 }
 

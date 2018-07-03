@@ -78,23 +78,16 @@
                                 //     '</div>', 
                                 // '</div>',      
 
-
-                                '<div>',
-                                //IL FORM SERVE EVENTUALMENTE PER UN FUTURO INVIO DI INFORMAZIONI
-                                    '<form>',
-                                        '<div id ="agid-foot-btn">',
-                                            '<button id="agid-cancel-access-button" class="agid-font agid-navigable">',
-                                                '<span>', this.getI18n('annulla_accesso'), '</span>',
-                                            '</button>',
-                                        '</div>',
-                                    '<form>',
-                                '</div>',
                             '</div>',
                             // '<div id="agid-cancel-access-container">',
                                
                             // '</div>',
                         '</div>',
-                       
+                        '<div id ="agid-foot-btn">',
+                            '<button id="agid-cancel-access-button" class="agid-font agid-navigable">',
+                                '<span>', this.getI18n('annulla_accesso'), '</span>',
+                            '</button>',
+                        '</div>',
                         // '<footer id="agid-spid-panel-footer">',
                         //     '<div id="agid-action-button-container">',
                         //         '<button id="nospid" class="agid-action-button agid-font agid-navigable">',
