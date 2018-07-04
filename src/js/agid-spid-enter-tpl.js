@@ -62,26 +62,7 @@
                                         '<span class="non-hai-spid-agid-font">', this.getI18n("non_hai_SPID"), '<a href="#">' ,this.getI18n("scopri_di_piu"), '</a></span>',
                                     '</div>',
                                 '</div>',
-                                // '<button id="nospid" class="agid-action-button agid-font agid-navigable">',
-                                //     '<span>', this.getI18n('non_hai_SPID'), '</span>',
-                                // '</button>',
-                                // '<button id="cosaspid" class="agid-action-button agid-font agid-navigable">',
-                                //     '<span>', this.getI18n('cosa_SPID'), '</span>',
-                                // '</button>',
-
-
-                                // '<div class="Providersgrid-wrapper u-padding-top-xl">',
-                                //     '<div class="Grid Grid--equalHeight Providersgrid u-layoutCenter u-layout-extrasmall">',
-                                //         '<div id="agid-spid-idp-list" class="agid-spid-row">',
-                                //             spidProvidersButtons,
-                                //         '</div>',
-                                //     '</div>', 
-                                // '</div>',      
-
                             '</div>',
-                            // '<div id="agid-cancel-access-container">',
-                               
-                            // '</div>',
                         '</div>',
                         '<div id ="agid-foot-btn">',
                             '<button id="agid-cancel-access-button" class="agid-font agid-navigable">',

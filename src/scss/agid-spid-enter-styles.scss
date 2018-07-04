@@ -4,6 +4,7 @@
 h1 {
     color: #17324d;
     font-size: 2rem;
+    font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .agid-display-logo {
@@ -78,7 +79,7 @@ h1 {
     z-index: 1;
 
     //.agid-spid-panel-back,
-    .agid-spid-panel-logo {
+    .agid-spid-display-logo {
         float: left;
         width: 33.33333vw;
         //padding-top: 3px;
@@ -110,7 +111,7 @@ h1 {
         }
     }
 
-    .agid-spid-panel-logo img {
+    .agid-spid-display-logo img {
         max-height: 37px;
     }
 
@@ -280,8 +281,6 @@ button:active {
 }
 
 @media screen and (max-width: 996px) {
-
-
     .agid-body-list {
         background-color: #f5f6f7;
     }
@@ -295,6 +294,185 @@ button:active {
         position: absolute;
         bottom: 0;
         width: 100%;
+    }
+}
+
+@media (min-width: 361px) {
+    .agid-spid-col {
+        &.s2 {
+            width: 16.66666%;
+        }
+
+        &.s3 {
+            width: 24.99999%;
+        }
+
+        &.s4 {
+            width: 33.33333%;
+        }
+
+        &.s5 {
+            width: 41.66666%;
+        }
+
+        &.s6 {
+            width: 49.99999%;
+        }
+
+        &.s7 {
+            width: 58.33333%;
+        }
+
+        &.s8 {
+            width: 66.66666%;
+        }
+
+        &.s9 {
+            width: 74.99999%;
+        }
+
+        &.s10 {
+            width: 83.33333%;
+        }
+
+        &.s11 {
+            width: 91.66666%;
+        }
+
+        &.s12 {
+            width: 99.99999%;
+        }
+    }
+
+    #agid-spid-panel-header {
+        & .agid-spid-display-logo img {
+            max-height: 50px;
+        }
+    }
+
+    // #agid-spid-enter-title-container {
+    //     padding-top: 0.813em;
+    //     background-color: red;
+    // }
+
+    .agid-spid-idp-button {
+        width: 145px;
+        height: 48px;
+    }
+
+    // #agid-cancel-access-container,
+    // #agid-logo-container {
+    //     display: block;
+
+    //     img {
+    //         padding-top: 10px;
+    //         height: 35px;
+    //     }
+    // }
+
+    #agid-cancel-access-button {
+        background-color: #fcfdff;
+        display:block;
+        color: #5c6f82;
+        font-family: "Titillium Web", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: bold;
+        box-shadow: inset 0 0 0 1px #e6e9f2;
+        border-radius: 5px;
+        border: 1px solid currentColor;
+        height: 46px;
+        display:block;
+        margin: auto;
+        width: 80%;
+    }
+
+    // #agid-cancel-access-container {
+    //     & a,
+    //     & a:visited,
+    //     & a:link {
+    //         text-decoration: none;
+    //     }
+    // }
+
+    .agid-spid-panel-content-center {
+        max-width: 380px;
+        //padding-top: 100px;
+    }
+}
+
+@media (min-width: 769px) {
+    .agid-spid-col {
+        &.m1 {
+            width: 8.33333%;
+        }
+
+        &.m2 {
+            width: 16.66666%;
+        }
+
+        &.m3 {
+            width: 24.99999%;
+        }
+
+        &.m4 {
+            width: 33.33333%;
+        }
+
+        &.m5 {
+            width: 41.66666%;
+        }
+
+        &.m6 {
+            width: 49.99999%;
+        }
+
+        &.m7 {
+            width: 58.33333%;
+        }
+
+        &.m8 {
+            width: 66.66666%;
+        }
+
+        &.m9 {
+            width: 74.99999%;
+        }
+
+        &.m10 {
+            width: 83.33333%;
+        }
+
+        &.m11 {
+            width: 91.66666%;
+        }
+
+        &.m12 {
+            width: 99.99999%;
+        }
+    }
+
+    // ?? LE SEG DUE NON SONO USATE NEL FILE TPL.JS
+    // .agid-spid-half {
+    //     width: 49.99999%;
+    // }
+
+    // .agid-spid-twothird {
+    //     width: 66.66666%;
+    // }
+
+    //FORSE NN SERVE
+    //.agid-spid-panel-content-center {
+        //width: 380px;
+        //padding-top: 100px;
+    //}
+
+    .agid-spid-idp-button {
+        width: 145px;
+    }
+
+    #agid-cancel-access-button {
+        display: block;
+        margin: auto;
+        width: 50%;       
     }
 }
 
@@ -328,9 +506,9 @@ button:active {
         width: 41.66666%;
     }
 
-    &.xs6 {
-        width: 49.99999%;
-    }
+    // &.xs6 {
+    //     width: 49.99999%;
+    // }
 
     &.xs7 {
         width: 58.33333%;
@@ -353,7 +531,7 @@ button:active {
     }
 
     &.xs12 {
-        width: 99.99999%;
+        width: 49.99999%;
     }
 }
 
@@ -385,13 +563,13 @@ button:active {
     }
 }
 
-#agid-cancel-access-container {
-    display: none;
-}
+// #agid-cancel-access-container {
+//     display: none;
+// }
 
-#agid-logo-container {
-    display: none;
-}
+// #agid-logo-container {
+//     display: none;
+// }
 
 #agid-infomodal {
     position: fixed;
@@ -468,183 +646,6 @@ button:active {
         position: absolute;
         // la prorietà bk-color non può essere specificata pena un bug di rendering del path circolare estero dell'SVG
         //background: url($assetsBaseUrl + "img/spid-ico-circle-bb.svg") center center no-repeat;
-    }
-}
-
-@media (min-width: 361px) {
-    .agid-spid-col {
-        &.s2 {
-            width: 16.66666%;
-        }
-
-        &.s3 {
-            width: 24.99999%;
-        }
-
-        &.s4 {
-            width: 33.33333%;
-        }
-
-        &.s5 {
-            width: 41.66666%;
-        }
-
-        &.s6 {
-            width: 49.99999%;
-        }
-
-        &.s7 {
-            width: 58.33333%;
-        }
-
-        &.s8 {
-            width: 66.66666%;
-        }
-
-        &.s9 {
-            width: 74.99999%;
-        }
-
-        &.s10 {
-            width: 83.33333%;
-        }
-
-        &.s11 {
-            width: 91.66666%;
-        }
-
-        &.s12 {
-            width: 99.99999%;
-        }
-    }
-
-    #agid-spid-panel-header {
-
-        & .agid-spid-panel-logo img {
-            max-height: 50px;
-        }
-    }
-
-    #agid-spid-enter-title-container {
-        padding-top: 0.813em;
-    }
-
-    .agid-spid-idp-button {
-        width: 155px;
-        height: 48px;
-    }
-
-    #agid-cancel-access-container,
-    #agid-logo-container {
-        display: block;
-
-        img {
-            padding-top: 10px;
-            height: 35px;
-        }
-    }
-
-    #agid-cancel-access-button {
-        background-color: #fcfdff;
-        display:block;
-        color: #5c6f82;
-        font-family: "Titillium Web", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-        font-weight: bold;
-        box-shadow: inset 0 0 0 1px #e6e9f2;
-        border-radius: 5px;
-        border: 1px solid currentColor;
-        height: 46px;
-        display:block;
-        margin: auto;
-        width: 80%;
-    }
-
-    #agid-cancel-access-container {
-        & a,
-        & a:visited,
-        & a:link {
-            text-decoration: none;
-        }
-    }
-
-    .agid-spid-panel-content-center {
-        max-width: 380px;
-        //padding-top: 100px;
-    }
-}
-
-@media (min-width: 769px) {
-    .agid-spid-col {
-        &.m1 {
-            width: 8.33333%;
-        }
-
-        &.m2 {
-            width: 16.66666%;
-        }
-
-        &.m3 {
-            width: 24.99999%;
-        }
-
-        &.m4 {
-            width: 33.33333%;
-        }
-
-        &.m5 {
-            width: 41.66666%;
-        }
-
-        &.m6 {
-            width: 49.99999%;
-        }
-
-        &.m7 {
-            width: 58.33333%;
-        }
-
-        &.m8 {
-            width: 66.66666%;
-        }
-
-        &.m9 {
-            width: 74.99999%;
-        }
-
-        &.m10 {
-            width: 83.33333%;
-        }
-
-        &.m11 {
-            width: 91.66666%;
-        }
-
-        &.m12 {
-            width: 99.99999%;
-        }
-    }
-
-    .agid-spid-half {
-        width: 49.99999%;
-    }
-
-    .agid-spid-twothird {
-        width: 66.66666%;
-    }
-
-    .agid-spid-panel-content-center {
-        width: 380px;
-        //padding-top: 100px;
-    }
-
-    .agid-spid-idp-button {
-        width: 165px;
-    }
-
-    #agid-cancel-access-button {
-        display: block;
-        margin: auto;
-        width: 50%;       
     }
 }
 
