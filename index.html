@@ -12,14 +12,50 @@
         var spid = new window.SPID();
             spid.init({
                 lang: 'en',
-                providers: {
-                    get: '/login?entityId={{entityID}}',
-                    poste: {
-                        post: {
-                            action: '/login',
-                            fieldName: 'entityID'
-                        }
-                    }
+                selector: '#my-spid-button',  // opzionale
+                method: 'POST',               // opzionale
+                url: '/Login',
+                fieldName: 'idp',
+                extraFields: {                // opzionale
+                    foo: 'bar',
+                    baz: 'baz'
+                },
+                mapping: {                    // opzionale
+                    'https://www.poste.it/xxx': 4,
+                    'https://sielteid.it/xxx': 5,
+                    'https://spid-testenv/sd': 7,
+                },
+                supported: [
+                    // Array di entityID relativi agli IdP di cui il SP ha i metadati.
+                    // Gli IdP non presenti saranno mostrati in grigio all’utente.
+                    // Se questo parametro non è fornito, tutti gli IdP saranno abilitati.
+                    // Si raccomanda di generare il valore dinamicamente in base ai metadati
+                    // configurati nell’applicativo, altrimenti è meglio non indicarlo del tutto.
+                ],
+                extaProviders: {
+                    // Array di oggetti contenenti le configurazioni di ulteriori
+                    // Identity Provider (di test) non ufficiali che si vogliano abilitare.
+                    // I provider qui elencati sono automaticamente aggiunti all’elenco
+                    // supported sopra descritto
+                },
+                protocol: {
+                    // SAML/OIDC. Protocollo usato dal SP per interagire con gli IdP.
+                    // Dal momento che alcuni IdP potrebbero non supportare OIDC,
+                    // questo parametro serve per mostrare in grigio gli IdP non supportati (default: SAML)
+                },
+                size: {
+                    // small/medium/large. Dimensione di visualizzazione (default: medium)
+                },
+                colorScheme: {
+                    // positive/negative. Schema di colori da adottare in base allo sfondo (default: positive)
+                },
+                fluid: {
+                    // true/false. Adatta la larghezza del bottone all’elemento che lo contiene (ma max 400px).
+                    // (default: false)
+                },
+                cornerStyle: {
+                    // rounded/sharp. Stile degli angoli del bottone.
+                    // Se impostato a sharp, il bottone non avrà margine. (default: rounded)
                 }
             });
 /* eslint-enable indent */
@@ -28,22 +64,17 @@
 
 <body>
     <section>
-        <div class="agid-spid-enter-button" aria-live="polite" data-size="s">
+        <div class="agid-spid-enter-button" id="my-spid-button" aria-live="polite" data-size="s">
             <noscript>
                 Il login tramite SPID richiede che JavaScript sia abilitato nel browser
             </noscript>
         </div>
-        <div class="agid-spid-enter-button" aria-live="polite" data-size="m">
+        <div class="agid-spid-enter-button" id="my-spid-button" aria-live="polite" data-size="m">
             <noscript>
                 Il login tramite SPID richiede che JavaScript sia abilitato nel browser
             </noscript>
         </div>
-        <div class="agid-spid-enter-button" aria-live="polite" data-size="l">
-            <noscript>
-                Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-            </noscript>
-        </div>
-        <div class="agid-spid-enter-button" aria-live="polite" data-size="xl">
+        <div class="agid-spid-enter-button" id="my-spid-button" aria-live="polite" data-size="l">
             <noscript>
                 Il login tramite SPID richiede che JavaScript sia abilitato nel browser
             </noscript>

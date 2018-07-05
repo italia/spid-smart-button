@@ -16,7 +16,8 @@ window.SPID = function () {
         _lang = 'it', // Lingua delle etichette sostituibile all'init, default Italiano
         _i18n = {}, // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
         _availableProviders,
-        _defaultGetUri = '/login?entityId={{entityID}}';
+        _defaultSelector = '#spid-button',
+        _selector;
 
     /** VARIABILI PUBBLICHE */
 
@@ -189,14 +190,25 @@ window.SPID = function () {
     }
 
     function getMergedProvidersData(agidProvidersList, options) {
+        if (!options.url) {
+            return false;
+        }
         return agidProvidersList.map(function (agidIdpConfig) {
-            if (options.providers[agidIdpConfig.provider]) {
-                agidIdpConfig.uri = options.providers[agidIdpConfig.provider].get || options.providers[agidIdpConfig.provider].post;
-                agidIdpConfig.method = options.providers[agidIdpConfig.provider].get ? 'GET' : 'POST';
-            } else {
-                agidIdpConfig.uri = options.providers.get || options.providers.post || _defaultGetUri;
-                agidIdpConfig.method = !options.providers.get ? (options.providers.post ? 'POST' : 'GET') : 'GET';
+            agidIdpConfig.url = options.url;
+            agidIdpConfig.method = options.method || 'GET';
+            if (agidIdpConfig.method === 'POST') {
+                agidIdpConfig.fieldName = options.fieldName;
+                agidIdpConfig.extraFields = options.extraFields;
             }
+
+
+            // if (options.providers[agidIdpConfig.provider]) {
+            //     agidIdpConfig.uri = options.providers[agidIdpConfig.provider].get || options.providers[agidIdpConfig.provider].post;
+            //     agidIdpConfig.method = options.providers[agidIdpConfig.provider].get ? 'GET' : 'POST';
+            // } else {
+            //     agidIdpConfig.uri = options.providers.get || options.providers.post || _defaultGetUri;
+            //     agidIdpConfig.method = !options.providers.get ? (options.providers.post ? 'POST' : 'GET') : 'GET';
+            // }
 
             return agidIdpConfig;
         });
@@ -205,7 +217,8 @@ window.SPID = function () {
     function getMergedDefaultOptions(options) {
         options = options || {};
         options.lang = options.lang || _lang;
-        options.providers = options.providers || { get: _defaultGetUri };
+        options.selector = options.selector || _defaultSelector;
+        _selector = options.selector;
 
         return options;
     }
@@ -246,6 +259,11 @@ window.SPID = function () {
                     return;
                 }
                 _availableProviders = getMergedProvidersData(data.spidProviders, options);
+                if (!_availableProviders) {
+                    console.error('Non è stato fornito l\'url necessario per il funzionamento dello smart button');
+                    error && error();
+                    return;
+                }
                 renderModule();
                 success && success();
             });
@@ -272,11 +290,11 @@ window.SPID = function () {
     };
 
     this.updateSpidButtons = function () {
-        var spidButtonsPlaceholders = document.querySelectorAll('.agid-spid-enter-button'),
+        var spidButtonsPlaceholders = document.querySelectorAll(_selector),
             hasButtonsOnPage = spidButtonsPlaceholders.length,
             i = 0, j = 0, foundDataSize,
             dataSize,
-            supportedSizes = ['s', 'm', 'l', 'xl'],
+            supportedSizes = ['s', 'm', 'l'],
             isSupportedSize,
             spidButtons;
 
