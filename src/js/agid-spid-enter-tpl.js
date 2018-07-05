@@ -49,17 +49,17 @@
                                 //     '<h1 id="agid-spid-enter-title-page" class="agid-font">', this.getI18n('scegli_provider_SPID'), '</h1>',
                                 // '</div>',
 
-                                '<h1 class="fadeInUp">',this.getI18n('scegli_provider_SPID'),'</h1>',
+                                '<h1 id="agid-spid-enter-title-page" class="fadeInUp">',this.getI18n('scegli_provider_SPID'),'</h1>',
                                 '<div class="agid-body-list">',
                                     '<div id="agid-spid-idp-list">',
                                         spidProvidersButtons,
                                     '</div>',
-                                    //NECESSARIO?
+                                    //TODO NECESSARIO?
                                     // '<div id="agid-logo-container" aria-hidden="true">',
                                     //     svgWithPngFallback.call(this, 'img/agid-logo-bb-short'),
                                     // '</div>',
                                     '<div id="agid-non-hai-spid">',
-                                        '<span class="non-hai-spid-agid-font">', this.getI18n("non_hai_SPID"), '<a href="#">' ,this.getI18n("scopri_di_piu"), '</a></span>',
+                                        '<span id="nospid" class="non-hai-spid-agid-font">', this.getI18n("non_hai_SPID"), '<a href="#">' ,this.getI18n("scopri_di_piu"), '</a></span>',
                                     '</div>',
                                 '</div>',
                             '</div>',

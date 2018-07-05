@@ -110,9 +110,9 @@ window.SPID = function () {
         // Vengono creati una sola volta all'init, non necessitano unbind
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-cancel-access-button').addEventListener('click', hideProvidersPanel);
-        // document.querySelector('#nospid').addEventListener('click', function () {
-        //     openInfoModal(getTemplate('nonHaiSpid'));
-        // });
+        document.querySelector('#nospid').addEventListener('click', function () {
+            openInfoModal(getTemplate('nonHaiSpid'));
+        });
         // document.querySelector('#cosaspid').addEventListener('click', function () {
         //     openInfoModal(getTemplate('cosaSpid'));
         // });
