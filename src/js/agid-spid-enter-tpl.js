@@ -51,7 +51,7 @@
 
                                 '<h1 class="fadeInUp">',this.getI18n('scegli_provider_SPID'),'</h1>',
                                 '<div class="agid-body-list">',
-                                    '<div id="agid-spid-idp-list" class="agid-spid-row">',
+                                    '<div id="agid-spid-idp-list">',
                                         spidProvidersButtons,
                                     '</div>',
                                     //NECESSARIO?
@@ -98,14 +98,14 @@
                     providerUri = providerData.uri.replace('{{entityID}}', encodeURIComponent(providerData.entityID));
                 }
                 return [
-                    '<span class="agid-spid-col l3 m6 s6 xs12">',
+                    '<span class="agid-spid-idp">',
                         '<form id="agid-spid-provider-', providerData.provider, '"',
                             'action="', providerUri, '" method="', providerData.method, '">',
                             '<button type="submit"',
                                 'class="agid-spid-idp-button agid-spid-idp-', providerData.provider, '"',
                                 'title="', providerEntityName, '"',
-                                'style="background-image: url(', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, ')"',
                                 (providerData.isActive) ? '' : 'disabled', '>',
+                                '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="Entra con Aruba">',
                             '</button>',
                             providerPayloadInputs,
                         '</form>',

@@ -38,21 +38,21 @@
         {
             "provider": "namirial",
             "entityName": "Namirial ID",
-            "logo": "spid-idp-dummy.svg",
+            "logo": "spid-idp-aruba.svg",
             "entityID" : "https://idp.namirialtsp.com/idp",
             "isActive": true
         },
         {
             "provider": "spid",
             "entityName": "SPIDItalia Register.it",
-            "logo": "spid-idp-dummy.svg",
+            "logo": "spid-idp-aruba.svg",
             "entityID" : "https://spid.register.it",
             "isActive": false
         },
         {
             "provider": "intesa",
             "entityName": "Intesa ID",
-            "logo": "spid-idp-dummy.svg",
+            "logo": "spid-idp-aruba.svg",
             "entityID" : "https://spid.intesa.it",
             "isActive": false
         }
