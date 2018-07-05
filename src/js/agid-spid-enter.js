@@ -190,6 +190,7 @@ window.SPID = function () {
     }
 
     function getMergedProvidersData(agidProvidersList, options) {
+        var property;
         if (!options.url) {
             return false;
         }
@@ -201,8 +202,8 @@ window.SPID = function () {
                 agidIdpConfig.extraFields = options.extraFields;
             }
 
-            for (var property in options.mapping) {
-                if (agidIdpConfig.entityID == property) {
+            for (property in options.mapping) {
+                if (agidIdpConfig.entityID === property) {
                     agidIdpConfig.entityID = options.mapping[property];
                 }
             }

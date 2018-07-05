@@ -80,14 +80,15 @@ Il minifizzato JS, che si occupa di caricare il rispettivo CSS se opportuno, a s
 Includere nella pagina uno o più placeholder `<div>` che abbiano i seguenti attributi:
 
  - classe : `agid-spid-enter-button` sarà ricercato dallo script per stampare tutti i pulsanti SPID
+ - selector: attributo `id` con valore customizzabile dall'utente. Obbligatorio, come valore di default usare `spid-button`
  - accessibilità : attributo `aria-live` con valore `polite` per evitare che il rendering disturbi la navigazione
- - dimensione : attributo `data-size` con una delle quattro dimensioni supportate: **s / m / l / xl**
+ - dimensione : attributo `data-size` con una delle quattro dimensioni supportate: **s / m / l**
  - fallback: tag `<noscript>` con messaggio localizzato all'interno del placeholder che avvisa l'utente della necessità di JavaScript abilitato per poter fruire di SPID qualora l'utente stia navigando senza JavaScript
 
 Esempio completo
 
 ```html
-    <div class="agid-spid-enter-button" aria-live="polite" data-size="xl">
+    <div class="agid-spid-enter-button" id='spid-button' aria-live="polite" data-size="l">
         <noscript>
             Il login tramite SPID richiede che JavaScript sia abilitato nel browser
         </noscript>
@@ -104,63 +105,38 @@ In caso di successo carica i CSS, mostra gli smartbutton sulla pagina e chiama l
 In caso di errore scrive un messaggio in console e chiama la callback `error` se esiste.
 
 ##### config
-Il parametro `config` è opzionale, se omesso le impostazioni predefinite saranno:
- - lingua italiana
- - un url di default `/login?entityId={{entityID}}`, dove il valore del parametro tra parentesi graffe verrà sostituito dalla libreria con il valore dell'entityID del provider corrente
- - form method GET
+Il parametro `config` serve a configurare l'intera struttura dello smart-button. Allo scopo di rendere flessibile lo smart-button assecondando le diverse applicazioni nelle quali puo' essere inserito sono state definite le seguenti proprieta':
 
-ovvero:
-```javascript
-var spid = new window.SPID();
-    spid.init({
-        lang: 'en',
-        providers: {
-            get: '/login?entityId={{entityID}}'
-        }
-    });
-```
-
-E' possibile specificare un altro url per una chiamata GET a condizione che contenga al suo interno il tag `{{entityID}}`, che è obbligatorio.
-
-In alternativa al metodo GET possiamo configurare una chiamata POST, fornendo:
-- un url per la form action
-- un valore `fieldName` che rappresenta il nome della input nascosta che conterrà l'id del provider
+| Parametro  | Descrizione        | Esempio |
+| ---------- | ------------------ | ------- |
+| **method** | GET/POST (default: GET) | GET |
+| **url** | URL da chiamare (anche relativo). Il placeholder {{idp}} sarà sostituito con l’entityID dell’IdP selezionato. Se questo parametro è assente, sarà scritto un errore in console.error() | `/spid/login/idp={{idp}}` |
+| **fieldName** | Se method=POST, contiene il nome del campo hidden in cui passiamo l’IdP selezionato (default: idp) | idp |
+| **extraFields** | Se method=POST, contiene eventuali valori aggiuntivi da passare in campi hidden | `{ foo: “bar” }` |
+| **selector** | Selettore CSS da usare per individuare l’elemento in cui iniettare lo Smart Button (default: #spid-button) | `#spid-button` |
+| **mapping** | Dizionario di mappatura tra entityID e valori custom, da usare quando un SP identifica gli IdP con chiavi diverse dall’entityID | `{ “https://www.poste.it/spid”: “poste” }` |
 
 ad esempio:
 
 ```javascript
 var spid = new window.SPID();
-    spid.init({
-        lang: 'en',
-        providers: {
-            post: {
-                action: '/login',
-                fieldName: 'entityID'
-            }
-        }
-    });
+spid.init({
+    lang: 'en',
+    selector: '#my-spid-button',  // opzionale
+    method: 'POST',               // opzionale
+    url: '/Login',
+    fieldName: 'idp',
+    extraFields: {                // opzionale
+        foo: 'bar',
+        baz: 'baz'
+    },
+    mapping: {                    // opzionale
+        'https://loginspid.aruba.it': 4,
+        'https://posteid.poste.it': 5,
+        'https://idp.namirialtsp.com/idp': 7,
+    },
+});
 ```
-
-Infine è possibile fornire una customizzazione per singolo provider, come ad esempio un url diverso o una configurazione per una chiamata POST, esplicitando un oggetto che abbia come nome il valore del campo provider all'interno del file `spidProviders.json` (es. 'poste' per Poste, 'spid' per SpidItalia etc..)
-
-Un esempio in cui tutte le opzioni configurabili vengono esplicitate:
-
-```javascript
-var spid = new window.SPID();
-    spid.init({
-        lang: 'en',
-        providers: {
-            get: '/login?entityId={{entityID}}',
-            poste: {
-                post: {
-                    action: '/login',
-                    fieldName: 'entityID'
-                }
-            }
-        }
-    });
-```
-Dove è stata fornita ad esempio una configurazione custom per il provider delle Poste.
 
 ##### success e error
 Sono due callback opzionali da fornire in caso sia necessario gestire il caso di successo o di errore.
