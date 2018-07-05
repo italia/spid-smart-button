@@ -201,14 +201,11 @@ window.SPID = function () {
                 agidIdpConfig.extraFields = options.extraFields;
             }
 
-
-            // if (options.providers[agidIdpConfig.provider]) {
-            //     agidIdpConfig.uri = options.providers[agidIdpConfig.provider].get || options.providers[agidIdpConfig.provider].post;
-            //     agidIdpConfig.method = options.providers[agidIdpConfig.provider].get ? 'GET' : 'POST';
-            // } else {
-            //     agidIdpConfig.uri = options.providers.get || options.providers.post || _defaultGetUri;
-            //     agidIdpConfig.method = !options.providers.get ? (options.providers.post ? 'POST' : 'GET') : 'GET';
-            // }
+            for (var property in options.mapping) {
+                if (agidIdpConfig.entityID == property) {
+                    agidIdpConfig.entityID = options.mapping[property];
+                }
+            }
 
             return agidIdpConfig;
         });

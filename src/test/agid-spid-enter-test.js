@@ -197,16 +197,6 @@ describe('SPID', function () {
                     });
                 });
 
-                it('should log error message if no url is provided in config', function (done) {
-                    // WHEN
-                    new Promise(function (resolve, reject) {
-                        SUT.init(null, resolve, reject);
-                    }).catch(function () {
-                        // THEN
-                        expect(console.error).toHaveBeenCalled();
-                        done();
-                    });
-                });
             });
 
             describe('when SPID button placeholder are present in the page', function () {
@@ -269,6 +259,37 @@ describe('SPID', function () {
                         // THEN
                         expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('GET', '/src/data/spidI18n.json');
                         expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"lang":"de"}');
+                        done();
+                    });
+                });
+
+                it('should log error message if no url is provided in config', function (done) {
+                    // WHEN
+                    new Promise(function (resolve, reject) {
+                        SUT.init(null, resolve, reject);
+                    }).catch(function () {
+                        // THEN
+                        expect(console.error).toHaveBeenCalled();
+                        done();
+                    });
+                });
+
+                it('should change provider entityID if provided with mapping options', function (done) {
+                    var config = {
+                        method: 'POST',               // opzionale
+                        url: '/Login',
+                        fieldName: 'testName',
+                        mapping: {
+                            'https://posteid.poste.it': 'poste'
+                        }
+                    };
+                    // WHEN
+                    new Promise(function (resolve) {
+                        SUT.init(config, resolve);
+                    }).then(function () {
+                        var hiddenInput = document.querySelectorAll('#agid-spid-provider-Poste-ID input[name="testName"]');
+                        // THEN
+                        expect(hiddenInput[0].value).toEqual('poste');
                         done();
                     });
                 });
