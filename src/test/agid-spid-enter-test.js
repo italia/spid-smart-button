@@ -5,8 +5,19 @@ describe('SPID', function () {
         agidInfoModalID = '#agid-infomodal',
         agidModalCosaBtID = '#cosaspid',
         agidModalButtonID = '#nospid',
+        supportedProviders = [
+            'https://loginspid.aruba.it',
+            'https://identity.infocert.it',
+            'https://posteid.poste.it',
+            'sielte.it',
+            'https://login.id.tim.it/affwebservices/public/saml2sso',
+            'https://idp.namirialtsp.com/idp',
+            'https://spid.register.it',
+            'https://spid.intesa.it'
+        ],
         genericConfig = {
-            url: '/generic/url/{{idp}}'
+            url: '/generic/url/{{idp}}',
+            supported: supportedProviders
         },
         ajaxFail = {
             providersEndpoint: '/src/data/spidProviders-fail.json',
@@ -135,7 +146,8 @@ describe('SPID', function () {
                 // GIVEN
                 var config = {
                     url: '/generic/url/{{idp}}',
-                    selector: 'my-spid-button'
+                    selector: 'my-spid-button',
+                    supported: supportedProviders
                 };
                 // WHEN
                 new Promise(function (resolve) {
@@ -151,7 +163,8 @@ describe('SPID', function () {
                 // GIVEN
                 var config = {
                     url: '/generic/url/{{idp}}',
-                    selector: '#my-spid-button'
+                    selector: '#my-spid-button',
+                    supported: supportedProviders
                 };
                 injectSpidPlaceHolder('S', 'my-spid-button');
                 // WHEN
@@ -247,7 +260,8 @@ describe('SPID', function () {
                     // GIVEN
                     var config = {
                         url: 'url',
-                        lang: 'de'
+                        lang: 'de',
+                        supported: supportedProviders
                     };
 
                     spyOn(XMLHttpRequest.prototype, 'open').and.callThrough();
@@ -263,10 +277,38 @@ describe('SPID', function () {
                     });
                 });
 
-                it('should log error message if no url is provided in config', function (done) {
+                it('should log error message if no config is provided', function (done) {
                     // WHEN
                     new Promise(function (resolve, reject) {
                         SUT.init(null, resolve, reject);
+                    }).catch(function () {
+                        // THEN
+                        expect(console.error).toHaveBeenCalled();
+                        done();
+                    });
+                });
+
+                it('should log error message if no url is provided in config', function (done) {
+                    // WHEN
+                    var config = {
+                        supported: supportedProviders
+                    }
+                    new Promise(function (resolve, reject) {
+                        SUT.init(config, resolve, reject);
+                    }).catch(function () {
+                        // THEN
+                        expect(console.error).toHaveBeenCalled();
+                        done();
+                    });
+                });
+
+                it('should log error message if no supported providers are provided', function (done) {
+                    // WHEN
+                    var config = {
+                        url: 'url'
+                    }
+                    new Promise(function (resolve, reject) {
+                        SUT.init(config, resolve, reject);
                     }).catch(function () {
                         // THEN
                         expect(console.error).toHaveBeenCalled();
@@ -281,7 +323,8 @@ describe('SPID', function () {
                         fieldName: 'testName',
                         mapping: {
                             'https://posteid.poste.it': 'poste'
-                        }
+                        },
+                        supported: supportedProviders
                     };
                     // WHEN
                     new Promise(function (resolve) {
@@ -294,13 +337,64 @@ describe('SPID', function () {
                     });
                 });
 
+                it('should enable provider button if that provider is supported and disable other providers', function (done) {
+                    var config = {
+                        url: '/Login',
+                        supported: [
+                            'https://posteid.poste.it'
+                        ],
+                    };
+                    // WHEN
+                    new Promise(function (resolve) {
+                        SUT.init(config, resolve);
+                    }).then(function () {
+                        var providers = document.querySelectorAll('#agid-spid-idp-list button'),
+                            disabled = document.querySelectorAll("#agid-spid-idp-list button:disabled"),
+                            enabled = document.querySelectorAll("#agid-spid-idp-list button:enabled");
+                        // THEN
+                        expect(disabled.length).toEqual(providers.length-1);
+                        expect(enabled.length).toEqual(1);
+                        done();
+                    });
+                });
+
+                it('should add extra providers if specified in options and make them supported', function (done) {
+                    var config = {
+                        url: '/Login',
+                        supported : supportedProviders,
+                        extraProviders: [
+                            {
+                                "protocols": ["SAML"],
+                                "entityName": "Ciccio ID",
+                                "logo": "spid-idp-aruba.svg",
+                                "entityID": "https://loginciccio.it",
+                                "active": true
+                            }
+                        ]
+                    };
+                    // WHEN
+                    new Promise(function (resolve) {
+                        SUT.init(config, resolve);
+                    }).then(function () {
+                        var providers = document.querySelectorAll('#agid-spid-idp-list button'),
+                            enabled = document.querySelectorAll("#agid-spid-idp-list button:enabled"),
+                            extraProvider = document.querySelectorAll('#agid-spid-provider-Ciccio-ID');
+                        // THEN
+                        expect(enabled.length).toEqual(providers.length);
+                        expect(extraProvider.length).toEqual(1);
+                        done();
+                    });
+                });
+
+
                 describe('when provided with a post method', function () {
                     it('should add to providers the hidden input payload with the correct name', function (done) {
                         // GIVEN
                         var config = {
                             method: 'POST',               // opzionale
                             url: '/Login',
-                            fieldName: 'testName'
+                            fieldName: 'testName',
+                            supported: supportedProviders
                         };
                         // WHEN
                         new Promise(function (resolve) {
@@ -323,7 +417,8 @@ describe('SPID', function () {
                             extraFields: {                // opzionale
                                 foo: 'bar',
                                 baz: 'baz'
-                            }
+                            },
+                            supported: supportedProviders
                         };
                         // WHEN
                         new Promise(function (resolve) {

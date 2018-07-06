@@ -190,10 +190,7 @@ window.SPID = function () {
     }
 
     function getMergedProvidersData(agidProvidersList, options) {
-        var property;
-        if (!options.url) {
-            return false;
-        }
+        var property, i;
         return agidProvidersList.map(function (agidIdpConfig) {
             agidIdpConfig.url = options.url;
             agidIdpConfig.method = options.method || 'GET';
@@ -208,8 +205,37 @@ window.SPID = function () {
                 }
             }
 
+            if (agidIdpConfig.supported) { //qui ci sono gli extraproviders che sono per forza supported
+                agidIdpConfig.supported = true;
+            } else {
+                if (options.supported.indexOf(agidIdpConfig.entityID) === -1) {
+                    agidIdpConfig.supported = false;
+                } else {
+                    agidIdpConfig.supported = true;
+                }
+            }
+
             return agidIdpConfig;
         });
+    }
+
+    function addExtraProviders(agidProvidersList, options) {
+        var i;
+        if (options.extraProviders) {
+            for (i = 0; i < options.extraProviders.length; i++) {
+                options.extraProviders[i].supported = true;
+            }
+            agidProvidersList = agidProvidersList.concat(options.extraProviders);
+        }
+        return agidProvidersList;
+    }
+
+    function checkMandatoryOptions(options) {
+        if (!options || !options.url || !options.supported || options.supported.length < 1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     function getMergedDefaultOptions(options) {
@@ -238,7 +264,11 @@ window.SPID = function () {
      * @param {function} error - callback opzionale per gestire il caso di errore
      */
     this.init = function (options, success, error) {
-
+        if (!checkMandatoryOptions(options)) {
+            console.error('Non sono stati forniti i parametri obbligatori della configurazione');
+            error && error();
+            return;
+        }
         self.initResources();
         options = getMergedDefaultOptions(options);
 
@@ -256,12 +286,8 @@ window.SPID = function () {
                     manageError(err, error);
                     return;
                 }
-                _availableProviders = getMergedProvidersData(data.spidProviders, options);
-                if (!_availableProviders) {
-                    console.error('Non è stato fornito l\'url necessario per il funzionamento dello smart button');
-                    error && error();
-                    return;
-                }
+                _availableProviders = addExtraProviders(data.spidProviders, options);
+                _availableProviders = getMergedProvidersData(_availableProviders, options);
                 renderModule();
                 success && success();
             });

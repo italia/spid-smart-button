@@ -25,7 +25,7 @@
             "protocols": [ "SAML" ],
             "entityName": "Sielte",
             "logo": "spid-idp-sielteid.svg",
-            "entityID" : "",
+            "entityID" : "sielte.it",
             "active": true
         },
         {

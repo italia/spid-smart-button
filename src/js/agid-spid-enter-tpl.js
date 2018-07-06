@@ -97,7 +97,7 @@
                                 'class="agid-spid-idp-button"',
                                 'title="', providerEntityName, '"',
                                 'style="background-image: url(', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, ')"',
-                                (providerData.active) ? '' : 'disabled', '>',
+                                (providerData.supported) ? '' : 'disabled', '>',
                             '</button>',
                             providerPayloadInputs,
                         '</form>',
