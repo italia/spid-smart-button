@@ -116,10 +116,9 @@ Il parametro `config` serve a configurare l'intera struttura dello smart-button.
 | **selector** | Selettore CSS da usare per individuare l’elemento in cui iniettare lo Smart Button (default: #spid-button) | `#spid-button` |
 | **mapping** | Dizionario di mappatura tra entityID e valori custom, da usare quando un SP identifica gli IdP con chiavi diverse dall’entityID | `{ “https://www.poste.it/spid”: “poste” }` |
 | **supported** | (obbligatorio) Array di entityID relativi agli IdP di cui il SP ha i metadati. Gli IdP non presenti saranno mostrati in grigio all’utente. | `[ “https://www.poste.it/spid” ]` |
-| **extraProviders** | Array di oggetti contenenti le configurazioni di ulteriori Identity Provider (di test) non ufficiali che si vogliano abilitare. I provider qui elencati sono automaticamente aggiunti all’elenco supported sopra descritto | ```[ {
-   “entityID”: “https://testidp.mycorp.com/”,
+| **extraProviders** | Array di oggetti contenenti le configurazioni di ulteriori Identity Provider (di test) non ufficiali che si vogliano abilitare. I provider qui elencati sono automaticamente aggiunti all’elenco supported sopra descritto | [{   “entityID”: “https://testidp.mycorp.com/”,
    “entityName”: “Test IdP”
-} ]``` |
+}] |
 
 ad esempio:
 
