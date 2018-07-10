@@ -386,6 +386,25 @@ describe('SPID', function () {
                     });
                 });
 
+                it('should disable all providers that don\'t support the kind of protocol in config', function (done) {
+                    var config = {
+                        url: '/Login',
+                        supported : supportedProviders,
+                        protocol: ["OIDC"]
+                    };
+                    // WHEN
+                    new Promise(function (resolve) {
+                        SUT.init(config, resolve);
+                    }).then(function () {
+                        var providers = document.querySelectorAll('#agid-spid-idp-list button'),
+                            enabled = document.querySelectorAll("#agid-spid-idp-list button:enabled"),
+                            disabled = document.querySelectorAll("#agid-spid-idp-list button:disabled");
+                        // THEN
+                        expect(enabled.length).toEqual(0);
+                        expect(disabled.length).toEqual(providers.length);
+                        done();
+                    });
+                });
 
                 describe('when provided with a post method', function () {
                     it('should add to providers the hidden input payload with the correct name', function (done) {

@@ -97,6 +97,18 @@ Esempio completo
 
 l'attributo `data-size` è case-insensitive quindi può essere sia maiuscolo che minuscolo.
 
+### Configurazione degli Identity Provider
+I dati degli IdP sono riportati staticamente nel codice sorgente dello Smart Button, che quindi non dovrà interrogare il Registro. Tali dati sono strutturati come segue:
+| Parametro | Descrizione |
+| --------- | ----------- |
+| **entityID** | Identificativo dell’Identity Provider |
+| **entityName** | Nome pubblico dell’Identity Provider da mostrare nella lista |
+| **logo** | URL completo del file PNG raffigurante il logo (default: indicare una immagine generica, distribuita nella CDN, da usare come placeholder) |
+| **protocols** | Array che può contenere i valori SAML e/o OIDC a seconda dei protocolli supportati dall’IdP |
+| **active** | true/false, indica se l’IdP è operativo. Può essere usato per disabilitarne uno temporaneamente in tutta la federazione (default: true) |
+
+Nel caso in cui l’utente configuri ulteriori IdP usando il parametro extraProviders della funzione SPID.init(), dovrà fornire queste informazioni.
+
 ### Metodi pubblici del modulo SPID
 Il modulo espone 4 metodi pubblici
 
@@ -116,7 +128,8 @@ Il parametro `config` serve a configurare l'intera struttura dello smart-button.
 | **selector** | Selettore CSS da usare per individuare l’elemento in cui iniettare lo Smart Button (default: #spid-button) | `#spid-button` |
 | **mapping** | Dizionario di mappatura tra entityID e valori custom, da usare quando un SP identifica gli IdP con chiavi diverse dall’entityID | `{ “https://www.poste.it/spid”: “poste” }` |
 | **supported** | (obbligatorio) Array di entityID relativi agli IdP di cui il SP ha i metadati. Gli IdP non presenti saranno mostrati in grigio all’utente. | `[ “https://www.poste.it/spid” ]` |
-| **extraProviders** | Array di oggetti contenenti le configurazioni di ulteriori Identity Provider (di test) non ufficiali che si vogliano abilitare. I provider qui elencati sono automaticamente aggiunti all’elenco supported sopra descritto | [{ `“entityID”:“https://testidp.mycorp.com/”, “entityName”: “Test IdP” }]` |
+| **extraProviders** | Array di oggetti contenenti le configurazioni di ulteriori Identity Provider (di test) non ufficiali che si vogliano abilitare. I provider qui elencati sono automaticamente aggiunti all’elenco supported sopra descritto | `[{ “entityID”:“https://testidp.mycorp.com/”, “entityName”: “Test IdP” }]` |
+| **protocol** | SAML/OIDC. Protocollo usato dal SP per interagire con gli IdP. Dal momento che alcuni IdP potrebbero non supportare OIDC, questo parametro serve per mostrare in grigio gli IdP non supportati (default: SAML) | SAML |
 
 ad esempio:
 
@@ -156,6 +169,7 @@ spid.init({
             "active": true
         }
     ],
+    protocol: "SAML"
 });
 ```
 

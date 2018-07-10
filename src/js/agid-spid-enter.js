@@ -17,7 +17,8 @@ window.SPID = function () {
         _i18n = {}, // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
         _availableProviders,
         _defaultSelector = '#spid-button',
-        _selector;
+        _selector,
+        _protocol = "SAML";
 
     /** VARIABILI PUBBLICHE */
 
@@ -190,7 +191,7 @@ window.SPID = function () {
     }
 
     function getMergedProvidersData(agidProvidersList, options) {
-        var property, i;
+        var property, hasProtocol;
         return agidProvidersList.map(function (agidIdpConfig) {
             agidIdpConfig.url = options.url;
             agidIdpConfig.method = options.method || 'GET';
@@ -205,14 +206,14 @@ window.SPID = function () {
                 }
             }
 
-            if (agidIdpConfig.supported) { //qui ci sono gli extraproviders che sono per forza supported
-                agidIdpConfig.supported = true;
-            } else {
-                if (options.supported.indexOf(agidIdpConfig.entityID) === -1) {
+            if (!agidIdpConfig.supported) {
+                if (options.supported.indexOf(agidIdpConfig.entityID) === -1 || agidIdpConfig.protocols.indexOf(options.protocol) === -1) {
                     agidIdpConfig.supported = false;
                 } else {
                     agidIdpConfig.supported = true;
                 }
+            } else if (agidIdpConfig.protocols.indexOf(options.protocol) === -1) {
+                agidIdpConfig.supported = false;
             }
 
             return agidIdpConfig;
@@ -241,8 +242,9 @@ window.SPID = function () {
     function getMergedDefaultOptions(options) {
         options = options || {};
         options.lang = options.lang || _lang;
-        options.selector = options.selector || _defaultSelector;
+        options.selector = options.selector || _defaultSelector; //TODO refactoring
         _selector = options.selector;
+        options.protocol = options.protocol || _protocol;
 
         return options;
     }
