@@ -3,7 +3,6 @@ describe('SPID', function () {
         axe = window.axe,
         agidSpidWrapperID = '#agid-spid-enter-container',
         agidInfoModalID = '#agid-infomodal',
-        agidModalCosaBtID = '#cosaspid',
         agidModalButtonID = '#nospid',
         supportedProviders = [
             'https://loginspid.aruba.it',
@@ -573,25 +572,24 @@ describe('SPID', function () {
         });
 
         describe('when the providers modal is displayed it should allow to close it by', function () {
-            //      it('click on the top right X button', function (done) {
-            //     // GIVEN
+            it('click on the top right X button', function (done) {
+                // GIVEN
+                injectSpidPlaceHolder('l');
 
-            //     injectSpidPlaceHolder('l');
+                new Promise(function (resolve) {
+                    SUT.init(genericConfig, resolve);
+                }).then(function () {
+                    var isChoiceModalVisible;
 
-            //     new Promise(function (resolve) {
-            //         SUT.init(genericConfig, resolve);
-            //     }).then(function () {
-            //         var isChoiceModalVisible;
-
-            //         document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
-            //         // WHEN
-            //         document.querySelector('#agid-spid-panel-close-button').click();
-            //         isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
-            //         // THEN
-            //         expect(isChoiceModalVisible).toBeFalsy();
-            //         done();
-            //     });
-            // });
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+                    // WHEN
+                    document.querySelector('#agid-spid-panel-close-button').click();
+                    isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
+                    // THEN
+                    expect(isChoiceModalVisible).toBeFalsy();
+                    done();
+                });
+            });
 
             it('click on the bottom list cancel button', function (done) {
                 // GIVEN
@@ -654,25 +652,25 @@ describe('SPID', function () {
         });
 
         describe('when the informative modal is displayed on top of the providers modal it should allow to close it by', function () {
-            // it('click on the top right X button in the modal', function (done) {
-            //     // GIVEN
-            //     injectSpidPlaceHolder('l');
+            it('click on the top right X button in the modal', function (done) {
+                // GIVEN
+                injectSpidPlaceHolder('l');
 
-            //     new Promise(function (resolve) {
-            //         SUT.init(genericConfig, resolve);
-            //     }).then(function () {
-            //         var isInfoModalVisible;
+                new Promise(function (resolve) {
+                    SUT.init(genericConfig, resolve);
+                }).then(function () {
+                    var isInfoModalVisible;
 
-            //         document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
-            //         document.querySelector(agidModalCosaBtID).click();
-            //         // WHEN
-            //         document.querySelector('#closemodalbutton').click();
-            //         isInfoModalVisible = isElementVisible(agidInfoModalID);
-            //         // THEN
-            //         expect(isInfoModalVisible).toBeFalsy();
-            //         done();
-            //     });
-            // });
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+                    document.querySelector(agidModalButtonID).click();
+                    // WHEN
+                    document.querySelector('#closemodalbutton').click();
+                    isInfoModalVisible = isElementVisible(agidInfoModalID);
+                    // THEN
+                    expect(isInfoModalVisible).toBeFalsy();
+                    done();
+                });
+            });
 
             it('hit on the keyboard esc key', function (done) {
                 // GIVEN
