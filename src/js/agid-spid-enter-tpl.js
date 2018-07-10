@@ -5,8 +5,9 @@
         return [
             '<img aria-hidden="true"',
                 'src="', this.getResources().assetsBaseUrl, imagePath, '.svg"',
+                //NON CI SONO LE IMMAGINI PNG
                 'onerror="this.src=\'', this.getResources().assetsBaseUrl, imagePath, '.png\'; this.onerror=null;"',
-                'alt="', altText, '" />'
+                'alt="', altText, '" style="float:left"/>'
         ].join('');
     };
 
@@ -30,11 +31,14 @@
                         '<header id="agid-spid-panel-header">',
                                 '<div class="agid-spid-panel-back agid-spid-panel-element" aria-controls="agid-spid-panel-select">',
                                     '<div class="agid-display-logo">',
-                                        svgWithPngFallback.call(this, 'img/spid-logo-c-lb', this.getI18n('alt_logo_SPID')),
+                                        svgWithPngFallback.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
                                     '</div>',
                                     '<div class="agid-display-close">',
                                         '<button tabindex="0" id="agid-spid-panel-close-button" class="agid-navigable" aria-labelledby="agid-cancel-access-button">',
-                                            '<span style="width:50px;height:30px">',svgWithPngFallback.call(this, 'img/x-icon', this.getI18n('naviga_indietro')),'</span>',
+                                            //SERVE SPAN?
+                                            //'<span style="width:50px;height:30px">',
+                                            svgWithPngFallback.call(this, 'img/close', this.getI18n('naviga_indietro')),
+                                            //'</span>',
                                         '</button>',
                                     '</div>',
                                 '</div>',

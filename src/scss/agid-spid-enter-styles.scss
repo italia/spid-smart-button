@@ -8,6 +8,7 @@ h1 {
     color: #17324d;
     font-size: 2rem;
     font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    min-width: 400px;
 }
 
 button:active {
@@ -101,7 +102,7 @@ button:active {
     color: #000;
     position: fixed;
     z-index: 1;
-    overflow: auto;
+    overflow: hidden;
 }
 
 #agid-spid-panel-header {
@@ -111,8 +112,9 @@ button:active {
     overflow: hidden;
     position: static;
     text-align: center;
-    width: 90%;
-    padding: 10px;
+    width: 100%;
+    min-width: 300px;
+    padding: 2.5rem;
     z-index: 1;
 
     .agid-spid-display-logo {
@@ -155,22 +157,21 @@ button:active {
 }
 
 #agid-spid-panel-close-button {
-    margin-left: calc(100% - 60px);
+    margin-left: calc(90% - 60px);
     margin-top: 5px;
 }
 
 #agid-spid-panel-content {
     display: block;
     overflow: hidden;
+    min-width: 300px;
 
     #agid-spid-enter-title-page {
         font-weight: 600;
         background: transparent;
-        color: #fff;
-        text-align: center;
-        display: inline-block;
-        font-size: 1em;
-        margin: 0 auto;
+        display: block;
+        text-align: left;
+        margin-left: 20px;
     }
 }
 
@@ -467,8 +468,8 @@ button:active {
     }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) {
     #agid-cancel-access-button {
-        width: 40%;
+        width: 436px;
     }
 }
