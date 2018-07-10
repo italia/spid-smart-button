@@ -24,6 +24,10 @@ button:active {
         display: flex;
         flex-direction: column;
         width: 50%;
+        animation-name: spidIdp;
+        animation-duration: 1s;
+        animation-delay: 0.5s;
+        animation-fill-mode: both;
 
         form {
             height: 100%;
@@ -46,10 +50,19 @@ button:active {
     }
 }
 
+@keyframes spidIdp {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 .agid-display-logo {
     float: left;
     width: 50%;
-    box-sizing: border-box;
 }
 
 .agid-display-close {
@@ -111,11 +124,9 @@ button:active {
     display: block;
     overflow: hidden;
     position: static;
-    text-align: center;
     width: 100%;
     min-width: 300px;
     padding: 2.5rem;
-    z-index: 1;
 
     .agid-spid-display-logo {
         float: left;
@@ -157,7 +168,7 @@ button:active {
 }
 
 #agid-spid-panel-close-button {
-    margin-left: calc(90% - 60px);
+    margin-left: calc(100% - 60px);
     margin-top: 5px;
 }
 
@@ -324,49 +335,50 @@ button:active {
     }
 }
 
-#agid-infomodal {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: #000;
-    background-color: rgba(0, 0, 0, 0.4);
+//MODALE QUANDO C'ERA IL BOTTONE 'NON HAI SPID?'
+// #agid-infomodal {
+//     position: fixed;
+//     z-index: 1;
+//     left: 0;
+//     top: 0;
+//     width: 100%;
+//     height: 100%;
+//     overflow: hidden;
+//     background-color: #000;
+//     background-color: rgba(0, 0, 0, 0.4);
 
-    .modal-content {
-        background-color: #fefefe;
-        padding: 20px;
-        border: 1px solid #888;
-        margin: 3vh 6vw 0;
-        max-height: 93vh;
-        box-sizing: border-box;
-        overflow: scroll;
+//     .modal-content {
+//         background-color: #fefefe;
+//         padding: 20px;
+//         border: 1px solid #888;
+//         margin: 3vh 6vw 0;
+//         max-height: 93vh;
+//         box-sizing: border-box;
+//         overflow: scroll;
 
-        div {
-            padding: 16px 20px 12px 0;
-        }
+//         div {
+//             padding: 16px 20px 12px 0;
+//         }
 
-        .close {
-            border: none;
-            color: #aaa;
-            cursor: pointer;
-            font-weight: 700;
-            position: fixed;
-            font-size: 2em;
-            right: 6vw;
-            width: 1.7em;
-            text-align: center;
-            top: 5vh;
+//         .close {
+//             border: none;
+//             color: #aaa;
+//             cursor: pointer;
+//             font-weight: 700;
+//             position: fixed;
+//             font-size: 2em;
+//             right: 6vw;
+//             width: 1.7em;
+//             text-align: center;
+//             top: 5vh;
 
-            &:hover,
-            &:focus {
-                color: #000;
-            }
-        }
-    }
-}
+//             &:hover,
+//             &:focus {
+//                 color: #000;
+//             }
+//         }
+//     }
+// }
 
 .agid-spid-visibile {
     display: block !important;

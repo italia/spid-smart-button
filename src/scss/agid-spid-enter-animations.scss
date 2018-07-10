@@ -65,7 +65,82 @@
         #agid-spid-panel-select {
             animation-name: anim-panel-in;
             animation-duration: 2s;
+
+            & .fadeInLeft {
+                position: relative;
+                animation-name: logoFromLeft;
+                animation-duration: 1s;
+                animation-fill-mode: forwards;
+            }
+
+            & .fadeInRight {
+                position: relative;
+                animation-name: closeFromRight;
+                animation-duration: 1s;
+                animation-fill-mode: both;
+            }
+
+            & .fadeInBottom {
+                position: relative;
+                animation-name: fromBottom;
+                animation-duration: 1s;
+                animation-fill-mode: both;
+            }
         }
+    }
+}
+
+@keyframes logoFromLeft {
+    from {
+        opacity: 0;
+        transform: translate(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes closeFromRight {
+    from {
+        opacity: 0;
+        transform: none;
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50px);
+    }
+}
+
+@keyframes fromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(200%);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.fadeInCancel {
+    position: relative;
+    animation-name: cancelBtn;
+    animation-delay: 1.5s;
+    animation-duration: 1.25s;
+    animation-fill-mode: both;
+}
+
+@keyframes cancelBtn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
 
