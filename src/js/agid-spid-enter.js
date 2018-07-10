@@ -16,7 +16,9 @@ window.SPID = function () {
         _lang = 'it', // Lingua delle etichette sostituibile all'init, default Italiano
         _i18n = {}, // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
         _availableProviders,
-        _defaultGetUri = '/login?entityId={{entityID}}';
+        _defaultSelector = '#spid-button',
+        _selector,
+        _protocol = "SAML";
 
     /** VARIABILI PUBBLICHE */
 
@@ -189,23 +191,60 @@ window.SPID = function () {
     }
 
     function getMergedProvidersData(agidProvidersList, options) {
+        var property, hasProtocol;
         return agidProvidersList.map(function (agidIdpConfig) {
-            if (options.providers[agidIdpConfig.provider]) {
-                agidIdpConfig.uri = options.providers[agidIdpConfig.provider].get || options.providers[agidIdpConfig.provider].post;
-                agidIdpConfig.method = options.providers[agidIdpConfig.provider].get ? 'GET' : 'POST';
-            } else {
-                agidIdpConfig.uri = options.providers.get || options.providers.post || _defaultGetUri;
-                agidIdpConfig.method = !options.providers.get ? (options.providers.post ? 'POST' : 'GET') : 'GET';
+            agidIdpConfig.url = options.url;
+            agidIdpConfig.method = options.method || 'GET';
+            if (agidIdpConfig.method === 'POST') {
+                agidIdpConfig.fieldName = options.fieldName;
+                agidIdpConfig.extraFields = options.extraFields;
+            }
+
+            for (property in options.mapping) {
+                if (agidIdpConfig.entityID === property) {
+                    agidIdpConfig.entityID = options.mapping[property];
+                }
+            }
+
+            if (!agidIdpConfig.supported) {
+                if (options.supported.indexOf(agidIdpConfig.entityID) === -1 || agidIdpConfig.protocols.indexOf(options.protocol) === -1) {
+                    agidIdpConfig.supported = false;
+                } else {
+                    agidIdpConfig.supported = true;
+                }
+            } else if (agidIdpConfig.protocols.indexOf(options.protocol) === -1) {
+                agidIdpConfig.supported = false;
             }
 
             return agidIdpConfig;
         });
     }
 
+    function addExtraProviders(agidProvidersList, options) {
+        var i;
+        if (options.extraProviders) {
+            for (i = 0; i < options.extraProviders.length; i++) {
+                options.extraProviders[i].supported = true;
+            }
+            agidProvidersList = agidProvidersList.concat(options.extraProviders);
+        }
+        return agidProvidersList;
+    }
+
+    function checkMandatoryOptions(options) {
+        if (!options || !options.url || !options.supported || options.supported.length < 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     function getMergedDefaultOptions(options) {
         options = options || {};
         options.lang = options.lang || _lang;
-        options.providers = options.providers || { get: _defaultGetUri };
+        options.selector = options.selector || _defaultSelector; //TODO refactoring
+        _selector = options.selector;
+        options.protocol = options.protocol || _protocol;
 
         return options;
     }
@@ -227,7 +266,11 @@ window.SPID = function () {
      * @param {function} error - callback opzionale per gestire il caso di errore
      */
     this.init = function (options, success, error) {
-
+        if (!checkMandatoryOptions(options)) {
+            console.error('Non sono stati forniti i parametri obbligatori della configurazione');
+            error && error();
+            return;
+        }
         self.initResources();
         options = getMergedDefaultOptions(options);
 
@@ -245,7 +288,8 @@ window.SPID = function () {
                     manageError(err, error);
                     return;
                 }
-                _availableProviders = getMergedProvidersData(data.spidProviders, options);
+                _availableProviders = addExtraProviders(data.spidProviders, options);
+                _availableProviders = getMergedProvidersData(_availableProviders, options);
                 renderModule();
                 success && success();
             });
@@ -272,11 +316,11 @@ window.SPID = function () {
     };
 
     this.updateSpidButtons = function () {
-        var spidButtonsPlaceholders = document.querySelectorAll('.agid-spid-enter-button'),
+        var spidButtonsPlaceholders = document.querySelectorAll(_selector),
             hasButtonsOnPage = spidButtonsPlaceholders.length,
             i = 0, j = 0, foundDataSize,
             dataSize,
-            supportedSizes = ['s', 'm', 'l', 'xl'],
+            supportedSizes = ['s', 'm', 'l'],
             isSupportedSize,
             spidButtons;
 

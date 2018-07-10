@@ -5,18 +5,32 @@ describe('SPID', function () {
         agidInfoModalID = '#agid-infomodal',
         agidModalCosaBtID = '#cosaspid',
         agidModalButtonID = '#nospid',
-        ajaxSuccess = {
-            providersEndpoint: '/src/data/spidProviders.json',
-            localisationEndpoint: '/src/data/spidI18n.json'
+        supportedProviders = [
+            'https://loginspid.aruba.it',
+            'https://identity.infocert.it',
+            'https://posteid.poste.it',
+            'sielte.it',
+            'https://login.id.tim.it/affwebservices/public/saml2sso',
+            'https://idp.namirialtsp.com/idp',
+            'https://spid.register.it',
+            'https://spid.intesa.it'
+        ],
+        genericConfig = {
+            url: '/generic/url/{{idp}}',
+            supported: supportedProviders
         },
         ajaxFail = {
             providersEndpoint: '/src/data/spidProviders-fail.json',
             localisationEndpoint: '/src/data/spidI18n-fail.json'
         };
 
-    function injectSpidPlaceHolder(size) {
+    function injectSpidPlaceHolder(size, selector) {
+        var _selector = 'spid-button';
+        if (selector) {
+            _selector = selector;
+        }
         var spidButtonPlaceholder = document.createElement('div');
-        spidButtonPlaceholder.innerHTML = '<div class="agid-spid-enter-button" aria-live="polite" data-size="' + size + '"></div>';
+        spidButtonPlaceholder.innerHTML = '<div class="agid-spid-enter-button" id="' + _selector + '" aria-live="polite" data-size="' + size + '"></div>';
         document.body.appendChild(spidButtonPlaceholder);
     }
 
@@ -76,7 +90,7 @@ describe('SPID', function () {
                 var agidSpidWrapper;
                 // WHEN
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     agidSpidWrapper = document.querySelector(agidSpidWrapperID);
                     // THEN
@@ -92,7 +106,7 @@ describe('SPID', function () {
                 spyOn(XMLHttpRequest.prototype, 'send').and.callThrough();
                 // WHEN
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     // THEN
                     expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('GET', '/src/data/spidI18n.json');
@@ -103,9 +117,9 @@ describe('SPID', function () {
 
             it('should NOT inject the modal wrapper HTML more than once', function (done) {
                 // GIVEN
-                var p1 = new Promise(function (resolve) { SUT.init(null, resolve) });
-                var p2 = new Promise(function (resolve) { SUT.init(null, resolve) });
-                var p3 = new Promise(function (resolve) { SUT.init(null, resolve) });
+                var p1 = new Promise(function (resolve) { SUT.init(genericConfig, resolve) });
+                var p2 = new Promise(function (resolve) { SUT.init(genericConfig, resolve) });
+                var p3 = new Promise(function (resolve) { SUT.init(genericConfig, resolve) });
                 var initCalls = [p1, p2, p3],
                     agidSpidWrapper;
                 // WHEN
@@ -120,10 +134,46 @@ describe('SPID', function () {
             it('should warn the dev if no placeholder is found to render the smartbuttons', function (done) {
                 // WHEN
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     // THEN
                     expect(console.warn).toHaveBeenCalled();
+                    done();
+                });
+            });
+
+            it('should warn the dev if no correct selector is found to render the smartbuttons', function (done) {
+                // GIVEN
+                var config = {
+                    url: '/generic/url/{{idp}}',
+                    selector: 'my-spid-button',
+                    supported: supportedProviders
+                };
+                // WHEN
+                new Promise(function (resolve) {
+                    SUT.init(config, resolve);
+                }).then(function () {
+                    // THEN
+                    expect(console.warn).toHaveBeenCalled();
+                    done();
+                });
+            });
+
+            it('should call the correct selector to render the smartbuttons', function (done) {
+                // GIVEN
+                var config = {
+                    url: '/generic/url/{{idp}}',
+                    selector: '#my-spid-button',
+                    supported: supportedProviders
+                };
+                injectSpidPlaceHolder('S', 'my-spid-button');
+                // WHEN
+                new Promise(function (resolve) {
+                    SUT.init(config, resolve);
+                }).then(function () {
+                    // THEN
+                    var spidButtons = document.querySelectorAll(config.selector);
+                    expect(spidButtons.length).toEqual(1);
                     done();
                 });
             });
@@ -136,7 +186,7 @@ describe('SPID', function () {
                     });
                     // WHEN
                     new Promise(function (resolve, reject) {
-                        SUT.init(null, resolve, reject);
+                        SUT.init(genericConfig, resolve, reject);
                     }).catch(function () {
                         // THEN
                         expect(console.error).toHaveBeenCalled();
@@ -151,7 +201,7 @@ describe('SPID', function () {
                     });
                     // WHEN
                     new Promise(function (resolve, reject) {
-                        SUT.init(null, resolve, reject);
+                        SUT.init(genericConfig, resolve, reject);
                     }).catch(function () {
                         var agidSpidWrapper = document.querySelector(agidSpidWrapperID);
                         // THEN
@@ -159,6 +209,7 @@ describe('SPID', function () {
                         done();
                     });
                 });
+
             });
 
             describe('when SPID button placeholder are present in the page', function () {
@@ -167,10 +218,9 @@ describe('SPID', function () {
                     injectSpidPlaceHolder('S');
                     injectSpidPlaceHolder('m');
                     injectSpidPlaceHolder('L');
-                    injectSpidPlaceHolder('xL');
                     // WHEN
                     new Promise(function (resolve) {
-                        SUT.init(null, resolve);
+                        SUT.init(genericConfig, resolve);
                     }).then(function () {
                         var spidButtons = document.querySelectorAll('.agid-spid-enter');
                         // THEN
@@ -184,7 +234,7 @@ describe('SPID', function () {
                     injectSpidPlaceHolder('H');
                     // WHEN
                     new Promise(function (resolve) {
-                        SUT.init(null, resolve);
+                        SUT.init(genericConfig, resolve);
                     }).then(function () {
                         // THEN
                         expect(console.error).toHaveBeenCalled();
@@ -193,11 +243,11 @@ describe('SPID', function () {
                 });
             });
 
-            describe('when not supplied with a configuration object', function () {
-                it('should not add to providers hidden inputs payload', function (done) {
+            describe('when supplied with a configuration object', function () {
+                it('should not add to providers hidden inputs payload if is a GET', function (done) {
                     // WHEN
                     new Promise(function (resolve) {
-                        SUT.init(null, resolve);
+                        SUT.init(genericConfig, resolve);
                     }).then(function () {
                         var hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input');
                         // THEN
@@ -205,13 +255,13 @@ describe('SPID', function () {
                         done();
                     });
                 });
-            });
 
-            describe('when supplied with a configuration object', function () {
                 it('should request the provided language in the config', function (done) {
                     // GIVEN
                     var config = {
-                        lang: 'de'
+                        url: 'url',
+                        lang: 'de',
+                        supported: supportedProviders
                     };
 
                     spyOn(XMLHttpRequest.prototype, 'open').and.callThrough();
@@ -227,16 +277,143 @@ describe('SPID', function () {
                     });
                 });
 
+                it('should log error message if no config is provided', function (done) {
+                    // WHEN
+                    new Promise(function (resolve, reject) {
+                        SUT.init(null, resolve, reject);
+                    }).catch(function () {
+                        // THEN
+                        expect(console.error).toHaveBeenCalled();
+                        done();
+                    });
+                });
+
+                it('should log error message if no url is provided in config', function (done) {
+                    // WHEN
+                    var config = {
+                        supported: supportedProviders
+                    }
+                    new Promise(function (resolve, reject) {
+                        SUT.init(config, resolve, reject);
+                    }).catch(function () {
+                        // THEN
+                        expect(console.error).toHaveBeenCalled();
+                        done();
+                    });
+                });
+
+                it('should log error message if no supported providers are provided', function (done) {
+                    // WHEN
+                    var config = {
+                        url: 'url'
+                    }
+                    new Promise(function (resolve, reject) {
+                        SUT.init(config, resolve, reject);
+                    }).catch(function () {
+                        // THEN
+                        expect(console.error).toHaveBeenCalled();
+                        done();
+                    });
+                });
+
+                it('should change provider entityID if provided with mapping options', function (done) {
+                    var config = {
+                        method: 'POST',               // opzionale
+                        url: '/Login',
+                        fieldName: 'testName',
+                        mapping: {
+                            'https://posteid.poste.it': 'poste'
+                        },
+                        supported: supportedProviders
+                    };
+                    // WHEN
+                    new Promise(function (resolve) {
+                        SUT.init(config, resolve);
+                    }).then(function () {
+                        var hiddenInput = document.querySelectorAll('#agid-spid-provider-Poste-ID input[name="testName"]');
+                        // THEN
+                        expect(hiddenInput[0].value).toEqual('poste');
+                        done();
+                    });
+                });
+
+                it('should enable provider button if that provider is supported and disable other providers', function (done) {
+                    var config = {
+                        url: '/Login',
+                        supported: [
+                            'https://posteid.poste.it'
+                        ],
+                    };
+                    // WHEN
+                    new Promise(function (resolve) {
+                        SUT.init(config, resolve);
+                    }).then(function () {
+                        var providers = document.querySelectorAll('#agid-spid-idp-list button'),
+                            disabled = document.querySelectorAll("#agid-spid-idp-list button:disabled"),
+                            enabled = document.querySelectorAll("#agid-spid-idp-list button:enabled");
+                        // THEN
+                        expect(disabled.length).toEqual(providers.length - 1);
+                        expect(enabled.length).toEqual(1);
+                        done();
+                    });
+                });
+
+                it('should add extra providers if specified in options and make them supported', function (done) {
+                    var config = {
+                        url: '/Login',
+                        supported: supportedProviders,
+                        extraProviders: [
+                            {
+                                "protocols": ["SAML"],
+                                "entityName": "Ciccio ID",
+                                "logo": "spid-idp-aruba.svg",
+                                "entityID": "https://loginciccio.it",
+                                "active": true
+                            }
+                        ]
+                    };
+                    // WHEN
+                    new Promise(function (resolve) {
+                        SUT.init(config, resolve);
+                    }).then(function () {
+                        var providers = document.querySelectorAll('#agid-spid-idp-list button'),
+                            enabled = document.querySelectorAll("#agid-spid-idp-list button:enabled"),
+                            extraProvider = document.querySelectorAll('#agid-spid-provider-Ciccio-ID');
+                        // THEN
+                        expect(enabled.length).toEqual(providers.length);
+                        expect(extraProvider.length).toEqual(1);
+                        done();
+                    });
+                });
+
+                it('should disable all providers that don\'t support the kind of protocol in config', function (done) {
+                    var config = {
+                        url: '/Login',
+                        supported: supportedProviders,
+                        protocol: ["OIDC"]
+                    };
+                    // WHEN
+                    new Promise(function (resolve) {
+                        SUT.init(config, resolve);
+                    }).then(function () {
+                        var providers = document.querySelectorAll('#agid-spid-idp-list button'),
+                            enabled = document.querySelectorAll("#agid-spid-idp-list button:enabled"),
+                            disabled = document.querySelectorAll("#agid-spid-idp-list button:disabled");
+                        // THEN
+                        expect(enabled.length).toEqual(0);
+                        expect(disabled.length).toEqual(providers.length);
+                        done();
+                    });
+                });
+
                 describe('when provided with a post method', function () {
                     it('should add to providers the hidden input payload with the correct name', function (done) {
                         // GIVEN
                         var config = {
-                            providers: {
-                                post: {
-                                    action: '/login',
-                                    fieldName: 'testName'
-                                }
-                            }
+                            method: 'POST',               // opzionale
+                            url: '/Login',
+                            fieldName: 'testName',
+                            supported: supportedProviders
                         };
                         // WHEN
                         new Promise(function (resolve) {
@@ -250,93 +427,34 @@ describe('SPID', function () {
                         });
                     });
 
-                    it('should add to providers the hidden inputs payload from common and the specific per provider', function (done) {
+                    it('should add to providers the hidden inputs payload defined in extrafields', function (done) {
                         // GIVEN
                         var config = {
-                            providers: {
-                                post: {
-                                    action: '/login',
-                                    fieldName: 'entityName'
-                                },
-                                poste: {
-                                    post: {
-                                        action: '/login',
-                                        fieldName: 'testName'
-                                    }
-                                }
-                            }
+                            method: 'POST',               // opzionale
+                            url: '/Login',
+                            fieldName: 'testName',
+                            extraFields: {                // opzionale
+                                foo: 'bar',
+                                baz: 'baz'
+                            },
+                            supported: supportedProviders
                         };
                         // WHEN
                         new Promise(function (resolve) {
                             SUT.init(config, resolve);
                         }).then(function () {
                             var providers = document.querySelectorAll('#agid-spid-idp-list button'),
-                                hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="entityName"]'),
-                                specificInput = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]');
+                                hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]'),
+                                fooInput = document.querySelectorAll('#agid-spid-idp-list input[name="foo"]'),
+                                bazInput = document.querySelectorAll('#agid-spid-idp-list input[name="baz"]');
                             // THEN
-                            expect(hiddenInputs.length).toEqual(providers.length - 1);
-                            expect(specificInput.length).toEqual(1);
+                            expect(hiddenInputs.length).toEqual(providers.length);
+                            expect(fooInput.length).toEqual(providers.length);
+                            expect(bazInput.length).toEqual(providers.length);
                             done();
                         });
                     });
 
-                    it('the provider should have the correct input name when specified', function (done) {
-                        // GIVEN
-                        var config = {
-                            providers: {
-                                poste: {
-                                    post: {
-                                        action: '/login',
-                                        fieldName: 'testName'
-                                    }
-                                }
-                            }
-                        };
-                        injectSpidPlaceHolder('xL');
-                        // WHEN
-                        new Promise(function (resolve) {
-                            SUT.init(config, resolve);
-                        }).then(function () {
-                            var provider = document.querySelector('#agid-spid-provider-poste input');
-                            // THEN
-                            expect(provider.name).toEqual('testName');
-                            done();
-                        });
-                    });
-
-                    it('should ovveride general attributes when is present a specific provider config', function (done) {
-                        // GIVEN
-                        var config = {
-                            providers: {
-                                poste: {
-                                    post: {
-                                        action: '/login',
-                                        fieldName: 'posteTestName'
-                                    }
-                                },
-                                tim: {
-                                    post: {
-                                        action: '/login',
-                                        fieldName: 'timTestName'
-                                    }
-                                }
-                            }
-                        };
-                        injectSpidPlaceHolder('xL');
-                        // WHEN
-                        new Promise(function (resolve) {
-                            SUT.init(config, resolve);
-                        }).then(function () {
-                            var posteData = document.querySelector('#agid-spid-provider-poste input'),
-                                arubaData = document.querySelector('#agid-spid-provider-aruba input'),
-                                timData = document.querySelector('#agid-spid-provider-tim input');
-                            // THEN
-                            expect(posteData.name).toEqual('posteTestName');
-                            expect(arubaData).toBeNull();
-                            expect(timData.name).toEqual('timTestName');
-                            done();
-                        });
-                    });
                 });
             });
         });
@@ -345,7 +463,7 @@ describe('SPID', function () {
             it('should call only the i18n endpoint for the new copy', function (done) {
                 // GIVEN
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     spyOn(XMLHttpRequest.prototype, 'open').and.callThrough();
                     spyOn(XMLHttpRequest.prototype, 'send').and.callThrough();
@@ -364,7 +482,7 @@ describe('SPID', function () {
                     SUT.setResources(ajaxFail);
                 });
                 new Promise(function (resolve, reject) {
-                    SUT.init(null, resolve, reject);
+                    SUT.init(genericConfig, resolve, reject);
                 }).catch(function () {
                     // WHEN
                     SUT.changeLanguage('en');
@@ -380,12 +498,12 @@ describe('SPID', function () {
                 var spidButtons;
 
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     injectSpidPlaceHolder('S');
                     // WHEN
                     SUT.updateSpidButtons();
-                    spidButtons = document.querySelectorAll('.agid-spid-enter');
+                    spidButtons = document.querySelectorAll('#spid-button');
                     // THEN
                     expect(spidButtons.length).toBe(1);
                     done();
@@ -399,7 +517,7 @@ describe('SPID', function () {
                     SUT.setResources(ajaxFail);
                 });
                 new Promise(function (resolve, reject) {
-                    SUT.init(null, resolve, reject);
+                    SUT.init(genericConfig, resolve, reject);
                 }).catch(function () {
                     injectSpidPlaceHolder('S');
                     // WHEN
@@ -421,7 +539,7 @@ describe('SPID', function () {
                 injectSpidPlaceHolder('S');
 
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     // WHEN
                     document.querySelector('.agid-spid-enter.agid-spid-enter-size-s').click();
@@ -440,7 +558,7 @@ describe('SPID', function () {
                 injectSpidPlaceHolder('m');
 
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var choiceModal = document.querySelector('#agid-spid-panel-select');
                     // WHEN
@@ -455,35 +573,36 @@ describe('SPID', function () {
         });
 
         describe('when the providers modal is displayed it should allow to close it by', function () {
-           // it('click on the top right X button', function (done) {
-                // GIVEN
-                // injectSpidPlaceHolder('Xl');
+            //      it('click on the top right X button', function (done) {
+            //     // GIVEN
 
-                // new Promise(function (resolve) {
-                //     SUT.init(null, resolve);
-                // }).then(function () {
-                //     var isChoiceModalVisible;
+            //     injectSpidPlaceHolder('l');
 
-                //     document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
-                //     // WHEN
-                //     document.querySelector('#agid-spid-panel-close-button').click();
-                //     isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
-                //     // THEN
-                //     expect(isChoiceModalVisible).toBeFalsy();
-                //     done();
-                // });
-           // });
+            //     new Promise(function (resolve) {
+            //         SUT.init(genericConfig, resolve);
+            //     }).then(function () {
+            //         var isChoiceModalVisible;
+
+            //         document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+            //         // WHEN
+            //         document.querySelector('#agid-spid-panel-close-button').click();
+            //         isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
+            //         // THEN
+            //         expect(isChoiceModalVisible).toBeFalsy();
+            //         done();
+            //     });
+            // });
 
             it('click on the bottom list cancel button', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('Xl');
+                injectSpidPlaceHolder('l');
 
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isChoiceModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
                     // WHEN
                     document.querySelector('#agid-cancel-access-button').click();
                     isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
@@ -495,14 +614,14 @@ describe('SPID', function () {
 
             it('hit on the keyboard esc key', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('Xl');
+                injectSpidPlaceHolder('l');
 
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isChoiceModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
                     // WHEN
                     triggerKeyEvent(27);
                     isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
@@ -519,7 +638,7 @@ describe('SPID', function () {
                 injectSpidPlaceHolder('L');
 
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isInfoModalVisible;
 
@@ -535,36 +654,36 @@ describe('SPID', function () {
         });
 
         describe('when the informative modal is displayed on top of the providers modal it should allow to close it by', function () {
-            //it('click on the top right X button in the modal', function (done) {
-                // GIVEN
-                // injectSpidPlaceHolder('Xl');
+            // it('click on the top right X button in the modal', function (done) {
+            //     // GIVEN
+            //     injectSpidPlaceHolder('l');
 
-                // new Promise(function (resolve) {
-                //     SUT.init(null, resolve);
-                // }).then(function () {
-                //     var isInfoModalVisible;
+            //     new Promise(function (resolve) {
+            //         SUT.init(genericConfig, resolve);
+            //     }).then(function () {
+            //         var isInfoModalVisible;
 
-                //     document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
-                //     document.querySelector(agidModalCosaBtID).click();
-                //     // WHEN
-                //     document.querySelector('#closemodalbutton').click();
-                //     isInfoModalVisible = isElementVisible(agidInfoModalID);
-                //     // THEN
-                //     expect(isInfoModalVisible).toBeFalsy();
-                //     done();
-                // });
-           // });
+            //         document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+            //         document.querySelector(agidModalCosaBtID).click();
+            //         // WHEN
+            //         document.querySelector('#closemodalbutton').click();
+            //         isInfoModalVisible = isElementVisible(agidInfoModalID);
+            //         // THEN
+            //         expect(isInfoModalVisible).toBeFalsy();
+            //         done();
+            //     });
+            // });
 
             it('hit on the keyboard esc key', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('Xl');
+                injectSpidPlaceHolder('l');
 
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isInfoModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
                     document.querySelector(agidModalButtonID).click();
                     // WHEN
                     triggerKeyEvent(27);
@@ -577,14 +696,14 @@ describe('SPID', function () {
 
             it('should not react to keystrokes different than ESC', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('Xl');
+                injectSpidPlaceHolder('l');
 
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isInfoModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-xl').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
                     document.querySelector(agidModalButtonID).click();
                     // WHEN
                     triggerKeyEvent(7);
@@ -625,7 +744,7 @@ describe('SPID', function () {
                     report;
                 // WHEN
                 new Promise(function (resolve) {
-                    SUT.init(null, resolve);
+                    SUT.init(genericConfig, resolve);
                 }).then(function () {
                     // Mostra il modale dei provide
                     agidSpidWrapper = document.querySelector(agidSpidWrapperID);
