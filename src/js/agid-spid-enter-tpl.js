@@ -30,10 +30,10 @@
                     '<section id="agid-spid-panel-select" aria-labelledby="agid-spid-enter-title-page" tabindex="0">',
                         '<header id="agid-spid-panel-header">',
                             '<div class="agid-spid-panel-back agid-spid-panel-element" aria-controls="agid-spid-panel-select">',
-                                '<div class="agid-display-logo fadeInLeft">',
+                                '<div class="agid-display-logo fadeInLeft fadeOutLeft">',
                                     svgWithPngFallback.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
                                 '</div>',
-                                '<div class="agid-display-close fadeInRight">',
+                                '<div class="agid-display-close fadeInRight fadeOutRight">',
                                     '<button tabindex="0" id="agid-spid-panel-close-button" class="agid-navigable" aria-labelledby="agid-cancel-access-button">',
                                         //SERVE SPAN?
                                         //'<span style="width:50px;height:30px">',
@@ -53,7 +53,7 @@
                                 //     '<h1 id="agid-spid-enter-title-page" class="agid-font">', this.getI18n('scegli_provider_SPID'), '</h1>',
                                 // '</div>',
 
-                                '<h1 id="agid-spid-enter-title-page" class="fadeInBottom">',this.getI18n('scegli_provider_SPID'),'</h1>',
+                                '<h1 id="agid-spid-enter-title-page" class="fadeInBottom fadeOutBottom">',this.getI18n('scegli_provider_SPID'),'</h1>',
                                 '<div class="agid-body-list">',
                                     '<div id="agid-spid-idp-list">',
                                         spidProvidersButtons,

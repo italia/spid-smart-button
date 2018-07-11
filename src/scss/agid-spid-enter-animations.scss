@@ -43,6 +43,27 @@
         #agid-spid-panel-select {
             animation-name: anim-panel-out;
             animation-duration: 1s;
+
+            & .fadeOutLeft {
+                position: relative;
+                animation-name: logoOutLeft;
+                animation-duration: 1s;
+                animation-fill-mode: both;
+            }
+
+            & .fadeOutRight {
+                position: relative;
+                animation-name: closeOutRight;
+                animation-duration: 1s;
+                animation-fill-mode: both;
+            }
+
+            & .fadeOutBottom {
+                position: relative;
+                animation-name: titleToBottom;
+                animation-duration: 1s;
+                animation-fill-mode: both;
+            }
         }
     }
     // FadeIn
@@ -62,6 +83,14 @@
             }
         }
 
+        & .fadeInCancel {
+            position: relative;
+            animation-name: cancelBtn;
+            animation-delay: 1s;
+            animation-duration: 1.25s;
+            animation-fill-mode: both;
+        }
+
         #agid-spid-panel-select {
             animation-name: anim-panel-in;
             animation-duration: 2s;
@@ -70,7 +99,7 @@
                 position: relative;
                 animation-name: logoFromLeft;
                 animation-duration: 1s;
-                animation-fill-mode: forwards;
+                animation-fill-mode: both;
             }
 
             & .fadeInRight {
@@ -82,11 +111,21 @@
 
             & .fadeInBottom {
                 position: relative;
-                animation-name: fromBottom;
+                animation-name: titleFromBottom;
                 animation-duration: 1s;
                 animation-fill-mode: both;
             }
         }
+    }
+}
+
+@keyframes cancelBtn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
 
@@ -114,7 +153,7 @@
     }
 }
 
-@keyframes fromBottom {
+@keyframes titleFromBottom {
     from {
         opacity: 0;
         transform: translateY(200%);
@@ -126,21 +165,39 @@
     }
 }
 
-.fadeInCancel {
-    position: relative;
-    animation-name: cancelBtn;
-    animation-delay: 1.5s;
-    animation-duration: 1.25s;
-    animation-fill-mode: both;
-}
-
-@keyframes cancelBtn {
+@keyframes logoOutLeft {
     from {
         opacity: 0;
+        transform: none;
     }
 
     to {
         opacity: 1;
+        transform: translate(-50px);
+    }
+}
+
+@keyframes closeOutRight {
+    from {
+        opacity: 0;
+        transform: translate(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes titleToBottom {
+    from {
+        opacity: 0;
+        transform: none;
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(200%);
     }
 }
 
