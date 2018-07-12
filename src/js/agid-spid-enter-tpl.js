@@ -120,12 +120,17 @@
             spidButton: function (sizeClass) {
                 return [
                     '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * begin * -->',
-                    '<button class="agid-spid-enter agid-font agid-spid-enter-size-', sizeClass, '" hidden>',
-                        '<span aria-hidden="true" class="agid-spid-enter-icon">',
-                            svgWithPngFallback.call(this, 'img/spid-ico-circle-bb', this.getI18n('entra_con_SPID')),
-                        '</span>',
-                        '<span class="agid-spid-enter-text">', this.getI18n('entra_con_SPID'), '</span>',
-                    '</button>',
+                    '<div id="principal">',            
+                        '<button class="agid-spid-enter agid-font agid-spid-enter-size-', sizeClass, '" hidden>', 
+                            '<span aria-hidden="true" class="agid-spid-enter-icon">',
+                                svgWithPngFallback.call(this, 'img/spid-ico-circle-bb', this.getI18n('entra_con_SPID')),
+                            '</span>',                    
+                            '<span class="agid-spid-enter-text">', this.getI18n('entra_con_SPID'), '</span>',
+                        '</button>',
+                        '<div id="image">',
+                            '<img class="agid-spid-icon" src="', this.getResources().assetsBaseUrl, 'img/spid-ico-circle-bb.svg"></img>',
+                        '</div>',
+                    '</div>',
                     '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * end * -->'
                 ].join('');
             },
