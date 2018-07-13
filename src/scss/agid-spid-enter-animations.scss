@@ -12,8 +12,8 @@
 #agid-spid-enter-container {
     display: block;
     transition-duration: 1s;
+    transition-delay: 0.5s;
     transition-property: visibility;
-    transition-delay: 0s;
     // FadeOut
     &[hidden] {
         // visibility è animabile diversamente da display
@@ -44,22 +44,19 @@
             animation-name: anim-panel-out;
             animation-duration: 1s;
 
-            & .fadeOutLeft {
-                position: relative;
+            .fadeOutLeft {
                 animation-name: logoOutLeft;
                 animation-duration: 1s;
                 animation-fill-mode: both;
             }
 
-            & .fadeOutRight {
-                position: relative;
+            .fadeOutRight {
                 animation-name: closeOutRight;
                 animation-duration: 1s;
                 animation-fill-mode: both;
             }
 
-            & .fadeOutBottom {
-                position: relative;
+            .fadeOutBottom {
                 animation-name: titleToBottom;
                 animation-duration: 1s;
                 animation-fill-mode: both;
@@ -75,16 +72,17 @@
             &::before {
                 animation-name: anim-base-in;
                 animation-duration: 2s;
+                animation-delay: 0.5s;
             }
 
             &::after {
                 animation-name: anim-icon-in;
                 animation-duration: 1s;
+                animation-delay: 0.5s;
             }
         }
 
-        & .fadeInCancel {
-            position: relative;
+        .fadeInCancel {
             animation-name: cancelBtn;
             animation-delay: 1s;
             animation-duration: 1.25s;
@@ -94,25 +92,26 @@
         #agid-spid-panel-select {
             animation-name: anim-panel-in;
             animation-duration: 2s;
+            animation-delay: 0.5s;
 
-            & .fadeInLeft {
-                position: relative;
+            .fadeInLeft {
                 animation-name: logoFromLeft;
                 animation-duration: 1s;
+                animation-delay: 0.5s;
                 animation-fill-mode: both;
             }
 
-            & .fadeInRight {
-                position: relative;
+            .fadeInRight {
                 animation-name: closeFromRight;
                 animation-duration: 1s;
+                animation-delay: 0.5s;
                 animation-fill-mode: both;
             }
 
-            & .fadeInBottom {
-                position: relative;
+            .fadeInBottom {
                 animation-name: titleFromBottom;
                 animation-duration: 1s;
+                animation-delay: 0.5s;
                 animation-fill-mode: both;
             }
         }
@@ -345,41 +344,38 @@ $animIconDistanceEnd: 120;
         height: 100vh;
     }
 
-    99.9% {
-        height: 100vh;
-    }
-
     100% {
         height: 0;
     }
 }
 
-#image {
-    display: block;
-    margin: auto;
-    width: 1%;
-    height: 1%;
-    visibility: hidden;
+#enter-button-container {
+    &.enterTransition {
+        .agid-spid-enter {
+            animation-name: fadeOutEnterBtn;
+            animation-duration: 1s;
+        }
 
-    .agid-spid-icon {
-        width: 100%;
-        height: 100%;
+        .agid-logo {
+            animation-name: biggerLogo;
+            animation-duration: 1.2s;
+        }
+    }
+
+    &.reverseEnterTransition {
+        .agid-spid-enter {
+            animation-name: fadeInEnterBtn;
+            animation-duration: 1s;
+        }
+
+        .agid-logo {
+            animation-name: smallerLogo;
+            animation-duration: 1s;
+        }
     }
 }
 
-.agid-spid-enter:hover {
-    animation-name: buttonOut;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-}
-
-.agid-spid-enter:hover + #image {
-    animation-name: spidIconIn;
-    animation-duration: 2s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes buttonOut {
+@keyframes fadeOutEnterBtn {
     from {
         opacity: 1;
     }
@@ -389,14 +385,37 @@ $animIconDistanceEnd: 120;
     }
 }
 
-@keyframes spidIconIn {
-    0% {
+@keyframes biggerLogo {
+    from {
         opacity: 1;
+        visibility: hidden;
     }
 
-    100% {
+    to {
         opacity: 0;
-        transform: scale(50, 50);
+        transform: scale(60);
         visibility: visible;
+    }
+}
+
+@keyframes fadeInEnterBtn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes smallerLogo {
+    from {
+        opacity: 0;
+        transform: scale(60);
+        visibility: visible;
+    }
+
+    to {
+        opacity: 1;
     }
 }

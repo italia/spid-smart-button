@@ -100,22 +100,37 @@ window.SPID = function () {
     function renderAvailableProviders() {
         var agid_spid_enter = document.querySelector('#agid-spid-enter'),
             spidProvidersButtonsHTML = '';
+        //var closeBtn = document.getElementById("agid-spid-panel-close-button");
 
         _availableProviders.forEach(function (provider) {
             spidProvidersButtonsHTML += getTemplate('spidProviderButton', provider);
         });
 
         agid_spid_enter.innerHTML = getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
-
         // Vengono creati una sola volta all'init, non necessitano unbind
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-cancel-access-button').addEventListener('click', hideProvidersPanel);
+        document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function () {
+            var elem = document.getElementsByClassName("choosedButton")[0];
+            elem.classList.remove("enterTransition");
+            elem.classList.remove("choosedButton");
+            elem.classList.add("reverseEnterTransition");
+            setTimeout(function () {
+                elem.classList.remove("reverseEnterTransition");
+            }, 2000);
+        });
+        document.querySelector('#agid-cancel-access-button').addEventListener('click', function () {
+            var elem = document.getElementsByClassName("choosedButton")[0];
+            elem.classList.remove("enterTransition");
+            elem.classList.remove("choosedButton");
+            elem.classList.add("reverseEnterTransition");
+            setTimeout(function () {
+                elem.classList.remove("reverseEnterTransition");
+            }, 2000);
+        });
         document.querySelector('#nospid').addEventListener('click', function () {
             openInfoModal(getTemplate('nonHaiSpid'));
         });
-        // document.querySelector('#cosaspid').addEventListener('click', function () {
-        //     openInfoModal(getTemplate('cosaSpid'));
-        // });
     }
 
     /*
@@ -278,7 +293,8 @@ window.SPID = function () {
             dataSize,
             supportedSizes = ['s', 'm', 'l', 'xl'],
             isSupportedSize,
-            spidButtons;
+            spidButtons,
+            btn;
 
         if (!_availableProviders) {
             console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
@@ -296,6 +312,19 @@ window.SPID = function () {
 
             if (isSupportedSize) {
                 spidButtonsPlaceholders[i].innerHTML = getTemplate('spidButton', dataSize);
+                btn = spidButtonsPlaceholders[i].getElementsByClassName("agid-spid-enter");
+                Array.prototype.forEach.call(btn, function (el) {
+                    el.addEventListener('click', function () {
+                        var parent = el.parentElement;
+                        parent.classList.add("enterTransition");
+                        parent.classList.add("choosedButton");
+                        console.log(parent);
+                        setTimeout(function () {
+                            parent.classList.remove("enterTransition");
+                        }, 2000);
+                    });
+                    console.log(el.tagName);
+                });
             } else {
                 console.error('Le dimensioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButtonsPlaceholders[i]);
             }
