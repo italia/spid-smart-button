@@ -40,7 +40,7 @@ button:active {
 
             .agid-spid-idp-button {
                 border: 0;
-                width: 95%;
+                width: 100%;
                 cursor: pointer;
                 background: #fff;
 
@@ -88,6 +88,21 @@ button:active {
     font-size: 1em;
 }
 
+.agid-spid-enter {
+    position: relative;
+
+    & .agid-logo {
+        position: absolute;
+        display: block;
+        margin: auto;
+        width: 3%;
+        visibility: hidden;
+        top: 20%;
+        left: 24%;
+        z-index: 1000;
+    }
+}
+
 #agid-spid-enter-container {
     position: fixed;
     z-index: 999;
@@ -127,9 +142,8 @@ button:active {
     display: block;
     overflow: hidden;
     position: static;
-    width: 100%;
     min-width: 300px;
-    padding: 2.5rem;
+    padding: 40px;
 
     .agid-spid-display-logo {
         float: left;
@@ -171,7 +185,7 @@ button:active {
 }
 
 #agid-spid-panel-close-button {
-    margin-left: calc(100% - 60px);
+    margin-left: 100%;
     margin-top: 5px;
 }
 
@@ -420,12 +434,13 @@ button:active {
 
 @media screen and (max-width: 767px) {
     #agid-foot-btn {
+        position: absolute;
+        background-color: white;
+        bottom: 0;
+        width: 100%;
         padding-top: 20px;
         padding-bottom: 20px;
         box-shadow: 0 -2px 5px 0 rgba(238, 238, 238, 0.7);
-        position: absolute;
-        bottom: 0;
-        width: 100%;
     }
 }
 

@@ -113,10 +113,27 @@ window.SPID = function () {
         });
 
         agid_spid_enter.innerHTML = getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
-
         // Vengono creati una sola volta all'init, non necessitano unbind
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-cancel-access-button').addEventListener('click', hideProvidersPanel);
+        document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function () {
+            var elem = document.getElementsByClassName("choosedButton")[0];
+            elem.classList.remove("enterTransition");
+            elem.classList.remove("choosedButton");
+            elem.classList.add("reverseEnterTransition");
+            setTimeout(function () {
+                elem.classList.remove("reverseEnterTransition");
+            }, 2000);
+        });
+        document.querySelector('#agid-cancel-access-button').addEventListener('click', function () {
+            var elem = document.getElementsByClassName("choosedButton")[0];
+            elem.classList.remove("enterTransition");
+            elem.classList.remove("choosedButton");
+            elem.classList.add("reverseEnterTransition");
+            setTimeout(function () {
+                elem.classList.remove("reverseEnterTransition");
+            }, 2000);
+        });
         document.querySelector('#nospid').addEventListener('click', function () {
             openInfoModal(getTemplate('nonHaiSpid'));
         });
@@ -245,7 +262,7 @@ window.SPID = function () {
         } else if (supportedCornerStyle.indexOf(styleOptions.cornerStyle.toLowerCase()) === -1) {
             return 'Il tipo di angoli supportati sono ' + supportedCornerStyle + ' trovati invece:' + _style.cornerStyle;
         } else if (supportedFluid.indexOf(styleOptions.fluid) === -1) {
-            return 'I valori del parametro supportati sono ' + supportedFluid + ' trovati invece:' +  _style.fluid;
+            return 'I valori del parametro supportati sono ' + supportedFluid + ' trovati invece:' + _style.fluid;
         } else {
             return true;
         }
@@ -348,7 +365,7 @@ window.SPID = function () {
         var spidButtonsPlaceholders = document.querySelectorAll(_selector),
             hasButtonsOnPage = spidButtonsPlaceholders.length,
             i = 0, j = 0,
-            //supportedSizes = ['small', 'medium', 'large'],
+            btn,
             spidButtons;
 
         if (!_availableProviders) {
@@ -361,11 +378,20 @@ window.SPID = function () {
             return;
         };
         for (i; i < hasButtonsOnPage; i++) {
-            //if (supportedSizes.indexOf(_style.size.toLowerCase()) !== -1) {
             spidButtonsPlaceholders[i].innerHTML = getTemplate('spidButton', _style);
-            // } else {
-            //    console.error('Le dimensioni supportate sono', supportedSizes, 'trovato invece:', _style.size, spidButtonsPlaceholders[i]);
-            //}
+            btn = spidButtonsPlaceholders[i].getElementsByClassName("agid-spid-enter");
+            Array.prototype.forEach.call(btn, function (el) {
+                el.addEventListener('click', function () {
+                    var parent = el.parentElement;
+                    parent.classList.add("enterTransition");
+                    parent.classList.add("choosedButton");
+                    console.log(parent);
+                    setTimeout(function () {
+                        parent.classList.remove("enterTransition");
+                    }, 2000);
+                });
+                console.log(el.tagName);
+            });
         }
         spidButtons = document.querySelectorAll('.agid-spid-enter');
 
