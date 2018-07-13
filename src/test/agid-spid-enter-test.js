@@ -23,13 +23,13 @@ describe('SPID', function () {
             localisationEndpoint: '/src/data/spidI18n-fail.json'
         };
 
-    function injectSpidPlaceHolder(size, selector) {
+    function injectSpidPlaceHolder(selector) {
         var _selector = 'spid-button';
         if (selector) {
             _selector = selector;
         }
         var spidButtonPlaceholder = document.createElement('div');
-        spidButtonPlaceholder.innerHTML = '<div class="agid-spid-enter-button" id="' + _selector + '" aria-live="polite" data-size="' + size + '"></div>';
+        spidButtonPlaceholder.innerHTML = '<div class="agid-spid-enter-button" id="' + _selector + '" aria-live="polite"></div>';
         document.body.appendChild(spidButtonPlaceholder);
     }
 
@@ -165,7 +165,7 @@ describe('SPID', function () {
                     selector: '#my-spid-button',
                     supported: supportedProviders
                 };
-                injectSpidPlaceHolder('S', 'my-spid-button');
+                injectSpidPlaceHolder('my-spid-button');
                 // WHEN
                 new Promise(function (resolve) {
                     SUT.init(config, resolve);
@@ -212,14 +212,17 @@ describe('SPID', function () {
             });
 
             describe('when SPID button placeholder are present in the page', function () {
-                it('should render the SPID button if supplied sizes are valid regardless of the case', function (done) {
+                it('should render the SPID button if supplied size is valid regardless of the case', function (done) {
                     // GIVEN
-                    injectSpidPlaceHolder('S');
-                    injectSpidPlaceHolder('m');
-                    injectSpidPlaceHolder('L');
+                    var config = {
+                        url: '/generic/url/{{idp}}',
+                        size : "SMALL",
+                        supported: supportedProviders
+                    };
+                    injectSpidPlaceHolder();
                     // WHEN
                     new Promise(function (resolve) {
-                        SUT.init(genericConfig, resolve);
+                        SUT.init(config, resolve);
                     }).then(function () {
                         var spidButtons = document.querySelectorAll('.agid-spid-enter');
                         // THEN
@@ -230,11 +233,66 @@ describe('SPID', function () {
 
                 it('should throw an error if supplied SPID button size is invalid', function (done) {
                     // GIVEN
-                    injectSpidPlaceHolder('H');
+                    var config = {
+                        url: '/generic/url/{{idp}}',
+                        size : "extra",
+                        supported: supportedProviders
+                    };
                     // WHEN
-                    new Promise(function (resolve) {
-                        SUT.init(genericConfig, resolve);
-                    }).then(function () {
+                    new Promise(function (resolve, reject) {
+                        SUT.init(config, resolve, reject);
+                    }).catch(function () {
+                        // THEN
+                        expect(console.error).toHaveBeenCalled();
+                        done();
+                    });
+                });
+
+                it('should throw an error if supplied SPID button color scheme is invalid', function (done) {
+                    // GIVEN
+                    var config = {
+                        url: '/generic/url/{{idp}}',
+                        colorScheme : "extra",
+                        supported: supportedProviders
+                    };
+                    // WHEN
+                    new Promise(function (resolve, reject) {
+                        SUT.init(config, resolve, reject);
+                    }).catch(function () {
+                        // THEN
+                        expect(console.error).toHaveBeenCalled();
+                        done();
+                    });
+                });
+
+                it('should throw an error if supplied SPID button color scheme is invalid', function (done) {
+                    // GIVEN
+                    var config = {
+                        url: '/generic/url/{{idp}}',
+                        fluid : "extra",
+                        supported: supportedProviders
+                    };
+                    // WHEN
+                    new Promise(function (resolve, reject) {
+                        SUT.init(config, resolve, reject);
+                    }).catch(function () {
+                        // THEN
+                        expect(console.error).toHaveBeenCalled();
+                        done();
+                    });
+                });
+
+                it('should throw an error if supplied SPID button color scheme is invalid', function (done) {
+                    // GIVEN
+                    var config = {
+                        url: '/generic/url/{{idp}}',
+                        cornerStyle : "extra",
+                        supported: supportedProviders
+                    };
+                    // WHEN
+                    new Promise(function (resolve, reject) {
+                        SUT.init(config, resolve, reject);
+                    }).catch(function () {
                         // THEN
                         expect(console.error).toHaveBeenCalled();
                         done();
@@ -499,7 +557,7 @@ describe('SPID', function () {
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
                 }).then(function () {
-                    injectSpidPlaceHolder('S');
+                    injectSpidPlaceHolder();
                     // WHEN
                     SUT.updateSpidButtons();
                     spidButtons = document.querySelectorAll('#spid-button');
@@ -518,7 +576,7 @@ describe('SPID', function () {
                 new Promise(function (resolve, reject) {
                     SUT.init(genericConfig, resolve, reject);
                 }).catch(function () {
-                    injectSpidPlaceHolder('S');
+                    injectSpidPlaceHolder();
                     // WHEN
                     SUT.updateSpidButtons();
                     spidButtons = document.querySelectorAll('.agid-spid-enter');
@@ -535,13 +593,13 @@ describe('SPID', function () {
                 // GIVEN
                 var isChoiceModalVisible;
 
-                injectSpidPlaceHolder('S');
+                injectSpidPlaceHolder();
 
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
                 }).then(function () {
                     // WHEN
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-s').click();
+                    document.querySelector('.agid-spid-enter-size-medium').click();
                     isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
                     // THEN
                     expect(isChoiceModalVisible).toBeTruthy();
@@ -554,14 +612,13 @@ describe('SPID', function () {
                 // https://stackoverflow.com/questions/23045172/focus-event-not-firing-via-javascript-in-chrome#answer-23045332
 
                 // GIVEN
-                injectSpidPlaceHolder('m');
-
+                injectSpidPlaceHolder();
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var choiceModal = document.querySelector('#agid-spid-panel-select');
                     // WHEN
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-m').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
                     // THEN
                     choiceModal.addEventListener('focus', function () {
                         expect(choiceModal).toBe(document.activeElement);
@@ -574,14 +631,14 @@ describe('SPID', function () {
         describe('when the providers modal is displayed it should allow to close it by', function () {
             it('click on the top right X button', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('l');
+                injectSpidPlaceHolder();
 
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isChoiceModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
                     // WHEN
                     document.querySelector('#agid-spid-panel-close-button').click();
                     isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
@@ -593,14 +650,14 @@ describe('SPID', function () {
 
             it('click on the bottom list cancel button', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('l');
+                injectSpidPlaceHolder();
 
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isChoiceModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
                     // WHEN
                     document.querySelector('#agid-cancel-access-button').click();
                     isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
@@ -612,14 +669,14 @@ describe('SPID', function () {
 
             it('hit on the keyboard esc key', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('l');
+                injectSpidPlaceHolder();
 
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isChoiceModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
                     // WHEN
                     triggerKeyEvent(27);
                     isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
@@ -633,14 +690,14 @@ describe('SPID', function () {
         describe('when the informative buttons in the footer are clicked', function () {
             it('should open the informative modal on top of the providers modal', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('L');
+                injectSpidPlaceHolder();
 
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isInfoModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
                     // WHEN
                     document.querySelector(agidModalButtonID).click();
                     isInfoModalVisible = isElementVisible(agidInfoModalID);
@@ -654,14 +711,14 @@ describe('SPID', function () {
         describe('when the informative modal is displayed on top of the providers modal it should allow to close it by', function () {
             it('click on the top right X button in the modal', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('l');
+                injectSpidPlaceHolder();
 
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isInfoModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
                     document.querySelector(agidModalButtonID).click();
                     // WHEN
                     document.querySelector('#closemodalbutton').click();
@@ -674,14 +731,14 @@ describe('SPID', function () {
 
             it('hit on the keyboard esc key', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('l');
+                injectSpidPlaceHolder();
 
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isInfoModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
                     document.querySelector(agidModalButtonID).click();
                     // WHEN
                     triggerKeyEvent(27);
@@ -694,14 +751,14 @@ describe('SPID', function () {
 
             it('should not react to keystrokes different than ESC', function (done) {
                 // GIVEN
-                injectSpidPlaceHolder('l');
+                injectSpidPlaceHolder();
 
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
                 }).then(function () {
                     var isInfoModalVisible;
 
-                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-l').click();
+                    document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
                     document.querySelector(agidModalButtonID).click();
                     // WHEN
                     triggerKeyEvent(7);

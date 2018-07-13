@@ -107,16 +107,17 @@
                     ].join('');
             },
 
-            spidButton: function (sizeClass) {
+            spidButton: function (style) {
+                var fluid = style.fluid ? " agid-spid-enter-fluid " : "";
                 return [
-                    '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * begin * -->',
-                    '<button class="agid-spid-enter agid-font agid-spid-enter-size-', sizeClass, '" hidden>',
+                    '<!-- AGID - SPID BUTTON ', style.size.toUpperCase(), ' * begin * -->',
+                    '<button class="agid-spid-enter agid-font agid-spid-enter-button-', style.colorScheme, ' agid-spid-enter-button-', style.cornerStyle, ' agid-spid-enter-size-', style.size, fluid,'" hidden>',
                         '<span aria-hidden="true" class="agid-spid-enter-icon">',
                             svgWithPngFallback.call(this, 'img/spid-ico-circle-bb', this.getI18n('entra_con_SPID')),
                         '</span>',
                         '<span class="agid-spid-enter-text">', this.getI18n('entra_con_SPID'), '</span>',
                     '</button>',
-                    '<!-- AGID - SPID BUTTON ', sizeClass.toUpperCase(), ' * end * -->'
+                    '<!-- AGID - SPID BUTTON ', style.size.toUpperCase(), ' * end * -->'
                 ].join('');
             },
 

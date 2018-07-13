@@ -1,5 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700,900);
 
+$spid-button-default: #0073e6;
+$spid-button-active: #0059b3;
+
 body {
     min-width: 300px;
 }
@@ -12,7 +15,7 @@ h1 {
 }
 
 button:active {
-    border: 4px solid rgb(247, 145, 13);
+    border: 3px solid rgb(247, 145, 13);
 }
 
 #agid-spid-idp-list {
@@ -191,10 +194,6 @@ button:active {
     margin: auto;
 }
 
-.agid-spid-enter-button {
-    text-align: center;
-}
-
 #agid-spid-panel-footer {
     display: block;
     position: fixed;
@@ -212,75 +211,62 @@ button:active {
     }
 }
 
-.agid-spid-enter-icon,
-.agid-spid-enter-text {
-    display: block;
-    float: left;
-}
-
 .agid-spid-enter-icon {
-    margin: 0 -0.4em 0 0;
-    padding: 0.6em 0.1em 0.9em 0.7em;
+    padding-right: 8px;
+    vertical-align: middle;
 
     & svg {
-        width: 1.8em;
-        height: 1.8em;
         fill: #fff;
+    }
+
+    & img {
+        float: none !important;
     }
 }
 
 .agid-spid-enter-text {
-    padding: 0.7em 1em 0.85em 0.7em;
-    font-size: 1.15em;
-    text-align: center;
+    vertical-align: top;
 }
 
-.agid-spid-enter-size-s {
-    font-size: 0.625em;
-    border-radius: 5px;
-    height: 31px;
+.agid-spid-enter-size-small {
+    font-size: 14px;
+    height: 40px;
+    padding: 10px 20px;
 
     & > span img {
-        width: 19px;
-        height: 17px;
+        width: 16px;
+        height: 16px;
         border: 0;
     }
 }
 
-.agid-spid-enter-size-m {
-    font-size: 0.95em;
-    border-radius: 6px;
+.agid-spid-enter-size-medium {
+    font-size: 16px;
     height: 48px;
+    padding: 12px 24px;
 
     & > span img {
-        width: 29px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         border: 0;
     }
 }
 
-.agid-spid-enter-size-l {
-    font-size: 1.25em;
-    border-radius: 7px;
-    height: 60px;
+.agid-spid-enter-size-large {
+    font-size: 18px;
+    height: 56px;
+    padding: 14px 28px;
 
     & > span img {
-        width: 38px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
         border: 0;
     }
 }
 
-.agid-spid-enter-size-xl {
-    font-size: 1.55em;
-    border-radius: 8px;
-    height: 77px;
-
-    & > span img {
-        width: 47px;
-        height: 45px;
-        border: 0;
-    }
+.agid-spid-enter-fluid {
+    width: 100%;
+    max-width: 400px;
 }
 
 #agid-cancel-access-button {
@@ -322,7 +308,7 @@ button:active {
 .agid-action-button {
     width: 49.99999%;
     height: 65px;
-    color: #06c;
+    color: $spid-button-default;
     font-weight: 700;
     //vertical-align: middle;
     background-color: #fff;
@@ -334,51 +320,6 @@ button:active {
         top: -4px;
     }
 }
-
-//MODALE QUANDO C'ERA IL BOTTONE 'NON HAI SPID?'
-// #agid-infomodal {
-//     position: fixed;
-//     z-index: 1;
-//     left: 0;
-//     top: 0;
-//     width: 100%;
-//     height: 100%;
-//     overflow: hidden;
-//     background-color: #000;
-//     background-color: rgba(0, 0, 0, 0.4);
-
-//     .modal-content {
-//         background-color: #fefefe;
-//         padding: 20px;
-//         border: 1px solid #888;
-//         margin: 3vh 6vw 0;
-//         max-height: 93vh;
-//         box-sizing: border-box;
-//         overflow: scroll;
-
-//         div {
-//             padding: 16px 20px 12px 0;
-//         }
-
-//         .close {
-//             border: none;
-//             color: #aaa;
-//             cursor: pointer;
-//             font-weight: 700;
-//             position: fixed;
-//             font-size: 2em;
-//             right: 6vw;
-//             width: 1.7em;
-//             text-align: center;
-//             top: 5vh;
-
-//             &:hover,
-//             &:focus {
-//                 color: #000;
-//             }
-//         }
-//     }
-// }
 
 .agid-spid-visibile {
     display: block !important;
@@ -412,6 +353,53 @@ button:active {
     }
 }
 
+.agid-spid-enter-button-positive {
+    color: #fff;
+    background-color: $spid-button-default;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $spid-button-active;
+        color: #fff;
+    }
+
+    &:visited {
+        background-color: $spid-button-default;
+        color: #fff;
+    }
+
+    svg {
+        fill: #fff;
+    }
+}
+
+.agid-spid-enter-button-negative {
+    color: $spid-button-default;
+    background-color: #fff;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: #fff;
+        color: $spid-button-active;
+    }
+
+    &:visited {
+        background-color: #fff;
+        color: $spid-button-default;
+    }
+}
+
+.agid-spid-enter-button-rounded {
+    border-radius: 4px;
+    margin: 16px;
+}
+
+.agid-spid-enter-button-sharp {
+    border-radius: 0;
+}
+
 /*
  * Deve essere l'ultimo set di regole, così che dopo che i pulsanti sono stati renderizzati con invisibilità inline
  * si da tempo al browser di caricare e parsare i fogli di stile appena iniettati, di google font e del presente
@@ -419,36 +407,9 @@ button:active {
  * in questo modo i pulsanti appaiono pochi istanti dopo correttamente stilizzati, sovrascrivendo l'attributo hidden
  */
 .agid-spid-enter {
-    padding: 0 40px;
-    color: #fff;
-    background-color: #06c;
-    font-weight: 20;
-    line-height: 1em;
-    text-decoration: none;
     border: 0;
     cursor: pointer;
-    outline: 0;
     display: inline-block;
-
-    &:hover,
-    &:focus {
-        background-color: #036;
-        color: #fff;
-    }
-
-    &:active {
-        background-color: #83beed;
-        color: #036;
-    }
-
-    &:visited {
-        background-color: #06c;
-        color: #fff;
-    }
-
-    svg {
-        fill: #fff;
-    }
 }
 
 @media screen and (max-width: 996px) {
