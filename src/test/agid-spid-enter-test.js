@@ -265,7 +265,7 @@ describe('SPID', function () {
                     });
                 });
 
-                it('should throw an error if supplied SPID button color scheme is invalid', function (done) {
+                it('should throw an error if supplied SPID button style is invalid', function (done) {
                     // GIVEN
                     var config = {
                         url: '/generic/url/{{idp}}',
@@ -282,7 +282,7 @@ describe('SPID', function () {
                     });
                 });
 
-                it('should throw an error if supplied SPID button color scheme is invalid', function (done) {
+                it('should throw an error if supplied SPID button corner style is invalid', function (done) {
                     // GIVEN
                     var config = {
                         url: '/generic/url/{{idp}}',
@@ -794,7 +794,6 @@ describe('SPID', function () {
                     }
                 },
                     agidSpidWrapper,
-                    agidInfoModal,
                     agidModalButton,
                     report;
                 // WHEN
