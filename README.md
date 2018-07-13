@@ -80,14 +80,15 @@ Il minifizzato JS, che si occupa di caricare il rispettivo CSS se opportuno, a s
 Includere nella pagina uno o più placeholder `<div>` che abbiano i seguenti attributi:
 
  - classe : `agid-spid-enter-button` sarà ricercato dallo script per stampare tutti i pulsanti SPID
+ - selector: attributo `id` con valore customizzabile dall'utente. Obbligatorio, come valore di default usare `spid-button`
  - accessibilità : attributo `aria-live` con valore `polite` per evitare che il rendering disturbi la navigazione
- - dimensione : attributo `data-size` con una delle quattro dimensioni supportate: **s / m / l / xl**
+ - dimensione : attributo `data-size` con una delle quattro dimensioni supportate: **s / m / l**
  - fallback: tag `<noscript>` con messaggio localizzato all'interno del placeholder che avvisa l'utente della necessità di JavaScript abilitato per poter fruire di SPID qualora l'utente stia navigando senza JavaScript
 
 Esempio completo
 
 ```html
-    <div class="agid-spid-enter-button" aria-live="polite" data-size="xl">
+    <div class="agid-spid-enter-button" id='spid-button' aria-live="polite" data-size="l">
         <noscript>
             Il login tramite SPID richiede che JavaScript sia abilitato nel browser
         </noscript>
@@ -95,6 +96,18 @@ Esempio completo
 ```
 
 l'attributo `data-size` è case-insensitive quindi può essere sia maiuscolo che minuscolo.
+
+### Configurazione degli Identity Provider
+I dati degli IdP sono riportati staticamente nel codice sorgente dello Smart Button, che quindi non dovrà interrogare il Registro. Tali dati sono strutturati come segue:
+| Parametro | Descrizione |
+| --------- | ----------- |
+| **entityID** | Identificativo dell’Identity Provider |
+| **entityName** | Nome pubblico dell’Identity Provider da mostrare nella lista |
+| **logo** | URL completo del file PNG raffigurante il logo (default: indicare una immagine generica, distribuita nella CDN, da usare come placeholder) |
+| **protocols** | Array che può contenere i valori SAML e/o OIDC a seconda dei protocolli supportati dall’IdP |
+| **active** | true/false, indica se l’IdP è operativo. Può essere usato per disabilitarne uno temporaneamente in tutta la federazione (default: true) |
+
+Nel caso in cui l’utente configuri ulteriori IdP usando il parametro extraProviders della funzione SPID.init(), dovrà fornire queste informazioni.
 
 ### Metodi pubblici del modulo SPID
 Il modulo espone 4 metodi pubblici
@@ -104,63 +117,61 @@ In caso di successo carica i CSS, mostra gli smartbutton sulla pagina e chiama l
 In caso di errore scrive un messaggio in console e chiama la callback `error` se esiste.
 
 ##### config
-Il parametro `config` è opzionale, se omesso le impostazioni predefinite saranno:
- - lingua italiana
- - un url di default `/login?entityId={{entityID}}`, dove il valore del parametro tra parentesi graffe verrà sostituito dalla libreria con il valore dell'entityID del provider corrente
- - form method GET
+Il parametro `config` serve a configurare l'intera struttura dello smart-button. Allo scopo di rendere flessibile lo smart-button assecondando le diverse applicazioni nelle quali puo' essere inserito sono state definite le seguenti proprieta':
 
-ovvero:
-```javascript
-var spid = new window.SPID();
-    spid.init({
-        lang: 'en',
-        providers: {
-            get: '/login?entityId={{entityID}}'
-        }
-    });
-```
-
-E' possibile specificare un altro url per una chiamata GET a condizione che contenga al suo interno il tag `{{entityID}}`, che è obbligatorio.
-
-In alternativa al metodo GET possiamo configurare una chiamata POST, fornendo:
-- un url per la form action
-- un valore `fieldName` che rappresenta il nome della input nascosta che conterrà l'id del provider
+| Parametro  | Descrizione        | Esempio |
+| ---------- | ------------------ | ------- |
+| **method** | GET/POST (default: GET) | GET |
+| **url** | URL da chiamare (anche relativo). Il placeholder {{idp}} sarà sostituito con l’entityID dell’IdP selezionato. Se questo parametro è assente, sarà scritto un errore in console.error() | `/spid/login/idp={{idp}}` |
+| **fieldName** | Se method=POST, contiene il nome del campo hidden in cui passiamo l’IdP selezionato (default: idp) | idp |
+| **extraFields** | Se method=POST, contiene eventuali valori aggiuntivi da passare in campi hidden | `{ foo: “bar” }` |
+| **selector** | Selettore CSS da usare per individuare l’elemento in cui iniettare lo Smart Button (default: #spid-button) | `#spid-button` |
+| **mapping** | Dizionario di mappatura tra entityID e valori custom, da usare quando un SP identifica gli IdP con chiavi diverse dall’entityID | `{ “https://www.poste.it/spid”: “poste” }` |
+| **supported** | (obbligatorio) Array di entityID relativi agli IdP di cui il SP ha i metadati. Gli IdP non presenti saranno mostrati in grigio all’utente. | `[ “https://www.poste.it/spid” ]` |
+| **extraProviders** | Array di oggetti contenenti le configurazioni di ulteriori Identity Provider (di test) non ufficiali che si vogliano abilitare. I provider qui elencati sono automaticamente aggiunti all’elenco supported sopra descritto | `[{ “entityID”:“https://testidp.mycorp.com/”, “entityName”: “Test IdP” }]` |
+| **protocol** | SAML/OIDC. Protocollo usato dal SP per interagire con gli IdP. Dal momento che alcuni IdP potrebbero non supportare OIDC, questo parametro serve per mostrare in grigio gli IdP non supportati (default: SAML) | SAML |
 
 ad esempio:
 
 ```javascript
 var spid = new window.SPID();
-    spid.init({
-        lang: 'en',
-        providers: {
-            post: {
-                action: '/login',
-                fieldName: 'entityID'
-            }
+spid.init({
+    lang: 'en',                   // opzionale
+    selector: '#my-spid-button',  // opzionale
+    method: 'POST',               // opzionale
+    url: '/Login',                // obbligatorio
+    fieldName: 'idp',             // opzionale
+    extraFields: {                // opzionale
+        foo: 'bar',
+        baz: 'baz'
+    },
+    mapping: {                    // opzionale
+        'https://loginspid.aruba.it': 4,
+        'https://posteid.poste.it': 5,
+        'https://idp.namirialtsp.com/idp': 7,
+    },
+    supported: [                  // obbligatorio
+            'sielte.it'
+    ],
+    extraProviders: [            // opzionale
+        {
+            "protocols": ["SAML"],
+            "entityName": "Ciccio ID",
+            "logo": "spid-idp-aruba.svg",
+            "entityID": "https://loginciccio.it",
+            "active": true
+        },
+        {
+            "protocols": ["SAML"],
+            "entityName": "Pippocert ",
+            "logo": "spid-idp-infocertid.svg",
+            "entityID": "https://identity.pippocert.it",
+            "active": true
         }
-    });
+    ],
+    protocol: "SAML"
+});
 ```
-
-Infine è possibile fornire una customizzazione per singolo provider, come ad esempio un url diverso o una configurazione per una chiamata POST, esplicitando un oggetto che abbia come nome il valore del campo provider all'interno del file `spidProviders.json` (es. 'poste' per Poste, 'spid' per SpidItalia etc..)
-
-Un esempio in cui tutte le opzioni configurabili vengono esplicitate:
-
-```javascript
-var spid = new window.SPID();
-    spid.init({
-        lang: 'en',
-        providers: {
-            get: '/login?entityId={{entityID}}',
-            poste: {
-                post: {
-                    action: '/login',
-                    fieldName: 'entityID'
-                }
-            }
-        }
-    });
-```
-Dove è stata fornita ad esempio una configurazione custom per il provider delle Poste.
 
 ##### success e error
 Sono due callback opzionali da fornire in caso sia necessario gestire il caso di successo o di errore.

@@ -67,25 +67,32 @@
             spidProviderButton: function (providerData) {
                 var providerPayloadInputs = '',
                     providerUri = '',
-                    providerEntityName = (providerData.isActive)
+                    providerEntityName = (providerData.active)
                                        ? this.getI18n('accedi_con_idp', providerData.entityName)
-                                       : this.getI18n('idp_disabled');
+                                       : this.getI18n('idp_disabled'),
+                    providerID =  providerData.entityName.replace(' ', '-');
                 if (providerData.method === 'POST') {
                     // Crea gli input field chiave=valore dall'oggetto
-                    var fieldName = providerData.uri.fieldName || 'entityID';
+                    var fieldName = providerData.fieldName || 'idp';
                     providerPayloadInputs += hiddenField(fieldName, providerData.entityID);
-                    providerUri = providerData.uri.action;
+                    if (providerData.extraFields) {
+                        for (property in providerData.extraFields) {
+                            providerPayloadInputs += hiddenField(property, providerData.extraFields[property]);
+                        }
+                    }
+                    providerUri = providerData.url;
                 } else if (providerData.method === 'GET') {
-                    providerUri = providerData.uri.replace('{{entityID}}', encodeURIComponent(providerData.entityID));
+                    providerUri = providerData.url.replace('{{idp}}', encodeURIComponent(providerData.entityID));
                 }
                 return [
                     '<span class="agid-spid-idp">',
-                        '<form id="agid-spid-provider-', providerData.provider, '"',
+                        '<form id="agid-spid-provider-', providerID, '"',
+
                             'action="', providerUri, '" method="', providerData.method, '">',
                             '<button type="submit"',
-                                'class="agid-spid-idp-button agid-spid-idp-', providerData.provider, '"',
+                                'class="agid-spid-idp-button"',
                                 'title="', providerEntityName, '"',
-                                (providerData.isActive) ? '' : 'disabled', '>',
+                                (providerData.supported) ? '' : 'disabled', '>',
                                 '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="Entra con Aruba">',
                             '</button>',
                             providerPayloadInputs,
