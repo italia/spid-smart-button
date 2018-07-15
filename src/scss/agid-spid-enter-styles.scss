@@ -95,10 +95,10 @@ button:active {
         position: absolute;
         display: block;
         margin: auto;
-        width: 3%;
+        width: 10%;
         visibility: hidden;
-        top: 20%;
-        left: 24%;
+        top: 30%;
+        left: 15%;
         z-index: 1000;
     }
 }
@@ -133,7 +133,7 @@ button:active {
     color: #000;
     position: fixed;
     z-index: 1;
-    overflow: hidden;
+    overflow: auto;
 }
 
 #agid-spid-panel-header {
@@ -195,7 +195,6 @@ button:active {
     min-width: 300px;
 
     #agid-spid-enter-title-page {
-        font-weight: 600;
         background: transparent;
         display: block;
         text-align: left;
@@ -226,6 +225,7 @@ button:active {
 }
 
 .agid-spid-enter-icon {
+    border: none;
     padding-right: 8px;
     vertical-align: middle;
 
@@ -295,6 +295,7 @@ button:active {
     display: block;
     margin: auto;
     width: 80%;
+    cursor: default;
 }
 
 .agid-spid-col {
@@ -434,7 +435,7 @@ button:active {
 
 @media screen and (max-width: 767px) {
     #agid-foot-btn {
-        position: absolute;
+        position: fixed;
         background-color: white;
         bottom: 0;
         width: 100%;
