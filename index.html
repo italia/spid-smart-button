@@ -1,60 +1,99 @@
 <!DOCTYPE html>
 <html lang="it">
-    <head>
-        <title lang="en">SPID Smart Button</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/ico" href="img/favicon.ico">
-        <script type="text/javascript" src="dev/agid-spid-enter.min.js" ></script>
-        <script type="text/javascript">
-/* eslint-disable indent */
-            window.agidSpidEnter.init({
-                language: 'it',
-                formActionUrl: 'https://hack.developers.italia.it/',
-                formSubmitMethod: 'POST',
-                providersPayload: {
-                    common: {
-                        providerHiddenName: 'entityId',
-                        atr: 1
-                    },
-                    aruba: {
-                        data: 'test',
-                        'a-nother': false
-                    },
-                    poste: {
-                        atr: 2
-                    },
-                    tim: {
-                        atr: 3,
-                        flag: true
-                    }
+
+<head>
+    <title lang="en">SPID Smart Button</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/ico" href="img/favicon.ico">
+    <script type="text/javascript" src="dev/agid-spid-enter.min.js"></script>
+    <script type="text/javascript">
+        /* eslint-disable indent */
+        var spid = new window.SPID();
+        spid.init({
+            lang: 'en',
+            selector: '#my-spid-button',  // opzionale
+            method: 'POST',               // opzionale
+            url: '/Login',
+            fieldName: 'idp',
+            extraFields: {                // opzionale
+                foo: 'bar',
+                baz: 'baz'
+            },
+            mapping: {                    // opzionale
+                'https://loginspid.aruba.it': 4,
+                'https://posteid.poste.it': 5,
+                'https://idp.namirialtsp.com/idp': 7,
+            },
+            supported: [
+                'sielte.it'
+                // Array di entityID relativi agli IdP di cui il SP ha i metadati.
+                // Gli IdP non presenti saranno mostrati in grigio all’utente.
+                // Se questo parametro non è fornito, tutti gli IdP saranno abilitati.
+                // Si raccomanda di generare il valore dinamicamente in base ai metadati
+                // configurati nell’applicativo, altrimenti è meglio non indicarlo del tutto.
+            ],
+            extraProviders: [
+                {
+                    "protocols": ["SAML"],
+                    "entityName": "Ciccio ID",
+                    "logo": "spid-idp-aruba.svg",
+                    "entityID": "https://loginciccio.it",
+                    "active": true
+                },
+                {
+                    "protocols": ["SAML"],
+                    "entityName": "Pippocert ",
+                    "logo": "spid-idp-infocertid.svg",
+                    "entityID": "https://identity.pippocert.it",
+                    "active": true
                 }
-            });
+                // Array di oggetti contenenti le configurazioni di ulteriori
+                // Identity Provider (di test) non ufficiali che si vogliano abilitare.
+                // I provider qui elencati sono automaticamente aggiunti all’elenco
+                // supported sopra descritto
+            ],
+            protocol: "OIDC",
+                // SAML/OIDC. Protocollo usato dal SP per interagire con gli IdP.
+                // Dal momento che alcuni IdP potrebbero non supportare OIDC,
+                // questo parametro serve per mostrare in grigio gli IdP non supportati (default: SAML)
+            size: {
+                // small/medium/large. Dimensione di visualizzazione (default: medium)
+            },
+            colorScheme: {
+                // positive/negative. Schema di colori da adottare in base allo sfondo (default: positive)
+            },
+            fluid: {
+                // true/false. Adatta la larghezza del bottone all’elemento che lo contiene (ma max 400px).
+                // (default: false)
+            },
+            cornerStyle: {
+                // rounded/sharp. Stile degli angoli del bottone.
+                // Se impostato a sharp, il bottone non avrà margine. (default: rounded)
+            }
+        });
 /* eslint-enable indent */
-        </script>
-    </head>
-    <body>
-        <section>
-            <div class="agid-spid-enter-button" aria-live="polite" data-size="s">
-                <noscript>
-                    Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-                </noscript>
-            </div>
-            <div class="agid-spid-enter-button" aria-live="polite" data-size="m">
-                <noscript>
-                    Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-                </noscript>
-            </div>
-            <div class="agid-spid-enter-button" aria-live="polite" data-size="l">
-                <noscript>
-                    Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-                </noscript>
-            </div>
-            <div class="agid-spid-enter-button" aria-live="polite" data-size="xl">
-                <noscript>
-                    Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-                </noscript>
-            </div>
-        </section>
-    </body>
+    </script>
+</head>
+
+<body>
+    <section>
+        <div class="agid-spid-enter-button" id="my-spid-button" aria-live="polite" data-size="s">
+            <noscript>
+                Il login tramite SPID richiede che JavaScript sia abilitato nel browser
+            </noscript>
+        </div>
+        <div class="agid-spid-enter-button" id="my-spid-button" aria-live="polite" data-size="m">
+            <noscript>
+                Il login tramite SPID richiede che JavaScript sia abilitato nel browser
+            </noscript>
+        </div>
+        <div class="agid-spid-enter-button" id="my-spid-button" aria-live="polite" data-size="l">
+            <noscript>
+                Il login tramite SPID richiede che JavaScript sia abilitato nel browser
+            </noscript>
+        </div>
+    </section>
+</body>
+
 </html>

@@ -1,24 +1,39 @@
 /*
  * Modulo SPID smart button
  */
-window.AgidSpidEnter = function () {
+window.SPID = function () {
     "use strict";
 
+    /** VARIABILI PRIVATE */
+
+    /* eslint no-underscore-dangle: 0 */
     var self = this,
-        agidSpidEnterWrapper,
-        spidIdpList,
-        infoModal,
-        spidPanelSelect;
+        _agidSpidEnterWrapper,
+        _spidIdpList,
+        _infoModal,
+        _spidPanelSelect,
+        _version = '{{ VERSION }}', // il placeholder '{{ VERSION }}' viene sostituito con la version del package dal task string-replace, non modificare!
+        _lang = 'it', // Lingua delle etichette sostituibile all'init, default Italiano
+        _i18n = {}, // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
+        _availableProviders,
+        _defaultSelector = '#spid-button',
+        _selector,
+        _protocol = "SAML";
 
-    self.availableProviders = null;
+    /** VARIABILI PUBBLICHE */
 
-    function getTpl(templateName, content) {
-        return self.tpl[templateName].call(self, content);
-    }
+    this.resources = {};
+    this.templates = {};
+
+    /** FUNZIONI PRIVATE */
+
+    function getTemplate(templateName, content) {
+        return self.templates[templateName].call(self, content);
+    };
 
     function showElement(dom) {
         dom.removeAttribute('hidden');
-    }
+    };
 
     function hideElement(dom) {
         var hiddenAttribute = document.createAttribute("hidden");
@@ -30,20 +45,20 @@ window.AgidSpidEnter = function () {
         var focusElement = setInterval(function () {
             element.focus();
         }, 100);
-        spidPanelSelect.addEventListener('focus', function () {
+        _spidPanelSelect.addEventListener('focus', function () {
             clearInterval(focusElement);
         });
     }
 
     function closeInfoModal() {
-        hideElement(infoModal);
-        infoModal.innerHTML = '';
-        giveFocusTo(spidPanelSelect);
+        hideElement(_infoModal);
+        _infoModal.innerHTML = '';
+        giveFocusTo(_spidPanelSelect);
     }
 
     function openInfoModal(htmlContent) {
-        infoModal.innerHTML = getTpl('infoModalContent', htmlContent);
-        showElement(infoModal);
+        _infoModal.innerHTML = getTemplate('infoModalContent', htmlContent);
+        showElement(_infoModal);
         // L'attributo aria-live assertive farà leggere il contenuto senza bisogno di focus
         // Viene distrutto e ricreato, non necessita unbind
         document.querySelector('#closemodalbutton').addEventListener('click', closeInfoModal);
@@ -52,15 +67,15 @@ window.AgidSpidEnter = function () {
     // Randomizza l'ordine dei tasti dei provider prima di mostrarli
     function shuffleIdp() {
         // eslint-disable-next-line vars-on-top
-        for (var i = spidIdpList.children.length; i >= 0; i--) {
-            spidIdpList.appendChild(spidIdpList.children[Math.random() * i | 0]);
+        for (var i = _spidIdpList.children.length; i >= 0; i--) {
+            _spidIdpList.appendChild(_spidIdpList.children[Math.random() * i | 0]);
         }
     }
 
     // Chiudi gli overlay in sequenza, prima info modal poi i providers
     function handleEscKeyEvent(event) {
-        var isEscKeyHit             = event.keyCode === 27,
-            isInfoModalVisible      = !infoModal.hasAttribute('hidden');
+        var isEscKeyHit = event.keyCode === 27,
+            isInfoModalVisible = !_infoModal.hasAttribute('hidden');
 
         if (isEscKeyHit) {
             if (isInfoModalVisible) {
@@ -74,13 +89,13 @@ window.AgidSpidEnter = function () {
 
     function showProvidersPanel() {
         shuffleIdp();
-        showElement(agidSpidEnterWrapper);
-        giveFocusTo(spidPanelSelect);
+        showElement(_agidSpidEnterWrapper);
+        giveFocusTo(_spidPanelSelect);
         document.addEventListener('keyup', handleEscKeyEvent);
     }
 
     function hideProvidersPanel() {
-        hideElement(agidSpidEnterWrapper);
+        hideElement(_agidSpidEnterWrapper);
         document.removeEventListener('keyup', handleEscKeyEvent);
     }
 
@@ -88,29 +103,228 @@ window.AgidSpidEnter = function () {
         var agid_spid_enter = document.querySelector('#agid-spid-enter'),
             spidProvidersButtonsHTML = '';
 
-        self.availableProviders.forEach(function (provider) {
-            spidProvidersButtonsHTML += getTpl('spidProviderButton', provider);
+        _availableProviders.forEach(function (provider) {
+            spidProvidersButtonsHTML += getTemplate('spidProviderButton', provider);
         });
 
-        agid_spid_enter.innerHTML = getTpl('spidProviderChoiceModal', spidProvidersButtonsHTML);
+        agid_spid_enter.innerHTML = getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
 
         // Vengono creati una sola volta all'init, non necessitano unbind
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-cancel-access-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#nospid').addEventListener('click', function () {
-            openInfoModal(getTpl('nonHaiSpid'));
+            openInfoModal(getTemplate('nonHaiSpid'));
         });
         document.querySelector('#cosaspid').addEventListener('click', function () {
-            openInfoModal(getTpl('cosaSpid'));
+            openInfoModal(getTemplate('cosaSpid'));
         });
     }
 
-    function renderSpidButtons() {
-        var spidButtonsPlaceholdersObj   = document.querySelectorAll('.agid-spid-enter-button'),
-            spidButtonsPlaceholdersArray = Array.from(spidButtonsPlaceholdersObj),
-            hasButtonsOnPage             = spidButtonsPlaceholdersArray.length;
+    /*
+     * Helper function per gestire tramite promise il risultato asincrono di success/fail, come $.ajax
+     */
+    function ajaxRequest(method, url, payload, done, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200 && xhr.responseText) {
+                    done(null, JSON.parse(xhr.responseText), callback);
+                } else {
+                    done(xhr.responseText, null, callback);
+                }
+            }
+        }.bind(this);
+        xhr.send(JSON.stringify(payload));
+    }
 
-        if (!self.availableProviders) {
+    function getLocalisedMessages(setMessages) {
+        var languageRequest = {
+            lang: _lang
+        };
+        ajaxRequest('GET', self.resources.localisationEndpoint, languageRequest, setMessages);
+    }
+
+    function getAvailableProviders(setProviders) {
+        ajaxRequest('GET', self.resources.providersEndpoint, null, setProviders);
+    }
+
+    function loadStylesheet(url) {
+        var linkElement = document.createElement('link');
+
+        linkElement.rel = 'stylesheet';
+        linkElement.type = 'text/css';
+        linkElement.href = url;
+        document.head.appendChild(linkElement);
+    }
+
+    function addContainersWrapper(wrapperID) {
+        _agidSpidEnterWrapper = document.createElement('section');
+
+        _agidSpidEnterWrapper.id = wrapperID;
+        hideElement(_agidSpidEnterWrapper);
+        document.body.insertBefore(_agidSpidEnterWrapper, document.body.firstChild);
+        _agidSpidEnterWrapper.innerHTML = getTemplate('spidMainContainers');
+    }
+
+    function getSelectors() {
+        _spidIdpList = document.querySelector('#agid-spid-idp-list');
+        _infoModal = document.querySelector('#agid-infomodal');
+        _spidPanelSelect = document.querySelector('#agid-spid-panel-select');
+    }
+
+    function renderSpidModalContainers() {
+        var agidSpidEnterWrapperId = 'agid-spid-enter-container',
+            existentWrapper = document.getElementById(agidSpidEnterWrapperId);
+
+        if (!existentWrapper) {
+            loadStylesheet(self.resources.stylesheetUrl);
+            addContainersWrapper(agidSpidEnterWrapperId);
+        }
+    }
+
+    function renderModule() {
+        renderSpidModalContainers();
+        renderAvailableProviders();
+        self.updateSpidButtons();
+        getSelectors();
+    }
+
+    function getMergedProvidersData(agidProvidersList, options) {
+        var property, hasProtocol;
+        return agidProvidersList.map(function (agidIdpConfig) {
+            agidIdpConfig.url = options.url;
+            agidIdpConfig.method = options.method || 'GET';
+            if (agidIdpConfig.method === 'POST') {
+                agidIdpConfig.fieldName = options.fieldName;
+                agidIdpConfig.extraFields = options.extraFields;
+            }
+
+            for (property in options.mapping) {
+                if (agidIdpConfig.entityID === property) {
+                    agidIdpConfig.entityID = options.mapping[property];
+                }
+            }
+
+            if (!agidIdpConfig.supported) {
+                if (options.supported.indexOf(agidIdpConfig.entityID) === -1 || agidIdpConfig.protocols.indexOf(options.protocol) === -1) {
+                    agidIdpConfig.supported = false;
+                } else {
+                    agidIdpConfig.supported = true;
+                }
+            } else if (agidIdpConfig.protocols.indexOf(options.protocol) === -1) {
+                agidIdpConfig.supported = false;
+            }
+
+            return agidIdpConfig;
+        });
+    }
+
+    function addExtraProviders(agidProvidersList, options) {
+        var i;
+        if (options.extraProviders) {
+            for (i = 0; i < options.extraProviders.length; i++) {
+                options.extraProviders[i].supported = true;
+            }
+            agidProvidersList = agidProvidersList.concat(options.extraProviders);
+        }
+        return agidProvidersList;
+    }
+
+    function checkMandatoryOptions(options) {
+        if (!options || !options.url || !options.supported || options.supported.length < 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function getMergedDefaultOptions(options) {
+        options = options || {};
+        options.lang = options.lang || _lang;
+        options.selector = options.selector || _defaultSelector; //TODO refactoring
+        _selector = options.selector;
+        options.protocol = options.protocol || _protocol;
+
+        return options;
+    }
+
+    function manageError(err, errorCallback) {
+        console.error('Si è verificato un errore nel caricamento dei dati', err);
+        errorCallback && errorCallback();
+    }
+
+    /** FUNZIONI PUBBLICHE */
+
+    this.getVersion = function () {
+        return _version;
+    };
+
+    /**
+     * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
+     * @param {function} success - callback opzionale per gestire il caso di successo
+     * @param {function} error - callback opzionale per gestire il caso di errore
+     */
+    this.init = function (options, success, error) {
+        if (!checkMandatoryOptions(options)) {
+            console.error('Non sono stati forniti i parametri obbligatori della configurazione');
+            error && error();
+            return;
+        }
+        self.initResources();
+        options = getMergedDefaultOptions(options);
+
+        _lang = options.lang;
+
+        getLocalisedMessages(function (err, data) {
+            if (err) {
+                manageError(err, error);
+                return;
+            }
+            self.initTemplates();
+            _i18n = data;
+            getAvailableProviders(function (err, data) {
+                if (err) {
+                    manageError(err, error);
+                    return;
+                }
+                _availableProviders = addExtraProviders(data.spidProviders, options);
+                _availableProviders = getMergedProvidersData(_availableProviders, options);
+                renderModule();
+                success && success();
+            });
+        });
+    };
+
+    /**
+     * @param {string} lang - il locale da caricare, due caratteri eg 'it' | 'en' | 'de'.
+     * @param {function} success - callback opzionale per gestire il caso di successo
+     * @param {function} error - callback opzionale per gestire il caso di errore
+     */
+    this.changeLanguage = function (lang, success, error) {
+        _lang = lang;
+
+        getLocalisedMessages(function (err, data) {
+            if (err) {
+                manageError(err, error);
+                return;
+            }
+            _i18n = data;
+            renderModule();
+            success && success();
+        });
+    };
+
+    this.updateSpidButtons = function () {
+        var spidButtonsPlaceholders = document.querySelectorAll(_selector),
+            hasButtonsOnPage = spidButtonsPlaceholders.length,
+            i = 0, j = 0, foundDataSize,
+            dataSize,
+            supportedSizes = ['s', 'm', 'l'],
+            isSupportedSize,
+            spidButtons;
+
+        if (!_availableProviders) {
             console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
             return;
         };
@@ -119,177 +333,52 @@ window.AgidSpidEnter = function () {
             console.warn('Nessun placeholder HTML trovato nella pagina per i pulsanti SPID');
             return;
         };
-
-        spidButtonsPlaceholdersArray.forEach(function (spidButton) {
-            var foundDataSize   = spidButton.getAttribute('data-size'),
-                dataSize        = foundDataSize.toLowerCase(),
-                supportedSizes  = ['s', 'm', 'l', 'xl'],
-                isSupportedSize = supportedSizes.indexOf(dataSize) !== -1;
+        for (i; i < hasButtonsOnPage; i++) {
+            foundDataSize = spidButtonsPlaceholders[i].getAttribute('data-size');
+            dataSize = foundDataSize.toLowerCase();
+            isSupportedSize = supportedSizes.indexOf(dataSize) !== -1;
 
             if (isSupportedSize) {
-                spidButton.innerHTML = getTpl('spidButton', dataSize);
+                spidButtonsPlaceholders[i].innerHTML = getTemplate('spidButton', dataSize);
             } else {
-                console.error('Le dimenioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButton);
+                console.error('Le dimensioni supportate sono', supportedSizes, 'trovato invece:', foundDataSize, spidButtonsPlaceholders[i]);
             }
-        });
+        }
+        spidButtons = document.querySelectorAll('.agid-spid-enter');
+
         // Binda gli eventi dopo aver renderizzato i pulsanti SPID
-        Array.from(document.querySelectorAll('.agid-spid-enter')).forEach(function (spidButton) {
-            spidButton.addEventListener('click', showProvidersPanel);
-        });
-    }
-
-    /*
-     * Helper function per gestire tramite promise il risultato asincrono di success/fail, come $.ajax
-     */
-    function ajaxRequest(method, url, payload) {
-        return new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest();
-            xhr.open(method, url);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200 && xhr.responseText) {
-                        resolve(JSON.parse(xhr.responseText));
-                    } else {
-                        reject(xhr.responseText);
-                    }
-                }
-            }.bind(this);
-            xhr.send(JSON.stringify(payload));
-        });
-    }
-
-    function getLocalisedMessages() {
-        var languageRequest = {
-            language: self.language
-        };
-
-        return ajaxRequest('GET', self.config.localisationEndpoint, languageRequest);
-    }
-
-    function getAvailableProviders() {
-        return ajaxRequest('GET', self.config.providersEndpoint);
-    }
-
-    function loadStylesheet(url) {
-        var linkElement  = document.createElement('link');
-
-        linkElement.rel  = 'stylesheet';
-        linkElement.type = 'text/css';
-        linkElement.href = url;
-        document.head.appendChild(linkElement);
-    }
-
-    function addContainersWrapper(wrapperID) {
-        agidSpidEnterWrapper = document.createElement('section');
-
-        agidSpidEnterWrapper.id  = wrapperID;
-        hideElement(agidSpidEnterWrapper);
-        document.body.insertBefore(agidSpidEnterWrapper, document.body.firstChild);
-        agidSpidEnterWrapper.innerHTML = getTpl('spidMainContainers');
-    }
-
-    function getSelectors() {
-        spidIdpList      = document.querySelector('#agid-spid-idp-list');
-        infoModal        = document.querySelector('#agid-infomodal');
-        spidPanelSelect  = document.querySelector('#agid-spid-panel-select');
-    }
-
-    function renderSpidModalContainers() {
-        var agidSpidEnterWrapperId = 'agid-spid-enter-container',
-            existentWrapper        = document.getElementById(agidSpidEnterWrapperId),
-            agidSpidEnterWrapper;
-
-        if (!existentWrapper) {
-            loadStylesheet(self.config.stylesheetUrl);
-            addContainersWrapper(agidSpidEnterWrapperId);
+        for (j; j < spidButtons.length; j++) {
+            spidButtons[j].addEventListener('click', showProvidersPanel);
         }
-    }
-
-    function renderModule() {
-        renderSpidModalContainers();
-        renderAvailableProviders();
-        renderSpidButtons();
-        getSelectors();
-    }
-
-    function mergeProvidersData(agidProvidersList, providersPayload) {
-        var availableProviders = [];
-
-        agidProvidersList.forEach(function (agidIdpConfig) {
-            if (agidIdpConfig.isActive) {
-                if (providersPayload) {
-                    agidIdpConfig.payload = Object.assign({}, providersPayload.common, providersPayload[agidIdpConfig.provider]);
-                } else {
-                    agidIdpConfig.payload = {};
-                }
-            }
-            availableProviders.push(agidIdpConfig);
-        });
-
-        self.availableProviders = availableProviders;
-    }
-
-    function setOptions(options) {
-        self.language         = options.language || self.language;
-        self.formActionUrl    = options.formActionUrl || self.formActionUrl;
-        self.formSubmitMethod = options.formSubmitMethod || self.formSubmitMethod;
-    }
-
-    /**
-     * @param {string} language - il locale da caricare, due caratteri eg 'it' | 'en'.
-     * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per le copy
-     */
-    function changeLanguage(language) {
-        setOptions({
-            language: language
-        });
-
-        return getLocalisedMessages()
-            .then(function (data) {
-                self.i18n = data;
-                renderModule();
-            })
-            .catch(function (error) {
-                console.error('Si è verificato un errore nel caricamento dei dati', error);
-            });
     };
 
-    /**
-     * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
-     * @returns {Promise} La promise rappresenta lo stato della chiamata ajax per i dati
-     */
-    function init(options) {
-        var fetchData;
+    this.setResources = function (resources) {
+        self.resources = resources;
+    };
 
-        if (options) {
-            setOptions(options);
+    this.getResources = function () {
+        // Cloniamo l'oggetto in modo che non sia modificabile dall'esterno
+        return JSON.parse(JSON.stringify(self.resources));
+    };
+
+    // Null safe access, se la label non è trovata non si verificano errori runtime, suggerimento in console
+    this.getI18n = function (labelKey, placeholderValue) {
+        var locale = _lang,
+            copy = _i18n.lang &&
+                _i18n.lang[locale] &&
+                _i18n.lang[locale][labelKey],
+            placeholder = /\{\d}/;
+
+        if (placeholderValue) {
+            copy = copy.replace(placeholder, placeholderValue);
         }
 
-        fetchData = [getLocalisedMessages(), getAvailableProviders()];
+        // In caso di label mancante fornisci un feedback al dev
+        if (!copy) {
+            console.error('La chiave richiesta non è disponibile nella lingua selezionata:', locale, labelKey);
+        }
 
-        return Promise.all(fetchData)
-            .then(function (data) {
-                self.i18n = data[0];
-                mergeProvidersData(data[1].spidProviders, options && options.providersPayload);
-                renderModule();
-            })
-            .catch(function (error) {
-                self.availableProviders = null;
-                console.error('Si è verificato un errore nel caricamento dei dati', error);
-            });
+        return copy || labelKey;
     };
 
-    function version() {
-        return self.config.version;
-    }
-
-    /*
-     * Metodi Pubblici
-     */
-    return {
-        init: init,
-        changeLanguage: changeLanguage,
-        updateSpidButtons: renderSpidButtons,
-        version: version
-    };
 };

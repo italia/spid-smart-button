@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
-    var fs           = require('fs'),
-        pkg          = JSON.parse(fs.readFileSync('./package.json', 'utf8')),
-        serverPort   = pkg.localserver.port,
+    var fs = require('fs'),
+        pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8')),
+        serverPort = pkg.localserver.port,
         localhostUrl = pkg.localserver.url + serverPort;
 
     require('load-grunt-tasks')(grunt);
@@ -9,9 +9,17 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+
         watch: {
-            files: ['src/scss/*', 'src/js/*'],
-            tasks: ['build', 'jasmine']
+            build: {
+                files: ['src/scss/*', 'src/js/*'],
+                tasks: ['build']
+            },
+
+            test: {
+                files: ['src/scss/*', 'src/js/*'],
+                tasks: ['build', 'jasmine']
+            }
         },
 
         // Controllo di sicurezza, rileva vulnerabilità note nel codice e nelle dipendenze
@@ -82,7 +90,7 @@ module.exports = function (grunt) {
                 options: {
                     map: false
                 },
-                src:   'dist/agid-spid-enter.min.<%= pkg.version %>.css',
+                src: 'dist/agid-spid-enter.min.<%= pkg.version %>.css',
                 dest: 'dist/agid-spid-enter.min.<%= pkg.version %>.css'
             }
         },
@@ -99,7 +107,6 @@ module.exports = function (grunt) {
                     'dev/agid-spid-enter.min.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
                         'src/js/agid-spid-enter-config-dev.js'
                     ]
                 }
@@ -116,13 +123,11 @@ module.exports = function (grunt) {
                     'dist/agid-spid-enter.min.<%= pkg.version %>.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
                         'src/js/agid-spid-enter-config.js'
                     ],
                     'dist/agid-spid-enter.min.latest.js': [
                         'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-i18n.js',
                         'src/js/agid-spid-enter-config.js'
                     ]
                 }

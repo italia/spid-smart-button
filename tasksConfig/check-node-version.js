@@ -7,15 +7,15 @@ function stripNonDigits(string) {
 }
 
 if (stripNonDigits(supportedNodeVersion) !== stripNonDigits(currentNodeVersion)) {
-    console.log('This project was developed with node.js version', supportedNodeVersion);
+    console.log('Questo progetto è stato sviluppato con la versione di node.js', supportedNodeVersion);
 }
 
 if (stripNonDigits(supportedNodeVersion) < stripNonDigits(currentNodeVersion)) {
-    console.log('current version detected is ahead:', currentNodeVersion);
-    console.log('If anything is wrong with depencies install try downgranding your node.js version\n\n');
+    console.log('la versione rilevata è superiore:', currentNodeVersion);
+    console.log('Se ci sono problemi con l\'installazione delle dipendenze prova a fare un downgrade della tua versione di node.js\n\n');
 }
 
 if (stripNonDigits(supportedNodeVersion) > stripNonDigits(currentNodeVersion)) {
-    console.log('current version detected is behind:', currentNodeVersion);
-    console.log('If anything is wrong with depencies install try upgrading your node.js version\n\n');
+    console.log('la versione rilevata è inferiore:', currentNodeVersion);
+    console.log('Se ci sono problemi con l\'installazione delle dipendenze prova a fare un upgrade della tua versione di node.js\n\n');
 }

@@ -1,49 +1,60 @@
 {
     "spidProviders": [
         {
-            "provider": "aruba",
-            "title": "Aruba",
+            "protocols": [ "SAML" ],
+            "entityName": "Aruba ID",
             "logo": "spid-idp-aruba.svg",
-            "isActive": true
+            "entityID" : "https://loginspid.aruba.it",
+            "active": true
         },
         {
-            "provider": "infocert",
-            "title": "Infocert",
+            "protocols": [ "SAML" ],
+            "entityName": "Infocert ",
             "logo": "spid-idp-infocertid.svg",
-            "isActive": true
+            "entityID" : "https://identity.infocert.it",
+            "active": true
         },
         {
-            "provider": "poste",
-            "title": "Poste",
+            "protocols": [ "SAML" ],
+            "entityName": "Poste ID",
             "logo": "spid-idp-posteid.svg",
-            "isActive": true
+            "entityID" : "https://posteid.poste.it",
+            "active": true
         },
         {
-            "provider": "sielte",
-            "title": "Sielte",
+            "protocols": [ "SAML" ],
+            "entityName": "Sielte",
             "logo": "spid-idp-sielteid.svg",
-            "isActive": true
+            "entityID" : "sielte.it",
+            "active": true
         },
         {
-            "provider": "tim",
-            "title": "Tim",
+            "protocols": [ "SAML" ],
+            "entityName": "Tim ID",
             "logo": "spid-idp-timid.svg",
-            "isActive": true
+            "entityID" : "https://login.id.tim.it/affwebservices/public/saml2sso",
+            "active": true
         },
         {
-            "provider": "newidp1",
+            "protocols": [ "SAML" ],
+            "entityName": "Namirial ID",
             "logo": "spid-idp-dummy.svg",
-            "isActive": false
+            "entityID" : "https://idp.namirialtsp.com/idp",
+            "active": true
         },
         {
-            "provider": "newidp2",
+            "protocols": [ "SAML" ],
+            "entityName": "SPIDItalia Register.it",
             "logo": "spid-idp-dummy.svg",
-            "isActive": false
+            "entityID" : "https://spid.register.it",
+            "active": true
         },
         {
-            "provider": "newidp3",
+            "protocols": [ "SAML" ],
+            "entityName": "Intesa ID",
             "logo": "spid-idp-dummy.svg",
-            "isActive": false
+            "entityID" : "https://spid.intesa.it",
+            "active": true
         }
     ]
 }
