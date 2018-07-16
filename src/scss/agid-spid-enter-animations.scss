@@ -118,6 +118,25 @@
     }
 }
 
+#agid-spid-idp-list {
+    .agid-spid-idp {
+        animation-name: spidIdp;
+        animation-duration: 1s;
+        animation-delay: 0.5s;
+        animation-fill-mode: both;
+    }
+}
+
+@keyframes spidIdp {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 @keyframes cancelBtn {
     from {
         opacity: 0;
