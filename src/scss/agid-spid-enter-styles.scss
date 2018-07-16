@@ -89,11 +89,10 @@ button:active {
         position: absolute;
         display: block;
         margin: auto;
-        width: 10%;
+        width: 12%;
         visibility: hidden;
         top: 30%;
-        left: 15%;
-        z-index: 1000;
+        left: 14%;
     }
 }
 
@@ -191,8 +190,7 @@ button:active {
     #agid-spid-enter-title-page {
         background: transparent;
         display: block;
-        text-align: left;
-        margin-left: 20px;
+        text-align: center;
     }
 }
 
@@ -285,10 +283,10 @@ button:active {
     box-shadow: inset 0 0 0 1px #e6e9f2;
     border-radius: 5px;
     border: 1px solid currentColor;
-    height: 46px;
+    height: 55px;
     display: block;
     margin: auto;
-    width: 80%;
+    width: 85%;
     cursor: default;
 }
 
@@ -439,8 +437,8 @@ button:active {
         background-color: white;
         bottom: 0;
         width: 100%;
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding-top: 4%;
+        padding-bottom: 4%;
         box-shadow: 0 -2px 5px 0 rgba(238, 238, 238, 0.7);
     }
 }

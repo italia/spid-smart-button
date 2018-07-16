@@ -396,10 +396,12 @@ $animIconDistanceEnd: 120;
 
 @keyframes fadeOutEnterBtn {
     from {
+        outline: none;
         opacity: 1;
     }
 
     to {
+        outline: none;
         opacity: 0;
     }
 }

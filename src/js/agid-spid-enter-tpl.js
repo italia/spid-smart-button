@@ -106,7 +106,7 @@
                 return [
                     '<!-- AGID - SPID BUTTON ', style.size.toUpperCase(), ' * begin * -->',
                     '<div id="enter-button-container">',
-                    '<button class="agid-spid-enter agid-font agid-spid-enter-button-', style.colorScheme, ' agid-spid-enter-button-', style.cornerStyle, ' agid-spid-enter-size-', style.size, fluid,'" hidden>',
+                        '<button class="agid-spid-enter agid-font agid-spid-enter-button-', style.colorScheme, ' agid-spid-enter-button-', style.cornerStyle, ' agid-spid-enter-size-', style.size, fluid,'" hidden>',
                             '<div class="agid-logo">',
                                 '<img class="agid-spid-icon" src="', this.getResources().assetsBaseUrl, 'img/spid-ico-circle-bb.svg"></img>',
                             '</div>',
