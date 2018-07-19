@@ -1,8 +1,4 @@
 {
-    "spid-texts": {
-        "version": "1.2",
-        "default": "it"
-    },
     "lang": {
         "it": {
             "naviga_indietro": "Torna indietro",
