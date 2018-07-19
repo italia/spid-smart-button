@@ -1,4 +1,4 @@
-/* eslint-disable indent */
+/* eslint-disable */
 
 (function(){
     function svgWithPngFallback(imagePath, altText) {
@@ -93,7 +93,7 @@
                                 'class="agid-spid-idp-button"',
                                 'title="', providerEntityName, '"',
                                 (providerData.supported) ? '' : 'disabled', '>',
-                                '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="Entra con Aruba">',
+                                '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="', providerData.entityName, '">',
                             '</button>',
                             providerPayloadInputs,
                         '</form>',
