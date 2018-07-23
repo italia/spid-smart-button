@@ -130,6 +130,10 @@ Il parametro `config` serve a configurare l'intera struttura dello smart-button.
 | **supported** | (obbligatorio) Array di entityID relativi agli IdP di cui il SP ha i metadati. Gli IdP non presenti saranno mostrati in grigio all’utente. | `[ “https://www.poste.it/spid” ]` |
 | **extraProviders** | Array di oggetti contenenti le configurazioni di ulteriori Identity Provider (di test) non ufficiali che si vogliano abilitare. I provider qui elencati sono automaticamente aggiunti all’elenco supported sopra descritto | `[{ “entityID”:“https://testidp.mycorp.com/”, “entityName”: “Test IdP” }]` |
 | **protocol** | SAML/OIDC. Protocollo usato dal SP per interagire con gli IdP. Dal momento che alcuni IdP potrebbero non supportare OIDC, questo parametro serve per mostrare in grigio gli IdP non supportati (default: SAML) | SAML |
+| **size** | small/medium/large. Dimensione di visualizzazione (default: medium) | medium |
+| **colorScheme** | positive/negative. Schema di colori da adottare in base allo sfondo (default: positive) | positive |
+| **fluid** | true/false. Adatta la larghezza del bottone all’elemento che lo contiene (ma max 400px).  (default: false) | true |
+| **cornerStyle** | rounded/sharp. Stile degli angoli del bottone. Se impostato a sharp, il bottone non avrà margine. (default: rounded) | rounded |
 
 ad esempio:
 
@@ -169,7 +173,8 @@ spid.init({
             "active": true
         }
     ],
-    protocol: "SAML"
+    protocol: "SAML",
+    size: "small"
 });
 ```
 
