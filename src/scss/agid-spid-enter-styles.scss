@@ -220,13 +220,10 @@ button:active {
     border: none;
     padding-right: 8px;
     vertical-align: middle;
+    display: inline-block;
 
     & svg {
         fill: #fff;
-    }
-
-    & img {
-        float: none !important;
     }
 }
 

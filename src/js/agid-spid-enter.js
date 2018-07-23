@@ -385,12 +385,10 @@ window.SPID = function () {
                     var parent = el.parentElement;
                     parent.classList.add("enterTransition");
                     parent.classList.add("choosedButton");
-                    console.log(parent);
                     setTimeout(function () {
                         parent.classList.remove("enterTransition");
                     }, 2000);
                 });
-                console.log(el.tagName);
             });
         }
         spidButtons = document.querySelectorAll('.agid-spid-enter');
