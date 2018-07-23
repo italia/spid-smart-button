@@ -12,8 +12,8 @@
 #agid-spid-enter-container {
     display: block;
     transition-duration: 1s;
+    transition-delay: 0.5s;
     transition-property: visibility;
-    transition-delay: 0s;
     // FadeOut
     &[hidden] {
         // visibility è animabile diversamente da display
@@ -43,6 +43,24 @@
         #agid-spid-panel-select {
             animation-name: anim-panel-out;
             animation-duration: 1s;
+
+            .fadeOutLeft {
+                animation-name: logoOutLeft;
+                animation-duration: 1s;
+                animation-fill-mode: both;
+            }
+
+            .fadeOutRight {
+                animation-name: closeOutRight;
+                animation-duration: 1s;
+                animation-fill-mode: both;
+            }
+
+            .fadeOutBottom {
+                animation-name: titleToBottom;
+                animation-duration: 1s;
+                animation-fill-mode: both;
+            }
         }
     }
     // FadeIn
@@ -54,18 +72,150 @@
             &::before {
                 animation-name: anim-base-in;
                 animation-duration: 2s;
+                animation-delay: 0.5s;
             }
 
             &::after {
                 animation-name: anim-icon-in;
                 animation-duration: 1s;
+                animation-delay: 0.5s;
             }
+        }
+
+        .fadeInCancel {
+            animation-name: cancelBtn;
+            animation-delay: 1s;
+            animation-duration: 1.25s;
+            animation-fill-mode: both;
         }
 
         #agid-spid-panel-select {
             animation-name: anim-panel-in;
             animation-duration: 2s;
+            animation-delay: 0.5s;
+
+            .fadeInLeft {
+                animation-name: logoFromLeft;
+                animation-duration: 1s;
+                animation-delay: 0.5s;
+                animation-fill-mode: both;
+            }
+
+            .fadeInRight {
+                animation-name: closeFromRight;
+                animation-duration: 1s;
+                animation-delay: 0.5s;
+                animation-fill-mode: both;
+            }
+
+            .fadeInBottom {
+                animation-name: titleFromBottom;
+                animation-duration: 1s;
+                animation-delay: 0.5s;
+                animation-fill-mode: both;
+            }
         }
+    }
+}
+
+#agid-spid-idp-list {
+    .agid-spid-idp {
+        animation-name: spidIdp;
+        animation-duration: 1s;
+        animation-delay: 0.5s;
+        animation-fill-mode: both;
+    }
+}
+
+@keyframes spidIdp {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes cancelBtn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes logoFromLeft {
+    from {
+        opacity: 0;
+        transform: translate(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes closeFromRight {
+    from {
+        opacity: 0;
+        transform: none;
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50px);
+    }
+}
+
+@keyframes titleFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(200%);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes logoOutLeft {
+    from {
+        opacity: 0;
+        transform: none;
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50px);
+    }
+}
+
+@keyframes closeOutRight {
+    from {
+        opacity: 0;
+        transform: translate(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes titleToBottom {
+    from {
+        opacity: 0;
+        transform: none;
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(200%);
     }
 }
 
@@ -213,11 +363,80 @@ $animIconDistanceEnd: 120;
         height: 100vh;
     }
 
-    99.9% {
-        height: 100vh;
-    }
-
     100% {
         height: 0;
+    }
+}
+
+#enter-button-container {
+    &.enterTransition {
+        .agid-spid-enter {
+            animation-name: fadeOutEnterBtn;
+            animation-duration: 1s;
+        }
+
+        .agid-spid-enter-icon {
+            animation-name: biggerLogo;
+            animation-duration: 1.2s;
+        }
+    }
+
+    &.reverseEnterTransition {
+        .agid-spid-enter {
+            animation-name: fadeInEnterBtn;
+            animation-duration: 1s;
+        }
+
+        .agid-spid-enter-icon {
+            animation-name: smallerLogo;
+            animation-duration: 1s;
+        }
+    }
+}
+
+@keyframes fadeOutEnterBtn {
+    from {
+        outline: none;
+        opacity: 1;
+    }
+
+    to {
+        outline: none;
+        opacity: 0;
+    }
+}
+
+@keyframes biggerLogo {
+    from {
+        opacity: 1;
+        visibility: hidden;
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(60);
+        visibility: visible;
+    }
+}
+
+@keyframes fadeInEnterBtn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes smallerLogo {
+    from {
+        opacity: 0;
+        transform: scale(60);
+        visibility: visible;
+    }
+
+    to {
+        opacity: 1;
     }
 }
