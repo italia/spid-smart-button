@@ -216,7 +216,7 @@ describe('SPID', function () {
                     // GIVEN
                     var config = {
                         url: '/generic/url/{{idp}}',
-                        size : "SMALL",
+                        size: "SMALL",
                         supported: supportedProviders
                     };
                     injectSpidPlaceHolder();
@@ -235,7 +235,7 @@ describe('SPID', function () {
                     // GIVEN
                     var config = {
                         url: '/generic/url/{{idp}}',
-                        size : "extra",
+                        size: "extra",
                         supported: supportedProviders
                     };
                     // WHEN
@@ -252,7 +252,7 @@ describe('SPID', function () {
                     // GIVEN
                     var config = {
                         url: '/generic/url/{{idp}}',
-                        colorScheme : "extra",
+                        colorScheme: "extra",
                         supported: supportedProviders
                     };
                     // WHEN
@@ -269,7 +269,7 @@ describe('SPID', function () {
                     // GIVEN
                     var config = {
                         url: '/generic/url/{{idp}}',
-                        fluid : "extra",
+                        fluid: "extra",
                         supported: supportedProviders
                     };
                     // WHEN
@@ -286,7 +286,7 @@ describe('SPID', function () {
                     // GIVEN
                     var config = {
                         url: '/generic/url/{{idp}}',
-                        cornerStyle : "extra",
+                        cornerStyle: "extra",
                         supported: supportedProviders
                     };
                     // WHEN
@@ -405,12 +405,11 @@ describe('SPID', function () {
                     new Promise(function (resolve) {
                         SUT.init(config, resolve);
                     }).then(function () {
-                        var providers = document.querySelectorAll('#agid-spid-idp-list button'),
-                            disabled = document.querySelectorAll("#agid-spid-idp-list button:disabled"),
-                            enabled = document.querySelectorAll("#agid-spid-idp-list button:enabled");
+                        var providers = document.querySelectorAll('#agid-spid-idp-list a'),
+                            disabled = document.querySelectorAll("#agid-spid-idp-list a[disabled]");
                         // THEN
                         expect(disabled.length).toEqual(providers.length - 1);
-                        expect(enabled.length).toEqual(1);
+                        //expect(enabled.length).toEqual(1);
                         done();
                     });
                 });
@@ -433,11 +432,10 @@ describe('SPID', function () {
                     new Promise(function (resolve) {
                         SUT.init(config, resolve);
                     }).then(function () {
-                        var providers = document.querySelectorAll('#agid-spid-idp-list button'),
-                            enabled = document.querySelectorAll("#agid-spid-idp-list button:enabled"),
-                            extraProvider = document.querySelectorAll('#agid-spid-provider-Ciccio-ID');
+                        var disabled = document.querySelectorAll('#agid-spid-idp-list a[disabled]'),
+                            extraProvider = document.querySelectorAll('#agid-spid-idp-list a[title="Accedi a SPID con Ciccio ID"]');
                         // THEN
-                        expect(enabled.length).toEqual(providers.length);
+                        expect(disabled.length).toEqual(0);
                         expect(extraProvider.length).toEqual(1);
                         done();
                     });

@@ -54,6 +54,22 @@ button:active {
                 }
             }
         }
+
+        a {
+            height: 100%;
+            border: 3px solid white;
+            padding: 10px;
+            background: white;
+
+            &:active {
+                border: 3px solid rgb(247, 145, 13);
+            }
+
+            &[disabled] {
+                cursor: not-allowed;
+                filter: grayscale(1);
+            }
+        }
     }
 }
 
