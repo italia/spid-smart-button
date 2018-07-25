@@ -81,22 +81,33 @@
                         }
                     }
                     providerUri = providerData.url;
+                    return [
+                        '<span class="agid-spid-idp">',
+                            '<form id="agid-spid-provider-', providerID, '"',
+
+                                'action="', providerUri, '" method="', providerData.method, '">',
+                                '<button type="submit"',
+                                    'class="agid-spid-idp-button"',
+                                    'title="', providerEntityName, '"',
+                                    (providerData.supported) ? '' : 'disabled', '>',
+                                    '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="', providerData.entityName, '">',
+                                '</button>',
+                                providerPayloadInputs,
+                            '</form>',
+                        '</span>'
+                        ].join('');
                 } else if (providerData.method === 'GET') {
                     providerUri = providerData.url.replace('{{idp}}', encodeURIComponent(providerData.entityID));
-                }
-                return [
-                    '<span class="agid-spid-idp">',
-                        '<form action="', providerUri, '" method="', providerData.method, '">',
-                            '<button type="submit"',
-                                'class="agid-spid-idp-button"',
-                                'title="', providerEntityName, '"',
-                                (providerData.supported) ? '' : 'disabled', '>',
+                    return [
+                        '<span class="agid-spid-idp">',
+                            '<a title="', providerEntityName, '" href="', providerUri,'"',
+                            (providerData.supported) ? '' : 'disabled',
+                            '>',
                                 '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="', providerData.entityName, '">',
-                            '</button>',
-                            providerPayloadInputs,
-                        '</form>',
-                    '</span>'
+                            '</a>',
+                        '</span>'
                     ].join('');
+                }
             },
 
             spidButton: function (style) {
