@@ -83,9 +83,7 @@
                     providerUri = providerData.url;
                     return [
                         '<span class="agid-spid-idp">',
-                            '<form id="agid-spid-provider-', providerID, '"',
-
-                                'action="', providerUri, '" method="', providerData.method, '">',
+                            '<form action="', providerUri, '" method="', providerData.method, '">',
                                 '<button type="submit"',
                                     'class="agid-spid-idp-button"',
                                     'title="', providerEntityName, '"',
@@ -101,8 +99,7 @@
                     return [
                         '<span class="agid-spid-idp">',
                             '<a title="', providerEntityName, '" href="', providerUri,'"',
-                            (providerData.supported) ? '' : 'disabled',
-                            '>',
+                            (providerData.supported) ? '' : 'disabled','>',
                                 '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="', providerData.entityName, '">',
                             '</a>',
                         '</span>'
