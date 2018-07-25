@@ -86,9 +86,7 @@
                 }
                 return [
                     '<span class="agid-spid-idp">',
-                        '<form id="agid-spid-provider-', providerID, '"',
-
-                            'action="', providerUri, '" method="', providerData.method, '">',
+                        '<form action="', providerUri, '" method="', providerData.method, '">',
                             '<button type="submit"',
                                 'class="agid-spid-idp-button"',
                                 'title="', providerEntityName, '"',
