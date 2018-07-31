@@ -105,9 +105,12 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dev/agid-spid-enter.min.js': [
-                        'src/js/agid-spid-enter.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-config-dev.js'
+                        'src/js/agid-spid-enter-config-dev.js',
+                        'src/js/agid-spid-enter.js'
+                        // ,
+                        // 'src/js/agid-spid-enter-tpl.js',
+                        // 'src/js/agid-spid-enter-config-dev.js'
                     ]
                 }
             },

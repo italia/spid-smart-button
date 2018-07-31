@@ -1,6 +1,12 @@
 /* eslint-disable */
+var SPID = (function(){
 
-(function(){
+    // costruttore dell'oggetto SPID
+    function SPID() {
+        this.resources = {};
+        this.templates = {};
+    }
+
     function svgWithPngFallback(imagePath, altText) {
         return [
             '<img aria-hidden="true"',
@@ -15,7 +21,7 @@
         return ['<input type="hidden" name="', name, '" value="', value, '" />'].join('');
     };
 
-    window.SPID.prototype.initTemplates = function(){
+    SPID.prototype.initTemplates = function(){
         this.templates = {
             spidMainContainers: function () {
                 return [
@@ -175,5 +181,8 @@
             }
         };
     }
+
+    return SPID;
+
 })();
 /* eslint-enable indent */

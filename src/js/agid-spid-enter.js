@@ -1,18 +1,19 @@
 /*
  * Modulo SPID smart button
  */
-window.SPID = function () {
+var SPID;
+SPID = (function (SPID) {
+
     "use strict";
 
-    /** VARIABILI PRIVATE */
-
     /* eslint no-underscore-dangle: 0 */
+
+    /** VARIABILI PRIVATE */
     var self = this,
         _agidSpidEnterWrapper,
         _spidIdpList,
         _infoModal,
         _spidPanelSelect,
-        _version = '{{ VERSION }}', // il placeholder '{{ VERSION }}' viene sostituito con la version del package dal task string-replace, non modificare!
         _lang = 'it', // Lingua delle etichette sostituibile all'init, default Italiano
         _i18n = {}, // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
         _availableProviders,
@@ -23,17 +24,13 @@ window.SPID = function () {
             colorScheme: "positive",
             fluid: false,
             cornerStyle: "rounded"
-        };
-
-    /** VARIABILI PUBBLICHE */
-
-    this.resources = {};
-    this.templates = {};
+        },
+        _SPID = SPID;
 
     /** FUNZIONI PRIVATE */
 
-    function getTemplate(templateName, content) {
-        return self.templates[templateName].call(self, content);
+    SPID.prototype.getTemplate = function (templateName, content) {
+        return this.templates[templateName].call(this, content);
     };
 
     function showElement(dom) {
@@ -61,8 +58,8 @@ window.SPID = function () {
         giveFocusTo(_spidPanelSelect);
     }
 
-    function openInfoModal(htmlContent) {
-        _infoModal.innerHTML = getTemplate('infoModalContent', htmlContent);
+    function openInfoModal(htmlContent, _spid) {
+        _infoModal.innerHTML = _spid.getTemplate('infoModalContent', htmlContent);
         showElement(_infoModal);
         // L'attributo aria-live assertive farà leggere il contenuto senza bisogno di focus
         // Viene distrutto e ricreato, non necessita unbind
@@ -104,15 +101,15 @@ window.SPID = function () {
         document.removeEventListener('keyup', handleEscKeyEvent);
     }
 
-    function renderAvailableProviders() {
+    function renderAvailableProviders(_spid) {
         var agid_spid_enter = document.querySelector('#agid-spid-enter'),
             spidProvidersButtonsHTML = '';
 
         _availableProviders.forEach(function (provider) {
-            spidProvidersButtonsHTML += getTemplate('spidProviderButton', provider);
+            spidProvidersButtonsHTML += _spid.getTemplate('spidProviderButton', provider);
         });
 
-        agid_spid_enter.innerHTML = getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
+        agid_spid_enter.innerHTML = _spid.getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
         // Vengono creati una sola volta all'init, non necessitano unbind
         document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
         document.querySelector('#agid-cancel-access-button').addEventListener('click', hideProvidersPanel);
@@ -135,7 +132,7 @@ window.SPID = function () {
             }, 2000);
         });
         document.querySelector('#nospid').addEventListener('click', function () {
-            openInfoModal(getTemplate('nonHaiSpid'));
+            openInfoModal(_spid.getTemplate('nonHaiSpid', null), _spid);
         });
     }
 
@@ -157,15 +154,15 @@ window.SPID = function () {
         xhr.send(JSON.stringify(payload));
     }
 
-    function getLocalisedMessages(setMessages) {
+    function getLocalisedMessages(setMessages, _spid) {
         var languageRequest = {
             lang: _lang
         };
-        ajaxRequest('GET', self.resources.localisationEndpoint, languageRequest, setMessages);
+        ajaxRequest('GET', _spid.resources.localisationEndpoint, languageRequest, setMessages);
     }
 
-    function getAvailableProviders(setProviders) {
-        ajaxRequest('GET', self.resources.providersEndpoint, null, setProviders);
+    function getAvailableProviders(setProviders, _spid) {
+        ajaxRequest('GET', _spid.resources.providersEndpoint, null, setProviders);
     }
 
     function loadStylesheet(url) {
@@ -177,13 +174,13 @@ window.SPID = function () {
         document.head.appendChild(linkElement);
     }
 
-    function addContainersWrapper(wrapperID) {
+    function addContainersWrapper(wrapperID, _spid) {
         _agidSpidEnterWrapper = document.createElement('section');
 
         _agidSpidEnterWrapper.id = wrapperID;
         hideElement(_agidSpidEnterWrapper);
         document.body.insertBefore(_agidSpidEnterWrapper, document.body.firstChild);
-        _agidSpidEnterWrapper.innerHTML = getTemplate('spidMainContainers');
+        _agidSpidEnterWrapper.innerHTML = _spid.getTemplate('spidMainContainers', null);
     }
 
     function getSelectors() {
@@ -192,22 +189,22 @@ window.SPID = function () {
         _spidPanelSelect = document.querySelector('#agid-spid-panel-select');
     }
 
-    function renderSpidModalContainers() {
+    function renderSpidModalContainers(_spid) {
         var agidSpidEnterWrapperId = 'agid-spid-enter-container',
             existentWrapper = document.getElementById(agidSpidEnterWrapperId);
 
         if (!existentWrapper) {
-            loadStylesheet(self.resources.stylesheetUrl);
-            addContainersWrapper(agidSpidEnterWrapperId);
+            loadStylesheet(_spid.resources.stylesheetUrl);
+            addContainersWrapper(agidSpidEnterWrapperId, _spid);
         }
     }
 
-    function renderModule() {
-        renderSpidModalContainers();
-        renderAvailableProviders();
-        self.updateSpidButtons();
+    SPID.prototype.renderModule = function () {
+        renderSpidModalContainers(this);
+        renderAvailableProviders(this);
+        this.updateSpidButtons();
         getSelectors();
-    }
+    };
 
     function getMergedProvidersData(agidProvidersList, options) {
         var property, hasProtocol;
@@ -296,23 +293,19 @@ window.SPID = function () {
 
     /** FUNZIONI PUBBLICHE */
 
-    this.getVersion = function () {
-        return _version;
-    };
-
     /**
      * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
      * @param {function} success - callback opzionale per gestire il caso di successo
      * @param {function} error - callback opzionale per gestire il caso di errore
      */
-    this.init = function (options, success, error) {
+    SPID.prototype._init = function (options, success, error, _spid) {
         var msg;
         if (!checkMandatoryOptions(options)) {
             console.error('Non sono stati forniti i parametri obbligatori della configurazione');
             error && error();
             return;
         }
-        self.initResources();
+        _spid.initResources();
         options = getMergedDefaultOptions(options);
         msg = checkStyleOptions(_style);
         if (msg !== true) {
@@ -327,7 +320,7 @@ window.SPID = function () {
                 manageError(err, error);
                 return;
             }
-            self.initTemplates();
+            _spid.initTemplates();
             _i18n = data;
             getAvailableProviders(function (err, data) {
                 if (err) {
@@ -336,10 +329,11 @@ window.SPID = function () {
                 }
                 _availableProviders = addExtraProviders(data.spidProviders, options);
                 _availableProviders = getMergedProvidersData(_availableProviders, options);
-                renderModule();
+                _spid.renderModule();
                 success && success();
-            });
-        });
+                return _spid;
+            }, _spid);
+        }, _spid);
     };
 
     /**
@@ -347,7 +341,7 @@ window.SPID = function () {
      * @param {function} success - callback opzionale per gestire il caso di successo
      * @param {function} error - callback opzionale per gestire il caso di errore
      */
-    this.changeLanguage = function (lang, success, error) {
+    function changeLanguage(lang, success, error) {
         _lang = lang;
 
         getLocalisedMessages(function (err, data) {
@@ -356,12 +350,12 @@ window.SPID = function () {
                 return;
             }
             _i18n = data;
-            renderModule();
+            this.renderModule();
             success && success();
         });
     };
 
-    this.updateSpidButtons = function () {
+    SPID.prototype.updateSpidButtons = function () {
         var spidButtonsPlaceholders = document.querySelectorAll(_selector),
             hasButtonsOnPage = spidButtonsPlaceholders.length,
             i = 0, j = 0,
@@ -378,7 +372,7 @@ window.SPID = function () {
             return;
         };
         for (i; i < hasButtonsOnPage; i++) {
-            spidButtonsPlaceholders[i].innerHTML = getTemplate('spidButton', _style);
+            spidButtonsPlaceholders[i].innerHTML = this.getTemplate('spidButton', _style);
             btn = spidButtonsPlaceholders[i].getElementsByClassName("agid-spid-enter");
             Array.prototype.forEach.call(btn, function (el) {
                 el.addEventListener('click', function () {
@@ -399,17 +393,17 @@ window.SPID = function () {
         }
     };
 
-    this.setResources = function (resources) {
-        self.resources = resources;
+    SPID.prototype.setResources = function (resources) {
+        this.resources = resources;
     };
 
-    this.getResources = function () {
+    SPID.prototype.getResources = function () {
         // Cloniamo l'oggetto in modo che non sia modificabile dall'esterno
-        return JSON.parse(JSON.stringify(self.resources));
+        return JSON.parse(JSON.stringify(this.resources));
     };
 
     // Null safe access, se la label non è trovata non si verificano errori runtime, suggerimento in console
-    this.getI18n = function (labelKey, placeholderValue) {
+    SPID.prototype.getI18n = function (labelKey, placeholderValue) {
         var locale = _lang,
             copy = _i18n.lang &&
                 _i18n.lang[locale] &&
@@ -428,4 +422,11 @@ window.SPID = function () {
         return copy || labelKey;
     };
 
-};
+    return {
+        init: function (config, success, error) {
+            var _spid = new _SPID();
+            return _spid._init(config, success, error, _spid);
+        },
+        changeLanguage: changeLanguage
+    };
+})(SPID || {});
