@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 
         watch: {
             build: {
-                files: ['src/scss/*', 'src/js/*'],
+                files: ['src/scss/*', 'src/js/*', 'src/data/*'],
                 tasks: ['build']
             },
 
@@ -105,6 +105,8 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dev/agid-spid-enter.min.js': [
+                        'src/data/spidI18n.js',
+                        'src/data/spidProviders.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-config-dev.js',
                         'src/js/agid-spid-enter.js'
@@ -121,11 +123,15 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/agid-spid-enter.min.<%= pkg.version %>.js': [
+                        'src/data/spidI18n.js',
+                        'src/data/spidProviders.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-config.js',
                         'src/js/agid-spid-enter.js'
                     ],
                     'dist/agid-spid-enter.min.latest.js': [
+                        'src/data/spidI18n.js',
+                        'src/data/spidProviders.js',
                         'src/js/agid-spid-enter-tpl.js',
                         'src/js/agid-spid-enter-config.js',
                         'src/js/agid-spid-enter.js'

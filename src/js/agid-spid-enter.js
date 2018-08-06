@@ -10,15 +10,14 @@ var _SPID,
             _spidIdpList,
             _infoModal,
             _spidPanelSelect,
-
             // questa funzione consente la gestione dell'esposizione verso l'esterno dei metodi pubblici
             // e permette inoltre di restituire un'istanza di _SPID tramite la funzione init()
-            SPID = function (config, success, error) {
+            SPID = function (config) {
                 this.internalSPID = new _SPID();
-                this.internalSPID._init(config, success, error);
+                this.internalSPID._init(config);
                 //in questo modo riesco a rendere pubblico questo metodo
-                this.changeLanguage = function (lang, success, error) {
-                    return this.internalSPID.changeLanguage(lang, success, error);
+                this.changeLanguage = function (lang) {
+                    return this.internalSPID.changeLanguage(lang);
                 };
                 //aggiungere qui i metodi da rendere pubblici
             };
@@ -148,17 +147,6 @@ var _SPID,
             }.bind(this);
             xhr.send(JSON.stringify(payload));
         }
-
-        _SPID.prototype.getLocalisedMessages = function (setMessages) {
-            var languageRequest = {
-                lang: this._lang
-            };
-            ajaxRequest('GET', this.resources.localisationEndpoint, languageRequest, setMessages);
-        };
-
-        _SPID.prototype.getAvailableProviders = function (setProviders) {
-            ajaxRequest('GET', this.resources.providersEndpoint, null, setProviders);
-        };
 
         function loadStylesheet(url) {
             var linkElement = document.createElement('link');
@@ -290,15 +278,12 @@ var _SPID,
 
         /**
          * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
-         * @param {function} success - callback opzionale per gestire il caso di successo
-         * @param {function} error - callback opzionale per gestire il caso di errore
          */
-        _SPID.prototype._init = function (options, success, error) {
+        _SPID.prototype._init = function (options) {
             var msg,
                 _spid = this;
             if (!checkMandatoryOptions(options)) {
                 console.error('Non sono stati forniti i parametri obbligatori della configurazione');
-                error && error();
                 return;
             }
             _spid.initResources();
@@ -306,56 +291,28 @@ var _SPID,
             msg = _spid.checkStyleOptions(_spid._style);
             if (msg !== true) {
                 console.error(msg);
-                error && error();
                 return;
             }
-            //_spid._lang = options.lang;
+            _spid.initTemplates();
 
-            _spid.getLocalisedMessages(function (err, data) {
-                if (err) {
-                    manageError(err, error);
-                    return;
-                }
-                _spid.initTemplates();
-                _spid._i18n = data;
-                _spid.getAvailableProviders(function (err, data) {
-                    if (err) {
-                        manageError(err, error);
-                        return;
-                    }
-                    _spid._availableProviders = addExtraProviders(data.spidProviders, options);
-                    _spid._availableProviders = getMergedProvidersData(_spid._availableProviders, options);
-                    _spid.renderModule();
-                    success && success();
-                });
-            });
+            _spid._availableProviders = addExtraProviders(_spid._availableProviders, options);
+            _spid._availableProviders = getMergedProvidersData(_spid._availableProviders, options);
+            _spid.renderModule();
         };
 
         /**
          * @param {string} lang - il locale da caricare, due caratteri eg 'it' | 'en' | 'de'.
-         * @param {function} success - callback opzionale per gestire il caso di successo
-         * @param {function} error - callback opzionale per gestire il caso di errore
          */
-        _SPID.prototype.changeLanguage = function (lang, success, error) {
+        _SPID.prototype.changeLanguage = function (lang) {
             var _spid = this;
             _spid._lang = lang;
-
-            _spid.getLocalisedMessages(function (err, data) {
-                if (err) {
-                    manageError(err, error);
-                    return;
-                }
-                _spid._i18n = data;
-                _spid.renderModule();
-                success && success();
-            });
+            _spid.renderModule();
         };
 
         _SPID.prototype.updateSpidButtons = function () {
             var spidButtonsPlaceholders = document.querySelectorAll(this._selector),
                 hasButtonsOnPage = spidButtonsPlaceholders.length,
                 i = 0, j = 0,
-                btn,
                 spidButtons;
 
             if (!this._availableProviders) {
@@ -367,12 +324,14 @@ var _SPID,
                 console.warn('Nessun placeholder HTML trovato nella pagina per i pulsanti SPID');
                 return;
             };
+            // Binda gli eventi dopo aver renderizzato i pulsanti SPID
             for (i; i < hasButtonsOnPage; i++) {
                 spidButtonsPlaceholders[i].innerHTML = this.getTemplate('spidButton', this._style);
-                btn = spidButtonsPlaceholders[i].getElementsByClassName("agid-spid-enter");
-                Array.prototype.forEach.call(btn, function (el) {
-                    el.addEventListener('click', function () {
-                        var parent = el.parentElement;
+                spidButtons = document.querySelectorAll('.agid-spid-enter');
+                Array.prototype.forEach.call(spidButtons, function (spidbtn) {
+                    spidbtn.addEventListener('click', showProvidersPanel);
+                    spidbtn.addEventListener('click', function () {
+                        var parent = spidbtn.parentElement;
                         parent.classList.add("enterTransition");
                         parent.classList.add("choosedButton");
                         setTimeout(function () {
@@ -380,12 +339,6 @@ var _SPID,
                         }, 2000);
                     });
                 });
-            }
-            spidButtons = document.querySelectorAll('.agid-spid-enter');
-
-            // Binda gli eventi dopo aver renderizzato i pulsanti SPID
-            for (j; j < spidButtons.length; j++) {
-                spidButtons[j].addEventListener('click', showProvidersPanel);
             }
         };
 

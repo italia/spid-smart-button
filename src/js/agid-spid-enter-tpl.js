@@ -1,5 +1,5 @@
 /* eslint-disable */
-var _SPID = (function(){
+var _SPID = (function(languages, providers){
 
     // costruttore dell'oggetto SPID
     // qui vengono avvalorate le proprietà con i valori di default
@@ -7,8 +7,8 @@ var _SPID = (function(){
         this.resources = {};
         this.templates = {};
         this._lang = 'it'; // Lingua delle etichette sostituibile all'init, default Italiano
-        this._i18n = {}; // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
-        this._availableProviders;
+        this._i18n = languages(); // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
+        this._availableProviders = providers();
         this._selector = '#spid-button';
         this._protocol = "SAML";
         this._style = {
@@ -196,5 +196,5 @@ var _SPID = (function(){
 
     return _SPID;
 
-})();
+})(languages, providers);
 /* eslint-enable indent */

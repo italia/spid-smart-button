@@ -6,9 +6,7 @@ var _SPID;
     _SPID.prototype.initResources = function () {
         this.resources = {
             assetsBaseUrl: '',
-            stylesheetUrl: 'dev/agid-spid-enter.min.css',
-            providersEndpoint: '/src/data/spidProviders.json',
-            localisationEndpoint: '/src/data/spidI18n.json'
+            stylesheetUrl: 'dev/agid-spid-enter.min.css'
         };
     };
 })(_SPID || {});

@@ -9,45 +9,48 @@
     <script type="text/javascript" src="dev/agid-spid-enter.min.js"></script>
     <script type="text/javascript">
         /* eslint-disable indent */
-        var spid = SPID.init({
-            lang: 'en',
-            selector: '#my-spid-button',  // opzionale
-            method: 'POST',               // opzionale
-            url: '/Login/{{idp}}',
-            fieldName: 'idp',
-            extraFields: {                // opzionale
-                foo: 'bar',
-                baz: 'baz'
-            },
-            mapping: {                    // opzionale
-                'https://loginspid.aruba.it': 4,
-                'https://posteid.poste.it': 5,
-                'https://idp.namirialtsp.com/idp': 7,
-            },
-            supported: [
-                'sielte.it'
-            ],
-            extraProviders: [
-                {
-                    "protocols": ["SAML"],
-                    "entityName": "Ciccio ID",
-                    "logo": "spid-idp-aruba.svg",
-                    "entityID": "https://loginciccio.it",
-                    "active": true
+        document.addEventListener('DOMContentLoaded', function () {
+            var spid = SPID.init({
+                lang: 'en',
+                selector: '#my-spid-button',  // opzionale
+                method: 'POST',               // opzionale
+                url: '/Login/{{idp}}',
+                fieldName: 'idp',
+                extraFields: {                // opzionale
+                    foo: 'bar',
+                    baz: 'baz'
                 },
-                {
-                    "protocols": ["SAML"],
-                    "entityName": "Pippocert ",
-                    "logo": "spid-idp-infocertid.svg",
-                    "entityID": "https://identity.pippocert.it",
-                    "active": true
-                }
-            ],
-            protocol: "SAML",
-            size: "large",
-            colorScheme: "positive",
-            cornerStyle: "rounded"
+                mapping: {                    // opzionale
+                    'https://loginspid.aruba.it': 4,
+                    'https://posteid.poste.it': 5,
+                    'https://idp.namirialtsp.com/idp': 7,
+                },
+                supported: [
+                    'sielte.it'
+                ],
+                extraProviders: [
+                    {
+                        "protocols": ["SAML"],
+                        "entityName": "Ciccio ID",
+                        "logo": "spid-idp-aruba.svg",
+                        "entityID": "https://loginciccio.it",
+                        "active": true
+                    },
+                    {
+                        "protocols": ["SAML"],
+                        "entityName": "Pippocert ",
+                        "logo": "spid-idp-infocertid.svg",
+                        "entityID": "https://identity.pippocert.it",
+                        "active": true
+                    }
+                ],
+                protocol: "SAML",
+                size: "large",
+                colorScheme: "positive",
+                cornerStyle: "rounded"
+            });
         });
+
 /* eslint-enable indent */
     </script>
 </head>
