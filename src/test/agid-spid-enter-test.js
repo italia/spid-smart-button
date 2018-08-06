@@ -5,6 +5,7 @@ describe('SPID', function () {
         agidSpidWrapperID = '#agid-spid-enter-container',
         agidInfoModalID = '#agid-infomodal',
         agidModalButtonID = '#nospid',
+        accediConSpid = 'Accedi a SPID con ',
         supportedProviders = [
             'https://loginspid.aruba.it',
             'https://identity.infocert.it',
@@ -295,11 +296,19 @@ describe('SPID', function () {
                         supported: supportedProviders
                     };
                     // WHEN
+
                     SPID.init(config);
-                    var hiddenInput = document.querySelectorAll('#agid-spid-provider-Poste-ID input[name="testName"]');
+                    var providers = document.querySelectorAll('#agid-spid-idp-list form'),
+                        hiddenInput;
+                    for (var i = 0; i < providers.length; i++) {
+                        if (providers[i][0].getAttribute('title') === accediConSpid + 'Poste ID') {
+                            hiddenInput = providers[i][1];
+                        }
+                    }
                     // THEN
-                    expect(hiddenInput[0].value).toEqual('poste');
+                    expect(hiddenInput.value).toEqual('poste');
                     done();
+
                 });
 
                 it('should enable provider button if that provider is supported and disable other providers', function (done) {
