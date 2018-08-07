@@ -56,6 +56,9 @@ window.SPID = function () {
     }
 
     function closeInfoModal() {
+        showElement(_spidPanelSelect);
+        showElement(document.querySelector('#agid-spid-enter-anim'));
+        showElement(document.querySelector(_selector));
         hideElement(_infoModal);
         _infoModal.innerHTML = '';
         giveFocusTo(_spidPanelSelect);
@@ -63,7 +66,10 @@ window.SPID = function () {
 
     function openInfoModal(htmlContent) {
         _infoModal.innerHTML = getTemplate('infoModalContent', htmlContent);
+        hideElement(document.querySelector('#agid-spid-enter-anim'));
         showElement(_infoModal);
+        hideElement(_spidPanelSelect);
+        hideElement(document.querySelector(_selector));
         // L'attributo aria-live assertive farà leggere il contenuto senza bisogno di focus
         // Viene distrutto e ricreato, non necessita unbind
         document.querySelector('#closemodalbutton').addEventListener('click', closeInfoModal);
@@ -134,7 +140,7 @@ window.SPID = function () {
                 elem.classList.remove("reverseEnterTransition");
             }, 2000);
         });
-        document.querySelector('#nospid').addEventListener('click', function () {
+        document.getElementById('nospid').addEventListener('click', function () {
             openInfoModal(getTemplate('nonHaiSpid'));
         });
     }

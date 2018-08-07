@@ -801,6 +801,7 @@ describe('SPID', function () {
                     agidSpidWrapper,
                     agidModalButton,
                     report;
+                injectSpidPlaceHolder();
                 // WHEN
                 new Promise(function (resolve) {
                     SUT.init(genericConfig, resolve);
