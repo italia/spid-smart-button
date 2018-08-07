@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 
         watch: {
             build: {
-                files: ['src/scss/*', 'src/js/*'],
+                files: ['src/scss/*', 'src/js/*', 'src/data/*'],
                 tasks: ['build']
             },
 
@@ -105,9 +105,11 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dev/agid-spid-enter.min.js': [
-                        'src/js/agid-spid-enter.js',
+                        'src/data/spidI18n.js',
+                        'src/data/spidProviders.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-config-dev.js'
+                        'src/js/agid-spid-enter-config-dev.js',
+                        'src/js/agid-spid-enter.js'
                     ]
                 }
             },
@@ -121,14 +123,18 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/agid-spid-enter.min.<%= pkg.version %>.js': [
-                        'src/js/agid-spid-enter.js',
+                        'src/data/spidI18n.js',
+                        'src/data/spidProviders.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-config.js'
+                        'src/js/agid-spid-enter-config.js',
+                        'src/js/agid-spid-enter.js'
                     ],
                     'dist/agid-spid-enter.min.latest.js': [
-                        'src/js/agid-spid-enter.js',
+                        'src/data/spidI18n.js',
+                        'src/data/spidProviders.js',
                         'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-config.js'
+                        'src/js/agid-spid-enter-config.js',
+                        'src/js/agid-spid-enter.js'
                     ]
                 }
             }
@@ -147,24 +153,6 @@ module.exports = function (grunt) {
                     outfile: '_SpecRunner.html',
                     keepRunner: true,
                     host: localhostUrl
-                }
-            }
-        },
-
-        'string-replace': {
-            version: {
-                files: {
-                    'dev/': ['dev/agid-spid-enter.min.js'],
-                    'dist/': [
-                        'dist/agid-spid-enter.min.<%= pkg.version %>.js',
-                        'dist/agid-spid-enter.min.latest.js'
-                    ]
-                },
-                options: {
-                    replacements: [{
-                        pattern: /{{ VERSION }}/g,
-                        replacement: '<%= pkg.version %>'
-                    }]
                 }
             }
         },
@@ -189,7 +177,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('css', ['sass:dev', 'postcss:dev']);
-    grunt.registerTask('js', ['uglify', 'string-replace']);
+    grunt.registerTask('js', ['uglify']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
     grunt.registerTask('test', ['jasmine', 'log-jasmine']);

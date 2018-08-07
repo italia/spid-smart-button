@@ -1,6 +1,24 @@
 /* eslint-disable */
+var _SPID = (function(languages, providers){
 
-(function(){
+    // costruttore dell'oggetto SPID
+    // qui vengono avvalorate le proprietà con i valori di default
+    function _SPID() {
+        this.resources = {};
+        this.templates = {};
+        this._lang = 'it'; // Lingua delle etichette sostituibile all'init, default Italiano
+        this._i18n = languages(); // L'oggetto viene popolato dalla chiamata ajax getLocalisedMessages()
+        this._availableProviders = providers();
+        this._selector = '#spid-button';
+        this._protocol = "SAML";
+        this._style = {
+            size: "medium",
+            colorScheme: "positive",
+            fluid: false,
+            cornerStyle: "rounded"
+        };
+    }
+
     function svgWithPngFallback(imagePath, altText) {
         return [
             '<img aria-hidden="true"',
@@ -15,7 +33,7 @@
         return ['<input type="hidden" name="', name, '" value="', value, '" />'].join('');
     };
 
-    window.SPID.prototype.initTemplates = function(){
+    _SPID.prototype.initTemplates = function(){
         this.templates = {
             spidMainContainers: function () {
                 return [
@@ -172,5 +190,8 @@
             }
         };
     }
-})();
+
+    return _SPID;
+
+})(languages, providers);
 /* eslint-enable indent */
