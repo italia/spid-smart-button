@@ -27,9 +27,9 @@
             spidProviderChoiceModal: function (spidProvidersButtons) {
                 return [
                     '<div id="agid-spid-enter-anim"></div>',
-                    '<section id="agid-spid-panel-select" aria-labelledby="agid-spid-enter-title-page" tabindex="0">',
-                        '<header id="agid-spid-panel-header">',
-                            '<div class="agid-spid-panel-back agid-spid-panel-element" aria-controls="agid-spid-panel-select">',
+                    '<section id="agid-spid-panel-select" class="agid-spid-panel" aria-labelledby="agid-spid-enter-title-page" tabindex="0">',
+                        '<header class="agid-spid-header">',
+                            '<div class="agid-spid-panel-back agid-spid-panel-element">',
                                 '<div class="agid-display-logo fadeInLeft fadeOutLeft">',
                                     svgWithPngFallback.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
                                 '</div>',
@@ -51,7 +51,7 @@
                                     '</div>',
                                     '<div id="agid-non-hai-spid">',
                                         '<span class="non-hai-spid-agid-font">', this.getI18n("non_hai_SPID"),'</span>',
-                                        '<span id="nospid" style="cursor: pointer; color: blue; text-decoration: underline;">' ,this.getI18n("scopri_di_piu"),'</span>',
+                                        '<span id="nospid" class="agid-spid-link non-hai-spid-agid-font">' ,this.getI18n("scopri_di_piu"),'</span>',
                                     '</div>',
                                 '</div>',
                             '</div>',
@@ -126,30 +126,34 @@
 
             infoModalContent: function (htmlContent) {
                 return [
-                        '<div class="modal-content agid-font">',
-                            '<button id="closemodalbutton"',
-                                'class="close agid-navigable"',
-                                'tabindex="0"',
-                                'aria-label="', this.getI18n('aria_chiudi_modale'), '">',
-                                '<b aria-hidden="true">&times;</b>',
-                            '</button>',
-                            '<div id="agid-infomodal-content" role="main" tabindex="0" aria-labelledby="agid-infomodal-title">',
-                                htmlContent,
+                        '<section class="agid-spid-panel">',
+                            '<header class="agid-spid-header">',
+                                '<div class="agid-spid-panel-back agid-spid-panel-element">',
+                                    '<div class="agid-display-logo fadeInLeft fadeOutLeft">',
+                                        svgWithPngFallback.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
+                                    '</div>',
+                                    '<div class="agid-display-close fadeInRight fadeOutRight">',
+                                        '<button id="closemodalbutton" class="agid-navigable" aria-labelledby="closemodalbutton">',
+
+                                            svgWithPngFallback.call(this, 'img/close', this.getI18n('aria_chiudi_modale')),
+                                        '</button>',
+                                    '</div>',
+                                '</div>',
+                            '</header>',
+                            '<div id="agid-infomodal-content">',
+                                '<div class="agid-spid-panel-content-center">',
+                                    htmlContent,
+                                '</div>',
                             '</div>',
-                        '</div>'
+                        '</section>'
                 ].join('');
             },
 
             // Fake content, Lipsum HTML, rimpiazzare con contenuti/etichette reali
             nonHaiSpid: function () {
                 return [
-                    '<h1 id="agid-infomodal-title">Non hai Spid?</h1>',
-                    '<ul>',
-                        '<li>Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat.</li>',
-                        '<li>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</li>',
-                        '<li>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.</li>',
-                        '<li>Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate, nunc.</li>',
-                    '</ul>'
+                    '<h1 id="agid-infomodal-title" class="fadeInBottom fadeOutBottom">',this.getI18n('non_hai_SPID'),'</h1>',
+                    '<h3>Inserire il testo corretto</h3>'
                 ].join('');
             }
         };

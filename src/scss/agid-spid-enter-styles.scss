@@ -80,7 +80,7 @@ button:active {
 
 .agid-display-close {
     float: right;
-    width: 50%;
+    margin-top: 5px;
 }
 
 .agid-font {
@@ -112,6 +112,12 @@ button:active {
     }
 }
 
+.agid-spid-link {
+    cursor: pointer;
+    color: $spid-button-default;
+    text-decoration: underline;
+}
+
 #agid-spid-enter-container {
     position: fixed;
     z-index: 999;
@@ -131,7 +137,7 @@ button:active {
     height: 0; // fix Safari, non comprime l'altezza del div quando i figli sono nascosti
 }
 
-#agid-spid-panel-select {
+.agid-spid-panel {
     top: 0;
     left: 0;
     margin-left: 0%;
@@ -145,7 +151,7 @@ button:active {
     overflow: auto;
 }
 
-#agid-spid-panel-header {
+.agid-spid-header {
     background-color: #fff;
     color: #fff;
     display: block;
@@ -191,11 +197,6 @@ button:active {
     .agid-spid-panel-element {
         min-width: 32px;
     }
-}
-
-#agid-spid-panel-close-button {
-    margin-left: 100%;
-    margin-top: 5px;
 }
 
 #agid-spid-panel-content {
