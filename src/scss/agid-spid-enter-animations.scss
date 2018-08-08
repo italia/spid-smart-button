@@ -1,7 +1,4 @@
-#agid-spid-enter-anim,
-#agid-spid-enter-anim::before,
-#agid-spid-enter-anim::after,
-#agid-spid-panel-select {
+.agid-spid-panel-anim {
     animation-delay: 0s;
     animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
     animation-iteration-count: 1;
@@ -25,22 +22,8 @@
         transition-delay: 1s;
         pointer-events: none;
 
-        #agid-spid-enter-anim {
-            animation-name: anim-panel-out;
-            animation-duration: 2s;
-
-            &::before {
-                animation-name: anim-base-out;
-                animation-duration: 0.5s;
-            }
-
-            &::after {
-                animation-name: anim-icon-out;
-                animation-duration: 1s;
-            }
-        }
-
-        #agid-spid-panel-select {
+        .agid-spid-panel-anim,
+        #agid-infomodal-content {
             animation-name: anim-panel-out;
             animation-duration: 1s;
 
@@ -65,23 +48,6 @@
     }
     // FadeIn
     &:not([hidden]) {
-        #agid-spid-enter-anim {
-            animation-name: anim-panel-in;
-            animation-duration: 0s;
-
-            &::before {
-                animation-name: anim-base-in;
-                animation-duration: 2s;
-                animation-delay: 0.5s;
-            }
-
-            &::after {
-                animation-name: anim-icon-in;
-                animation-duration: 1s;
-                animation-delay: 0.5s;
-            }
-        }
-
         .fadeInCancel {
             animation-name: cancelBtn;
             animation-delay: 1s;
@@ -89,7 +55,8 @@
             animation-fill-mode: both;
         }
 
-        #agid-spid-panel-select {
+        .agid-spid-panel-anim,
+        #agid-infomodal-content {
             animation-name: anim-panel-in;
             animation-duration: 2s;
             animation-delay: 0.5s;
@@ -373,6 +340,7 @@ $animIconDistanceEnd: 120;
         .agid-spid-enter {
             animation-name: fadeOutEnterBtn;
             animation-duration: 1s;
+            animation-fill-mode: forwards;
         }
 
         .agid-spid-enter-icon {

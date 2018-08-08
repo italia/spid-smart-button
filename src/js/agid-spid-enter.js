@@ -15,6 +15,8 @@ var _SPID,
             SPID = function (config) {
                 this.internalSPID = new _SPID();
                 this.internalSPID._init(config);
+
+                /* FUNZIONI PUBBLICHE*/
                 //in questo modo riesco a rendere pubblico questo metodo
                 this.changeLanguage = function (lang) {
                     return this.internalSPID.changeLanguage(lang);
@@ -48,8 +50,6 @@ var _SPID,
         _SPID.prototype.closeInfoModal = function () {
             var _spid = this;
             showElement(_spidPanelSelect);
-            showElement(document.querySelector('#agid-spid-enter-anim'));
-            showElement(document.querySelector(_spid._selector));
             hideElement(_infoModal);
             _infoModal.innerHTML = '';
             giveFocusTo(_spidPanelSelect);
@@ -58,10 +58,8 @@ var _SPID,
         _SPID.prototype.openInfoModal = function (htmlContent) {
             var _spid = this;
             _infoModal.innerHTML = _spid.getTemplate('infoModalContent', htmlContent);
-            hideElement(document.querySelector('#agid-spid-enter-anim'));
             showElement(_infoModal);
             hideElement(_spidPanelSelect);
-            hideElement(document.querySelector(_spid._selector));
             // L'attributo aria-live assertive farà leggere il contenuto senza bisogno di focus
             // Viene distrutto e ricreato, non necessita unbind
             document.querySelector('#closemodalbutton').addEventListener('click', function () {
@@ -122,13 +120,9 @@ var _SPID,
             agid_spid_enter.innerHTML = _spid.getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
             // Vengono creati una sola volta all'init, non necessitano unbind
             document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function () {
-                _spid.hideProvidersPanel();
-            });
-            document.querySelector('#agid-cancel-access-button').addEventListener('click', function () {
-                _spid.hideProvidersPanel();
-            });
-            document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function () {
                 var elem = document.getElementsByClassName("choosedButton")[0];
+                document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
+                _spid.hideProvidersPanel();
                 elem.classList.remove("enterTransition");
                 elem.classList.remove("choosedButton");
                 elem.classList.add("reverseEnterTransition");
@@ -138,6 +132,8 @@ var _SPID,
             });
             document.querySelector('#agid-cancel-access-button').addEventListener('click', function () {
                 var elem = document.getElementsByClassName("choosedButton")[0];
+                document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
+                _spid.hideProvidersPanel();
                 elem.classList.remove("enterTransition");
                 elem.classList.remove("choosedButton");
                 elem.classList.add("reverseEnterTransition");
@@ -150,24 +146,6 @@ var _SPID,
             });
 
         };
-
-        /*
-         * Helper function per gestire tramite promise il risultato asincrono di success/fail, come $.ajax
-         */
-        function ajaxRequest(method, url, payload, done, callback) {
-            var xhr = new XMLHttpRequest();
-            xhr.open(method, url);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200 && xhr.responseText) {
-                        done(null, JSON.parse(xhr.responseText), callback);
-                    } else {
-                        done(xhr.responseText, null, callback);
-                    }
-                }
-            }.bind(this);
-            xhr.send(JSON.stringify(payload));
-        }
 
         function loadStylesheet(url) {
             var linkElement = document.createElement('link');
@@ -295,8 +273,6 @@ var _SPID,
             errorCallback && errorCallback();
         }
 
-        /** FUNZIONI PUBBLICHE */
-
         /**
          * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
          */
@@ -352,14 +328,18 @@ var _SPID,
                 spidButtons = document.querySelectorAll('.agid-spid-enter');
                 Array.prototype.forEach.call(spidButtons, function (spidbtn) {
                     spidbtn.addEventListener('click', function () {
-                        _spid.showProvidersPanel();
-                    });
-                    spidbtn.addEventListener('click', function () {
                         var parent = spidbtn.parentElement;
                         parent.classList.add("enterTransition");
                         parent.classList.add("choosedButton");
+                        _spid.showProvidersPanel();
+                        document.getElementById('agid-logo').classList.add('fadeInLeft');
+                        document.getElementById('agid-close-button').classList.add('fadeInLeft');
+                        document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
                         setTimeout(function () {
                             parent.classList.remove("enterTransition");
+                            document.getElementById('agid-logo').classList.remove('fadeInLeft');
+                            document.getElementById('agid-close-button').classList.remove('fadeInLeft');
+                            document.getElementById('agid-spid-panel-select').classList.remove('agid-spid-panel-anim');
                         }, 2000);
                     });
                 });
