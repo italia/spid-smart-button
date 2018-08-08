@@ -19,11 +19,12 @@ unless you know what you're doing... :)
 
  * Indirizzi di produzione delle risorse (attualmente test), inserire indirizzi reali di CDN
  */
-window.SPID.prototype.initResources = function () {
-    this.resources = {
-        assetsBaseUrl: 'https://rawgit.com/srescio/spid-smart-button/issue-2/separate-html-js/',
-        stylesheetUrl: 'https://rawgit.com/srescio/spid-smart-button/issue-2/separate-html-js/prod/agid-spid-enter.min.{{ VERSION }}.css',
-        providersEndpoint: 'https://rawgit.com/srescio/spid-smart-button/issue-2/separate-html-js/src/data/spidProviders.json',
-        localisationEndpoint: 'https://rawgit.com/srescio/spid-smart-button/issue-2/separate-html-js/src/data/spidI18n.json'
+var _SPID;
+(function (_SPID) {
+    _SPID.prototype.initResources = function () {
+        this.resources = {
+            assetsBaseUrl: 'https://rawgit.com/srescio/spid-smart-button/issue-2/separate-html-js/',
+            stylesheetUrl: 'https://rawgit.com/srescio/spid-smart-button/issue-2/separate-html-js/prod/agid-spid-enter.min.{{ VERSION }}.css'
+        };
     };
-};
+})(_SPID || {});

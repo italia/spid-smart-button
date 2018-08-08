@@ -2,7 +2,7 @@
 
 [![Join the #spid-smart-button channel](https://img.shields.io/badge/Slack%20channel-%23spid--smart--button-blue.svg?logo=slack)](https://developersitalia.slack.com/messages/C7EQLBY9H)
 [![Get invited](https://slack.developers.italia.it/badge.svg)](https://slack.developers.italia.it/)
-[![SPID on forum.italia.it](https://img.shields.io/badge/Forum-SPID-blue.svg)](https://forum.italia.it/c/spid)
+[![SPID on forum.italia.it](https://img.shields.io/badge/Forum-SPID-blue.svg)](https://forum.italia.it/c/spid) [![Build Status](https://travis-ci.org/italia/spid-smart-button.svg?branch=master)](https://travis-ci.org/italia/spid-smart-button)
 
 > ⚠️ **WORK IN PROGRESS** ⚠️
 
@@ -82,20 +82,17 @@ Includere nella pagina uno o più placeholder `<div>` che abbiano i seguenti att
  - classe : `agid-spid-enter-button` sarà ricercato dallo script per stampare tutti i pulsanti SPID
  - selector: attributo `id` con valore customizzabile dall'utente. Obbligatorio, come valore di default usare `spid-button`
  - accessibilità : attributo `aria-live` con valore `polite` per evitare che il rendering disturbi la navigazione
- - dimensione : attributo `data-size` con una delle quattro dimensioni supportate: **s / m / l**
  - fallback: tag `<noscript>` con messaggio localizzato all'interno del placeholder che avvisa l'utente della necessità di JavaScript abilitato per poter fruire di SPID qualora l'utente stia navigando senza JavaScript
 
 Esempio completo
 
 ```html
-    <div class="agid-spid-enter-button" id='spid-button' aria-live="polite" data-size="l">
+    <div class="agid-spid-enter-button" id='spid-button' aria-live="polite">
         <noscript>
             Il login tramite SPID richiede che JavaScript sia abilitato nel browser
         </noscript>
     </div>
 ```
-
-l'attributo `data-size` è case-insensitive quindi può essere sia maiuscolo che minuscolo.
 
 ### Configurazione degli Identity Provider
 I dati degli IdP sono riportati staticamente nel codice sorgente dello Smart Button, che quindi non dovrà interrogare il Registro. Tali dati sono strutturati come segue:
@@ -138,7 +135,7 @@ Il parametro `config` serve a configurare l'intera struttura dello smart-button.
 ad esempio:
 
 ```javascript
-var spid = new window.SPID();
+var spid = window.SPID();
 spid.init({
     lang: 'en',                   // opzionale
     selector: '#my-spid-button',  // opzionale
@@ -181,7 +178,7 @@ spid.init({
 ##### success e error
 Sono due callback opzionali da fornire in caso sia necessario gestire il caso di successo o di errore.
 
-#### `changelang(lang, success, error)`
+#### `changeLanguage(lang, success, error)`
 In caso di successo aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata.
 La stringa `lang` deve essere costituita da due caratteri eg `it`.
 Le lingue supportate sono italiano `it`, inglese `en` e tedesco `de`
@@ -196,10 +193,4 @@ Sono due callback opzionali da fornire in caso sia necessario gestire il caso di
 Ricerca i placeholders per ripristinare i pulsanti, utilizzabile in caso di aggiornamento dinamico della UI causante la cancellazione dei pulsanti renderizzati in fase di inizializzazione
 ```javascript
 spid.updateSpidButtons();
-```
-
-#### `version()`
-Ritorna la semantic version del modulo in uso, utile caricando il minifizzato *latest*
-```javascript
-spid.version();
 ```
