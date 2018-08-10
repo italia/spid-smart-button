@@ -2,6 +2,15 @@ language: node_js
 node_js:
   - "8"
 
+before_install: npm install -g grunt-cli
+install: npm install
+before_script:
+  - grunt build
+  - npm start &
+  - sleep 5
+script:
+  - npm test
+
 deploy:
   provider: pages
   local-dir: dist
