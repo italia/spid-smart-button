@@ -5,15 +5,11 @@ dist: trusty # needs Ubuntu Trusty
 sudo: required
 addons:
   chrome: stable # have Travis install Chrome stable
-cache:
-  npm: true
-  directories:
-    - node_modules
 
 install: npm install
 before_script:
-  - npm start
-  - sleep 5
+  - npm start &
+  - sleep 10
 script:
   - npm test
 
