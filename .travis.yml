@@ -1,10 +1,22 @@
 language: node_js
 node_js:
   - "8"
+dist: trusty # needs Ubuntu Trusty
+sudo: required
+addons:
+  chrome: stable # have Travis install Chrome stable
+cache:
+  npm: true
+  directories:
+    - node_modules
 
+before_install: npm install -g grunt-cli
+install: npm install
 before_script:
   - npm start
-  - sleep 20
+  - sleep 5
+script:
+  - npm test
 
 deploy:
   provider: pages
