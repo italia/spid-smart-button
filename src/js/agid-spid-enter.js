@@ -62,7 +62,7 @@ var _SPID,
             hideElement(_spidPanelSelect);
             // L'attributo aria-live assertive farà leggere il contenuto senza bisogno di focus
             // Viene distrutto e ricreato, non necessita unbind
-            document.querySelector('#closemodalbutton').addEventListener('click', function () {
+            document.querySelector('#spid-close-modal-button').addEventListener('click', function () {
                 _spid.closeInfoModal();
             });
         };
@@ -110,7 +110,7 @@ var _SPID,
 
         _SPID.prototype.renderAvailableProviders = function () {
             var _spid = this,
-                agid_spid_enter = document.querySelector('#agid-spid-enter'),
+                agid_spid_enter = document.querySelector('#spid-enter'),
                 spidProvidersButtonsHTML = '';
 
             _spid._availableProviders.forEach(function (provider) {
@@ -123,25 +123,25 @@ var _SPID,
                 var elem = document.getElementsByClassName("choosedButton")[0];
                 document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
                 _spid.hideProvidersPanel();
-                elem.classList.remove("enterTransition");
+                elem.classList.remove("agid-enter-transition");
                 elem.classList.remove("choosedButton");
-                elem.classList.add("reverseEnterTransition");
+                elem.classList.add("agid-reverse-enter-transition");
                 setTimeout(function () {
-                    elem.classList.remove("reverseEnterTransition");
+                    elem.classList.remove("agid-reverse-enter-transition");
                 }, 2000);
             });
-            document.querySelector('#agid-cancel-access-button').addEventListener('click', function () {
+            document.querySelector('#spid-cancel-access-button').addEventListener('click', function () {
                 var elem = document.getElementsByClassName("choosedButton")[0];
                 document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
                 _spid.hideProvidersPanel();
-                elem.classList.remove("enterTransition");
+                elem.classList.remove("agid-enter-transition");
                 elem.classList.remove("choosedButton");
-                elem.classList.add("reverseEnterTransition");
+                elem.classList.add("agid-reverse-enter-transition");
                 setTimeout(function () {
-                    elem.classList.remove("reverseEnterTransition");
+                    elem.classList.remove("agid-reverse-enter-transition");
                 }, 2000);
             });
-            document.querySelector('#nospid').addEventListener('click', function () {
+            document.querySelector('#spid-nonhai-spid').addEventListener('click', function () {
                 _spid.openInfoModal(_spid.getTemplate('nonHaiSpid', null));
             });
 
@@ -166,13 +166,13 @@ var _SPID,
         };
 
         function getSelectors() {
-            _spidIdpList = document.querySelector('#agid-spid-idp-list');
-            _infoModal = document.querySelector('#agid-infomodal');
+            _spidIdpList = document.querySelector('#spid-idp-list');
+            _infoModal = document.querySelector('#spid-info-modal');
             _spidPanelSelect = document.querySelector('#agid-spid-panel-select');
         }
 
         _SPID.prototype.renderSpidModalContainers = function () {
-            var agidSpidEnterWrapperId = 'agid-spid-enter-container',
+            var agidSpidEnterWrapperId = 'spid-enter-container',
                 existentWrapper = document.getElementById(agidSpidEnterWrapperId);
 
             if (!existentWrapper) {
@@ -329,16 +329,16 @@ var _SPID,
                 Array.prototype.forEach.call(spidButtons, function (spidbtn) {
                     spidbtn.addEventListener('click', function () {
                         var parent = spidbtn.parentElement;
-                        parent.classList.add("enterTransition");
+                        parent.classList.add("agid-enter-transition");
                         parent.classList.add("choosedButton");
                         _spid.showProvidersPanel();
-                        document.getElementById('agid-logo').classList.add('fadeInLeft');
-                        document.getElementById('agid-close-button').classList.add('fadeInLeft');
+                        document.getElementById('agid-logo').classList.add('agid-fade-in-left');
+                        document.getElementById('agid-close-button').classList.add('agid-fade-in-left');
                         document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
                         setTimeout(function () {
-                            parent.classList.remove("enterTransition");
-                            document.getElementById('agid-logo').classList.remove('fadeInLeft');
-                            document.getElementById('agid-close-button').classList.remove('fadeInLeft');
+                            parent.classList.remove("agid-enter-transition");
+                            document.getElementById('agid-logo').classList.remove('agid-fade-in-left');
+                            document.getElementById('agid-close-button').classList.remove('agid-fade-in-left');
                             document.getElementById('agid-spid-panel-select').classList.remove('agid-spid-panel-anim');
                         }, 2000);
                     });

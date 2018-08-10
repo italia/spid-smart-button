@@ -2,9 +2,9 @@ describe('SPID', function () {
 
     var SPID = window.SPID,
         axe = window.axe,
-        agidSpidWrapperID = '#agid-spid-enter-container',
-        agidInfoModalID = '#agid-infomodal',
-        agidModalButtonID = '#nospid',
+        agidSpidWrapperID = '#spid-enter-container',
+        agidInfoModalID = '#spid-info-modal',
+        agidModalButtonID = '#spid-nonhai-spid',
         accediConSpid = 'Accedi a SPID con ',
         supportedProviders = [
             'https://loginspid.aruba.it',
@@ -100,7 +100,7 @@ describe('SPID', function () {
                 // WHEN
                 SPID.init(genericConfig);
                 // THEN
-                var text = document.getElementById('agid-spid-enter-title-page').innerHTML;
+                var text = document.getElementById('spid-enter-title-page').innerHTML;
                 expect(text).toEqual('Scegli il tuo provider SPID')
                 done();
             });
@@ -234,7 +234,7 @@ describe('SPID', function () {
                 it('should not add to providers hidden inputs payload if is a GET', function (done) {
                     // WHEN
                     SPID.init(genericConfig);
-                    var hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input');
+                    var hiddenInputs = document.querySelectorAll('#spid-idp-list input');
                     // THEN
                     expect(hiddenInputs.length).toEqual(0);
                     done();
@@ -250,7 +250,7 @@ describe('SPID', function () {
 
                     // WHEN
                     SPID.init(config);
-                    var title = document.getElementById('agid-spid-enter-title-page').innerHTML;
+                    var title = document.getElementById('spid-enter-title-page').innerHTML;
                     expect(title).toEqual('Wähle Ihren SPIDProvider')
                     done();
                 });
@@ -298,7 +298,7 @@ describe('SPID', function () {
                     // WHEN
 
                     SPID.init(config);
-                    var providers = document.querySelectorAll('#agid-spid-idp-list form'),
+                    var providers = document.querySelectorAll('#spid-idp-list form'),
                         hiddenInput;
                     for (var i = 0; i < providers.length; i++) {
                         if (providers[i][0].getAttribute('title') === accediConSpid + 'Poste ID') {
@@ -320,8 +320,8 @@ describe('SPID', function () {
                     };
                     // WHEN
                     SPID.init(config);
-                    var providers = document.querySelectorAll('#agid-spid-idp-list a'),
-                        disabled = document.querySelectorAll("#agid-spid-idp-list a[disabled]");
+                    var providers = document.querySelectorAll('#spid-idp-list a'),
+                        disabled = document.querySelectorAll("#spid-idp-list a[disabled]");
                     // THEN
                     expect(disabled.length).toEqual(providers.length - 1);
                     //expect(enabled.length).toEqual(1);
@@ -344,8 +344,8 @@ describe('SPID', function () {
                     };
                     // WHEN
                     SPID.init(config);
-                    var disabled = document.querySelectorAll('#agid-spid-idp-list a[disabled]'),
-                        extraProvider = document.querySelectorAll('#agid-spid-idp-list a[title="Accedi a SPID con Ciccio ID"]');
+                    var disabled = document.querySelectorAll('#spid-idp-list a[disabled]'),
+                        extraProvider = document.querySelectorAll('#spid-idp-list a[title="Accedi a SPID con Ciccio ID"]');
                     // THEN
                     expect(disabled.length).toEqual(0);
                     expect(extraProvider.length).toEqual(1);
@@ -360,9 +360,9 @@ describe('SPID', function () {
                     };
                     // WHEN
                     SPID.init(config);
-                    var providers = document.querySelectorAll('#agid-spid-idp-list button'),
-                        enabled = document.querySelectorAll("#agid-spid-idp-list button:enabled"),
-                        disabled = document.querySelectorAll("#agid-spid-idp-list button:disabled");
+                    var providers = document.querySelectorAll('#spid-idp-list button'),
+                        enabled = document.querySelectorAll("#spid-idp-list button:enabled"),
+                        disabled = document.querySelectorAll("#spid-idp-list button:disabled");
                     // THEN
                     expect(enabled.length).toEqual(0);
                     expect(disabled.length).toEqual(providers.length);
@@ -380,8 +380,8 @@ describe('SPID', function () {
                         };
                         // WHEN
                         SPID.init(config);
-                        var providers = document.querySelectorAll('#agid-spid-idp-list button'),
-                            hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]');
+                        var providers = document.querySelectorAll('#spid-idp-list button'),
+                            hiddenInputs = document.querySelectorAll('#spid-idp-list input[name="testName"]');
                         // THEN
                         expect(hiddenInputs.length).toEqual(providers.length);
                         done();
@@ -401,10 +401,10 @@ describe('SPID', function () {
                         };
                         // WHEN
                         SPID.init(config);
-                        var providers = document.querySelectorAll('#agid-spid-idp-list button'),
-                            hiddenInputs = document.querySelectorAll('#agid-spid-idp-list input[name="testName"]'),
-                            fooInput = document.querySelectorAll('#agid-spid-idp-list input[name="foo"]'),
-                            bazInput = document.querySelectorAll('#agid-spid-idp-list input[name="baz"]');
+                        var providers = document.querySelectorAll('#spid-idp-list button'),
+                            hiddenInputs = document.querySelectorAll('#spid-idp-list input[name="testName"]'),
+                            fooInput = document.querySelectorAll('#spid-idp-list input[name="foo"]'),
+                            bazInput = document.querySelectorAll('#spid-idp-list input[name="baz"]');
                         // THEN
                         expect(hiddenInputs.length).toEqual(providers.length);
                         expect(fooInput.length).toEqual(providers.length);
@@ -423,7 +423,7 @@ describe('SPID', function () {
                 // WHEN
                 spid.changeLanguage('en');
                 // THEN
-                var title = document.getElementById('agid-spid-enter-title-page').innerHTML;
+                var title = document.getElementById('spid-enter-title-page').innerHTML;
                 expect(title).toEqual('Choose your SPID provider');
                 //expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('GET', '/src/data/spidI18n.json');
                 //expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"lang":"en"}');
@@ -491,7 +491,7 @@ describe('SPID', function () {
 
                 document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
                 // WHEN
-                document.querySelector('#agid-cancel-access-button').click();
+                document.querySelector('#spid-cancel-access-button').click();
                 isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
@@ -544,7 +544,7 @@ describe('SPID', function () {
                 document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
                 document.querySelector(agidModalButtonID).click();
                 // WHEN
-                document.querySelector('#closemodalbutton').click();
+                document.querySelector('#spid-close-modal-button').click();
                 isInfoModalVisible = isElementVisible(agidInfoModalID);
                 // THEN
                 expect(isInfoModalVisible).toBeFalsy();

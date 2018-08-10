@@ -6,7 +6,7 @@
     animation-fill-mode: forwards;
 }
 
-#agid-spid-enter-container {
+#spid-enter-container {
     display: block;
     transition-duration: 1s;
     transition-delay: 0.5s;
@@ -23,23 +23,23 @@
         pointer-events: none;
 
         .agid-spid-panel-anim,
-        #agid-infomodal-content {
+        #spid-infomodal-content {
             animation-name: anim-panel-out;
             animation-duration: 1s;
 
-            .fadeOutLeft {
+            .agid-fade-out-left {
                 animation-name: logoOutLeft;
                 animation-duration: 1s;
                 animation-fill-mode: both;
             }
 
-            .fadeOutRight {
+            .agid-fade-out-right {
                 animation-name: closeOutRight;
                 animation-duration: 1s;
                 animation-fill-mode: both;
             }
 
-            .fadeOutBottom {
+            .agid-fade-out-bottom {
                 animation-name: titleToBottom;
                 animation-duration: 1s;
                 animation-fill-mode: both;
@@ -48,7 +48,7 @@
     }
     // FadeIn
     &:not([hidden]) {
-        .fadeInCancel {
+        .agid-fade-in-cancel {
             animation-name: cancelBtn;
             animation-delay: 1s;
             animation-duration: 1.25s;
@@ -56,26 +56,26 @@
         }
 
         .agid-spid-panel-anim,
-        #agid-infomodal-content {
+        #spid-infomodal-content {
             animation-name: anim-panel-in;
             animation-duration: 2s;
             animation-delay: 0.5s;
 
-            .fadeInLeft {
+            .agid-fade-in-left {
                 animation-name: logoFromLeft;
                 animation-duration: 1s;
                 animation-delay: 0.5s;
                 animation-fill-mode: both;
             }
 
-            .fadeInRight {
+            .agid-fade-in-right {
                 animation-name: closeFromRight;
                 animation-duration: 1s;
                 animation-delay: 0.5s;
                 animation-fill-mode: both;
             }
 
-            .fadeInBottom {
+            .agid-fade-in-bottom {
                 animation-name: titleFromBottom;
                 animation-duration: 1s;
                 animation-delay: 0.5s;
@@ -85,7 +85,7 @@
     }
 }
 
-#agid-spid-idp-list {
+#spid-idp-list {
     .agid-spid-idp {
         animation-name: spidIdp;
         animation-duration: 1s;
@@ -335,8 +335,8 @@ $animIconDistanceEnd: 120;
     }
 }
 
-#enter-button-container {
-    &.enterTransition {
+#spid-enter-button-container {
+    &.agid-enter-transition {
         .agid-spid-enter {
             animation-name: fadeOutEnterBtn;
             animation-duration: 1s;
@@ -349,7 +349,7 @@ $animIconDistanceEnd: 120;
         }
     }
 
-    &.reverseEnterTransition {
+    &.agid-reverse-enter-transition {
         .agid-spid-enter {
             animation-name: fadeInEnterBtn;
             animation-duration: 1s;

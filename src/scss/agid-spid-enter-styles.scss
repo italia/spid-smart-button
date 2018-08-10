@@ -17,12 +17,12 @@ h1 {
 button:active {
     border: 3px solid rgb(247, 145, 13);
 
-    &#agid-cancel-access-button {
+    &#spid-cancel-access-button {
         border: 3px solid rgb(247, 145, 13);
     }
 }
 
-#agid-spid-idp-list {
+#spid-idp-list {
     display: flex;
     flex-flow: row wrap;
     padding: 20px;
@@ -87,7 +87,7 @@ button:active {
     font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
 }
 
-.non-hai-spid-agid-font {
+.agid-non-hai-spid-font {
     font-size: 15px;
     font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
@@ -118,14 +118,14 @@ button:active {
     text-decoration: underline;
 }
 
-#agid-spid-enter-container {
+#spid-enter-container {
     position: fixed;
     z-index: 999;
     top: 0;
     left: 0;
 }
 
-#agid-non-hai-spid {
+#spid-non-hai-spid {
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: center;
@@ -133,7 +133,7 @@ button:active {
     padding-bottom: 20px;
 }
 
-#agid-spid-enter {
+#spid-enter {
     height: 0; // fix Safari, non comprime l'altezza del div quando i figli sono nascosti
 }
 
@@ -205,7 +205,7 @@ button:active {
     min-width: 300px;
     background: #fff;
 
-    #agid-spid-enter-title-page {
+    #spid-enter-title-page {
         background: transparent;
         display: block;
         text-align: center;
@@ -290,7 +290,7 @@ button:active {
     max-width: 400px;
 }
 
-#agid-cancel-access-button {
+#spid-cancel-access-button {
     background-color: #fcfdff;
     color: #5c6f82;
     font-family: "Titillium Web", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -315,7 +315,7 @@ button:active {
     }
 }
 
-#agid-spid-enter-title-container {
+#spid-enter-title-container {
     padding-top: 1.25em;
 }
 
@@ -347,7 +347,7 @@ button:active {
     opacity: 0;
 }
 
-#agid-spid-enter-anim {
+#spid-enter-anim {
     position: relative;
     width: 100vw;
     height: 100vh;
@@ -447,7 +447,7 @@ button:active {
 }
 
 @media screen and (max-width: 767px) {
-    #agid-foot-btn {
+    #spid-foot-btn {
         position: fixed;
         background-color: white;
         bottom: 0;
@@ -459,11 +459,11 @@ button:active {
 }
 
 @media (min-width: 361px) {
-    #agid-spid-panel-header {
-        & .agid-spid-display-logo img {
-            max-height: 50px;
-        }
-    }
+    // #agid-spid-panel-header {
+    //     & .agid-spid-display-logo img {
+    //         max-height: 50px;
+    //     }
+    // }
 
     .agid-spid-panel-content-center {
         max-width: 500px;
@@ -471,7 +471,7 @@ button:active {
 }
 
 @media (min-width: 768px) {
-    #agid-cancel-access-button {
+    #spid-cancel-access-button {
         width: 436px;
     }
 }
