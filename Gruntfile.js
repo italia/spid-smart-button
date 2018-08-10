@@ -57,7 +57,7 @@ module.exports = function (grunt) {
                     style: 'expanded'
                 },
                 files: {
-                    'dev/agid-spid-enter.min.css': 'src/scss/agid-spid-enter-dev.scss'
+                    'dev/spid-button.min.css': 'src/scss/agid-spid-enter-dev.scss'
                 }
             },
             prod: {
@@ -66,7 +66,7 @@ module.exports = function (grunt) {
                     sourcemap: 'none'
                 },
                 files: {
-                    'dist/agid-spid-enter.min.<%= pkg.version %>.css': 'src/scss/agid-spid-enter-prod.scss'
+                    'dist/spid-button.min.css': 'src/scss/agid-spid-enter-prod.scss'
                 }
             }
         },
@@ -83,15 +83,15 @@ module.exports = function (grunt) {
                 options: {
                     map: true
                 },
-                src: 'dev/agid-spid-enter.min.css',
-                dest: 'dev/agid-spid-enter.min.css'
+                src: 'dev/spid-button.min.css',
+                dest: 'dev/spid-button.min.css'
             },
             prod: {
                 options: {
                     map: false
                 },
-                src: 'dist/agid-spid-enter.min.<%= pkg.version %>.css',
-                dest: 'dist/agid-spid-enter.min.<%= pkg.version %>.css'
+                src: 'dist/spid-button.min.css',
+                dest: 'dist/spid-button.min.css'
             }
         },
 
@@ -104,7 +104,7 @@ module.exports = function (grunt) {
                     compress: false
                 },
                 files: {
-                    'dev/agid-spid-enter.min.js': [
+                    'dev/spid-button.min.js': [
                         'src/data/spidI18n.js',
                         'src/data/spidProviders.js',
                         'src/js/agid-spid-enter-tpl.js',
@@ -122,14 +122,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    'dist/agid-spid-enter.min.<%= pkg.version %>.js': [
-                        'src/data/spidI18n.js',
-                        'src/data/spidProviders.js',
-                        'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-config.js',
-                        'src/js/agid-spid-enter.js'
-                    ],
-                    'dist/agid-spid-enter.min.latest.js': [
+                    'dist/spid-button.min.js': [
                         'src/data/spidI18n.js',
                         'src/data/spidProviders.js',
                         'src/js/agid-spid-enter-tpl.js',
@@ -146,7 +139,7 @@ module.exports = function (grunt) {
                 src: [
                     'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
                     'node_modules/axe-core/axe.js', // A11y accessibility testing library
-                    'dev/agid-spid-enter.min.js' // Modulo minifizzato da testare
+                    'dist/spid-button.min.js' // Modulo minifizzato da testare
                 ],
                 options: {
                     specs: ['src/test/agid-*.js'],
@@ -176,7 +169,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('css', ['sass:dev', 'postcss:dev']);
+    grunt.registerTask('css', ['sass', 'postcss']);
     grunt.registerTask('js', ['uglify']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
     grunt.registerTask('build', ['css', 'js']);
