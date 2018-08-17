@@ -15,6 +15,8 @@ var _SPID,
             SPID = function (config) {
                 this.internalSPID = new _SPID();
                 this.internalSPID._init(config);
+
+                /* FUNZIONI PUBBLICHE*/
                 //in questo modo riesco a rendere pubblico questo metodo
                 this.changeLanguage = function (lang) {
                     return this.internalSPID.changeLanguage(lang);
@@ -45,18 +47,24 @@ var _SPID,
             });
         }
 
-        function closeInfoModal() {
+        _SPID.prototype.closeInfoModal = function () {
+            var _spid = this;
+            showElement(_spidPanelSelect);
             hideElement(_infoModal);
             _infoModal.innerHTML = '';
             giveFocusTo(_spidPanelSelect);
-        }
+        };
 
-        function openInfoModal(htmlContent, _spid) {
+        _SPID.prototype.openInfoModal = function (htmlContent) {
+            var _spid = this;
             _infoModal.innerHTML = _spid.getTemplate('infoModalContent', htmlContent);
             showElement(_infoModal);
+            hideElement(_spidPanelSelect);
             // L'attributo aria-live assertive farà leggere il contenuto senza bisogno di focus
             // Viene distrutto e ricreato, non necessita unbind
-            document.querySelector('#closemodalbutton').addEventListener('click', closeInfoModal);
+            document.querySelector('#spid-close-modal-button').addEventListener('click', function () {
+                _spid.closeInfoModal();
+            });
         };
 
         // Randomizza l'ordine dei tasti dei provider prima di mostrarli
@@ -68,35 +76,41 @@ var _SPID,
         }
 
         // Chiudi gli overlay in sequenza, prima info modal poi i providers
-        function handleEscKeyEvent(event) {
+        _SPID.prototype.handleEscKeyEvent = function (event) {
             var isEscKeyHit = event.keyCode === 27,
                 isInfoModalVisible = !_infoModal.hasAttribute('hidden');
 
             if (isEscKeyHit) {
                 if (isInfoModalVisible) {
-                    closeInfoModal();
+                    this.closeInfoModal();
                 } else {
                     // eslint-disable-next-line no-use-before-define
-                    hideProvidersPanel();
+                    this.hideProvidersPanel();
                 }
             }
-        }
+        };
 
-        function showProvidersPanel() {
+        _SPID.prototype.showProvidersPanel = function () {
+            var _spid = this;
             shuffleIdp();
             showElement(_agidSpidEnterWrapper);
             giveFocusTo(_spidPanelSelect);
-            document.addEventListener('keyup', handleEscKeyEvent);
-        }
+            document.addEventListener('keyup', function (event) {
+                _spid.handleEscKeyEvent(event);
+            });
+        };
 
-        function hideProvidersPanel() {
+        _SPID.prototype.hideProvidersPanel = function () {
+            var _spid = this;
             hideElement(_agidSpidEnterWrapper);
-            document.removeEventListener('keyup', handleEscKeyEvent);
-        }
+            document.addEventListener('keyup', function (event) {
+                _spid.handleEscKeyEvent(event);
+            });
+        };
 
         _SPID.prototype.renderAvailableProviders = function () {
             var _spid = this,
-                agid_spid_enter = document.querySelector('#agid-spid-enter'),
+                agid_spid_enter = document.querySelector('#spid-enter'),
                 spidProvidersButtonsHTML = '';
 
             _spid._availableProviders.forEach(function (provider) {
@@ -105,48 +119,33 @@ var _SPID,
 
             agid_spid_enter.innerHTML = _spid.getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
             // Vengono creati una sola volta all'init, non necessitano unbind
-            document.querySelector('#agid-spid-panel-close-button').addEventListener('click', hideProvidersPanel);
-            document.querySelector('#agid-cancel-access-button').addEventListener('click', hideProvidersPanel);
             document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function () {
                 var elem = document.getElementsByClassName("choosedButton")[0];
-                elem.classList.remove("enterTransition");
+                document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
+                _spid.hideProvidersPanel();
+                elem.classList.remove("agid-enter-transition");
                 elem.classList.remove("choosedButton");
-                elem.classList.add("reverseEnterTransition");
+                elem.classList.add("agid-reverse-enter-transition");
                 setTimeout(function () {
-                    elem.classList.remove("reverseEnterTransition");
+                    elem.classList.remove("agid-reverse-enter-transition");
                 }, 2000);
             });
-            document.querySelector('#agid-cancel-access-button').addEventListener('click', function () {
+            document.querySelector('#spid-cancel-access-button').addEventListener('click', function () {
                 var elem = document.getElementsByClassName("choosedButton")[0];
-                elem.classList.remove("enterTransition");
+                document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
+                _spid.hideProvidersPanel();
+                elem.classList.remove("agid-enter-transition");
                 elem.classList.remove("choosedButton");
-                elem.classList.add("reverseEnterTransition");
+                elem.classList.add("agid-reverse-enter-transition");
                 setTimeout(function () {
-                    elem.classList.remove("reverseEnterTransition");
+                    elem.classList.remove("agid-reverse-enter-transition");
                 }, 2000);
             });
-            document.querySelector('#nospid').addEventListener('click', function () {
-                openInfoModal(_spid.getTemplate('nonHaiSpid', null), _spid);
+            document.querySelector('#spid-nonhai-spid').addEventListener('click', function () {
+                _spid.openInfoModal(_spid.getTemplate('nonHaiSpid', null));
             });
-        };
 
-        /*
-         * Helper function per gestire tramite promise il risultato asincrono di success/fail, come $.ajax
-         */
-        function ajaxRequest(method, url, payload, done, callback) {
-            var xhr = new XMLHttpRequest();
-            xhr.open(method, url);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200 && xhr.responseText) {
-                        done(null, JSON.parse(xhr.responseText), callback);
-                    } else {
-                        done(xhr.responseText, null, callback);
-                    }
-                }
-            }.bind(this);
-            xhr.send(JSON.stringify(payload));
-        }
+        };
 
         function loadStylesheet(url) {
             var linkElement = document.createElement('link');
@@ -167,13 +166,13 @@ var _SPID,
         };
 
         function getSelectors() {
-            _spidIdpList = document.querySelector('#agid-spid-idp-list');
-            _infoModal = document.querySelector('#agid-infomodal');
+            _spidIdpList = document.querySelector('#spid-idp-list');
+            _infoModal = document.querySelector('#spid-info-modal');
             _spidPanelSelect = document.querySelector('#agid-spid-panel-select');
         }
 
         _SPID.prototype.renderSpidModalContainers = function () {
-            var agidSpidEnterWrapperId = 'agid-spid-enter-container',
+            var agidSpidEnterWrapperId = 'spid-enter-container',
                 existentWrapper = document.getElementById(agidSpidEnterWrapperId);
 
             if (!existentWrapper) {
@@ -274,8 +273,6 @@ var _SPID,
             errorCallback && errorCallback();
         }
 
-        /** FUNZIONI PUBBLICHE */
-
         /**
          * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
          */
@@ -313,7 +310,8 @@ var _SPID,
             var spidButtonsPlaceholders = document.querySelectorAll(this._selector),
                 hasButtonsOnPage = spidButtonsPlaceholders.length,
                 i = 0, j = 0,
-                spidButtons;
+                spidButtons,
+                _spid = this;
 
             if (!this._availableProviders) {
                 console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
@@ -329,13 +327,19 @@ var _SPID,
                 spidButtonsPlaceholders[i].innerHTML = this.getTemplate('spidButton', this._style);
                 spidButtons = document.querySelectorAll('.agid-spid-enter');
                 Array.prototype.forEach.call(spidButtons, function (spidbtn) {
-                    spidbtn.addEventListener('click', showProvidersPanel);
                     spidbtn.addEventListener('click', function () {
                         var parent = spidbtn.parentElement;
-                        parent.classList.add("enterTransition");
+                        parent.classList.add("agid-enter-transition");
                         parent.classList.add("choosedButton");
+                        _spid.showProvidersPanel();
+                        document.getElementById('agid-logo').classList.add('agid-fade-in-left');
+                        document.getElementById('agid-close-button').classList.add('agid-fade-in-left');
+                        document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
                         setTimeout(function () {
-                            parent.classList.remove("enterTransition");
+                            parent.classList.remove("agid-enter-transition");
+                            document.getElementById('agid-logo').classList.remove('agid-fade-in-left');
+                            document.getElementById('agid-close-button').classList.remove('agid-fade-in-left');
+                            document.getElementById('agid-spid-panel-select').classList.remove('agid-spid-panel-anim');
                         }, 2000);
                     });
                 });
