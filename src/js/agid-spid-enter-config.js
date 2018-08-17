@@ -5,8 +5,8 @@ var _SPID;
 (function (_SPID) {
     _SPID.prototype.initResources = function () {
         this.resources = {
-            assetsBaseUrl: '',
-            stylesheetUrl: 'dist/spid-button.min.css'
+            assetsBaseUrl: 'https://italia.github.io/spid-smart-button/',
+            stylesheetUrl: 'https://italia.github.io/spid-smart-button/spid-button.min.css'
         };
     };
 })(_SPID || {});
