@@ -6,7 +6,7 @@ var _SPID;
     _SPID.prototype.initResources = function () {
         this.resources = {
             assetsBaseUrl: '',
-            stylesheetUrl: 'dev/agid-spid-enter.min.css'
+            stylesheetUrl: 'dev/spid-button.min.css'
         };
     };
 })(_SPID || {});

@@ -7,12 +7,12 @@ function languages() {
                 scegli_provider_SPID: "Scegli il tuo provider SPID",
                 annulla_accesso: "Annulla l'accesso",
                 non_hai_SPID: "Non hai SPID?",
-                cosa_SPID: "Cos'é SPID?",
+                cosa_SPID: "Cos'è SPID?",
                 entra_con_SPID: "Entra con SPID",
-                scopri_di_piu: "Scopri di pi&ugrave",
-                aria_chiudi_modale: "Chiudi modale informativo",
+                scopri_di_piu: "Scopri di più.",
+                aria_chiudi_modale: "Chiudi finestra accesso SPID",
                 accedi_con_idp: "Accedi a SPID con {0}",
-                idp_disabled: "Fornitore non attivo"
+                idp_disabled: "Provider non attivo"
             },
             en: {
                 naviga_indietro: "Go back",
