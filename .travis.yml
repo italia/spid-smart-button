@@ -2,14 +2,14 @@ language: node_js
 node_js:
   - "8"
 dist: trusty # needs Ubuntu Trusty
-sudo: required
 addons:
   chrome: stable # have Travis install Chrome stable
 
 install: npm install
 before_script:
-  - npm start &
-  - sleep 10
+  - npm start
+  - sleep 5
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
   - npm test
 
