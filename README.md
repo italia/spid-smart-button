@@ -29,18 +29,19 @@ Questo repository è mantenuto da AgID - Agenzia per l'Italia Digitale con l'aus
 
 
 ## Utilizzo dello smart-button
+Nel momento in cui lo spid-smart-button sara' disponibile tramite cdn, sara' sufficiente importare lo script presente su CDN nell'applicazione in cui si intende utilizzarlo. Ad es.
+```html
+<script type="text/javascript" src="cdn/spid-button.min.js"></script>
+```
 
-### CDN
-**in via di sviluppo**
-
-### Predisporre placeholder HTML per includere lo spid-smart-button
-Includere nella pagina uno o più placeholder `<div>` che abbiano i seguenti attributi:
+### Come inserire lo spid-smart-button in una applicazione
+E' sufficiente includere in un punto del codice html uno o più placeholder `<div>` che abbiano i seguenti attributi:
 
  - selector: attributo `id` con valore customizzabile dall'utente. Obbligatorio, come valore di default usare `spid-button`
  - accessibilità : attributo `aria-live` con valore `polite` per evitare che il rendering disturbi la navigazione
- - fallback: tag `<noscript>` con messaggio localizzato all'interno del placeholder che avvisa l'utente della necessità di JavaScript abilitato per poter fruire di SPID qualora l'utente stia navigando senza JavaScript
+ - fallback: tag `<noscript>` con messaggio localizzato all'interno del placeholder che avvisa l'utente della necessità di JavaScript abilitato per poter fruire di SPID qualora l'utente stia navigando senza JavaScript.
 
-Esempio completo
+Ad es.
 
 ```html
     <div id ='spid-button' aria-live="polite">
@@ -50,22 +51,10 @@ Esempio completo
     </div>
 ```
 
-### Configurazione degli Identity Provider
-I dati degli IdP sono riportati staticamente nel codice sorgente dello Smart Button, che quindi non dovrà interrogare il Registro. Tali dati sono strutturati come segue:
-| Parametro | Descrizione |
-| --------- | ----------- |
-| **entityID** | Identificativo dell’Identity Provider |
-| **entityName** | Nome pubblico dell’Identity Provider da mostrare nella lista |
-| **logo** | URL completo del file PNG raffigurante il logo (default: indicare una immagine generica, distribuita nella CDN, da usare come placeholder) |
-| **protocols** | Array che può contenere i valori SAML e/o OIDC a seconda dei protocolli supportati dall’IdP |
-| **active** | true/false, indica se l’IdP è operativo. Può essere usato per disabilitarne uno temporaneamente in tutta la federazione (default: true) |
-
-Nel caso in cui l’utente configuri ulteriori IdP usando il parametro extraProviders della funzione SPID.init(), dovrà fornire queste informazioni.
-
-### Metodi dello spid-smart-button
-Il modulo espone 4 metodi pubblici
+### Come configurare lo spid-smart-button
 
 #### `init(config)`
+Questo metodo consente di configurare lo smart-button nel modo desiderato tramite il parametro `config`.
 In caso di successo carica i CSS, mostra gli smartbutton sulla pagina,
 In caso di errori o configurazioni errate, alcuni Warning o messaggi vengono visualizzati in console.
 
@@ -131,15 +120,21 @@ var spid = SPID.init({
 ```
 
 #### `changeLanguage(lang)`
-In caso di successo aggiorna i pulsanti e l'interfaccia del modale con la lingua selezionata.
+Questo metodo consente di cambiare la lingua dello smart-button a run-time.
 La stringa `lang` deve essere costituita da due caratteri eg `it`.
 Le lingue supportate sono italiano `it`, inglese `en` e tedesco `de`
 ```javascript
 spid.changeLanguage('en');
 ```
 
-#### `updateSpidButtons()`
-Ricerca i placeholders per ripristinare i pulsanti, utilizzabile in caso di aggiornamento dinamico della UI causante la cancellazione dei pulsanti renderizzati in fase di inizializzazione
-```javascript
-spid.updateSpidButtons();
-```
+### Configurazione degli Identity Provider
+I dati degli IdP sono riportati staticamente nel codice sorgente dello Smart-Button, che quindi non dovrà interrogare il Registro. Tali dati sono strutturati come segue:
+| Parametro | Descrizione |
+| --------- | ----------- |
+| **entityID** | Identificativo dell’Identity Provider |
+| **entityName** | Nome pubblico dell’Identity Provider da mostrare nella lista |
+| **logo** | URL completo del file PNG raffigurante il logo (default: indicare una immagine generica, distribuita nella CDN, da usare come placeholder) |
+| **protocols** | Array che può contenere i valori SAML e/o OIDC a seconda dei protocolli supportati dall’IdP |
+| **active** | true/false, indica se l’IdP è operativo. Può essere usato per disabilitarne uno temporaneamente in tutta la federazione (default: true) |
+
+Nel caso in cui l’utente configuri ulteriori IdP usando il parametro `extraProviders` all'interno della configurazione in fase di `SPID.init()`, dovrà fornire queste informazioni.
