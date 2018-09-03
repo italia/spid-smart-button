@@ -47,38 +47,14 @@ var _SPID,
             });
         }
 
-        _SPID.prototype.closeInfoModal = function () {
-            var _spid = this;
-            showElement(_spidPanelSelect);
-            hideElement(_infoModal);
-            _infoModal.innerHTML = '';
-            giveFocusTo(_spidPanelSelect);
-        };
-
-        _SPID.prototype.openInfoModal = function (htmlContent) {
-            var _spid = this;
-            _infoModal.innerHTML = _spid.getTemplate('infoModalContent', htmlContent);
-            showElement(_infoModal);
-            hideElement(_spidPanelSelect);
-            // L'attributo aria-live assertive farà leggere il contenuto senza bisogno di focus
-            // Viene distrutto e ricreato, non necessita unbind
-            document.querySelector('#spid-close-modal-button').addEventListener('click', function () {
-                _spid.closeInfoModal();
-            });
-        };
-
         // Chiudi gli overlay in sequenza, prima info modal poi i providers
         _SPID.prototype.handleEscKeyEvent = function (event) {
             var isEscKeyHit = event.keyCode === 27,
                 isInfoModalVisible = !_infoModal.hasAttribute('hidden');
 
             if (isEscKeyHit) {
-                if (isInfoModalVisible) {
-                    this.closeInfoModal();
-                } else {
-                    // eslint-disable-next-line no-use-before-define
-                    this.hideProvidersPanel();
-                }
+                // eslint-disable-next-line no-use-before-define
+                this.hideProvidersPanel();
             }
         };
 
@@ -132,10 +108,6 @@ var _SPID,
                     elem.classList.remove("agid-reverse-enter-transition");
                 }, 2000);
             });
-            document.querySelector('#spid-nonhai-spid').addEventListener('click', function () {
-                _spid.openInfoModal(_spid.getTemplate('nonHaiSpid', null));
-            });
-
         };
 
         function loadStylesheet(url) {

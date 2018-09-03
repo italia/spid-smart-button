@@ -136,39 +136,6 @@ var _SPID = (function(languages, providers){
                     '</div>',
                     '<!-- AGID - SPID BUTTON ', style.size.toUpperCase(), ' * end * -->'
                 ].join('');
-            },
-
-            infoModalContent: function (htmlContent) {
-                return [
-                        '<section class="agid-spid-panel">',
-                            '<header class="agid-spid-header">',
-                                '<div class="agid-spid-panel-back agid-spid-panel-element">',
-                                    '<div class="agid-display-logo">',
-                                        getImageResource.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
-                                    '</div>',
-                                    '<div class="agid-display-close">',
-                                        '<button id="spid-close-modal-button" class="agid-navigable" aria-labelledby="spid-close-modal-button">',
-
-                                            getImageResource.call(this, 'img/close', this.getI18n('aria_chiudi_modale')),
-                                        '</button>',
-                                    '</div>',
-                                '</div>',
-                            '</header>',
-                            '<div id="spid-infomodal-content">',
-                                '<div class="agid-spid-panel-content-center">',
-                                    htmlContent,
-                                '</div>',
-                            '</div>',
-                        '</section>'
-                ].join('');
-            },
-
-            // Fake content, Lipsum HTML, rimpiazzare con contenuti/etichette reali
-            nonHaiSpid: function () {
-                return [
-                    '<h1 id="spid-info-modal-title" class="agid-fade-in-bottom">',this.getI18n('non_hai_SPID'),'</h1>',
-                    '<h3 class="agid-fade-in-bottom">Inserire il testo corretto</h3>'
-                ].join('');
             }
         };
     }
