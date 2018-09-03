@@ -127,12 +127,13 @@ var _SPID = (function(languages, providers){
 
             spidButton: function (style) {
                 var fluid = style.fluid ? " agid-spid-enter-fluid " : "";
+                var imgPath = style.colorScheme == 'negative' ? 'img/spid-ico-circle-lb.svg' : 'img/spid-ico-circle-bb.svg';
                 return [
                     '<!-- AGID - SPID BUTTON ', style.size.toUpperCase(), ' * begin * -->',
                     '<div id="spid-enter-button-container">',
                         '<button class="agid-spid-enter agid-font agid-spid-enter-button-', style.colorScheme, ' agid-spid-enter-button-', style.cornerStyle, ' agid-spid-enter-size-', style.size, fluid,'" hidden>',
                             '<span aria-hidden="true" class="agid-spid-enter-icon">',
-                                '<img src="', this.getResources().assetsBaseUrl, 'img/spid-ico-circle-bb.svg" alt="',this.getI18n('entra_con_SPID'),'"></img>',
+                                '<img src="', this.getResources().assetsBaseUrl, imgPath,'" alt="',this.getI18n('entra_con_SPID'),'"></img>',
                             '</span>',
                             '<span class="agid-spid-enter-text">', this.getI18n('entra_con_SPID'), '</span>',
                         '</button>',

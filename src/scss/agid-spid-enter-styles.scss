@@ -15,7 +15,6 @@ h1 {
 }
 
 button:active {
-    border: 3px solid rgb(247, 145, 13);
 
     &#spid-cancel-access-button {
         border: 3px solid rgb(247, 145, 13);
@@ -96,20 +95,6 @@ button:active {
     background: transparent;
     cursor: pointer;
     font-size: 1em;
-}
-
-.agid-spid-enter {
-    position: relative;
-
-    & .agid-logo {
-        position: absolute;
-        display: block;
-        margin: auto;
-        width: 12%;
-        visibility: hidden;
-        top: 30%;
-        left: 14%;
-    }
 }
 
 .agid-spid-link {
@@ -276,7 +261,7 @@ button:active {
 .agid-spid-enter-size-large {
     font-size: 18px;
     height: 56px;
-    padding: 14px 28px;
+    padding: 12px 28px;
 
     & > span img {
         width: 32px;
@@ -428,9 +413,21 @@ button:active {
  * in questo modo i pulsanti appaiono pochi istanti dopo correttamente stilizzati, sovrascrivendo l'attributo hidden
  */
 .agid-spid-enter {
+    position: relative;
     border: 0;
     cursor: pointer;
     display: inline-block;
+    font-weight: 600;
+
+    & .agid-logo {
+        position: absolute;
+        display: block;
+        margin: auto;
+        width: 12%;
+        visibility: hidden;
+        top: 30%;
+        left: 14%;
+    }
 }
 
 @media screen and (max-width: 996px) {

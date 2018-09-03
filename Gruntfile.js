@@ -13,12 +13,12 @@ module.exports = function (grunt) {
         watch: {
             build: {
                 files: ['src/scss/*', 'src/js/*', 'src/data/*'],
-                tasks: ['build']
+                tasks: ['build:dev']
             },
 
             test: {
                 files: ['src/scss/*', 'src/js/*'],
-                tasks: ['build', 'jasmine']
+                tasks: ['build:dev', 'jasmine']
             }
         },
 
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
                     style: 'expanded'
                 },
                 files: {
-                    'dev/spid-button.min.css': 'src/scss/agid-spid-enter-dev.scss'
+                    'dist/spid-button.min.css': 'src/scss/agid-spid-enter-dev.scss'
                 }
             },
             prod: {
@@ -83,8 +83,8 @@ module.exports = function (grunt) {
                 options: {
                     map: true
                 },
-                src: 'dev/spid-button.min.css',
-                dest: 'dev/spid-button.min.css'
+                src: 'dist/spid-button.min.css',
+                dest: 'dist/spid-button.min.css'
             },
             prod: {
                 options: {
@@ -104,7 +104,7 @@ module.exports = function (grunt) {
                     compress: false
                 },
                 files: {
-                    'dev/spid-button.min.js': [
+                    'dist/spid-button.min.js': [
                         'src/data/spidI18n.js',
                         'src/data/spidProviders.js',
                         'src/js/agid-spid-enter-tpl.js',
@@ -131,6 +131,14 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        copy: {
+            prod: {
+                files: [
+                    // includes files within path
+                    { expand: true, src: ['img/**'], dest: 'dist/', filter: 'isFile' }
+                ],
+            },
         },
 
         // Unit tests
@@ -169,9 +177,8 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('css', ['sass', 'postcss']);
-    grunt.registerTask('js', ['uglify']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
-    grunt.registerTask('build', ['css', 'js']);
+    grunt.registerTask('build:prod', ['sass:prod', 'postcss:prod', 'copy:prod', 'uglify:prod']);
+    grunt.registerTask('build:dev', ['sass:dev', 'postcss:dev', 'uglify:dev']);
     grunt.registerTask('test', ['jasmine', 'log-jasmine']);
 };

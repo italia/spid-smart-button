@@ -34,7 +34,8 @@
   "scripts": {
     "preinstall": "node tasksConfig/check-node-version.js",
     "security": "grunt retire",
-    "start": "grunt build && grunt serve & grunt watch:build",
+    "start": "grunt build:prod && grunt serve",
+    "serve": "grunt build:dev && grunt serve",
     "lint": "grunt lint",
     "test-watch": "grunt watch:test",
     "test": "grunt test",
@@ -49,6 +50,7 @@
     "eslint-plugin-jasmine": "^2.9.1",
     "grunt": "^1.0.1",
     "grunt-cli": "1.2.0",
+    "grunt-contrib-copy": "1.0.0",
     "grunt-contrib-jasmine": "^2.0.1",
     "grunt-contrib-uglify": "3.1.0",
     "grunt-contrib-watch": "^1.1.0",
