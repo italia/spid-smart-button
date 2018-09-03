@@ -67,14 +67,6 @@ var _SPID,
             });
         };
 
-        // Randomizza l'ordine dei tasti dei provider prima di mostrarli
-        function shuffleIdp() {
-            // eslint-disable-next-line vars-on-top
-            for (var i = _spidIdpList.children.length; i >= 0; i--) {
-                _spidIdpList.appendChild(_spidIdpList.children[Math.random() * i | 0]);
-            }
-        }
-
         // Chiudi gli overlay in sequenza, prima info modal poi i providers
         _SPID.prototype.handleEscKeyEvent = function (event) {
             var isEscKeyHit = event.keyCode === 27,
@@ -92,7 +84,6 @@ var _SPID,
 
         _SPID.prototype.showProvidersPanel = function () {
             var _spid = this;
-            shuffleIdp();
             showElement(_agidSpidEnterWrapper);
             giveFocusTo(_spidPanelSelect);
             document.addEventListener('keyup', function (event) {

@@ -23,8 +23,6 @@ var _SPID = (function(languages, providers){
         return [
             '<img aria-hidden="true"',
                 'src="', this.getResources().assetsBaseUrl, imagePath, '.svg"',
-                //NON CI SONO LE IMMAGINI PNG
-                'onerror="this.src=\'', this.getResources().assetsBaseUrl, imagePath, '.png\'; this.onerror=null;"',
                 'alt="', altText, '" style="float:left"/>'
         ].join('');
     };
