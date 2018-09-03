@@ -19,7 +19,7 @@ var _SPID = (function(languages, providers){
         };
     }
 
-    function svgWithPngFallback(imagePath, altText) {
+    function getImageResource(imagePath, altText) {
         return [
             '<img aria-hidden="true"',
                 'src="', this.getResources().assetsBaseUrl, imagePath, '.svg"',
@@ -46,12 +46,12 @@ var _SPID = (function(languages, providers){
                         '<header class="agid-spid-header">',
                             '<div class="agid-spid-panel-back agid-spid-panel-element">',
                                 '<div id="agid-logo" class="agid-display-logo agid-fade-out-left">',
-                                    svgWithPngFallback.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
+                                    getImageResource.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
                                 '</div>',
                                 '<div id="agid-close-button" class="agid-display-close agid-fade-out-right">',
                                     '<button tabindex="0" id="agid-spid-panel-close-button" class="agid-navigable" aria-labelledby="spid-cancel-access-button">',
 
-                                        svgWithPngFallback.call(this, 'img/close', this.getI18n('naviga_indietro')),
+                                        getImageResource.call(this, 'img/close', this.getI18n('naviga_indietro')),
                                     '</button>',
                                 '</div>',
                             '</div>',
@@ -85,8 +85,7 @@ var _SPID = (function(languages, providers){
                     providerUri = '',
                     providerEntityName = (providerData.active)
                                        ? this.getI18n('accedi_con_idp', providerData.entityName)
-                                       : this.getI18n('idp_disabled'),
-                    providerID =  providerData.entityName.replace(' ', '-');
+                                       : this.getI18n('idp_disabled');
                 if (providerData.method === 'POST') {
                     // Crea gli input field chiave=valore dall'oggetto
                     var fieldName = providerData.fieldName || 'idp';
@@ -145,12 +144,12 @@ var _SPID = (function(languages, providers){
                             '<header class="agid-spid-header">',
                                 '<div class="agid-spid-panel-back agid-spid-panel-element">',
                                     '<div class="agid-display-logo">',
-                                        svgWithPngFallback.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
+                                        getImageResource.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
                                     '</div>',
                                     '<div class="agid-display-close">',
                                         '<button id="spid-close-modal-button" class="agid-navigable" aria-labelledby="spid-close-modal-button">',
 
-                                            svgWithPngFallback.call(this, 'img/close', this.getI18n('aria_chiudi_modale')),
+                                            getImageResource.call(this, 'img/close', this.getI18n('aria_chiudi_modale')),
                                         '</button>',
                                     '</div>',
                                 '</div>',
