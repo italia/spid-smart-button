@@ -48,13 +48,6 @@
     }
     // FadeIn
     &:not([hidden]) {
-        .agid-fade-in-cancel {
-            animation-name: cancelBtn;
-            animation-delay: 1s;
-            animation-duration: 1.25s;
-            animation-fill-mode: both;
-        }
-
         .agid-spid-panel-anim,
         #spid-infomodal-content {
             animation-name: anim-panel-in;
@@ -95,16 +88,6 @@
 }
 
 @keyframes spidIdp {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes cancelBtn {
     from {
         opacity: 0;
     }

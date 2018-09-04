@@ -14,16 +14,9 @@ h1 {
     min-width: 400px;
 }
 
-button:active {
-    &#spid-cancel-access-button {
-        border: 3px solid rgb(247, 145, 13);
-    }
-}
-
 #spid-idp-list {
     display: flex;
     flex-flow: row wrap;
-    //padding: 20px;
 
     .agid-spid-idp {
         margin: 12px auto;
@@ -134,6 +127,7 @@ button:active {
     position: fixed;
     z-index: 1;
     overflow: auto;
+    background: #fff;
 }
 
 .agid-spid-header {
@@ -186,9 +180,9 @@ button:active {
 
 #agid-spid-panel-content {
     display: block;
-    overflow: hidden;
     min-width: 300px;
     background: #fff;
+    margin-bottom: 10px;
 
     #spid-enter-title-page {
         background: transparent;
@@ -277,17 +271,42 @@ button:active {
 
 #spid-cancel-access-button {
     background-color: #fcfdff;
-    color: #5c6f82;
+    padding: 12px 24px;
+    color: #50565c;
     font-family: "Titillium Web", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 16px;
+    display: inline-block;
     box-shadow: inset 0 0 0 1px #e6e9f2;
-    border-radius: 5px;
-    border: 1px solid currentColor;
+    border-radius: 4px;
+    border: 0 solid transparent;
     height: 55px;
-    display: block;
     margin: auto;
-    width: 85%;
-    cursor: default;
+    width: 90%;
+    text-align: center;
+    line-height: 1.5;
+    vertical-align: middle;
+    cursor: pointer;
+
+    &:active:focus {
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(92, 111, 130, 0.5);
+    }
+
+    &:active {
+        color: #5c6f82;
+    }
+
+    &:hover {
+        color: #50565c;
+        -webkit-box-shadow: inset 0 0 0 1px #c9cedc;
+        box-shadow: inset 0 0 0 1px #c9cedc;
+    }
+}
+
+.agid-spid-circular-shadow {
+    position: relative;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .agid-spid-col {
@@ -430,20 +449,8 @@ button:active {
     }
 }
 
-@media screen and (max-width: 996px) {
-    .agid-body-list {
-        background-color: #f5f6f7;
-
-        // .agid-spid-idp {
-        //     form {
-        //         margin: 5px;
-        //     }
-        // }
-    }
-}
-
 @media screen and (max-width: 767px) {
-    #spid-foot-btn {
+    #spid-foot-btn { //ricontrollare questa media query
         position: fixed;
         background-color: white;
         bottom: 0;
@@ -455,19 +462,7 @@ button:active {
 }
 
 @media (min-width: 361px) {
-    // #agid-spid-panel-header {
-    //     & .agid-spid-display-logo img {
-    //         max-height: 50px;
-    //     }
-    // }
-
     .agid-spid-panel-content-center {
         max-width: 500px;
-    }
-}
-
-@media (min-width: 768px) {
-    #spid-cancel-access-button {
-        width: 436px;
     }
 }
