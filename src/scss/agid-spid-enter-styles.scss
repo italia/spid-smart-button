@@ -15,7 +15,6 @@ h1 {
 }
 
 button:active {
-
     &#spid-cancel-access-button {
         border: 3px solid rgb(247, 145, 13);
     }
@@ -24,18 +23,19 @@ button:active {
 #spid-idp-list {
     display: flex;
     flex-flow: row wrap;
-    padding: 20px;
+    //padding: 20px;
 
     .agid-spid-idp {
+        margin: 12px auto;
         display: flex;
         flex-direction: column;
-        width: 50%;
+        width: 40%;
+        background: #f5f6f7;
+        border-radius: 3px;
 
         form {
             height: 100%;
-            border: 3px solid white;
             padding: 10px;
-            background: white;
 
             &:active {
                 border: 3px solid rgb(247, 145, 13);
@@ -434,12 +434,11 @@ button:active {
     .agid-body-list {
         background-color: #f5f6f7;
 
-        .agid-spid-idp {
-            form {
-                margin: 5px;
-                border: 3px solid f5f6f7;
-            }
-        }
+        // .agid-spid-idp {
+        //     form {
+        //         margin: 5px;
+        //     }
+        // }
     }
 }
 
