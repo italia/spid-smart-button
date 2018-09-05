@@ -9,8 +9,9 @@ addons:
 install: npm install
 before_script:
   - npm start &
-  - sleep 15
+  - sleep 10
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - sleep 10
 script:
   - npm test
 
