@@ -35,8 +35,7 @@ var _SPID = (function(languages, providers){
         this.templates = {
             spidMainContainers: function () {
                 return [
-                    '<div id="spid-enter">', '</div>',
-                    '<div id="spid-info-modal" class="modal" aria-live="assertive" tabindex="0" hidden>', '</div>'
+                    '<div id="spid-enter">', '</div>'
                 ].join('');
             },
 

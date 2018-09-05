@@ -526,7 +526,7 @@ describe('SPID', function () {
                 injectSpidPlaceHolder();
                 // WHEN
                 SPID.init(genericConfig);
-                // Mostra il modale dei provide
+                // Mostra il modale dei providers
                 agidSpidWrapper = document.querySelector(agidSpidWrapperID);
                 agidSpidWrapper.removeAttribute('hidden');
                 // THEN

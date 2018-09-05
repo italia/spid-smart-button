@@ -8,7 +8,6 @@ var _SPID,
 
         var _agidSpidEnterWrapper,
             _spidIdpList,
-            _infoModal,
             _spidPanelSelect,
             // questa funzione consente la gestione dell'esposizione verso l'esterno dei metodi pubblici
             // e permette inoltre di restituire un'istanza di _SPID tramite la funzione init()
@@ -49,8 +48,7 @@ var _SPID,
 
         // Chiudi gli overlay in sequenza, prima info modal poi i providers
         _SPID.prototype.handleEscKeyEvent = function (event) {
-            var isEscKeyHit = event.keyCode === 27,
-                isInfoModalVisible = !_infoModal.hasAttribute('hidden');
+            var isEscKeyHit = event.keyCode === 27;
 
             if (isEscKeyHit) {
                 // eslint-disable-next-line no-use-before-define
@@ -130,7 +128,6 @@ var _SPID,
 
         function getSelectors() {
             _spidIdpList = document.querySelector('#spid-idp-list');
-            _infoModal = document.querySelector('#spid-info-modal');
             _spidPanelSelect = document.querySelector('#agid-spid-panel-select');
         }
 
