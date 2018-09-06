@@ -80,6 +80,7 @@ h1 {
 }
 
 .agid-non-hai-spid-font {
+    margin-right: 5px;
     font-size: 15px;
     font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
@@ -92,8 +93,8 @@ h1 {
 
 .agid-spid-link {
     cursor: pointer;
-    color: $spid-button-default;
-    text-decoration: underline;
+    font-weight: bold;
+    color: #06c;
 }
 
 #spid-enter-container {

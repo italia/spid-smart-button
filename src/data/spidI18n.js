@@ -22,7 +22,7 @@ function languages() {
                 non_hai_SPID: "Don't have SPID?",
                 cosa_SPID: "What is SPID?",
                 entra_con_SPID: "Sign in with SPID",
-                scopri_di_piu: "Learn more",
+                scopri_di_piu: "Learn more.",
                 aria_chiudi_modale: "Close informative modal",
                 accedi_con_idp: "Access to SPID with {0}",
                 idp_disabled: "Provider not enabled"
@@ -35,7 +35,7 @@ function languages() {
                 non_hai_SPID: "Haben Sie nicht SPID?",
                 cosa_SPID: "Was ist SPID?",
                 entra_con_SPID: "Loggen Sie mit SPID",
-                scopri_di_piu: "Finde mehr heraus",
+                scopri_di_piu: "Finde mehr heraus.",
                 aria_chiudi_modale: "Schlißen Sie den Dialog",
                 accedi_con_idp: "Zugriff auf SPID mit {0}",
                 idp_disabled: "Provider nicht aktiviert"
