@@ -305,8 +305,20 @@ h1 {
 
 .agid-spid-circular-shadow {
     position: relative;
-    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+
+    &::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        -webkit-box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
+        box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
+        left: 10%;
+        right: 10%;
+        width: 80%;
+        height: 50%;
+        border-radius: 100%;
+        bottom: 0; //remove this to put shadow on top
+    }
 }
 
 .agid-spid-col {
