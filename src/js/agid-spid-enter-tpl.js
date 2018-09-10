@@ -69,12 +69,12 @@ var _SPID = (function(languages, providers){
                                         '<span class="agid-non-hai-spid-font">', this.getI18n("non_hai_SPID"),'</span>',
                                         '<span id="spid-nonhai-spid" class="agid-spid-link agid-non-hai-spid-font">' ,this.getI18n("scopri_di_piu"),'</span>',
                                     '</div>',
-                                    '<div class="agid-spid-circular-shadow">',
-                                        '<button id="spid-cancel-access-button" class="agid-font">',
-                                            '<span>', this.getI18n('annulla_accesso'), '</span>',
-                                        '</button>',
-                                    '</div>',
                             '</div>',
+                        '</div>',
+                        '<div id="spid-foot-btn" class="agid-spid-circular-shadow">',
+                            '<button id="spid-cancel-access-button" class="agid-font">',
+                                '<span>', this.getI18n('annulla_accesso'), '</span>',
+                            '</button>',
                         '</div>',
                     '</section>'
                 ].join('');

@@ -205,6 +205,9 @@ h1 {
 .agid-spid-panel-content-center {
     text-align: center;
     margin: auto;
+    overflow: auto;
+    height: 100%;
+    margin-bottom: 60px;
 }
 
 #agid-spid-panel-footer {
@@ -328,7 +331,6 @@ h1 {
         width: 80%;
         height: 50%;
         border-radius: 100%;
-        bottom: 0; //remove this to put shadow on top
     }
 }
 
@@ -472,15 +474,29 @@ h1 {
     }
 }
 
+#spid-foot-btn {
+    text-align: center;
+    max-width: 500px;
+    bottom: 0;
+    background-color: white;
+    margin: -40px auto auto auto;
+    width: 100%;
+    padding-bottom: 4%;
+}
+
 @media screen and (max-width: 767px) {
-    #spid-foot-btn { //ricontrollare questa media query
+    #spid-foot-btn {
         position: fixed;
-        background-color: white;
-        bottom: 0;
-        width: 100%;
         padding-top: 4%;
         padding-bottom: 4%;
-        box-shadow: 0 -2px 5px 0 rgba(238, 238, 238, 0.7);
+        margin: auto;
+    }
+}
+
+@media screen and (max-height: 450px) {
+    #spid-foot-btn {
+        margin: -20px 110px !important;
+        padding-top: 0 !important;
     }
 }
 
