@@ -8,8 +8,6 @@ var _SPID,
 
         var _agidSpidEnterWrapper,
             _spidIdpList,
-            _infoModal,
-
             _spidPanelSelect,
             // questa funzione consente la gestione dell'esposizione verso l'esterno dei metodi pubblici
             // e permette inoltre di restituire un'istanza di _SPID tramite la funzione init()
@@ -48,52 +46,18 @@ var _SPID,
             });
         }
 
-        _SPID.prototype.closeInfoModal = function () {
-            var _spid = this;
-            showElement(_spidPanelSelect);
-            hideElement(_infoModal);
-            _infoModal.innerHTML = '';
-            giveFocusTo(_spidPanelSelect);
-        };
-
-        _SPID.prototype.openInfoModal = function (htmlContent) {
-            var _spid = this;
-            _infoModal.innerHTML = _spid.getTemplate('infoModalContent', htmlContent);
-            showElement(_infoModal);
-            hideElement(_spidPanelSelect);
-            // L'attributo aria-live assertive farà leggere il contenuto senza bisogno di focus
-            // Viene distrutto e ricreato, non necessita unbind
-            document.querySelector('#spid-close-modal-button').addEventListener('click', function () {
-                _spid.closeInfoModal();
-            });
-        };
-
-        // Randomizza l'ordine dei tasti dei provider prima di mostrarli
-        function shuffleIdp() {
-            // eslint-disable-next-line vars-on-top
-            for (var i = _spidIdpList.children.length; i >= 0; i--) {
-                _spidIdpList.appendChild(_spidIdpList.children[Math.random() * i | 0]);
-            }
-        }
-
         // Chiudi gli overlay in sequenza, prima info modal poi i providers
         _SPID.prototype.handleEscKeyEvent = function (event) {
-            var isEscKeyHit = event.keyCode === 27,
-                isInfoModalVisible = !_infoModal.hasAttribute('hidden');
+            var isEscKeyHit = event.keyCode === 27;
 
             if (isEscKeyHit) {
-                if (isInfoModalVisible) {
-                    this.closeInfoModal();
-                } else {
-                    // eslint-disable-next-line no-use-before-define
-                    this.hideProvidersPanel();
-                }
+                // eslint-disable-next-line no-use-before-define
+                this.hideProvidersPanel();
             }
         };
 
         _SPID.prototype.showProvidersPanel = function () {
             var _spid = this;
-            shuffleIdp();
             showElement(_agidSpidEnterWrapper);
             giveFocusTo(_spidPanelSelect);
             document.addEventListener('keyup', function (event) {
@@ -142,10 +106,6 @@ var _SPID,
                     elem.classList.remove("agid-reverse-enter-transition");
                 }, 2000);
             });
-            document.querySelector('#spid-nonhai-spid').addEventListener('click', function () {
-                _spid.openInfoModal(_spid.getTemplate('nonHaiSpid', null));
-            });
-
         };
 
         function loadStylesheet(url) {
@@ -168,7 +128,6 @@ var _SPID,
 
         function getSelectors() {
             _spidIdpList = document.querySelector('#spid-idp-list');
-            _infoModal = document.querySelector('#spid-info-modal');
             _spidPanelSelect = document.querySelector('#agid-spid-panel-select');
         }
 
