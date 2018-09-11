@@ -9,6 +9,7 @@ var _SPID,
         var _agidSpidEnterWrapper,
             _spidIdpList,
             _infoModal,
+
             _spidPanelSelect,
             // questa funzione consente la gestione dell'esposizione verso l'esterno dei metodi pubblici
             // e permette inoltre di restituire un'istanza di _SPID tramite la funzione init()
