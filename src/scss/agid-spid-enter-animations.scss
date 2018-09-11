@@ -22,8 +22,7 @@
         transition-delay: 1s;
         pointer-events: none;
 
-        .agid-spid-panel-anim,
-        #spid-infomodal-content {
+        .agid-spid-panel-anim {
             animation-name: anim-panel-out;
             animation-duration: 1s;
 
@@ -55,8 +54,7 @@
             animation-fill-mode: both;
         }
 
-        .agid-spid-panel-anim,
-        #spid-infomodal-content {
+        .agid-spid-panel-anim {
             animation-name: anim-panel-in;
             animation-duration: 2s;
             animation-delay: 0.5s;

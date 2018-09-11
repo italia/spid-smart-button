@@ -19,12 +19,10 @@ var _SPID = (function(languages, providers){
         };
     }
 
-    function svgWithPngFallback(imagePath, altText) {
+    function getImageResource(imagePath, altText) {
         return [
             '<img aria-hidden="true"',
                 'src="', this.getResources().assetsBaseUrl, imagePath, '.svg"',
-                //NON CI SONO LE IMMAGINI PNG
-                'onerror="this.src=\'', this.getResources().assetsBaseUrl, imagePath, '.png\'; this.onerror=null;"',
                 'alt="', altText, '" style="float:left"/>'
         ].join('');
     };
@@ -37,8 +35,7 @@ var _SPID = (function(languages, providers){
         this.templates = {
             spidMainContainers: function () {
                 return [
-                    '<div id="spid-enter">', '</div>',
-                    '<div id="spid-info-modal" class="modal" aria-live="assertive" tabindex="0" hidden>', '</div>'
+                    '<div id="spid-enter">', '</div>'
                 ].join('');
             },
 
@@ -48,12 +45,12 @@ var _SPID = (function(languages, providers){
                         '<header class="agid-spid-header">',
                             '<div class="agid-spid-panel-back agid-spid-panel-element">',
                                 '<div id="agid-logo" class="agid-display-logo agid-fade-out-left">',
-                                    svgWithPngFallback.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
+                                    getImageResource.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
                                 '</div>',
                                 '<div id="agid-close-button" class="agid-display-close agid-fade-out-right">',
                                     '<button tabindex="0" id="agid-spid-panel-close-button" class="agid-navigable" aria-labelledby="spid-cancel-access-button">',
 
-                                        svgWithPngFallback.call(this, 'img/close', this.getI18n('naviga_indietro')),
+                                        getImageResource.call(this, 'img/close', this.getI18n('naviga_indietro')),
                                     '</button>',
                                 '</div>',
                             '</div>',
@@ -87,8 +84,7 @@ var _SPID = (function(languages, providers){
                     providerUri = '',
                     providerEntityName = (providerData.active)
                                        ? this.getI18n('accedi_con_idp', providerData.entityName)
-                                       : this.getI18n('idp_disabled'),
-                    providerID =  providerData.entityName.replace(' ', '-');
+                                       : this.getI18n('idp_disabled');
                 if (providerData.method === 'POST') {
                     // Crea gli input field chiave=valore dall'oggetto
                     var fieldName = providerData.fieldName || 'idp';
@@ -138,39 +134,6 @@ var _SPID = (function(languages, providers){
                         '</button>',
                     '</div>',
                     '<!-- AGID - SPID BUTTON ', style.size.toUpperCase(), ' * end * -->'
-                ].join('');
-            },
-
-            infoModalContent: function (htmlContent) {
-                return [
-                        '<section class="agid-spid-panel">',
-                            '<header class="agid-spid-header">',
-                                '<div class="agid-spid-panel-back agid-spid-panel-element">',
-                                    '<div class="agid-display-logo">',
-                                        svgWithPngFallback.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
-                                    '</div>',
-                                    '<div class="agid-display-close">',
-                                        '<button id="spid-close-modal-button" class="agid-navigable" aria-labelledby="spid-close-modal-button">',
-
-                                            svgWithPngFallback.call(this, 'img/close', this.getI18n('aria_chiudi_modale')),
-                                        '</button>',
-                                    '</div>',
-                                '</div>',
-                            '</header>',
-                            '<div id="spid-infomodal-content">',
-                                '<div class="agid-spid-panel-content-center">',
-                                    htmlContent,
-                                '</div>',
-                            '</div>',
-                        '</section>'
-                ].join('');
-            },
-
-            // Fake content, Lipsum HTML, rimpiazzare con contenuti/etichette reali
-            nonHaiSpid: function () {
-                return [
-                    '<h1 id="spid-info-modal-title" class="agid-fade-in-bottom">',this.getI18n('non_hai_SPID'),'</h1>',
-                    '<h3 class="agid-fade-in-bottom">Inserire il testo corretto</h3>'
                 ].join('');
             }
         };

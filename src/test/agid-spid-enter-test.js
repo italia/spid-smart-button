@@ -3,8 +3,6 @@ describe('SPID', function () {
     var SPID = window.SPID,
         axe = window.axe,
         agidSpidWrapperID = '#spid-enter-container',
-        agidInfoModalID = '#spid-info-modal',
-        agidModalButtonID = '#spid-nonhai-spid',
         accediConSpid = 'Accedi a SPID con ',
         supportedProviders = [
             'https://loginspid.aruba.it',
@@ -421,8 +419,6 @@ describe('SPID', function () {
                 // THEN
                 var title = document.getElementById('spid-enter-title-page').innerHTML;
                 expect(title).toEqual('Choose your SPID provider');
-                //expect(XMLHttpRequest.prototype.open).toHaveBeenCalledWith('GET', '/src/data/spidI18n.json');
-                //expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith('{"lang":"en"}');
                 done();
             });
         });
@@ -511,77 +507,6 @@ describe('SPID', function () {
             });
         });
 
-        describe('when the informative buttons in the footer are clicked', function () {
-            it('should open the informative modal on top of the providers modal', function (done) {
-                // GIVEN
-                injectSpidPlaceHolder();
-
-                SPID.init(genericConfig);
-                var isInfoModalVisible;
-
-                document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
-                // WHEN
-                document.querySelector(agidModalButtonID).click();
-                isInfoModalVisible = isElementVisible(agidInfoModalID);
-                // THEN
-                expect(isInfoModalVisible).toBeTruthy();
-                done();
-            });
-        });
-
-        describe('when the informative modal is displayed on top of the providers modal it should allow to close it by', function () {
-            it('click on the top right X button in the modal', function (done) {
-                // GIVEN
-                injectSpidPlaceHolder();
-
-                SPID.init(genericConfig);
-                var isInfoModalVisible;
-
-                document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
-                document.querySelector(agidModalButtonID).click();
-                // WHEN
-                document.querySelector('#spid-close-modal-button').click();
-                isInfoModalVisible = isElementVisible(agidInfoModalID);
-                // THEN
-                expect(isInfoModalVisible).toBeFalsy();
-                done();
-            });
-
-            it('hit on the keyboard esc key', function (done) {
-                // GIVEN
-                injectSpidPlaceHolder();
-
-                SPID.init(genericConfig);
-                var isInfoModalVisible;
-
-                document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
-                document.querySelector(agidModalButtonID).click();
-                // WHEN
-                triggerKeyEvent(27);
-                isInfoModalVisible = isElementVisible(agidInfoModalID);
-                // THEN
-                expect(isInfoModalVisible).toBeFalsy();
-                done();
-            });
-
-            it('should not react to keystrokes different than ESC', function (done) {
-                // GIVEN
-                injectSpidPlaceHolder();
-
-                SPID.init(genericConfig);
-                var isInfoModalVisible;
-
-                document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
-                document.querySelector(agidModalButtonID).click();
-                // WHEN
-                triggerKeyEvent(7);
-                isInfoModalVisible = isElementVisible(agidInfoModalID);
-                // THEN
-                expect(isInfoModalVisible).toBeTruthy();
-                done();
-            });
-        });
-
         // A11y accessibility testing
         describe('aXe accessibility check (A11y)', function () {
             it('should not find any violation in the module HTML', function (done) {
@@ -593,17 +518,13 @@ describe('SPID', function () {
                     }
                 },
                     agidSpidWrapper,
-                    agidModalButton,
                     report;
                 injectSpidPlaceHolder();
                 // WHEN
                 SPID.init(genericConfig);
-                // Mostra il modale dei provide
+                // Mostra il modale dei providers
                 agidSpidWrapper = document.querySelector(agidSpidWrapperID);
                 agidSpidWrapper.removeAttribute('hidden');
-                // Mostra modale informativo per avere tutti gli elementi HTML visibili e testabili
-                agidModalButton = document.querySelector(agidModalButtonID);
-                agidModalButton.click();
                 // THEN
                 axe.run(agidSpidWrapper, axeOptions, function (error, result) {
                     if (result.violations.length) {
