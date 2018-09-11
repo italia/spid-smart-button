@@ -7,3 +7,4 @@ _SpecRunner.html
 reports/
 *.min.*
 *debug.log
+/dist/img/**
