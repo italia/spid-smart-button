@@ -137,7 +137,6 @@ module.exports = function (grunt) {
         jasmine: {
             unitTest: {
                 src: [
-                    'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
                     'node_modules/axe-core/axe.js', // A11y accessibility testing library
                     'dist/spid-button.min.js' // Modulo minifizzato da testare
                 ],

@@ -34,7 +34,8 @@
   "scripts": {
     "preinstall": "node tasksConfig/check-node-version.js",
     "security": "grunt retire",
-    "start": "grunt build && grunt serve & grunt watch:build",
+    "start": "grunt build && grunt serve",
+    "watch": "grunt watch:build",
     "lint": "grunt lint",
     "test-watch": "grunt watch:test",
     "test": "grunt test",
