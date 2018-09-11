@@ -145,7 +145,6 @@ module.exports = function (grunt) {
         jasmine: {
             unitTest: {
                 src: [
-                    'node_modules/promise-polyfill/promise.min.js', // Fix per phantomJs che non supporta Promise ES6
                     'node_modules/axe-core/axe.js', // A11y accessibility testing library
                     'dist/spid-button.min.js' // Modulo minifizzato da testare
                 ],
@@ -173,7 +172,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('log-coverage', function () {
         grunt.log.writeln('Il report della code coverage si trova in:');
-        grunt.log.writeln(localhostUrl + '/reports/coverage/dev/agid-spid-enter.min.js.html');
+        grunt.log.writeln(localhostUrl + '/reports/coverage/distv/agid-spid-enter.min.js.html');
     });
 
     grunt.registerTask('default', ['watch']);

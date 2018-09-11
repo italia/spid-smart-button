@@ -19,10 +19,6 @@ describe('SPID', function () {
         genericConfig = {
             url: '/generic/url/{{idp}}',
             supported: supportedProviders
-        },
-        ajaxFail = {
-            providersEndpoint: '/src/data/spidProviders-fail.json',
-            localisationEndpoint: '/src/data/spidI18n-fail.json'
         };
 
     function injectSpidPlaceHolder(selector) {
