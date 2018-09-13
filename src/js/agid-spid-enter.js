@@ -264,7 +264,7 @@ var _SPID,
                 i = 0, j = 0, t = 0,
                 spidButtons,
                 spidProvidersBtn, delaySeconds,
-                _spid = this
+                _spid = this;
 
             if (!this._availableProviders) {
                 console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
@@ -290,11 +290,11 @@ var _SPID,
                         document.getElementById('agid-close-button').classList.add('agid-fade-in-left');
                         document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
                         spidProvidersBtn = document.getElementsByClassName('agid-spid-idp');
-                        delaySeconds = 0.50;
+                        delaySeconds = 1.10;
                         for (j = 0; j < spidProvidersBtn.length; j++) {
                             spidProvidersBtn[j].classList.add('agid-spid-idp-fade-in');
                             spidProvidersBtn[j].setAttribute('style', 'animation-delay: ' + delaySeconds + 's');
-                            delaySeconds = delaySeconds + 0.15;
+                            delaySeconds = delaySeconds + 0.10;
                         }
                         setTimeout(function () {
                             parent.classList.remove('agid-enter-transition');
