@@ -47,8 +47,7 @@
     }
     // FadeIn
     &:not([hidden]) {
-        .agid-spid-panel-anim,
-        #spid-infomodal-content {
+        .agid-spid-panel-anim {
             animation-name: anim-panel-in;
             animation-duration: 2s;
             animation-delay: 0.5s;
@@ -77,22 +76,35 @@
     }
 }
 
-#spid-idp-list {
-    .agid-spid-idp {
-        animation-name: spidIdp;
-        animation-duration: 1s;
-        animation-delay: 0.5s;
-        animation-fill-mode: both;
-    }
+.agid-spid-idp-fade-in {
+    animation-name: spid-button-anim-idp-fade-in;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
 }
 
-@keyframes spidIdp {
+@keyframes spid-button-anim-idp-fade-in {
     from {
         opacity: 0;
     }
 
     to {
         opacity: 1;
+    }
+}
+
+.agid-spid-idp-fade-out {
+    animation-name: spid-button-anim-idp-fade-out;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+@keyframes spid-button-anim-idp-fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
     }
 }
 
