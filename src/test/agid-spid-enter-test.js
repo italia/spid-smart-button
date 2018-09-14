@@ -268,10 +268,34 @@ describe('SPID', function () {
                     done();
                 });
 
+                it('should log error message if it\'s not present {{idp}} placeholder in url', function (done) {
+                    // WHEN
+                    var config = {
+                        url: 'url',
+                        supported: supportedProviders
+                    };
+                    SPID.init(config);
+                    // THEN
+                    expect(console.error).toHaveBeenCalled();
+                    done();
+                });
+
                 it('should log error message if no supported providers are provided', function (done) {
                     // WHEN
                     var config = {
-                        url: 'url'
+                        url: 'url{{idp}}'
+                    };
+                    SPID.init(config);
+                    // THEN
+                    expect(console.error).toHaveBeenCalled();
+                    done();
+                });
+
+                it('should log error message if is provided an empty array of supported providers', function (done) {
+                    // WHEN
+                    var config = {
+                        url: 'url{{idp}}',
+                        supported: []
                     };
                     SPID.init(config);
                     // THEN

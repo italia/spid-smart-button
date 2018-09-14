@@ -208,8 +208,14 @@ var _SPID,
         };
 
         function checkMandatoryOptions(options) {
-            if (!options || !options.url || !options.supported || options.supported.length < 1 || options.url.indexOf('{{idp}}') === -1) {
-                return false;
+            if (!options) {
+                return 'Non sono stati forniti i parametri obbligatori della configurazione';
+            } else if (!options.url) {
+                return 'Non è stato fornito l\'url obbligatorio in configurazione';
+            } else if (options.url.indexOf('{{idp}}') === -1) {
+                return 'L\'url non contiene il placeholder {{idp}}';
+            } else if (!options.supported || options.supported.length < 1) {
+                return 'Non sono stati forniti gli IdP supportati nel parametro \'supported\'';
             } else {
                 return true;
             }
@@ -237,17 +243,18 @@ var _SPID,
          * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
          */
         _SPID.prototype._init = function (options) {
-            var msg,
+            var msgStyle, msgMandatory,
                 _spid = this;
-            if (!checkMandatoryOptions(options)) {
-                console.error('Non sono stati forniti i parametri obbligatori della configurazione');
+            msgMandatory = checkMandatoryOptions(options);
+            if (msgMandatory !== true) {
+                console.error(msgMandatory);
                 return;
             }
             _spid.initResources();
             options = _spid.getMergedDefaultOptions(options);
-            msg = checkStyleOptions(_spid._style);
-            if (msg !== true) {
-                console.error(msg);
+            msgStyle = checkStyleOptions(_spid._style);
+            if (msgStyle !== true) {
+                console.error(msgStyle);
                 return;
             }
             _spid.initTemplates();
