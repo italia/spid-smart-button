@@ -75,12 +75,15 @@ var _SPID,
 
         function exitChoiceModalAnimations() {
             var elem = document.getElementsByClassName('choosedButton')[0];
+            document.getElementsByClassName('agid-spid-enter-icon')[0].classList.remove('agid-spid-enter-icon-animation-in');
+            document.getElementsByClassName('agid-spid-enter-icon')[0].classList.add('agid-spid-enter-icon-animation-out');
             document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
             elem.classList.remove('agid-enter-transition');
             elem.classList.remove('choosedButton');
             elem.classList.add('agid-reverse-enter-transition');
             setTimeout(function () {
                 elem.classList.remove('agid-reverse-enter-transition');
+                document.getElementsByClassName('agid-spid-enter-icon')[0].classList.remove('agid-spid-enter-icon-animation-out');
             }, 2000);
         }
 
@@ -258,6 +261,7 @@ var _SPID,
             _spid.renderModule();
         };
 
+
         _SPID.prototype.updateSpidButtons = function () {
             var spidButtonsPlaceholders = document.querySelectorAll(this._selector),
                 hasButtonsOnPage = spidButtonsPlaceholders.length,
@@ -289,6 +293,7 @@ var _SPID,
                         document.getElementById('agid-logo').classList.add('agid-fade-in-left');
                         document.getElementById('agid-close-button').classList.add('agid-fade-in-left');
                         document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
+                        document.getElementsByClassName('agid-spid-enter-icon')[0].classList.add('agid-spid-enter-icon-animation-in');
                         spidProvidersBtn = document.getElementsByClassName('agid-spid-idp');
                         delaySeconds = 1.10;
                         for (j = 0; j < spidProvidersBtn.length; j++) {

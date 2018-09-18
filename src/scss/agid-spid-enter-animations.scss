@@ -328,11 +328,6 @@ $animIconDistanceEnd: 120;
             animation-duration: 1s;
             animation-fill-mode: forwards;
         }
-
-        .agid-spid-enter-icon {
-            animation-name: biggerLogo;
-            animation-duration: 1.2s;
-        }
     }
 
     &.agid-reverse-enter-transition {
@@ -340,12 +335,19 @@ $animIconDistanceEnd: 120;
             animation-name: fadeInEnterBtn;
             animation-duration: 1s;
         }
-
-        .agid-spid-enter-icon {
-            animation-name: smallerLogo;
-            animation-duration: 1s;
-        }
     }
+}
+
+.agid-spid-enter-icon-animation-in {
+    animation-name: spid-button-icon-bigger-logo;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.agid-spid-enter-icon-animation-out {
+    animation-name: spid-button-icon-smaller-logo;
+    animation-duration: 1s;
 }
 
 @keyframes fadeOutEnterBtn {
@@ -360,16 +362,36 @@ $animIconDistanceEnd: 120;
     }
 }
 
-@keyframes biggerLogo {
+@keyframes spid-button-icon-bigger-logo {
     from {
+        transform: none;
         opacity: 1;
         visibility: hidden;
+        //transform-origin: left top;
     }
 
     to {
-        opacity: 0;
-        transform: scale(60);
+        opacity: 0.2;
+        //transform: scale(60);
         visibility: visible;
+        transform: scale(15) translateX(120px) translateY(70px);
+        transform-origin: right bottom;
+        position: fixed;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    @keyframes spid-button-icon-bigger-logo {
+        from {
+            opacity: 1;
+            visibility: hidden;
+        }
+
+        to {
+            opacity: 0;
+            transform: scale(60);
+            visibility: visible;
+        }
     }
 }
 
@@ -383,7 +405,7 @@ $animIconDistanceEnd: 120;
     }
 }
 
-@keyframes smallerLogo {
+@keyframes spid-button-icon-smaller-logo {
     from {
         opacity: 0;
         transform: scale(60);
