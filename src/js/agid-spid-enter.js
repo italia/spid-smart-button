@@ -73,6 +73,20 @@ var _SPID,
             });
         };
 
+        function exitChoiceModalAnimations() {
+            var elem = document.getElementsByClassName('choosedButton')[0];
+            document.getElementsByClassName('agid-spid-enter-icon')[0].classList.remove('in');
+            //document.getElementsByClassName('agid-spid-enter-icon')[0].classList.add('agid-spid-enter-icon-animation-out');
+            document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
+            elem.classList.remove('agid-enter-transition');
+            elem.classList.remove('choosedButton');
+            elem.classList.add('agid-reverse-enter-transition');
+            setTimeout(function () {
+                elem.classList.remove('agid-reverse-enter-transition');
+                document.getElementsByClassName('agid-spid-enter-icon')[0].classList.remove('agid-spid-enter-icon-animation-out');
+            }, 2000);
+        }
+
         _SPID.prototype.renderAvailableProviders = function () {
             var _spid = this,
                 agid_spid_enter = document.querySelector('#spid-enter'),
@@ -85,26 +99,12 @@ var _SPID,
             agid_spid_enter.innerHTML = _spid.getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
             // Vengono creati una sola volta all'init, non necessitano unbind
             document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function () {
-                var elem = document.getElementsByClassName("choosedButton")[0];
-                document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
                 _spid.hideProvidersPanel();
-                elem.classList.remove("agid-enter-transition");
-                elem.classList.remove("choosedButton");
-                elem.classList.add("agid-reverse-enter-transition");
-                setTimeout(function () {
-                    elem.classList.remove("agid-reverse-enter-transition");
-                }, 2000);
+                exitChoiceModalAnimations();
             });
             document.querySelector('#spid-cancel-access-button').addEventListener('click', function () {
-                var elem = document.getElementsByClassName("choosedButton")[0];
-                document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
                 _spid.hideProvidersPanel();
-                elem.classList.remove("agid-enter-transition");
-                elem.classList.remove("choosedButton");
-                elem.classList.add("agid-reverse-enter-transition");
-                setTimeout(function () {
-                    elem.classList.remove("agid-reverse-enter-transition");
-                }, 2000);
+                exitChoiceModalAnimations();
             });
         };
 
@@ -228,11 +228,6 @@ var _SPID,
             return options;
         };
 
-        function manageError(err, errorCallback) {
-            console.error('Si è verificato un errore nel caricamento dei dati', err);
-            errorCallback && errorCallback();
-        }
-
         /**
          * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
          */
@@ -266,11 +261,13 @@ var _SPID,
             _spid.renderModule();
         };
 
+
         _SPID.prototype.updateSpidButtons = function () {
             var spidButtonsPlaceholders = document.querySelectorAll(this._selector),
                 hasButtonsOnPage = spidButtonsPlaceholders.length,
-                i = 0, j = 0,
+                i = 0, j = 0, t = 0,
                 spidButtons,
+                spidProvidersBtn, delaySeconds,
                 _spid = this;
 
             if (!this._availableProviders) {
@@ -292,14 +289,28 @@ var _SPID,
                         parent.classList.add("agid-enter-transition");
                         parent.classList.add("choosedButton");
                         _spid.showProvidersPanel();
+
                         document.getElementById('agid-logo').classList.add('agid-fade-in-left');
                         document.getElementById('agid-close-button').classList.add('agid-fade-in-left');
                         document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
+                        document.getElementsByClassName('agid-spid-enter-icon')[0].classList.add('agid-spid-enter-icon-animation');
+                        document.getElementsByClassName('agid-spid-enter-icon')[0].classList.add('in');
+                        spidProvidersBtn = document.getElementsByClassName('agid-spid-idp');
+                        delaySeconds = 1.10;
+                        for (j = 0; j < spidProvidersBtn.length; j++) {
+                            spidProvidersBtn[j].classList.add('agid-spid-idp-fade-in');
+                            spidProvidersBtn[j].setAttribute('style', 'animation-delay: ' + delaySeconds + 's');
+                            delaySeconds = delaySeconds + 0.10;
+                        }
                         setTimeout(function () {
-                            parent.classList.remove("agid-enter-transition");
+                            parent.classList.remove('agid-enter-transition');
                             document.getElementById('agid-logo').classList.remove('agid-fade-in-left');
                             document.getElementById('agid-close-button').classList.remove('agid-fade-in-left');
                             document.getElementById('agid-spid-panel-select').classList.remove('agid-spid-panel-anim');
+                            for (t = 0; t < spidProvidersBtn.length; t++) {
+                                spidProvidersBtn[t].classList.remove('agid-spid-idp-fade-in');
+                                spidProvidersBtn[t].removeAttribute('style');
+                            }
                         }, 2000);
                     });
                 });
