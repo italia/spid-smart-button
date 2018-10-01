@@ -40,6 +40,8 @@ var _SPID = (function(languages, providers){
             },
 
             spidProviderChoiceModal: function (spidProvidersButtons) {
+                var imgPath = 'img/spid-ico-circle-bb-bg.svg';
+
                 return [
                     '<section id="agid-spid-panel-select" class="agid-spid-panel" aria-labelledby="spid-enter-title-page" tabindex="0">',
                         '<header class="agid-spid-header">',
@@ -57,15 +59,19 @@ var _SPID = (function(languages, providers){
                         '</header>',
 
                         '<div id="agid-spid-panel-content">',
-                            '<div class="agid-spid-panel-content-center">',
-                                '<h1 id="spid-enter-title-page" class="agid-fade-in-bottom agid-fade-out-bottom">',this.getI18n('scegli_provider_SPID'),'</h1>',
-                                    '<div id="spid-idp-list">',
-                                        spidProvidersButtons,
-                                    '</div>',
-                                    '<div id="spid-non-hai-spid">',
-                                        '<span class="agid-non-hai-spid-font">', this.getI18n("non_hai_SPID"),'</span>',
-                                        '<span id="spid-nonhai-spid" class="agid-spid-link agid-non-hai-spid-font">' ,this.getI18n("scopri_di_piu"),'</span>',
-                                    '</div>',
+                        '<div >',
+                            '<img class="agid-spid-little-man-icon" src="', this.getResources().assetsBaseUrl, imgPath,'" alt="',this.getI18n('entra_con_SPID'),'" class="agid-spid-littleMan-icon"></img>',
+                        '</div>',                            
+                        '<div class="agid-spid-panel-content-center">',
+                            '<h1 id="spid-enter-title-page" class="agid-fade-in-bottom agid-fade-out-bottom">',this.getI18n('scegli_provider_SPID'),'</h1>',
+                            
+                            '<div id="spid-idp-list">',
+                                    spidProvidersButtons,
+                                '</div>',
+                                '<div id="spid-non-hai-spid">',
+                                    '<span class="agid-non-hai-spid-font">', this.getI18n("non_hai_SPID"),'</span>',
+                                    '<span id="spid-nonhai-spid" class="agid-spid-link agid-non-hai-spid-font">' ,this.getI18n("scopri_di_piu"),'</span>',
+                                '</div>',
                             '</div>',
                         '</div>',
                         '<div id="spid-foot-btn" class="agid-spid-circular-shadow">',
