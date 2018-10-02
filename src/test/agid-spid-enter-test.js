@@ -329,6 +329,58 @@ describe('SPID', function () {
 
                 });
 
+                it('should generate correct url for the IdP using its entityId, GET method', function (done) {
+                    var config = {
+                       // method: 'POST',               // opzionale
+                        url: '/Login={{idp}}',
+                        fieldName: 'testName',
+                        mapping: {
+                            'https://posteid.poste.it': 'poste'
+                        },
+                        supported: supportedProviders
+                    };
+                    // WHEN
+
+                    SPID.init(config);
+                    var providers = document.getElementsByClassName('agid-spid-idp'),
+                        generatedUrl;
+                    for (var i = 0; i < providers.length; i++) {
+                        if (providers[i].childNodes[0].getAttribute('href').indexOf('poste') !== -1) {
+                            generatedUrl = providers[i].childNodes[0].getAttribute('href');
+                        }
+                    }
+                    // THEN
+                    expect(generatedUrl).toEqual('/Login=poste');
+                    done();
+
+                });
+
+                it('should generate correct url for the IdP using its entityId, POST method', function (done) {
+                    var config = {
+                        method: 'POST',
+                        url: '/Login={{idp}}',
+                        fieldName: 'testName',
+                        mapping: {
+                            'https://posteid.poste.it': 'poste'
+                        },
+                        supported: supportedProviders
+                    };
+                    // WHEN
+
+                    SPID.init(config);
+                    var providers = document.getElementsByClassName('agid-spid-idp'),
+                        generatedUrl;
+                    for (var i = 0; i < providers.length; i++) {
+                        if (providers[i].childNodes[0].getAttribute('action').indexOf('poste') !== -1) {
+                            generatedUrl = providers[i].childNodes[0].getAttribute('action');
+                        }
+                    }
+                    // THEN
+                    expect(generatedUrl).toEqual('/Login=poste');
+                    done();
+
+                });
+
                 it('should enable provider button if that provider is supported and disable other providers', function (done) {
                     var config = {
                         url: '/Login{{idp}}',
