@@ -40,7 +40,7 @@ var _SPID = (function(languages, providers){
             },
 
             spidProviderChoiceModal: function (spidProvidersButtons) {
-                var imgPath = 'img/spid-ico-circle-bb-bg.svg';
+                var imgPath = 'img/spid-ico-circle-black.svg';
 
                 return [
                     '<section id="agid-spid-panel-select" class="agid-spid-panel" aria-labelledby="spid-enter-title-page" tabindex="0">',
@@ -59,9 +59,9 @@ var _SPID = (function(languages, providers){
                         '</header>',
 
                         '<div id="agid-spid-panel-content">',
-                        '<div >',
+                        //'<div >',
                             '<img class="agid-spid-little-man-icon" src="', this.getResources().assetsBaseUrl, imgPath,'" alt="',this.getI18n('entra_con_SPID'),'" class="agid-spid-littleMan-icon"></img>',
-                        '</div>',                            
+                        //'</div>',                            
                         '<div class="agid-spid-panel-content-center">',
                             '<h1 id="spid-enter-title-page" class="agid-fade-in-bottom agid-fade-out-bottom">',this.getI18n('scegli_provider_SPID'),'</h1>',
                             

@@ -239,8 +239,14 @@ h1 {
 }
 
 .agid-spid-little-man-icon {
-    width: 320px;
+    width: 32px;
     position: absolute;
+}
+
+@media screen and (max-width: 767px) {
+    .agid-spid-little-man-icon {
+        display: none;
+    }
 }
 
 .agid-spid-enter-text {

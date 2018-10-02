@@ -76,14 +76,16 @@ var _SPID,
         function exitChoiceModalAnimations() {
             var elem = document.getElementsByClassName('choosedButton')[0];
             document.getElementsByClassName('agid-spid-enter-icon')[0].classList.remove('in');
-            //document.getElementsByClassName('agid-spid-enter-icon')[0].classList.add('agid-spid-enter-icon-animation-out');
+            document.getElementsByClassName('agid-spid-little-man-icon')[0].classList.add('agid-spid-enter-logo-animation-out');
             document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
             elem.classList.remove('agid-enter-transition');
             elem.classList.remove('choosedButton');
             elem.classList.add('agid-reverse-enter-transition');
             setTimeout(function () {
                 elem.classList.remove('agid-reverse-enter-transition');
-                document.getElementsByClassName('agid-spid-enter-icon')[0].classList.remove('agid-spid-enter-icon-animation-out');
+                //document.getElementsByClassName('agid-spid-enter-icon')[0].classList.remove('agid-spid-enter-icon-animation-out');
+                document.getElementsByClassName('agid-spid-little-man-icon')[0].classList.remove('agid-spid-enter-logo-animation-out');
+
             }, 2000);
         }
 
