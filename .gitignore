@@ -5,6 +5,4 @@ node_modules/
 .grunt/
 _SpecRunner.html
 reports/
-*.min.*
 *debug.log
-/dist/img/**
