@@ -379,6 +379,18 @@ $animIconDistanceEnd: 120;
     }
 }
 
+@media (max-width: 1110px) {
+    @keyframes spid-show-little-man {
+        100% {
+            opacity: 0.15;
+            position: absolute;
+            top: 77%;
+            left: 80%;
+            width: 12%;
+        }
+    }
+}
+
 @keyframes spid-hide-little-man {
     0% {
         opacity: 0.15;
