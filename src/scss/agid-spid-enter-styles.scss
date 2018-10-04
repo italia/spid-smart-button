@@ -190,6 +190,7 @@ h1 {
 }
 
 #agid-spid-panel-content {
+    position: relative;
     display: block;
     min-width: 300px;
     background: #fff;
@@ -235,6 +236,17 @@ h1 {
 
     & svg {
         fill: #fff;
+    }
+}
+
+.agid-spid-little-man-icon {
+    width: 32px;
+    position: absolute;
+}
+
+@media screen and (max-width: 767px) {
+    .agid-spid-little-man-icon {
+        display: none;
     }
 }
 
@@ -487,7 +499,6 @@ h1 {
 @media screen and (max-width: 767px) {
     #spid-foot-btn {
         position: fixed;
-        padding-top: 4%;
         padding-bottom: 4%;
         margin: auto;
     }
@@ -495,7 +506,7 @@ h1 {
 
 @media screen and (max-height: 450px) {
     #spid-foot-btn {
-        margin: -20px 110px !important;
+        // margin: -20px 110px !important; //TODO: da usare solo in portrait (width 734) // TODO: aggiusta per portrait 684 667
         padding-top: 0 !important;
     }
 }
