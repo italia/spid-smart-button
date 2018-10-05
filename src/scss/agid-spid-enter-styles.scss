@@ -241,6 +241,7 @@ h1 {
 
 .agid-spid-little-man-icon {
     width: 32px;
+    opacity: 0;
     position: absolute;
 }
 
@@ -500,7 +501,12 @@ h1 {
     #spid-foot-btn {
         position: fixed;
         padding-bottom: 4%;
-        margin: auto;
+        text-align: center;
+        max-width: 500px;
+        bottom: 0;
+        background-color: white;
+        margin: -80px auto auto auto;
+        width: 100%;
     }
 }
 
