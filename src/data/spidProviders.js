@@ -25,7 +25,7 @@ function providers() {
             protocols: ["SAML"],
             entityName: "Sielte",
             logo: "spid-idp-sielteid.svg",
-            entityID: "sielte.it",
+            entityID: "https://identity.sieltecloud.it",
             active: true
         },
         {
@@ -38,21 +38,21 @@ function providers() {
         {
             protocols: ["SAML"],
             entityName: "Namirial ID",
-            logo: "spid-idp-aruba.svg",
+            logo: "spid-idp-namirialid.svg",
             entityID: "https://idp.namirialtsp.com/idp",
             active: true
         },
         {
             protocols: ["SAML"],
             entityName: "SPIDItalia Register.it",
-            logo: "spid-idp-aruba.svg",
+            logo: "spid-idp-spiditalia.svg",
             entityID: "https://spid.register.it",
             active: true
         },
         {
             protocols: ["SAML"],
             entityName: "Intesa ID",
-            logo: "spid-idp-aruba.svg",
+            logo: "spid-idp-intesaid.svg",
             entityID: "https://spid.intesa.it",
             active: true
         }
