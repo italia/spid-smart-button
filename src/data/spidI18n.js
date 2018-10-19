@@ -36,6 +36,18 @@ function languages() {
                 scopri_di_piu: "Finde mehr heraus",
                 accedi_con_idp: "Zugriff auf SPID mit {0}",
                 idp_disabled: "Provider nicht aktiviert"
+            },
+            fr: {
+                naviga_indietro: "Retour",
+                alt_logo_SPID: "Logo SPID",
+                scegli_provider_SPID: "Sélectionner un fournisseur SPID",
+                annulla_accesso: "Annuler l'accès",
+                non_hai_SPID: "Vous n'avez pas SPID?",
+                cosa_SPID: "Qu'est-ce que SPID?",
+                entra_con_SPID: "Se connecter avec SPID",
+                scopri_di_piu: "En savoir plus.",
+                accedi_con_idp: "Connectez-vous à SPID avec {0}",
+                idp_disabled: "Fournisseur non actif"
             }
         }
     }
