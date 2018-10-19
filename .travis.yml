@@ -13,6 +13,7 @@ before_script:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   - sleep 10
   - wget --spider --timeout=15 --retry-connrefused http://localhost:9222
+  - find . | grep 'chrome-linux/chrome$' | xargs ldd
 script:
   - npm test
 
