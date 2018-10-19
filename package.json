@@ -44,7 +44,7 @@
     "build-watch": "grunt watch:build",
     "lint": "grunt lint",
     "test-watch": "grunt watch:test",
-    "test": "grunt test",
+    "test": "grunt test --verbose",
     "performance": "lighthouse $npm_package_localserver_url$npm_package_localserver_port/index.html --output-path=reports/lighthouse.html --view",
     "precommit": "npm run lint",
     "prepush": "npm test",
