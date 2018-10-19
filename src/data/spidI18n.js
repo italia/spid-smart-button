@@ -18,24 +18,24 @@ function languages() {
                 alt_logo_SPID: "SPID logo",
                 scegli_provider_SPID: "Choose your SPID provider",
                 annulla_accesso: "Cancel access",
-                non_hai_SPID: "Don't have SPID?",
+                non_hai_SPID: "You don't have SPID?",
                 cosa_SPID: "What is SPID?",
                 entra_con_SPID: "Sign in with SPID",
-                scopri_di_piu: "Learn more",
+                scopri_di_piu: "Learn more.",
                 accedi_con_idp: "Access to SPID with {0}",
-                idp_disabled: "Provider not enabled"
+                idp_disabled: "Inactive provider"
             },
             de: {
-                naviga_indietro: "Gehen Sie zurück",
+                naviga_indietro: "Zurück",
                 alt_logo_SPID: "SPID Logo",
-                scegli_provider_SPID: "Wähle Ihren SPIDProvider",
-                annulla_accesso: "Rückgängig Zugang",
-                non_hai_SPID: "Haben Sie nicht SPID?",
+                scegli_provider_SPID: "SPID Anbieter auswählen",
+                annulla_accesso: "Anmeldung abbrechen",
+                non_hai_SPID: "Haben Sie kein SPID?",
                 cosa_SPID: "Was ist SPID?",
-                entra_con_SPID: "Loggen Sie mit SPID",
-                scopri_di_piu: "Finde mehr heraus",
-                accedi_con_idp: "Zugriff auf SPID mit {0}",
-                idp_disabled: "Provider nicht aktiviert"
+                entra_con_SPID: "Mit SPID anmelden",
+                scopri_di_piu: "Weitere Informationen.",
+                accedi_con_idp: "Anmeldung bei SPID mit {0}",
+                idp_disabled: "Inaktiver Anbieter"
             },
             fr: {
                 naviga_indietro: "Retour",
