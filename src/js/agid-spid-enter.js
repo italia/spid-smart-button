@@ -262,7 +262,7 @@ var _SPID,
         };
 
         /**
-         * @param {string} lang - il locale da caricare, due caratteri eg 'it' | 'en' | 'de'.
+         * @param {string} lang - il locale da caricare, due caratteri eg 'it' | 'en' | 'de' | 'fr'.
          */
         _SPID.prototype.changeLanguage = function (lang) {
             var _spid = this;
