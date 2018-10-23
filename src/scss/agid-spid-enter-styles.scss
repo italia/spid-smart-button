@@ -11,32 +11,31 @@ h1 {
     color: #17324d;
     font-size: 2rem;
     font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    min-width: 400px;
+   // min-width: 400px;
 }
 
-button:active {
-    border: 3px solid rgb(247, 145, 13);
-
-    &#spid-cancel-access-button {
-        border: 3px solid rgb(247, 145, 13);
-    }
+.agid-spid-grayscale-compatibility {
+  -webkit-filter: grayscale(100%);
+  -webkit-filter: grayscale(1);
+  filter: grayscale(100%);
+  filter: url('../img/gray.svg#grayscale');
 }
 
 #spid-idp-list {
     display: flex;
     flex-flow: row wrap;
-    padding: 20px;
 
     .agid-spid-idp {
+        margin: 12px auto;
         display: flex;
         flex-direction: column;
-        width: 50%;
+        width: 40%;
+        background: #f5f6f7;
+        border-radius: 3px;
 
         form {
             height: 100%;
-            border: 3px solid white;
             padding: 10px;
-            background: white;
 
             &:active {
                 border: 3px solid rgb(247, 145, 13);
@@ -46,11 +45,13 @@ button:active {
                 border: 0;
                 width: 100%;
                 cursor: pointer;
-                background: #fff;
+                background: #f5f6f7;
+                padding: 5px;
+                height: 100%;
 
                 &[disabled] {
+                    opacity: 0.2;
                     cursor: not-allowed;
-                    filter: grayscale(1);
                 }
             }
         }
@@ -66,8 +67,9 @@ button:active {
             }
 
             &[disabled] {
+                opacity: 0.2;
                 cursor: not-allowed;
-                filter: grayscale(1);
+                pointer-events: none;
             }
         }
     }
@@ -88,6 +90,7 @@ button:active {
 }
 
 .agid-non-hai-spid-font {
+    margin-right: 5px;
     font-size: 15px;
     font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
@@ -98,24 +101,10 @@ button:active {
     font-size: 1em;
 }
 
-.agid-spid-enter {
-    position: relative;
-
-    & .agid-logo {
-        position: absolute;
-        display: block;
-        margin: auto;
-        width: 12%;
-        visibility: hidden;
-        top: 30%;
-        left: 14%;
-    }
-}
-
 .agid-spid-link {
     cursor: pointer;
-    color: $spid-button-default;
-    text-decoration: underline;
+    font-weight: bold;
+    color: #06c;
 }
 
 #spid-enter-container {
@@ -149,6 +138,7 @@ button:active {
     position: fixed;
     z-index: 1;
     overflow: auto;
+    //background: #fff;
 }
 
 .agid-spid-header {
@@ -200,10 +190,11 @@ button:active {
 }
 
 #agid-spid-panel-content {
+    position: relative;
     display: block;
-    overflow: hidden;
     min-width: 300px;
     background: #fff;
+    margin-bottom: 10px;
 
     #spid-enter-title-page {
         background: transparent;
@@ -215,6 +206,10 @@ button:active {
 .agid-spid-panel-content-center {
     text-align: center;
     margin: auto;
+    overflow: auto;
+    height: 100%;
+    margin-bottom: 60px;
+    max-width: 500px;
 }
 
 #agid-spid-panel-footer {
@@ -242,6 +237,18 @@ button:active {
 
     & svg {
         fill: #fff;
+    }
+}
+
+.agid-spid-little-man-icon {
+    width: 32px;
+    opacity: 0;
+    position: absolute;
+}
+
+@media screen and (max-width: 767px) {
+    .agid-spid-little-man-icon {
+        display: none;
     }
 }
 
@@ -276,7 +283,7 @@ button:active {
 .agid-spid-enter-size-large {
     font-size: 18px;
     height: 56px;
-    padding: 14px 28px;
+    padding: 12px 28px;
 
     & > span img {
         width: 32px;
@@ -292,17 +299,53 @@ button:active {
 
 #spid-cancel-access-button {
     background-color: #fcfdff;
-    color: #5c6f82;
+    padding: 12px 24px;
+    color: #50565c;
     font-family: "Titillium Web", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 16px;
+    display: inline-block;
     box-shadow: inset 0 0 0 1px #e6e9f2;
-    border-radius: 5px;
-    border: 1px solid currentColor;
+    border-radius: 4px;
+    border: 0 solid transparent;
     height: 55px;
-    display: block;
     margin: auto;
-    width: 85%;
-    cursor: default;
+    width: 90%;
+    text-align: center;
+    line-height: 1.5;
+    vertical-align: middle;
+    cursor: pointer;
+
+    &:active:focus {
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(92, 111, 130, 0.5);
+    }
+
+    &:active {
+        color: #5c6f82;
+    }
+
+    &:hover {
+        color: #50565c;
+        -webkit-box-shadow: inset 0 0 0 1px #c9cedc;
+        box-shadow: inset 0 0 0 1px #c9cedc;
+    }
+}
+
+.agid-spid-circular-shadow {
+    position: relative;
+
+    &::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        -webkit-box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
+        box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
+        left: 10%;
+        right: 10%;
+        width: 80%;
+        height: 50%;
+        border-radius: 100%;
+    }
 }
 
 .agid-spid-col {
@@ -428,50 +471,37 @@ button:active {
  * in questo modo i pulsanti appaiono pochi istanti dopo correttamente stilizzati, sovrascrivendo l'attributo hidden
  */
 .agid-spid-enter {
+    position: relative;
     border: 0;
     cursor: pointer;
     display: inline-block;
+    font-weight: 600;
+
+    & .agid-logo {
+        position: absolute;
+        display: block;
+        margin: auto;
+        width: 12%;
+        visibility: hidden;
+        top: 30%;
+        left: 14%;
+    }
 }
 
-@media screen and (max-width: 996px) {
-    .agid-body-list {
-        background-color: #f5f6f7;
-
-        .agid-spid-idp {
-            form {
-                margin: 5px;
-                border: 3px solid f5f6f7;
-            }
-        }
-    }
+#spid-foot-btn {
+    text-align: center;
+    max-width: 500px;
+    bottom: 0;
+    background-color: white;
+    margin: -40px auto auto auto;
+    width: 100%;
+    padding-bottom: 4%;
 }
 
 @media screen and (max-width: 767px) {
     #spid-foot-btn {
         position: fixed;
-        background-color: white;
-        bottom: 0;
-        width: 100%;
-        padding-top: 4%;
-        padding-bottom: 4%;
-        box-shadow: 0 -2px 5px 0 rgba(238, 238, 238, 0.7);
-    }
-}
-
-@media (min-width: 361px) {
-    // #agid-spid-panel-header {
-    //     & .agid-spid-display-logo img {
-    //         max-height: 50px;
-    //     }
-    // }
-
-    .agid-spid-panel-content-center {
-        max-width: 500px;
-    }
-}
-
-@media (min-width: 768px) {
-    #spid-cancel-access-button {
-        width: 436px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }

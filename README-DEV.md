@@ -42,8 +42,11 @@ ora puoi visitare la pagina http://localhost:9090/  dalla quale puoi raggiungere
  - gli unit test Jasmine: http://localhost:9090/_SpecRunner.html
  - la code coverage Istanbul: http://localhost:9090/reports/coverage/dev/agid-spid-enter.min.js.html
 
-I sorgenti si trovano nelle cartelle `src/js` ed `src/scss` e i file minificati prodotti dal task di build sono presenti nelle cartelle `dev` e `dist`.
-Per sviluppare ed effettuare subito la build delle modifiche bisogna eseguire il comando `npm run watch` contestualmente al comando `npm start`.
+I sorgenti si trovano nelle cartelle `src/js` ed `src/scss` e i file minificati prodotti dal task di build sono presenti nella cartella `dist`.
+#### In sviluppo
+Per sviluppare ed effettuare subito la build delle modifiche bisogna eseguire il comando `npm run build-watch` contestualmente al comando `npm run serve`.
+#### Per generare il pacchetto da distribuire
+Tramite il comando `npm start` vengono generati i file js e scss minificati necessari per essere distribuiti.
 
 ### Code Style
 *Prima di ogni commit verrà eseguito un linter* che verificherà che il codice sia stilisticamente uniforme pena il fallimento del commit, in modo da incoraggiare una scrittura coerente, per JavaScript viene utilizzata la convenzione [Crockford](http://crockford.com/javascript/code.html), per i CSS la [Stylelint Standard](https://github.com/stylelint/stylelint-config-standard), inoltre per aspetti comuni quali l'indentazione e il line ending sono presenti i file [EditorConfig](http://editorconfig.org/) e [gitattributes](https://git-scm.com/docs/gitattributes),
@@ -68,7 +71,7 @@ Per generare i file minificati di produzione bisogna lanciare il comando
 ```
 npm start
 ```
-Questo comando e' inserito nella pipeline di `trevisCI`.
+Questo comando e' inserito nella pipeline di `TravisCI`.
 Il file JS minificato, che si occupa di caricare il rispettivo CSS se opportuno, a seguito della **build** è disponibile sotto la cartella `dist/` con il nome di `spid-button.min.js`.
 
 ### Continuous integration

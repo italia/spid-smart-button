@@ -40,6 +40,8 @@ var _SPID = (function(languages, providers){
             },
 
             spidProviderChoiceModal: function (spidProvidersButtons) {
+                var imgPath = 'img/spid-logo-animation-black.svg';
+
                 return [
                     '<section id="agid-spid-panel-select" class="agid-spid-panel" aria-labelledby="spid-enter-title-page" tabindex="0">',
                         '<header class="agid-spid-header">',
@@ -57,21 +59,20 @@ var _SPID = (function(languages, providers){
                         '</header>',
 
                         '<div id="agid-spid-panel-content">',
+                            '<img class="agid-spid-little-man-icon" src="', this.getResources().assetsBaseUrl, imgPath,'" alt="',this.getI18n('entra_con_SPID'),'" class="agid-spid-littleMan-icon"></img>',
                             '<div class="agid-spid-panel-content-center">',
                                 '<h1 id="spid-enter-title-page" class="agid-fade-in-bottom agid-fade-out-bottom">',this.getI18n('scegli_provider_SPID'),'</h1>',
-                                '<div class="agid-body-list">',
-                                    '<div id="spid-idp-list">',
-                                        spidProvidersButtons,
-                                    '</div>',
-                                    '<div id="spid-non-hai-spid">',
-                                        '<span class="agid-non-hai-spid-font">', this.getI18n("non_hai_SPID"),'</span>',
-                                        '<span id="spid-nonhai-spid" class="agid-spid-link agid-non-hai-spid-font">' ,this.getI18n("scopri_di_piu"),'</span>',
-                                    '</div>',
+                                '<div id="spid-idp-list">',
+                                    spidProvidersButtons,
+                                '</div>',
+                                '<div id="spid-non-hai-spid">',
+                                    '<span class="agid-non-hai-spid-font">', this.getI18n("non_hai_SPID"),'</span>',
+                                    '<span id="spid-nonhai-spid" class="agid-spid-link agid-non-hai-spid-font">' ,this.getI18n("scopri_di_piu"),'</span>',
                                 '</div>',
                             '</div>',
                         '</div>',
-                        '<div id ="spid-foot-btn" class="agid-fade-in-cancel">',
-                            '<button id="spid-cancel-access-button" class="agid-font agid-navigable">',
+                        '<div id="spid-foot-btn" class="agid-spid-circular-shadow">',
+                            '<button id="spid-cancel-access-button" class="agid-font">',
                                 '<span>', this.getI18n('annulla_accesso'), '</span>',
                             '</button>',
                         '</div>',
@@ -123,12 +124,13 @@ var _SPID = (function(languages, providers){
 
             spidButton: function (style) {
                 var fluid = style.fluid ? " agid-spid-enter-fluid " : "";
+                var imgPath = style.colorScheme == 'negative' ? 'img/spid-ico-circle-lb.svg' : 'img/spid-ico-circle-bb.svg';
                 return [
                     '<!-- AGID - SPID BUTTON ', style.size.toUpperCase(), ' * begin * -->',
                     '<div id="spid-enter-button-container">',
                         '<button class="agid-spid-enter agid-font agid-spid-enter-button-', style.colorScheme, ' agid-spid-enter-button-', style.cornerStyle, ' agid-spid-enter-size-', style.size, fluid,'" hidden>',
                             '<span aria-hidden="true" class="agid-spid-enter-icon">',
-                                '<img src="', this.getResources().assetsBaseUrl, 'img/spid-ico-circle-bb.svg" alt="',this.getI18n('entra_con_SPID'),'"></img>',
+                                '<img src="', this.getResources().assetsBaseUrl, imgPath,'" alt="',this.getI18n('entra_con_SPID'),'"></img>',
                             '</span>',
                             '<span class="agid-spid-enter-text">', this.getI18n('entra_con_SPID'), '</span>',
                         '</button>',
