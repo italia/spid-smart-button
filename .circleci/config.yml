@@ -1,7 +1,6 @@
 # Javascript Node CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 
 var_2: &cache_key spid-smart-button-{{ .Branch }}-{{ checksum "package.json" }}
 var_3: &working_directory /tmp/spid-smart-button
