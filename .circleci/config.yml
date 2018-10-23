@@ -9,7 +9,7 @@ var_3: &working_directory ~/spid-smart-button
 anchor_1: &job_defaults
   working_directory: *working_directory
   docker:
-- image: *docker_image
+    - image: *docker_image
 
 version: 2
 jobs:
