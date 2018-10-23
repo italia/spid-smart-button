@@ -18,12 +18,10 @@ jobs:
     steps:
       - checkout
       - run: npm install
-
       - save_cache:
           key: *cache_key
           paths:
             - "node_modules"
-
       - run:
           name: Execute Chrome in Background
           command: google-chrome-stable --headless --no-default-browser-check --no-first-run --disable-translate --remote-debugging-port=9222 --disable-gpu
