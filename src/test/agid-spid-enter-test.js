@@ -245,7 +245,7 @@ describe('SPID', function () {
                     // WHEN
                     SPID.init(config);
                     var title = document.getElementById('spid-enter-title-page').innerHTML;
-                    expect(title).toEqual('Wähle Ihren SPIDProvider')
+                    expect(title).toEqual('SPID Anbieter auswählen')
                     done();
                 });
 
