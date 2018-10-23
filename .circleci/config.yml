@@ -50,7 +50,6 @@ jobs:
           key: *cache_key
       - attach_workspace:
           at: *working_directory
-
       - run: npm test
 
 workflows:
