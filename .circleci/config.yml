@@ -2,37 +2,73 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+var_1: &docker_image circleci/node:8.1.3
+var_2: &cache_key spid-smart-button-{{ .Branch }}-{{ checksum "package.json" }}
+var_3: &working_directory ~/spid-smart-button
+
+anchor_1: &job_defaults
+  working_directory: *working_directory
+  docker:
+- image: *docker_image
+
 version: 2
 jobs:
-  build:
+  setup:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:7.10
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
+      <<: *job_defaults
 
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
       - run: npm install
 
       - save_cache:
+          key: *cache_key
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - "node_modules"
 
-      # run tests!
-      # - run: npm test
+      - run:
+          name: Execute Chrome in Background
+          command: google-chrome-stable --headless --no-default-browser-check --no-first-run --disable-translate --remote-debugging-port=9222 --disable-gpu
+          background: true
+  build:
+    docker:
+      <<: *job_defaults
+    steps:
+      - restore_cache:
+          key: *cache_key
+      - persist_to_workspace:
+          root: *working_directory
+          paths:
+            - "dist/"
+      - checkout
+      - run: npm start
+          background: true
+  test:
+    docker:
+      <<: *job_defaults
+    steps:
+      - restore_cache:
+          key: *cache_key
+      - attach_workspace:
+          at: *working_directory
 
+      - checkout
+      - run: npm test
+
+workflows:
+  version: 2
+  default_workflow:
+    jobs:
+      - setup
+      - build:
+          requires:
+            - setup
+          filters:
+            branches:
+              only: master
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
