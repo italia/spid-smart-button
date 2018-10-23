@@ -149,6 +149,7 @@ module.exports = function (grunt) {
                     'dist/spid-button.min.js' // Modulo minifizzato da testare
                 ],
                 options: {
+                    noSandbox: true,
                     specs: ['src/test/agid-*.js'],
                     outfile: '_SpecRunner.html',
                     keepRunner: true,
