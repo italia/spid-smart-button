@@ -41,7 +41,8 @@ jobs:
           paths:
             - "dist/"
       - checkout
-      - run: npm start
+      - run:
+          command: npm start
           background: true
   test:
     docker:
