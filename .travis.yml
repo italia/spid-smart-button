@@ -14,9 +14,10 @@ before_script:
   - npm start &
   - wget --spider --timeout=15 --retry-connrefused http://localhost:9090
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-  - sleep 10
+  - sleep 30
   - wget --spider --timeout=15 --retry-connrefused http://localhost:9222
   - find . | grep 'chrome-linux/chrome$' | xargs ldd
+  - sleep 30
 script:
   - npm test
 
