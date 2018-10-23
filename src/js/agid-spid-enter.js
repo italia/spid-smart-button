@@ -191,27 +191,33 @@ var _SPID,
             return agidProvidersList;
         }
 
-        _SPID.prototype.checkStyleOptions = function (styleOptions) {
+        function checkStyleOptions(styleOptions) {
             var supportedSizes = ['small', 'medium', 'large'],
                 supportedColorScheme = ["positive", "negative"],
                 supportedCornerStyle = ["rounded", "sharp"],
                 supportedFluid = [true, false];
             if (supportedSizes.indexOf(styleOptions.size.toLowerCase()) === -1) {
-                return 'Le dimensioni supportate sono ' + supportedSizes + ' trovato invece:' + this._style.size;
+                return 'Le dimensioni supportate sono ' + supportedSizes + ' trovato invece:' + styleOptions.size;
             } else if (supportedColorScheme.indexOf(styleOptions.colorScheme.toLowerCase()) === -1) {
-                return 'I colori supportati sono ' + supportedColorScheme + ' trovati invece:' + this._style.colorScheme;
+                return 'I colori supportati sono ' + supportedColorScheme + ' trovati invece:' + styleOptions.colorScheme;
             } else if (supportedCornerStyle.indexOf(styleOptions.cornerStyle.toLowerCase()) === -1) {
-                return 'Il tipo di angoli supportati sono ' + supportedCornerStyle + ' trovati invece:' + this._style.cornerStyle;
+                return 'Il tipo di angoli supportati sono ' + supportedCornerStyle + ' trovati invece:' + styleOptions.cornerStyle;
             } else if (supportedFluid.indexOf(styleOptions.fluid) === -1) {
-                return 'I valori del parametro supportati sono ' + supportedFluid + ' trovati invece:' + this._style.fluid;
+                return 'I valori del parametro supportati sono ' + supportedFluid + ' trovati invece:' + styleOptions.fluid;
             } else {
                 return true;
             }
         };
 
         function checkMandatoryOptions(options) {
-            if (!options || !options.url || !options.supported || options.supported.length < 1) {
-                return false;
+            if (!options) {
+                return 'Non sono stati forniti i parametri obbligatori della configurazione';
+            } else if (!options.url) {
+                return 'Non è stato fornito l\'url obbligatorio in configurazione';
+            } else if (options.url.indexOf('{{idp}}') === -1) {
+                return 'L\'url non contiene il placeholder {{idp}}';
+            } else if (!options.supported || options.supported.length < 1) {
+                return 'Non sono stati forniti gli IdP supportati nel parametro \'supported\'';
             } else {
                 return true;
             }
@@ -234,17 +240,18 @@ var _SPID,
          * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
          */
         _SPID.prototype._init = function (options) {
-            var msg,
+            var msgStyle, msgMandatory,
                 _spid = this;
-            if (!checkMandatoryOptions(options)) {
-                console.error('Non sono stati forniti i parametri obbligatori della configurazione');
+            msgMandatory = checkMandatoryOptions(options);
+            if (msgMandatory !== true) {
+                console.error(msgMandatory);
                 return;
             }
             _spid.initResources();
             options = _spid.getMergedDefaultOptions(options);
-            msg = _spid.checkStyleOptions(_spid._style);
-            if (msg !== true) {
-                console.error(msg);
+            msgStyle = checkStyleOptions(_spid._style);
+            if (msgStyle !== true) {
+                console.error(msgStyle);
                 return;
             }
             _spid.initTemplates();

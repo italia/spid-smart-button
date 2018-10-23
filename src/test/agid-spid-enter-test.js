@@ -237,7 +237,7 @@ describe('SPID', function () {
                 it('should request the provided language in the config', function (done) {
                     // GIVEN
                     var config = {
-                        url: 'url',
+                        url: 'url{{idp}}',
                         lang: 'de',
                         supported: supportedProviders
                     };
@@ -268,10 +268,34 @@ describe('SPID', function () {
                     done();
                 });
 
+                it('should log error message if it\'s not present {{idp}} placeholder in url', function (done) {
+                    // WHEN
+                    var config = {
+                        url: 'url',
+                        supported: supportedProviders
+                    };
+                    SPID.init(config);
+                    // THEN
+                    expect(console.error).toHaveBeenCalled();
+                    done();
+                });
+
                 it('should log error message if no supported providers are provided', function (done) {
                     // WHEN
                     var config = {
-                        url: 'url'
+                        url: 'url{{idp}}'
+                    };
+                    SPID.init(config);
+                    // THEN
+                    expect(console.error).toHaveBeenCalled();
+                    done();
+                });
+
+                it('should log error message if is provided an empty array of supported providers', function (done) {
+                    // WHEN
+                    var config = {
+                        url: 'url{{idp}}',
+                        supported: []
                     };
                     SPID.init(config);
                     // THEN
@@ -282,7 +306,7 @@ describe('SPID', function () {
                 it('should change provider entityID if provided with mapping options', function (done) {
                     var config = {
                         method: 'POST',               // opzionale
-                        url: '/Login',
+                        url: '/Login{{idp}}',
                         fieldName: 'testName',
                         mapping: {
                             'https://posteid.poste.it': 'poste'
@@ -359,7 +383,7 @@ describe('SPID', function () {
 
                 it('should enable provider button if that provider is supported and disable other providers', function (done) {
                     var config = {
-                        url: '/Login',
+                        url: '/Login{{idp}}',
                         supported: [
                             'https://posteid.poste.it'
                         ],
@@ -376,7 +400,7 @@ describe('SPID', function () {
 
                 it('should add extra providers if specified in options and make them supported', function (done) {
                     var config = {
-                        url: '/Login',
+                        url: '/Login{{idp}}',
                         supported: supportedProviders,
                         extraProviders: [
                             {
