@@ -86,6 +86,8 @@ var _SPID = (function(languages, providers){
                     providerEntityName = (providerData.active)
                                        ? this.getI18n('accedi_con_idp', providerData.entityName)
                                        : this.getI18n('idp_disabled');
+
+                                       providerUri = providerData.url.replace('{{idp}}', encodeURIComponent(providerData.entityID));
                 if (providerData.method === 'POST') {
                     // Crea gli input field chiave=valore dall'oggetto
                     var fieldName = providerData.fieldName || 'idp';
@@ -95,7 +97,6 @@ var _SPID = (function(languages, providers){
                             providerPayloadInputs += hiddenField(property, providerData.extraFields[property]);
                         }
                     }
-                    providerUri = providerData.url;
                     return [
                         '<span class="agid-spid-idp">',
                             '<form action="', providerUri, '" method="', providerData.method, '">',
@@ -110,7 +111,6 @@ var _SPID = (function(languages, providers){
                         '</span>'
                         ].join('');
                 } else if (providerData.method === 'GET') {
-                    providerUri = providerData.url.replace('{{idp}}', encodeURIComponent(providerData.entityID));
                     return [
                         '<span class="agid-spid-idp">',
                             '<a title="', providerEntityName, '" href="', providerUri,'"',
