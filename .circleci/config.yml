@@ -61,12 +61,6 @@ workflows:
       - build:
           requires:
             - setup
-          filters:
-            branches:
-              only: master
       - test:
           requires:
             - build
-          filters:
-            branches:
-              only: master
