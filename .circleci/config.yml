@@ -7,7 +7,7 @@ var_2: &cache_key spid-smart-button-{{ .Branch }}-{{ checksum "package.json" }}
 var_3: &working_directory /tmp/spid-smart-button
 
 anchor_1: &job_defaults
-  #working_directory: *working_directory
+  working_directory: *working_directory
   docker:
     - image: circleci/node:8-browsers
 
