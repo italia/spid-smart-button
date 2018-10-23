@@ -57,7 +57,7 @@ module.exports = function (grunt) {
                     style: 'expanded'
                 },
                 files: {
-                    'dist/spid-button.min.css': 'src/scss/agid-spid-enter-dev.scss'
+                    'dist/spid-button.min.css': 'src/scss/spid-button-dev.scss'
                 }
             },
             prod: {
@@ -66,7 +66,7 @@ module.exports = function (grunt) {
                     sourcemap: 'none'
                 },
                 files: {
-                    'dist/spid-button.min.css': 'src/scss/agid-spid-enter-prod.scss'
+                    'dist/spid-button.min.css': 'src/scss/spid-button-prod.scss'
                 }
             }
         },
@@ -107,9 +107,9 @@ module.exports = function (grunt) {
                     'dist/spid-button.min.js': [
                         'src/data/spidI18n.js',
                         'src/data/spidProviders.js',
-                        'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-config-dev.js',
-                        'src/js/agid-spid-enter.js'
+                        'src/js/spid-button-tpl.js',
+                        'src/js/spid-button-config-dev.js',
+                        'src/js/spid-button.js'
                     ]
                 }
             },
@@ -125,9 +125,9 @@ module.exports = function (grunt) {
                     'dist/spid-button.min.js': [
                         'src/data/spidI18n.js',
                         'src/data/spidProviders.js',
-                        'src/js/agid-spid-enter-tpl.js',
-                        'src/js/agid-spid-enter-config.js',
-                        'src/js/agid-spid-enter.js'
+                        'src/js/spid-button-tpl.js',
+                        'src/js/spid-button-config.js',
+                        'src/js/spid-button.js'
                     ]
                 }
             }
@@ -149,7 +149,7 @@ module.exports = function (grunt) {
                     'dist/spid-button.min.js' // Modulo minifizzato da testare
                 ],
                 options: {
-                    specs: ['src/test/agid-*.js'],
+                    specs: ['src/test/spid-button-*.js'],
                     outfile: '_SpecRunner.html',
                     keepRunner: true,
                     host: localhostUrl
@@ -172,7 +172,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('log-coverage', function () {
         grunt.log.writeln('Il report della code coverage si trova in:');
-        grunt.log.writeln(localhostUrl + '/reports/coverage/distv/agid-spid-enter.min.js.html');
+        grunt.log.writeln(localhostUrl + '/reports/coverage/distv/spid-button.min.js.html');
     });
 
     grunt.registerTask('default', ['watch']);

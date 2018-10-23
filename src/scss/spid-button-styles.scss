@@ -14,7 +14,7 @@ h1 {
    // min-width: 400px;
 }
 
-.agid-spid-grayscale-compatibility {
+.spid-button-grayscale-compatibility {
   -webkit-filter: grayscale(100%);
   -webkit-filter: grayscale(1);
   filter: grayscale(100%);
@@ -25,7 +25,7 @@ h1 {
     display: flex;
     flex-flow: row wrap;
 
-    .agid-spid-idp {
+    .spid-button-idp {
         margin: 12px auto;
         display: flex;
         flex-direction: column;
@@ -41,7 +41,7 @@ h1 {
                 border: 3px solid rgb(247, 145, 13);
             }
 
-            .agid-spid-idp-button {
+            .spid-button-idp-button {
                 border: 0;
                 width: 100%;
                 cursor: pointer;
@@ -75,33 +75,33 @@ h1 {
     }
 }
 
-.agid-display-logo {
+.spid-button-display-logo {
     float: left;
     width: 50%;
 }
 
-.agid-display-close {
+.spid-button-display-close {
     float: right;
     margin-top: 5px;
 }
 
-.agid-font {
+.spid-button-font {
     font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
 }
 
-.agid-non-hai-spid-font {
+.spid-button-non-hai-spid-font {
     margin-right: 5px;
     font-size: 15px;
     font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
-.agid-navigable {
+.spid-button-navigable {
     background: transparent;
     cursor: pointer;
     font-size: 1em;
 }
 
-.agid-spid-link {
+.spid-button-link {
     cursor: pointer;
     font-weight: bold;
     color: #06c;
@@ -126,7 +126,7 @@ h1 {
     height: 0; // fix Safari, non comprime l'altezza del div quando i figli sono nascosti
 }
 
-.agid-spid-panel {
+.spid-button-panel {
     top: 0;
     left: 0;
     margin-left: 0%;
@@ -141,7 +141,7 @@ h1 {
     //background: #fff;
 }
 
-.agid-spid-header {
+.spid-button-header {
     background-color: #fff;
     color: #fff;
     display: block;
@@ -150,13 +150,13 @@ h1 {
     min-width: 300px;
     padding: 40px;
 
-    .agid-spid-display-logo {
+    .spid-button-display-logo {
         float: left;
         width: 33.33333vw;
         font-size: 30px;
     }
 
-    .agid-spid-panel-back {
+    .spid-button-panel-back {
         & a,
         & button,
         & button a {
@@ -180,16 +180,16 @@ h1 {
         }
     }
 
-    .agid-spid-display-logo img {
+    .spid-button-display-logo img {
         max-height: 37px;
     }
 
-    .agid-spid-panel-element {
+    .spid-button-panel-element {
         min-width: 32px;
     }
 }
 
-#agid-spid-panel-content {
+#spid-button-panel-content {
     display: block;
     min-width: 300px;
     background: #fff;
@@ -202,7 +202,7 @@ h1 {
     }
 }
 
-.agid-spid-panel-content-center {
+.spid-button-panel-content-center {
     text-align: center;
     margin: auto;
     overflow: auto;
@@ -210,7 +210,7 @@ h1 {
     margin-bottom: 60px;
 }
 
-#agid-spid-panel-footer {
+#spid-button-panel-footer {
     display: block;
     position: fixed;
     bottom: 0;
@@ -227,7 +227,7 @@ h1 {
     }
 }
 
-.agid-spid-enter-icon {
+.spid-button-icon {
     border: none;
     padding-right: 8px;
     vertical-align: middle;
@@ -238,22 +238,22 @@ h1 {
     }
 }
 
-.agid-spid-little-man-icon {
+.spid-button-little-man-icon {
     width: 32px;
     position: absolute;
 }
 
 @media screen and (max-width: 767px) {
-    .agid-spid-little-man-icon {
+    .spid-button-little-man-icon {
         display: none;
     }
 }
 
-.agid-spid-enter-text {
+.spid-button-text {
     vertical-align: top;
 }
 
-.agid-spid-enter-size-small {
+.spid-button-size-small {
     font-size: 14px;
     height: 40px;
     padding: 10px 20px;
@@ -265,7 +265,7 @@ h1 {
     }
 }
 
-.agid-spid-enter-size-medium {
+.spid-button-size-medium {
     font-size: 16px;
     height: 48px;
     padding: 12px 24px;
@@ -277,7 +277,7 @@ h1 {
     }
 }
 
-.agid-spid-enter-size-large {
+.spid-button-size-large {
     font-size: 18px;
     height: 56px;
     padding: 12px 28px;
@@ -289,7 +289,7 @@ h1 {
     }
 }
 
-.agid-spid-enter-fluid {
+.spid-button-fluid {
     width: 100%;
     max-width: 400px;
 }
@@ -328,7 +328,7 @@ h1 {
     }
 }
 
-.agid-spid-circular-shadow {
+.spid-button-circular-shadow {
     position: relative;
 
     &::after {
@@ -345,7 +345,7 @@ h1 {
     }
 }
 
-.agid-spid-col {
+.spid-button-col {
     float: left;
     width: 100vw;
     width: 24.99999%;
@@ -359,7 +359,7 @@ h1 {
     padding-top: 1.25em;
 }
 
-#agid-action-button-container {
+#spid-button-action-button-container {
     width: 100%;
 
     & button {
@@ -367,7 +367,7 @@ h1 {
     }
 }
 
-.agid-action-button {
+.spid-button-action-button {
     width: 49.99999%;
     height: 65px;
     color: $spid-button-default;
@@ -382,7 +382,7 @@ h1 {
     }
 }
 
-.agid-spid-visibile {
+.spid-button-visibile {
     display: block !important;
     opacity: 0;
 }
@@ -414,7 +414,7 @@ h1 {
     }
 }
 
-.agid-spid-enter-button-positive {
+.spid-button-positive {
     color: #fff;
     background-color: $spid-button-default;
 
@@ -435,7 +435,7 @@ h1 {
     }
 }
 
-.agid-spid-enter-button-negative {
+.spid-button-negative {
     color: $spid-button-default;
     background-color: #fff;
 
@@ -452,12 +452,12 @@ h1 {
     }
 }
 
-.agid-spid-enter-button-rounded {
+.spid-button-rounded {
     border-radius: 4px;
     margin: 16px;
 }
 
-.agid-spid-enter-button-sharp {
+.spid-button-sharp {
     border-radius: 0;
 }
 
@@ -467,14 +467,14 @@ h1 {
  * così da evitare di vedere prima i pulsanti "rotti" che poi si aggiustano gradualmente mentre il CSS viene scaricato e parsato
  * in questo modo i pulsanti appaiono pochi istanti dopo correttamente stilizzati, sovrascrivendo l'attributo hidden
  */
-.agid-spid-enter {
+.spid-button {
     position: relative;
     border: 0;
     cursor: pointer;
     display: inline-block;
     font-weight: 600;
 
-    & .agid-logo {
+    & .spid-button-logo {
         position: absolute;
         display: block;
         margin: auto;
@@ -512,7 +512,7 @@ h1 {
 }
 
 @media (min-width: 361px) {
-    .agid-spid-panel-content-center {
+    .spid-button-panel-content-center {
         max-width: 500px;
     }
 }

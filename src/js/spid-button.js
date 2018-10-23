@@ -6,7 +6,7 @@ var _SPID,
 
         "use strict";
 
-        var _agidSpidEnterWrapper,
+        var _spidButtonWrapper,
             _spidIdpList,
             _spidPanelSelect,
             // questa funzione consente la gestione dell'esposizione verso l'esterno dei metodi pubblici
@@ -58,7 +58,7 @@ var _SPID,
 
         _SPID.prototype.showProvidersPanel = function () {
             var _spid = this;
-            showElement(_agidSpidEnterWrapper);
+            showElement(_spidButtonWrapper);
             giveFocusTo(_spidPanelSelect);
             document.addEventListener('keyup', function (event) {
                 _spid.handleEscKeyEvent(event);
@@ -67,7 +67,7 @@ var _SPID,
 
         _SPID.prototype.hideProvidersPanel = function () {
             var _spid = this;
-            hideElement(_agidSpidEnterWrapper);
+            hideElement(_spidButtonWrapper);
             document.addEventListener('keyup', function (event) {
                 _spid.handleEscKeyEvent(event);
             });
@@ -75,32 +75,32 @@ var _SPID,
 
         function exitChoiceModalAnimations() {
             var elem = document.getElementsByClassName('choosedButton')[0];
-            document.getElementsByClassName('agid-spid-enter-icon')[0].classList.remove('in');
-            document.getElementsByClassName('agid-spid-little-man-icon')[0].classList.add('agid-spid-enter-logo-animation-out');
-            document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
-            elem.classList.remove('agid-enter-transition');
+            document.getElementsByClassName('spid-button-icon')[0].classList.remove('in');
+            document.getElementsByClassName('spid-button-little-man-icon')[0].classList.add('spid-button-logo-animation-out');
+            document.getElementById('spid-button-panel-select').classList.add('spid-button-panel-anim');
+            elem.classList.remove('spid-button-transition');
             elem.classList.remove('choosedButton');
-            elem.classList.add('agid-reverse-enter-transition');
+            elem.classList.add('spid-button-reverse-enter-transition');
             setTimeout(function () {
-                elem.classList.remove('agid-reverse-enter-transition');
+                elem.classList.remove('spid-button-reverse-enter-transition');
                 //document.getElementsByClassName('agid-spid-enter-icon')[0].classList.remove('agid-spid-enter-icon-animation-out');
-                document.getElementsByClassName('agid-spid-little-man-icon')[0].classList.remove('agid-spid-enter-logo-animation-out');
+                document.getElementsByClassName('spid-button-little-man-icon')[0].classList.remove('spid-button-logo-animation-out');
 
             }, 2000);
         }
 
         _SPID.prototype.renderAvailableProviders = function () {
             var _spid = this,
-                agid_spid_enter = document.querySelector('#spid-enter'),
+                spid_button = document.querySelector('#spid-enter'),
                 spidProvidersButtonsHTML = '';
 
             _spid._availableProviders.forEach(function (provider) {
                 spidProvidersButtonsHTML += _spid.getTemplate('spidProviderButton', provider);
             });
 
-            agid_spid_enter.innerHTML = _spid.getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
+            spid_button.innerHTML = _spid.getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
             // Vengono creati una sola volta all'init, non necessitano unbind
-            document.querySelector('#agid-spid-panel-close-button').addEventListener('click', function () {
+            document.querySelector('#spid-button-panel-close-button').addEventListener('click', function () {
                 _spid.hideProvidersPanel();
                 exitChoiceModalAnimations();
             });
@@ -120,26 +120,26 @@ var _SPID,
         }
 
         _SPID.prototype.addContainersWrapper = function (wrapperID) {
-            _agidSpidEnterWrapper = document.createElement('section');
+            _spidButtonWrapper = document.createElement('section');
 
-            _agidSpidEnterWrapper.id = wrapperID;
-            hideElement(_agidSpidEnterWrapper);
-            document.body.insertBefore(_agidSpidEnterWrapper, document.body.firstChild);
-            _agidSpidEnterWrapper.innerHTML = this.getTemplate('spidMainContainers', null);
+            _spidButtonWrapper.id = wrapperID;
+            hideElement(_spidButtonWrapper);
+            document.body.insertBefore(_spidButtonWrapper, document.body.firstChild);
+            _spidButtonWrapper.innerHTML = this.getTemplate('spidMainContainers', null);
         };
 
         function getSelectors() {
             _spidIdpList = document.querySelector('#spid-idp-list');
-            _spidPanelSelect = document.querySelector('#agid-spid-panel-select');
+            _spidPanelSelect = document.querySelector('#spid-button-panel-select');
         }
 
         _SPID.prototype.renderSpidModalContainers = function () {
-            var agidSpidEnterWrapperId = 'spid-enter-container',
-                existentWrapper = document.getElementById(agidSpidEnterWrapperId);
+            var spidButtonWrapperId = 'spid-enter-container',
+                existentWrapper = document.getElementById(spidButtonWrapperId);
 
             if (!existentWrapper) {
                 loadStylesheet(this.resources.stylesheetUrl);
-                this.addContainersWrapper(agidSpidEnterWrapperId);
+                this.addContainersWrapper(spidButtonWrapperId);
             }
         };
 
@@ -150,45 +150,45 @@ var _SPID,
             getSelectors();
         };
 
-        function getMergedProvidersData(agidProvidersList, options) {
+        function getMergedProvidersData(spidButtonProvidersList, options) {
             var property;
-            return agidProvidersList.map(function (agidIdpConfig) {
-                agidIdpConfig.url = options.url;
-                agidIdpConfig.method = options.method || 'GET';
-                if (agidIdpConfig.method === 'POST') {
-                    agidIdpConfig.fieldName = options.fieldName;
-                    agidIdpConfig.extraFields = options.extraFields;
+            return spidButtonProvidersList.map(function (spidButtonIdpConfig) {
+                spidButtonIdpConfig.url = options.url;
+                spidButtonIdpConfig.method = options.method || 'GET';
+                if (spidButtonIdpConfig.method === 'POST') {
+                    spidButtonIdpConfig.fieldName = options.fieldName;
+                    spidButtonIdpConfig.extraFields = options.extraFields;
                 }
 
                 for (property in options.mapping) {
-                    if (agidIdpConfig.entityID === property) {
-                        agidIdpConfig.entityID = options.mapping[property];
+                    if (spidButtonIdpConfig.entityID === property) {
+                        spidButtonIdpConfig.entityID = options.mapping[property];
                     }
                 }
 
-                if (!agidIdpConfig.supported) {
-                    if (options.supported.indexOf(agidIdpConfig.entityID) === -1 || agidIdpConfig.protocols.indexOf(options.protocol) === -1) {
-                        agidIdpConfig.supported = false;
+                if (!spidButtonIdpConfig.supported) {
+                    if (options.supported.indexOf(spidButtonIdpConfig.entityID) === -1 || spidButtonIdpConfig.protocols.indexOf(options.protocol) === -1) {
+                        spidButtonIdpConfig.supported = false;
                     } else {
-                        agidIdpConfig.supported = true;
+                        spidButtonIdpConfig.supported = true;
                     }
-                } else if (agidIdpConfig.protocols.indexOf(options.protocol) === -1) {
-                    agidIdpConfig.supported = false;
+                } else if (spidButtonIdpConfig.protocols.indexOf(options.protocol) === -1) {
+                    spidButtonIdpConfig.supported = false;
                 }
 
-                return agidIdpConfig;
+                return spidButtonIdpConfig;
             });
         }
 
-        function addExtraProviders(agidProvidersList, options) {
+        function addExtraProviders(spidButtonProvidersList, options) {
             var i;
             if (options.extraProviders) {
                 for (i = 0; i < options.extraProviders.length; i++) {
                     options.extraProviders[i].supported = true;
                 }
-                agidProvidersList = agidProvidersList.concat(options.extraProviders);
+                spidButtonProvidersList = spidButtonProvidersList.concat(options.extraProviders);
             }
-            return agidProvidersList;
+            return spidButtonProvidersList;
         }
 
         function checkStyleOptions(styleOptions) {
@@ -291,33 +291,33 @@ var _SPID,
             // Binda gli eventi dopo aver renderizzato i pulsanti SPID
             for (i; i < hasButtonsOnPage; i++) {
                 spidButtonsPlaceholders[i].innerHTML = this.getTemplate('spidButton', this._style);
-                spidButtons = document.querySelectorAll('.agid-spid-enter');
+                spidButtons = document.querySelectorAll('.spid-button');
                 Array.prototype.forEach.call(spidButtons, function (spidbtn) {
                     spidbtn.addEventListener('click', function () {
                         var parent = spidbtn.parentElement;
-                        parent.classList.add("agid-enter-transition");
+                        parent.classList.add("spid-button-transition");
                         parent.classList.add("choosedButton");
                         _spid.showProvidersPanel();
 
-                        document.getElementById('agid-logo').classList.add('agid-fade-in-left');
-                        document.getElementById('agid-close-button').classList.add('agid-fade-in-left');
-                        document.getElementById('agid-spid-panel-select').classList.add('agid-spid-panel-anim');
-                        document.getElementsByClassName('agid-spid-enter-icon')[0].classList.add('agid-spid-enter-icon-animation');
-                        document.getElementsByClassName('agid-spid-enter-icon')[0].classList.add('in');
-                        spidProvidersBtn = document.getElementsByClassName('agid-spid-idp');
+                        document.getElementById('spid-button-logo').classList.add('spid-button-fade-in-left');
+                        document.getElementById('spid-button-close-button').classList.add('spid-button-fade-in-left');
+                        document.getElementById('spid-button-panel-select').classList.add('spid-button-panel-anim');
+                        document.getElementsByClassName('spid-button-icon')[0].classList.add('spid-button-icon-animation');
+                        document.getElementsByClassName('spid-button-icon')[0].classList.add('in');
+                        spidProvidersBtn = document.getElementsByClassName('spid-button-idp');
                         delaySeconds = 1.10;
                         for (j = 0; j < spidProvidersBtn.length; j++) {
-                            spidProvidersBtn[j].classList.add('agid-spid-idp-fade-in');
+                            spidProvidersBtn[j].classList.add('spid-button-idp-fade-in');
                             spidProvidersBtn[j].setAttribute('style', 'animation-delay: ' + delaySeconds + 's');
                             delaySeconds = delaySeconds + 0.10;
                         }
                         setTimeout(function () {
-                            parent.classList.remove('agid-enter-transition');
-                            document.getElementById('agid-logo').classList.remove('agid-fade-in-left');
-                            document.getElementById('agid-close-button').classList.remove('agid-fade-in-left');
-                            document.getElementById('agid-spid-panel-select').classList.remove('agid-spid-panel-anim');
+                            parent.classList.remove('spid-button-transition');
+                            document.getElementById('spid-button-logo').classList.remove('spid-button-fade-in-left');
+                            document.getElementById('spid-button-close-button').classList.remove('spid-button-fade-in-left');
+                            document.getElementById('spid-button-panel-select').classList.remove('spid-button-panel-anim');
                             for (t = 0; t < spidProvidersBtn.length; t++) {
-                                spidProvidersBtn[t].classList.remove('agid-spid-idp-fade-in');
+                                spidProvidersBtn[t].classList.remove('spid-button-idp-fade-in');
                                 spidProvidersBtn[t].removeAttribute('style');
                             }
                         }, 2000);
