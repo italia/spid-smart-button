@@ -49,6 +49,12 @@ workflows:
   default_workflow:
     jobs:
       - build
+          branches:
+            ignore:
+              - gh-pages
       - test:
+          branches:
+            ignore:
+              - gh-pages
           requires:
             - build
