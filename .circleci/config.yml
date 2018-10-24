@@ -1,74 +1,54 @@
 # Javascript Node CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-var_1: &docker_image circleci/node:8.1.3
+
 var_2: &cache_key spid-smart-button-{{ .Branch }}-{{ checksum "package.json" }}
-var_3: &working_directory ~/spid-smart-button
+var_3: &working_directory /tmp/spid-smart-button
 
 anchor_1: &job_defaults
   working_directory: *working_directory
   docker:
-- image: *docker_image
+    - image: circleci/node:8-browsers
 
 version: 2
 jobs:
-  setup:
-    docker:
-      <<: *job_defaults
-
+  build:
+    <<: *job_defaults
     steps:
       - checkout
-      - run: npm install
-
+      - restore_cache:
+          key: *cache_key
+      - run: sudo npm install -g npm@latest
+      - run: npm install grunt --no-save
+      - run: npm install --no-save
+      - run: npm build
       - save_cache:
           key: *cache_key
           paths:
             - "node_modules"
-
-      - run:
-          name: Execute Chrome in Background
-          command: google-chrome-stable --headless --no-default-browser-check --no-first-run --disable-translate --remote-debugging-port=9222 --disable-gpu
-          background: true
-  build:
-    docker:
-      <<: *job_defaults
-    steps:
-      - restore_cache:
-          key: *cache_key
       - persist_to_workspace:
           root: *working_directory
           paths:
             - "dist/"
-      - checkout
-      - run: npm start
-          background: true
   test:
-    docker:
-      <<: *job_defaults
+    <<: *job_defaults
     steps:
+      - checkout
       - restore_cache:
           key: *cache_key
       - attach_workspace:
           at: *working_directory
-
-      - checkout
+      - run:
+          command: npm run serve
+          background: true
+      - run: sleep 5
       - run: npm test
 
 workflows:
   version: 2
   default_workflow:
     jobs:
-      - setup
-      - build:
-          requires:
-            - setup
-          filters:
-            branches:
-              only: master
+      - build
       - test:
           requires:
             - build
-          filters:
-            branches:
-              only: master
