@@ -12,32 +12,22 @@ anchor_1: &job_defaults
 
 version: 2
 jobs:
-  setup:
+  build:
     <<: *job_defaults
     steps:
       - checkout
+      - run: sudo npm install -g npm@latest
+      - run: sudo npm install -g grunt-cli
       - run: npm install
       - save_cache:
           key: *cache_key
           paths:
             - "node_modules"
-      - run:
-          name: Execute Chrome in Background
-          command: google-chrome-stable --headless --no-default-browser-check --no-first-run --disable-translate --remote-debugging-port=9222 --disable-gpu
-          background: true
-  build:
-    <<: *job_defaults
-    steps:
-      - checkout
-      - restore_cache:
-          key: *cache_key
       - persist_to_workspace:
           root: *working_directory
           paths:
             - "dist/"
-      - run:
-          command: npm start
-          background: true
+      - run: npm build
   test:
     <<: *job_defaults
     steps:
@@ -46,16 +36,16 @@ jobs:
           key: *cache_key
       - attach_workspace:
           at: *working_directory
+      - run:
+          command: npm run serve
+          background: true
       - run: npm test
 
 workflows:
   version: 2
   default_workflow:
     jobs:
-      - setup
-      - build:
-          requires:
-            - setup
+      - build
       - test:
           requires:
             - build
