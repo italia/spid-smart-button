@@ -44,6 +44,29 @@ jobs:
       - run: sleep 5
       - run: npm test
 
+  # Deploy to gh-pages for testing purpose only until we can serve it
+  # through the official CDN
+  deploy:
+    <<: *job_defaults
+    steps:
+      - attach_workspace:
+          at: *working_directory
+      - deploy: |
+          git config --global user.email no-reply@spid.gov.it
+          git config --global user.name SPID Deploy Bot
+
+          git clone $CIRCLE_REPOSITORY_URL gh-pages
+          cd gh-pages
+          git checkout gh-pages || git checkout --orphan gh-pages
+          git rm -rf .
+
+          cp -a ../dist/. .
+          mkdir -p .circleci && cp -a ../.circleci/. .circleci/.
+
+          git add -A
+          git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
+          git push origin gh-pages
+
 workflows:
   version: 2
   default_workflow:
@@ -60,3 +83,10 @@ workflows:
                 - gh-pages
           requires:
             - build
+      - deploy:
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
+
