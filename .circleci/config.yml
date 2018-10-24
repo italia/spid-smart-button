@@ -39,7 +39,6 @@ jobs:
           command: npm start
           background: true
   test:
-    docker:
     <<: *job_defaults
     steps:
       - checkout
