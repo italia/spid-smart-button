@@ -1,0 +1,105 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+
+var_2: &cache_key spid-smart-button-{{ .Branch }}-{{ checksum "package.json" }}
+var_3: &working_directory /tmp/spid-smart-button
+
+anchor_1: &job_defaults
+  working_directory: *working_directory
+  docker:
+    - image: circleci/node:8-browsers
+
+anchor_2: &add_ssh_keys
+    fingerprints:
+      - "b2:e5:27:3b:20:fa:60:f4:94:87:a0:4c:d6:14:d0:60"
+
+version: 2
+jobs:
+  build:
+    <<: *job_defaults
+    steps:
+      - add_ssh_keys: *add_ssh_keys
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - run: sudo npm install -g npm@latest
+      - run: npm install grunt --no-save
+      - run: npm install --no-save
+      - run: npm run build-prod
+      - save_cache:
+          key: *cache_key
+          paths:
+            - "node_modules"
+      - persist_to_workspace:
+          root: *working_directory
+          paths:
+            - "dist/"
+            - ".circleci/"
+  test:
+    <<: *job_defaults
+    steps:
+      - add_ssh_keys: *add_ssh_keys
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - attach_workspace:
+          at: *working_directory
+      - run:
+          command: npm run serve
+          background: true
+      - run: sleep 5
+      - run: npm test
+
+  # Deploy to gh-pages for testing purpose only until we can serve it
+  # through the official CDN
+  deploy:
+    <<: *job_defaults
+    steps:
+      - add_ssh_keys: *add_ssh_keys
+      - attach_workspace:
+          at: *working_directory
+      - checkout:
+          path: /tmp/gh-pages
+      - deploy:
+          name: Deploy
+          command: |
+            git config --global user.email no-reply@spid.gov.it
+            git config --global user.name "SPID Deploy Bot"
+
+            cd /tmp/gh-pages
+            git checkout gh-pages || git checkout --orphan gh-pages
+            git rm -rf .
+
+            cp -a /tmp/spid-smart-button/dist/. .
+            mkdir -p .circleci && cp -a /tmp/spid-smart-button/.circleci/. .circleci/.
+
+            git add -A
+            git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
+            git push origin gh-pages
+
+workflows:
+  version: 2
+  default_workflow:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+      - test:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+          requires:
+            - build
+      - deploy:
+          filters:
+            branches:
+              only:
+                - circleci-deploy
+                - master
+          requires:
+            - test
+
