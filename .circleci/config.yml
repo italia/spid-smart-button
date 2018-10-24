@@ -51,21 +51,23 @@ jobs:
     steps:
       - attach_workspace:
           at: *working_directory
-      - deploy: |
-          git config --global user.email no-reply@spid.gov.it
-          git config --global user.name SPID Deploy Bot
+      - deploy:
+          name: Deploy
+          command: |
+            git config --global user.email no-reply@spid.gov.it
+            git config --global user.name SPID Deploy Bot
 
-          git clone $CIRCLE_REPOSITORY_URL gh-pages
-          cd gh-pages
-          git checkout gh-pages || git checkout --orphan gh-pages
-          git rm -rf .
+            git clone $CIRCLE_REPOSITORY_URL gh-pages
+            cd gh-pages
+            git checkout gh-pages || git checkout --orphan gh-pages
+            git rm -rf .
 
-          cp -a ../dist/. .
-          mkdir -p .circleci && cp -a ../.circleci/. .circleci/.
+            cp -a ../dist/. .
+            mkdir -p .circleci && cp -a ../.circleci/. .circleci/.
 
-          git add -A
-          git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
-          git push origin gh-pages
+            git add -A
+            git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
+            git push origin gh-pages
 
 workflows:
   version: 2
