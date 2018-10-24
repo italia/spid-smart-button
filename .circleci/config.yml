@@ -41,6 +41,7 @@ jobs:
       - run:
           command: npm run serve
           background: true
+      - run: sleep 5
       - run: npm test
 
 workflows:
