@@ -31,11 +31,11 @@ jobs:
   test:
     <<: *job_defaults
     steps:
-      - run: sudo npm install -g npm@latest
-      - run: sudo npm install -g grunt-cli
       - checkout
       - restore_cache:
           key: *cache_key
+      - run: sudo npm install -g npm@latest
+      - run: sudo npm install -g grunt-cli
       - attach_workspace:
           at: *working_directory
       - run:
