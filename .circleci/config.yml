@@ -86,7 +86,9 @@ workflows:
       - deploy:
           filters:
             branches:
-              only: master
+              only:
+                - circleci-deploy
+                - master
           requires:
             - test
 
