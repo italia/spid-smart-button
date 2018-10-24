@@ -10,11 +10,16 @@ anchor_1: &job_defaults
   docker:
     - image: circleci/node:8-browsers
 
+anchor_2: &add_ssh_keys
+    fingerprints:
+      - "b2:e5:27:3b:20:fa:60:f4:94:87:a0:4c:d6:14:d0:60"
+
 version: 2
 jobs:
   build:
     <<: *job_defaults
     steps:
+      - add_ssh_keys: *add_ssh_keys
       - checkout
       - restore_cache:
           key: *cache_key
@@ -34,6 +39,7 @@ jobs:
   test:
     <<: *job_defaults
     steps:
+      - add_ssh_keys: *add_ssh_keys
       - checkout
       - restore_cache:
           key: *cache_key
@@ -50,6 +56,7 @@ jobs:
   deploy:
     <<: *job_defaults
     steps:
+      - add_ssh_keys: *add_ssh_keys
       - attach_workspace:
           at: *working_directory
       - checkout:
