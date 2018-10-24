@@ -15,9 +15,9 @@ jobs:
   build:
     <<: *job_defaults
     steps:
-      - checkout
       - run: sudo npm install -g npm@latest
       - run: sudo npm install -g grunt-cli
+      - checkout
       - run: npm install
       - save_cache:
           key: *cache_key
@@ -31,6 +31,8 @@ jobs:
   test:
     <<: *job_defaults
     steps:
+      - run: sudo npm install -g npm@latest
+      - run: sudo npm install -g grunt-cli
       - checkout
       - restore_cache:
           key: *cache_key
