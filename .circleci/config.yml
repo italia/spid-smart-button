@@ -30,6 +30,7 @@ jobs:
           root: *working_directory
           paths:
             - "dist/"
+            - ".circleci/"
   test:
     <<: *job_defaults
     steps:
