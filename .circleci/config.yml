@@ -21,6 +21,7 @@ jobs:
       - run: sudo npm install -g npm@latest
       - run: npm install grunt --save-dev
       - run: npm install
+      - run: npm build
       - save_cache:
           key: *cache_key
           paths:
@@ -29,7 +30,6 @@ jobs:
           root: *working_directory
           paths:
             - "dist/"
-      - run: npm build
   test:
     <<: *job_defaults
     steps:
