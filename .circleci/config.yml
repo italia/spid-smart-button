@@ -21,7 +21,7 @@ jobs:
       - run: sudo npm install -g npm@latest
       - run: npm install grunt --no-save
       - run: npm install --no-save
-      - run: npm build-prod
+      - run: npm run build-prod
       - save_cache:
           key: *cache_key
           paths:
