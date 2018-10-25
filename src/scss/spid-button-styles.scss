@@ -190,6 +190,7 @@ h1 {
 }
 
 #spid-button-panel-content {
+    position: relative;
     display: block;
     min-width: 300px;
     background: #fff;
@@ -208,6 +209,7 @@ h1 {
     overflow: auto;
     height: 100%;
     margin-bottom: 60px;
+    max-width: 500px;
 }
 
 #spid-button-panel-footer {
@@ -240,6 +242,7 @@ h1 {
 
 .spid-button-little-man-icon {
     width: 32px;
+    opacity: 0;
     position: absolute;
 }
 
@@ -498,21 +501,7 @@ h1 {
 @media screen and (max-width: 767px) {
     #spid-foot-btn {
         position: fixed;
-        padding-top: 4%;
-        padding-bottom: 4%;
-        margin: auto;
-    }
-}
-
-@media screen and (max-height: 450px) {
-    #spid-foot-btn {
-        margin: -20px 110px !important;
-        padding-top: 0 !important;
-    }
-}
-
-@media (min-width: 361px) {
-    .spid-button-panel-content-center {
-        max-width: 500px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }

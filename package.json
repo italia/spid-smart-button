@@ -41,6 +41,7 @@
     "security": "grunt retire",
     "start": "grunt build:prod && grunt serve",
     "serve": "grunt build:dev && grunt serve",
+    "build-prod": "grunt build:prod",
     "build-watch": "grunt watch:build",
     "lint": "grunt lint",
     "test-watch": "grunt watch:test",

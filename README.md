@@ -2,7 +2,7 @@
 
 [![Join the #spid-smart-button channel](https://img.shields.io/badge/Slack%20channel-%23spid--smart--button-blue.svg?logo=slack)](https://developersitalia.slack.com/messages/C7EQLBY9H)
 [![Get invited](https://slack.developers.italia.it/badge.svg)](https://slack.developers.italia.it/)
-[![SPID on forum.italia.it](https://img.shields.io/badge/Forum-SPID-blue.svg)](https://forum.italia.it/c/spid) [![Build Status](https://travis-ci.org/italia/spid-smart-button.svg?branch=master)](https://travis-ci.org/italia/spid-smart-button)
+[![SPID on forum.italia.it](https://img.shields.io/badge/Forum-SPID-blue.svg)](https://forum.italia.it/c/spid) [![CircleCI](https://circleci.com/gh/italia/spid-smart-button/tree/master.svg?style=svg)](https://circleci.com/gh/italia/spid-smart-button/tree/master)
 
 > ⚠️ **WORK IN PROGRESS** ⚠️
 

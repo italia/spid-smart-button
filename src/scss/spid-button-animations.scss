@@ -372,23 +372,41 @@ $animIconDistanceEnd: 120;
 
     100% {
         opacity: 0.15;
-        transform-origin: top left;
-        transform: translate(70vw, 50vh) scale(10);
+        position: absolute;
+        top: 80%;
+        left: 75%;
+        width: 15%;
+    }
+}
+
+@media (max-width: 1110px) {
+    @keyframes spid-show-little-man {
+        100% {
+            opacity: 0.15;
+            position: absolute;
+            top: 77%;
+            left: 80%;
+            width: 12%;
+        }
     }
 }
 
 @keyframes spid-hide-little-man {
     0% {
         opacity: 0.15;
-        transform: translate(70vw, 60vh) scale(10);
+        position: absolute;
+        top: 80%;
+        left: 75%;
+        width: 15%;
     }
 
-    30% {
+    50% {
         opacity: 0;
     }
 
     100% {
-        transform: none;
+        top: 0;
+        left: 0;
     }
 }
 
@@ -415,7 +433,8 @@ $animIconDistanceEnd: 120;
 
     100% {
         opacity: 0;
-        transform: translate(60vw, 60vh) scale(10);
+        transform-origin: top left;
+        transform: translate(50vw, 50vh) scale(10);
     }
 }
 
@@ -435,12 +454,13 @@ $animIconDistanceEnd: 120;
 }
 
 @keyframes spid-button-icon-smaller-logo {
-    from {
+    0% {
         opacity: 0.2;
-        transform: translate(70vw, 70vh) scale(10);
+        transform-origin: top left;
+        transform: translate(50vw, 50vh) scale(10);
     }
 
-    to {
+    100% {
         transform: none;
         opacity: 1;
     }

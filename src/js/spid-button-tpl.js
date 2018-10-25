@@ -40,7 +40,7 @@ var _SPID = (function(languages, providers){
             },
 
             spidProviderChoiceModal: function (spidProvidersButtons) {
-                var imgPath = 'img/spid-ico-circle-black.svg';
+                var imgPath = 'img/spid-logo-animation-black.svg';
 
                 return [
                     '<section id="spid-button-panel-select" class="spid-button-panel" aria-labelledby="spid-enter-title-page" tabindex="0">',
@@ -59,13 +59,10 @@ var _SPID = (function(languages, providers){
                         '</header>',
 
                         '<div id="spid-button-panel-content">',
-                        //'<div >',
                             '<img class="spid-button-little-man-icon" src="', this.getResources().assetsBaseUrl, imgPath,'" alt="',this.getI18n('entra_con_SPID'),'" class="spid-button-littleMan-icon"></img>',
-                        //'</div>',                            
-                        '<div class="spid-button-panel-content-center">',
-                            '<h1 id="spid-enter-title-page" class="spid-button-fade-in-bottom spid-button-fade-out-bottom">',this.getI18n('scegli_provider_SPID'),'</h1>',
-                            
-                            '<div id="spid-idp-list">',
+                            '<div class="spid-button-panel-content-center">',
+                                '<h1 id="spid-enter-title-page" class="spid-button-fade-in-bottom spid-button-fade-out-bottom">',this.getI18n('scegli_provider_SPID'),'</h1>',
+                                '<div id="spid-idp-list">',
                                     spidProvidersButtons,
                                 '</div>',
                                 '<div id="spid-non-hai-spid">',

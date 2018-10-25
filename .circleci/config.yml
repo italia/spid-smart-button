@@ -1,38 +1,112 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
+# spid-smart-button CircleCI configuration
+
+# prepare the cache key used for keeping the node_modules directory across builds
+var_2: &cache_key spid-smart-button-{{ .Branch }}-{{ checksum "package.json" }}
+
+# prepare a couple more reusable parameters
+var_3: &working_directory /tmp/spid-smart-button
+anchor_1: &job_defaults
+  working_directory: *working_directory
+  docker:
+    - image: circleci/node:8-browsers
+
+# we use a rw SSH key instead of the default one injected by CircleCI because we
+# use it for deploy as well
+anchor_2: &add_ssh_keys
+    fingerprints:
+      - "b2:e5:27:3b:20:fa:60:f4:94:87:a0:4c:d6:14:d0:60"
+
 version: 2
 jobs:
+  # this job builds the production distribution under dist/
   build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:7.10
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+    <<: *job_defaults
     steps:
+      - add_ssh_keys: *add_ssh_keys
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: npm install
-
+          key: *cache_key
+      - run: sudo npm install -g npm@latest
+      - run: npm install grunt --no-save
+      - run: npm install --no-save
+      - run: npm run build-prod
       - save_cache:
+          key: *cache_key
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - "node_modules"
+      # this preserves things across jobs in this workflow
+      - persist_to_workspace:
+          root: *working_directory
+          paths:
+            - "dist/"
+            - ".circleci/"
+  
+  # this job runs the test suite with a headless browser
+  test:
+    <<: *job_defaults
+    steps:
+      - add_ssh_keys: *add_ssh_keys
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - attach_workspace:
+          at: *working_directory
+      # run the webserver in background, wait a few seconds for it to launch and then run tests
+      - run:
+          command: npm run serve
+          background: true
+      - run: sleep 5
+      - run: npm test
 
-      # run tests!
-      # - run: npm test
+  # deploy to gh-pages for testing purposes only until we can serve it
+  # through the official CDN
+  deploy:
+    <<: *job_defaults
+    steps:
+      - add_ssh_keys: *add_ssh_keys
+      - attach_workspace:
+          at: *working_directory
+      - checkout:
+          path: /tmp/gh-pages
+      - deploy:
+          name: Deploy
+          command: |
+            git config --global user.email no-reply@spid.gov.it
+            git config --global user.name "SPID Deploy Bot"
+
+            cd /tmp/gh-pages
+            git checkout gh-pages || git checkout --orphan gh-pages
+            git rm -rf .
+
+            cp -a /tmp/spid-smart-button/dist/. .
+            # copy .circleci as well so that the branch filter is honored
+            mkdir -p .circleci && cp -a /tmp/spid-smart-button/.circleci/. .circleci/.
+
+            git add -A
+            git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
+            git push origin gh-pages
+
+workflows:
+  version: 2
+  default_workflow:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+      - test:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+          requires:
+            - build
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - test
 
