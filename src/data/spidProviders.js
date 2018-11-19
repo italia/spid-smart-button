@@ -55,6 +55,13 @@ function providers() {
             logo: "spid-idp-intesaid.svg",
             entityID: "https://spid.intesa.it",
             active: true
+        },
+        {
+            protocols: ["SAML"],
+            entityName: "Lepida ID",
+            logo: "spid-idp-lepidaid.svg",
+            entityID: "https://id.lepida.it/idp/shibboleth",
+            active: true
         }
     ]
 }
