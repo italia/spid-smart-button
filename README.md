@@ -122,7 +122,7 @@ var spid = SPID.init({
 #### `changeLanguage(lang)`
 Questo metodo consente di cambiare la lingua dello smart-button a run-time.
 La stringa `lang` deve essere costituita da due caratteri eg `it`.
-Le lingue supportate sono italiano `it`, inglese `en` e tedesco `de`
+Le lingue supportate sono italiano `it`, inglese `en`, tedesco `de` e francese 'fr'.
 ```javascript
 spid.changeLanguage('en');
 ```

@@ -234,7 +234,7 @@ describe('SPID', function () {
                     done();
                 });
 
-                it('should request the provided language in the config', function (done) {
+                it('should request the provided language (de) in the config', function (done) {
                     // GIVEN
                     var config = {
                         url: 'url{{idp}}',
@@ -246,6 +246,21 @@ describe('SPID', function () {
                     SPID.init(config);
                     var title = document.getElementById('spid-enter-title-page').innerHTML;
                     expect(title).toEqual('Wähle Ihren SPIDProvider')
+                    done();
+                });
+
+                it('should request the provided language (fr) in the config', function (done) {
+                    // GIVEN
+                    var config = {
+                        url: 'url',
+                        lang: 'fr',
+                        supported: supportedProviders
+                    };
+
+                    // WHEN
+                    SPID.init(config);
+                    var title = document.getElementById('spid-enter-title-page').innerHTML;
+                    expect(title).toEqual('Sélectionner un fournisseur SPID')
                     done();
                 });
 
