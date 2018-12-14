@@ -392,14 +392,6 @@ $animIconDistanceEnd: 120;
 }
 
 @keyframes spid-hide-little-man {
-    0% {
-        opacity: 0.15;
-        position: absolute;
-        top: 80%;
-        left: 75%;
-        width: 15%;
-    }
-
     50% {
         opacity: 0;
     }

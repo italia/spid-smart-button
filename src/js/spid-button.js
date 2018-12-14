@@ -248,11 +248,11 @@ var SPID = (function () {
                                 '<span id="spid-nonhai-spid" class="spid-button-link spid-button-non-hai-spid-font">' , spid._getI18n("scopri_di_piu"),'</span>',
                             '</div>',
                         '</div>',
-                    '</div>',
-                    '<div id="spid-foot-btn" class="spid-button-circular-shadow">',
-                        '<button id="spid-cancel-access-button" class="spid-button-font">',
-                            '<span>', spid._getI18n('annulla_accesso'), '</span>',
-                        '</button>',
+                        '<div id="spid-foot-btn" class="spid-button-circular-shadow">',
+                            '<button id="spid-cancel-access-button" class="spid-button-font">',
+                                '<span>', spid._getI18n('annulla_accesso'), '</span>',
+                            '</button>',
+                        '</div>',
                     '</div>',
                 '</section>'
             ].join('');
