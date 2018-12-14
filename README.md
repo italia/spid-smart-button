@@ -65,6 +65,7 @@ La funzione `SPID.init()` inizializza il bottone secondo i parametri forniti, ch
 
 | Parametro  | Descrizione        | Esempio |
 | ---------- | ------------------ | ------- |
+| **lang** | `it`/`en`/`de` (default: `it`) | `"it"` |
 | **method** | `GET`/`POST` (default: `GET`) | `"GET"` |
 | **url** | (obbligatorio) URL da chiamare (anche relativo). Il placeholder `{{idp}}` sarà sostituito con l’entityID dell’IdP selezionato (o con il valore custom specificato nel parametro `mapping`). Se questo parametro è assente, sarà scritto un errore in console.error() | `"/spid/login/idp={{idp}}"` |
 | **fieldName** | Se method=POST, contiene il nome del campo hidden in cui passiamo l’IdP selezionato (default: `idp`) | `"idp"` |
