@@ -105,11 +105,10 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/spid-button.min.js': [
-                        'src/data/spidI18n.js',
-                        'src/data/spidProviders.js',
-                        'src/js/spid-button-tpl.js',
-                        'src/js/spid-button-config-dev.js',
-                        'src/js/spid-button.js'
+                        'src/js/spid-button.js',
+                        'src/js/i18n.js',
+                        'src/js/providers.js',
+                        'src/js/config-dev.js'
                     ]
                 }
             },
@@ -123,11 +122,10 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/spid-button.min.js': [
-                        'src/data/spidI18n.js',
-                        'src/data/spidProviders.js',
-                        'src/js/spid-button-tpl.js',
-                        'src/js/spid-button-config.js',
-                        'src/js/spid-button.js'
+                        'src/js/spid-button.js',
+                        'src/js/i18n.js',
+                        'src/js/providers.js',
+                        'src/js/config.js'
                     ]
                 }
             }

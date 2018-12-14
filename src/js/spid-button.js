@@ -1,79 +1,101 @@
 /*
- * Modulo SPID smart button
+ * SPID Smart Button
  */
-var _SPID,
-    SPID = (function (_SPID) {
-
+var SPID = (function () {
         "use strict";
 
-        var _spidButtonWrapper,
-            _spidIdpList,
-            _spidPanelSelect,
-            // questa funzione consente la gestione dell'esposizione verso l'esterno dei metodi pubblici
-            // e permette inoltre di restituire un'istanza di _SPID tramite la funzione init()
-            SPID = function (config) {
-                this.internalSPID = new _SPID();
-                this.internalSPID._init(config);
+        /* UTILITY FUNCTIONS */
 
-                /* FUNZIONI PUBBLICHE*/
-                //in questo modo riesco a rendere pubblico questo metodo
-                this.changeLanguage = function (lang) {
-                    return this.internalSPID.changeLanguage(lang);
-                };
-                //aggiungere qui i metodi da rendere pubblici
-            };
+        var loadStylesheet = function(url) {
+            var linkElement = document.createElement('link');
 
-        _SPID.prototype.getTemplate = function (templateName, content) {
-            return this.templates[templateName].call(this, content);
+            linkElement.rel = 'stylesheet';
+            linkElement.type = 'text/css';
+            linkElement.href = url;
+            document.head.appendChild(linkElement);
         };
 
-        function showElement(dom) {
+        var imageTag = function(imagePath, altText) {
+            return [
+                '<img aria-hidden="true"',
+                    'src="', SPID.assetsBaseUrl, imagePath, '.svg"',
+                    'alt="', altText, '" style="float:left" />'
+            ].join('');
+        };
+    
+        var hiddenField = function (name, value) {
+            return ['<input type="hidden" name="', name, '" value="', value, '" />'].join('');
+        };
+
+        /* SPID BUTTON CLASS */
+
+        // class for objects returned by SPID.init()
+        var spidObj = function (config, providers) {
+            this.config = config;
+            this._providers = providers;
+        };
+
+        /* PUBLIC METHODS */
+
+        /**
+         * @param {string} lang - il locale da caricare, due caratteri eg 'it' | 'en' | 'de'.
+         */
+        spidObj.prototype.changeLanguage = function (lang) {
+            var _spid = this;
+            _spid.config.lang = lang;
+            _spid._render();
+        };
+
+        /* PRIVATE METHODS */
+
+        spidObj.prototype._showElement = function (dom) {
             dom.removeAttribute('hidden');
         };
 
-        function hideElement(dom) {
+        spidObj.prototype._hideElement = function(dom) {
             var hiddenAttribute = document.createAttribute("hidden");
             dom.setAttributeNode(hiddenAttribute);
         }
 
         // a11y: porta il focus sull'elemento interattivo mostrato
-        function giveFocusTo(element) {
+        spidObj.prototype._giveFocusTo = function(element) {
+            var spid = this;
             var focusElement = setInterval(function () {
                 element.focus();
             }, 100);
-            _spidPanelSelect.addEventListener('focus', function () {
+            spid._spidPanelSelect.addEventListener('focus', function () {
                 clearInterval(focusElement);
             });
         }
 
         // Chiudi gli overlay in sequenza, prima info modal poi i providers
-        _SPID.prototype.handleEscKeyEvent = function (event) {
-            var isEscKeyHit = event.keyCode === 27;
+        spidObj.prototype._handleEscKeyEvent = function (event) {
+            var spid = this;
 
-            if (isEscKeyHit) {
-                // eslint-disable-next-line no-use-before-define
-                this.hideProvidersPanel();
+            if (event.keyCode === 27) {  // ESC key
+                spid._hideProvidersPanel();
             }
         };
 
-        _SPID.prototype.showProvidersPanel = function () {
-            var _spid = this;
-            showElement(_spidButtonWrapper);
-            giveFocusTo(_spidPanelSelect);
+        spidObj.prototype._showProvidersPanel = function () {
+            var spid = this;
+            spid._showElement(spid._spidButtonWrapper);
+            spid._giveFocusTo(spid._spidPanelSelect);
             document.addEventListener('keyup', function (event) {
-                _spid.handleEscKeyEvent(event);
+                spid._handleEscKeyEvent(event);
             });
         };
 
-        _SPID.prototype.hideProvidersPanel = function () {
-            var _spid = this;
-            hideElement(_spidButtonWrapper);
+        spidObj.prototype._hideProvidersPanel = function () {
+            var spid = this;
+            spid._hideElement(spid._spidButtonWrapper);
             document.addEventListener('keyup', function (event) {
-                _spid.handleEscKeyEvent(event);
+                spid._handleEscKeyEvent(event);
             });
         };
 
-        function exitChoiceModalAnimations() {
+        spidObj.prototype._exitChoiceModalAnimations = function() {
+            // TODO: limit this to our markup or namespace
             var elem = document.getElementsByClassName('choosedButton')[0];
             document.getElementsByClassName('spid-button-icon')[0].classList.remove('in');
             document.getElementsByClassName('spid-button-little-man-icon')[0].classList.add('spid-button-logo-animation-out');
@@ -89,218 +111,64 @@ var _SPID,
             }, 2000);
         }
 
-        _SPID.prototype.renderAvailableProviders = function () {
-            var _spid = this,
-                spid_button = document.querySelector('#spid-enter'),
-                spidProvidersButtonsHTML = '';
+        spidObj.prototype._render = function () {
+            var spid = this;
 
-            _spid._availableProviders.forEach(function (provider) {
-                spidProvidersButtonsHTML += _spid.getTemplate('spidProviderButton', provider);
-            });
+            // render modal containers
+            var wrapperId = 'spid-enter-container';
 
-            spid_button.innerHTML = _spid.getTemplate('spidProviderChoiceModal', spidProvidersButtonsHTML);
-            // Vengono creati una sola volta all'init, non necessitano unbind
+            // if wrapper does not exist, create it
+            if (!document.getElementById(wrapperId)) {
+                loadStylesheet(SPID.stylesheetUrl);
+
+                // add containers wrapper
+                spid._spidButtonWrapper = document.createElement('section');
+                spid._spidButtonWrapper.id = wrapperId;
+                spid._hideElement(spid._spidButtonWrapper);
+                document.body.insertBefore(spid._spidButtonWrapper, document.body.firstChild);
+                spid._spidButtonWrapper.innerHTML = '<div id="spid-enter"></div>';
+            }
+
+            // render providers
+            var modal = document.querySelector('#spid-enter');
+            modal.innerHTML = spid._renderProvidersChoiceModal();
+            
+            // Vengono creati una sola volta all'init e non necessitano unbind
             document.querySelector('#spid-button-panel-close-button').addEventListener('click', function () {
-                _spid.hideProvidersPanel();
-                exitChoiceModalAnimations();
+                spid._hideProvidersPanel();
+                spid._exitChoiceModalAnimations();
             });
             document.querySelector('#spid-cancel-access-button').addEventListener('click', function () {
-                _spid.hideProvidersPanel();
-                exitChoiceModalAnimations();
+                spid._hideProvidersPanel();
+                spid._exitChoiceModalAnimations();
             });
-        };
 
-        function loadStylesheet(url) {
-            var linkElement = document.createElement('link');
-
-            linkElement.rel = 'stylesheet';
-            linkElement.type = 'text/css';
-            linkElement.href = url;
-            document.head.appendChild(linkElement);
-        }
-
-        _SPID.prototype.addContainersWrapper = function (wrapperID) {
-            _spidButtonWrapper = document.createElement('section');
-
-            _spidButtonWrapper.id = wrapperID;
-            hideElement(_spidButtonWrapper);
-            document.body.insertBefore(_spidButtonWrapper, document.body.firstChild);
-            _spidButtonWrapper.innerHTML = this.getTemplate('spidMainContainers', null);
-        };
-
-        function getSelectors() {
-            _spidIdpList = document.querySelector('#spid-idp-list');
-            _spidPanelSelect = document.querySelector('#spid-button-panel-select');
-        }
-
-        _SPID.prototype.renderSpidModalContainers = function () {
-            var spidButtonWrapperId = 'spid-enter-container',
-                existentWrapper = document.getElementById(spidButtonWrapperId);
-
-            if (!existentWrapper) {
-                loadStylesheet(this.resources.stylesheetUrl);
-                this.addContainersWrapper(spidButtonWrapperId);
-            }
-        };
-
-        _SPID.prototype.renderModule = function () {
-            this.renderSpidModalContainers();
-            this.renderAvailableProviders();
-            this.updateSpidButtons();
-            getSelectors();
-        };
-
-        function checkStyleOptions(styleOptions) {
-            var supportedSizes = ['small', 'medium', 'large'],
-                supportedColorScheme = ["positive", "negative"],
-                supportedCornerStyle = ["rounded", "sharp"],
-                supportedFluid = [true, false];
-            if (supportedSizes.indexOf(styleOptions.size.toLowerCase()) === -1) {
-                return 'Le dimensioni supportate sono ' + supportedSizes + ' trovato invece:' + styleOptions.size;
-            } else if (supportedColorScheme.indexOf(styleOptions.colorScheme.toLowerCase()) === -1) {
-                return 'I colori supportati sono ' + supportedColorScheme + ' trovati invece:' + styleOptions.colorScheme;
-            } else if (supportedCornerStyle.indexOf(styleOptions.cornerStyle.toLowerCase()) === -1) {
-                return 'Il tipo di angoli supportati sono ' + supportedCornerStyle + ' trovati invece:' + styleOptions.cornerStyle;
-            } else if (supportedFluid.indexOf(styleOptions.fluid) === -1) {
-                return 'I valori del parametro supportati sono ' + supportedFluid + ' trovati invece:' + styleOptions.fluid;
-            } else {
-                return true;
-            }
-        };
-
-        function checkMandatoryOptions(options) {
-            if (!options) {
-                return 'Non sono stati forniti i parametri obbligatori della configurazione';
-            } else if (!options.url) {
-                return 'Non è stato fornito l\'url obbligatorio in configurazione';
-            } else if (options.url.indexOf('{{idp}}') === -1) {
-                return 'L\'url non contiene il placeholder {{idp}}';
-            } else if (!options.supported || options.supported.length < 1) {
-                return 'Non sono stati forniti gli IdP supportati nel parametro \'supported\'';
-            } else {
-                return true;
-            }
-        }
-
-        _SPID.prototype.getMergedDefaultOptions = function (options) {
-            options = options || {};
-            options.lang = this._lang = options.lang || this._lang;
-            options.selector = this._selector = options.selector || this._selector;
-            options.protocol = options.protocol || this._protocol;
-            options.size = this._style.size = options.size || this._style.size;
-            options.colorScheme = this._style.colorScheme = options.colorScheme || this._style.colorScheme;
-            options.fluid = this._style.fluid = options.fluid || this._style.fluid;
-            options.cornerStyle = this._style.cornerStyle = options.cornerStyle || this._style.cornerStyle;
-
-            return options;
-        };
-
-        /**
-         * @param {Object} options - opzionale, fare riferimento al readme per panoramica completa
-         */
-        _SPID.prototype._init = function (options) {
-            var msgStyle, msgMandatory,
-                _spid = this;
-            msgMandatory = checkMandatoryOptions(options);
-            if (msgMandatory !== true) {
-                console.error(msgMandatory);
-                return;
-            }
-            _spid.initResources();
-            _spid._options = _spid.getMergedDefaultOptions(options);
-            msgStyle = checkStyleOptions(_spid._style);
-            if (msgStyle !== true) {
-                console.error(msgStyle);
-                return;
-            }
-            _spid.initTemplates();
-
-            // add extra providers  
-            if ('extraProviders' in options) {
-                for (var i = 0; i < options.extraProviders.length; i++) {
-                    var provider = options.extraProviders[i];
-                    provider._supported = true;
-
-                    // set defaults
-                    if (!('protocols' in provider)) provider.protocols = ["SAML"];
-
-                    _spid._availableProviders.push(provider)
-                }
-            }
-
-            // set defaults
-            _spid._availableProviders = _spid._availableProviders.map(function (idp) {
-                idp.url = options.url;
-                idp.method = options.method || 'GET';
-                if (idp.method === 'POST') {
-                    idp.fieldName = options.fieldName;
-                    idp.extraFields = options.extraFields;
-                }
-
-                var property
-                for (property in options.mapping) {
-                    if (idp.entityID === property) {
-                        idp.entityID = options.mapping[property];
-                    }
-                }
-                
-                if (!('_supported' in idp)) {
-                    idp._supported = options.supported.indexOf(idp.entityID) > -1
-                        && idp.protocols.indexOf(options.protocol) > -1;
-                }
-
-                return idp;
-            });
-            
-            _spid.renderModule();
-        };
-
-        /**
-         * @param {string} lang - il locale da caricare, due caratteri eg 'it' | 'en' | 'de'.
-         */
-        _SPID.prototype.changeLanguage = function (lang) {
-            var _spid = this;
-            _spid._lang = lang;
-            _spid.renderModule();
-        };
-
-
-        _SPID.prototype.updateSpidButtons = function () {
-            var spidButtonsPlaceholders = document.querySelectorAll(this._selector),
-                hasButtonsOnPage = spidButtonsPlaceholders.length,
-                i = 0, j = 0, t = 0,
-                spidButtons,
-                spidProvidersBtn, delaySeconds,
-                _spid = this;
-
-            if (!this._availableProviders) {
-                console.error('Si è verificato un errore nel caricamento dei providers, impossibile renderizzare i pulsanti SPID');
+            // update buttons
+            var spidButtonsPlaceholders = document.querySelectorAll(spid.config.selector);
+            if (spidButtonsPlaceholders.length == 0) {
+                console.warn('Nessun placeholder HTML trovato nella pagina per i pulsanti SPID.');
                 return;
             };
 
-            if (!hasButtonsOnPage) {
-                console.warn('Nessun placeholder HTML trovato nella pagina per i pulsanti SPID');
-                return;
-            };
             // Binda gli eventi dopo aver renderizzato i pulsanti SPID
-            for (i; i < hasButtonsOnPage; i++) {
-                spidButtonsPlaceholders[i].innerHTML = this.getTemplate('spidButton', this._style);
-                spidButtons = document.querySelectorAll('.spid-button');
-                Array.prototype.forEach.call(spidButtons, function (spidbtn) {
+            for (var i = 0; i < spidButtonsPlaceholders.length; i++) {
+                spidButtonsPlaceholders[i].innerHTML = spid._renderButton();
+                var spidButtons = document.querySelectorAll('.spid-button');
+                spidButtons.forEach(function (spidbtn) {
                     spidbtn.addEventListener('click', function () {
                         var parent = spidbtn.parentElement;
                         parent.classList.add("spid-button-transition");
                         parent.classList.add("choosedButton");
-                        _spid.showProvidersPanel();
+                        spid._showProvidersPanel();
 
                         document.getElementById('spid-button-logo').classList.add('spid-button-fade-in-left');
                         document.getElementById('spid-button-close-button').classList.add('spid-button-fade-in-left');
                         document.getElementById('spid-button-panel-select').classList.add('spid-button-panel-anim');
                         document.getElementsByClassName('spid-button-icon')[0].classList.add('spid-button-icon-animation');
                         document.getElementsByClassName('spid-button-icon')[0].classList.add('in');
-                        spidProvidersBtn = document.getElementsByClassName('spid-button-idp');
-                        delaySeconds = 1.10;
-                        for (j = 0; j < spidProvidersBtn.length; j++) {
+                        var spidProvidersBtn = document.getElementsByClassName('spid-button-idp');
+                        var delaySeconds = 1.10;
+                        for (var j = 0; j < spidProvidersBtn.length; j++) {
                             spidProvidersBtn[j].classList.add('spid-button-idp-fade-in');
                             spidProvidersBtn[j].setAttribute('style', 'animation-delay: ' + delaySeconds + 's');
                             delaySeconds = delaySeconds + 0.10;
@@ -310,7 +178,7 @@ var _SPID,
                             document.getElementById('spid-button-logo').classList.remove('spid-button-fade-in-left');
                             document.getElementById('spid-button-close-button').classList.remove('spid-button-fade-in-left');
                             document.getElementById('spid-button-panel-select').classList.remove('spid-button-panel-anim');
-                            for (t = 0; t < spidProvidersBtn.length; t++) {
+                            for (var t = 0; t < spidProvidersBtn.length; t++) {
                                 spidProvidersBtn[t].classList.remove('spid-button-idp-fade-in');
                                 spidProvidersBtn[t].removeAttribute('style');
                             }
@@ -318,27 +186,18 @@ var _SPID,
                     });
                 });
             }
-        };
-
-        _SPID.prototype.setResources = function (resources) {
-            this.resources = resources;
-        };
-
-        _SPID.prototype.getResources = function () {
-            // Cloniamo l'oggetto in modo che non sia modificabile dall'esterno
-            return JSON.parse(JSON.stringify(this.resources));
+            
+            spid._spidPanelSelect = document.querySelector('#spid-button-panel-select');
         };
 
         // Null safe access, se la label non è trovata non si verificano errori runtime, suggerimento in console
-        _SPID.prototype.getI18n = function (labelKey, placeholderValue) {
-            var locale = this._lang,
-                copy = this._i18n.lang &&
-                    this._i18n.lang[locale] &&
-                    this._i18n.lang[locale][labelKey],
-                placeholder = /\{\d}/;
+        spidObj.prototype._getI18n = function (labelKey, placeholderValue) {
+            var lang = this.config.lang,
+                copy = SPID.i18n[lang] && SPID.i18n[lang][labelKey],
+                placeholderRegex = /\{\d}/;
 
-            if (placeholderValue) {
-                copy = copy.replace(placeholder, placeholderValue);
+            if (placeholderValue !== undefined) {
+                copy = copy.replace(placeholderRegex, placeholderValue);
             }
 
             // In caso di label mancante fornisci un feedback al dev
@@ -349,13 +208,189 @@ var _SPID,
             return copy || labelKey;
         };
 
-        return new function () {
-            var instance;
+        spidObj.prototype._renderProvidersChoiceModal = function() {
+            var spid = this;
 
-            this.init = function (config, success, error) {
-                instance = new SPID(config, success, error);
-                return instance;
-            };
+            var imgPath = 'img/spid-logo-animation-black.svg';
+
+            var providerButtons = '';
+            spid._providers.forEach(function (idp) {
+                providerButtons += spid._renderProviderButton(idp);
+            });
+
+            return [
+                '<section id="spid-button-panel-select" class="spid-button-panel" aria-labelledby="spid-enter-title-page" tabindex="0">',
+                    '<header class="spid-button-header">',
+                        '<div class="spid-button-panel-back spid-button-panel-element">',
+                            '<div id="spid-button-logo" class="spid-button-display-logo spid-button-fade-out-left">',
+                            imageTag('img/spid-logo', spid._getI18n('alt_logo_SPID')),
+                            '</div>',
+                            '<div id="spid-button-close-button" class="spid-button-display-close spid-button-fade-out-right">',
+                                '<button tabindex="0" id="spid-button-panel-close-button" class="spid-button-navigable" aria-labelledby="spid-cancel-access-button">',
+                                imageTag('img/close', spid._getI18n('naviga_indietro')),
+                                '</button>',
+                            '</div>',
+                        '</div>',
+                    '</header>',
+
+                    '<div id="spid-button-panel-content">',
+                        '<img class="spid-button-little-man-icon" src="', SPID.assetsBaseUrl, imgPath,'" alt="',spid._getI18n('entra_con_SPID'),'" class="spid-button-littleMan-icon"></img>',
+                        '<div class="spid-button-panel-content-center">',
+                            '<h1 id="spid-enter-title-page" class="spid-button-fade-in-bottom spid-button-fade-out-bottom">', spid._getI18n('scegli_provider_SPID'),'</h1>',
+                            '<div id="spid-idp-list">',
+                                providerButtons,
+                            '</div>',
+                            '<div id="spid-non-hai-spid">',
+                                '<span class="spid-button-non-hai-spid-font">', spid._getI18n("non_hai_SPID"),'</span>',
+                                '<span id="spid-nonhai-spid" class="spid-button-link spid-button-non-hai-spid-font">' , spid._getI18n("scopri_di_piu"),'</span>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                    '<div id="spid-foot-btn" class="spid-button-circular-shadow">',
+                        '<button id="spid-cancel-access-button" class="spid-button-font">',
+                            '<span>', spid._getI18n('annulla_accesso'), '</span>',
+                        '</button>',
+                    '</div>',
+                '</section>'
+            ].join('');
         };
 
-    })(_SPID || {});
+        spidObj.prototype._renderProviderButton = function (idp) {
+            var spid = this;
+
+            var isSupported = spid.config.supported.indexOf(idp.entityID) > -1
+                && idp.protocols.indexOf(spid.config.protocol) > -1;
+
+            var linkTitle = idp.active
+                ? spid._getI18n('accedi_con_idp', idp.entityName)
+                : spid._getI18n('idp_disabled');
+            
+            // apply mapping if any
+            var entityID = (idp.entityID in spid.config.mapping)
+                ? spid.config.mapping[idp.entityID]
+                : idp.entityID;
+                idp.entityID;
+
+            var actionURL = spid.config.url.replace('{{idp}}', encodeURIComponent(entityID));
+
+            if (spid.config.method === 'POST') {
+                var inputs = hiddenField(spid.config.fieldName, entityID);
+                for (var inputName in spid.config.extraFields) {
+                    inputs += hiddenField(inputName, spid.config.extraFields[inputName]);
+                }
+                return [
+                    '<span class="spid-button-idp">',
+                        '<form action="', actionURL, '" method="POST">',
+                            '<button type="submit"',
+                                'class="spid-button-idp-button"',
+                                'title="', linkTitle, '"',
+                                isSupported ? '' : 'disabled', '>',
+                                '<img src="', SPID.assetsBaseUrl, 'img/idp-logos/', idp.logo, '" alt="', idp.entityName, '">',
+                            '</button>',
+                            inputs,
+                        '</form>',
+                    '</span>'
+                    ].join('');
+            } else if (spid.config.method === 'GET') {
+                return [
+                    '<span class="spid-button-idp">',
+                        '<a title="', linkTitle, '" href="', actionURL,'"',
+                            (isSupported ? '' : 'disabled'),'>',
+                            '<img src="', SPID.assetsBaseUrl, 'img/idp-logos/', idp.logo, '" alt="', idp.entityName, '">',
+                        '</a>',
+                    '</span>'
+                ].join('');
+            }
+        };
+
+        spidObj.prototype._renderButton = function () {
+            var spid = this;
+
+            var fluid = spid.config.fluid ? " spid-button-fluid " : "";
+            var imgPath = spid.config.colorScheme == 'negative' ? 'img/spid-ico-circle-lb.svg' : 'img/spid-ico-circle-bb.svg';
+            return [
+                '<div id="spid-enter-button-container">',
+                    '<button class="spid-button spid-button-font spid-button-', spid.config.colorScheme, ' spid-button-', spid.config.cornerStyle, ' spid-button-size-', spid.config.size, fluid,'" hidden>',
+                        '<span aria-hidden="true" class="spid-button-icon">',
+                            '<img src="', SPID.assetsBaseUrl, imgPath,'" alt="', spid._getI18n('entra_con_SPID'),'" />',
+                        '</span>',
+                        '<span class="spid-button-text">', spid._getI18n('entra_con_SPID'), '</span>',
+                    '</button>',
+                '</div>',
+            ].join('');
+        };
+
+        /* SPID.init() FACTORY METHOD */
+
+        var defaults = {
+            lang:           'it',
+            method:         'GET',
+            fieldName:      'idp',
+            extraFields:    {},
+            selector:       '#spid-button',
+            mapping:        {},
+            extraProviders: [],
+            protocol:       'SAML',
+            size:           'medium',
+            colorScheme:    'positive',
+            fluid:          false,
+            cornerStyle:    'rounded'
+        };
+
+        var supportedSizes = ['small', 'medium', 'large'],
+            supportedColorScheme = ["positive", "negative"],
+            supportedCornerStyle = ["rounded", "sharp"],
+            supportedFluid = [true, false];
+
+        return {
+            init: function (config) {
+                // validate
+                var error;
+                if (typeof config !== 'object' || config === null) {
+                    error = 'Non è stata fornita la configurazione';
+                } else {
+                    // apply defaults
+                    for (var key in defaults)
+                        if (!(key in config))
+                            config[key] = defaults[key];
+                    
+                    // more validation
+                    if (!config.url) {
+                        error = 'Non è stato fornito l\'url obbligatorio in configurazione';
+                    } else if (config.method == 'GET' && config.url.indexOf('{{idp}}') === -1) {
+                        error = 'L\'url non contiene il placeholder {{idp}}';
+                    } else if (!config.supported || config.supported.length < 1) {
+                        error = 'Non sono stati forniti gli IdP supportati nel parametro \'supported\'';
+                    } else if (supportedSizes.indexOf(config.size) === -1) {
+                        error = 'Le dimensioni supportate sono ' + supportedSizes + '; valore non valido:' + config.size;
+                    } else if (supportedColorScheme.indexOf(config.colorScheme) === -1) {
+                        error = 'I colori supportati sono ' + supportedColorScheme + '; valore non valido:' + config.colorScheme;
+                    } else if (supportedCornerStyle.indexOf(config.cornerStyle) === -1) {
+                        error = 'Il valori supportati per il parametro cornerStyle sono ' + supportedCornerStyle + '; valore non valido:' + config.cornerStyle;
+                    } else if (supportedFluid.indexOf(config.fluid) === -1) {
+                        error = 'I valori supportati per il parametro fluid sono ' + supportedFluid + '; valore non valido:' + config.fluid;
+                    }
+                }
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+                
+                // clone providers
+                var providers = JSON.parse(JSON.stringify(SPID.providers));
+
+                // add extra providers  
+                config.extraProviders.forEach(function (idp) {
+                    // set defaults
+                    if (!('protocols' in idp)) idp.protocols = ["SAML"];
+
+                    providers.push(idp);
+                    config.supported.push(idp.entityID);
+                });
+                
+                var spid = new spidObj(config, providers);
+                spid._render();
+                return spid;
+            }
+        };
+    })();
