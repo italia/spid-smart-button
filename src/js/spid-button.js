@@ -245,7 +245,7 @@ var SPID = (function () {
                             '</div>',
                             '<div id="spid-non-hai-spid">',
                                 '<span class="spid-button-non-hai-spid-font">', spid._getI18n("non_hai_SPID"),'</span>',
-                                '<span id="spid-nonhai-spid" class="spid-button-link spid-button-non-hai-spid-font">' , spid._getI18n("scopri_di_piu"),'</span>',
+                                '<a id="spid-nonhai-spid" class="spid-button-link spid-button-non-hai-spid-font" href="https://www.spid.gov.it/richiedi-spid" target="_blank">' , spid._getI18n("scopri_di_piu"),'</a>',
                             '</div>',
                         '</div>',
                         '<div id="spid-foot-btn" class="spid-button-circular-shadow">',
