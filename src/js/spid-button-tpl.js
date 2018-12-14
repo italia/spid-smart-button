@@ -43,14 +43,14 @@ var _SPID = (function(languages, providers){
                 var imgPath = 'img/spid-logo-animation-black.svg';
 
                 return [
-                    '<section id="agid-spid-panel-select" class="agid-spid-panel" aria-labelledby="spid-enter-title-page" tabindex="0">',
-                        '<header class="agid-spid-header">',
-                            '<div class="agid-spid-panel-back agid-spid-panel-element">',
-                                '<div id="agid-logo" class="agid-display-logo agid-fade-out-left">',
+                    '<section id="spid-button-panel-select" class="spid-button-panel" aria-labelledby="spid-enter-title-page" tabindex="0">',
+                        '<header class="spid-button-header">',
+                            '<div class="spid-button-panel-back spid-button-panel-element">',
+                                '<div id="spid-button-logo" class="spid-button-display-logo spid-button-fade-out-left">',
                                     getImageResource.call(this, 'img/spid-logo', this.getI18n('alt_logo_SPID')),
                                 '</div>',
-                                '<div id="agid-close-button" class="agid-display-close agid-fade-out-right">',
-                                    '<button tabindex="0" id="agid-spid-panel-close-button" class="agid-navigable" aria-labelledby="spid-cancel-access-button">',
+                                '<div id="spid-button-close-button" class="spid-button-display-close spid-button-fade-out-right">',
+                                    '<button tabindex="0" id="spid-button-panel-close-button" class="spid-button-navigable" aria-labelledby="spid-cancel-access-button">',
 
                                         getImageResource.call(this, 'img/close', this.getI18n('naviga_indietro')),
                                     '</button>',
@@ -58,21 +58,21 @@ var _SPID = (function(languages, providers){
                             '</div>',
                         '</header>',
 
-                        '<div id="agid-spid-panel-content">',
-                            '<img class="agid-spid-little-man-icon" src="', this.getResources().assetsBaseUrl, imgPath,'" alt="',this.getI18n('entra_con_SPID'),'" class="agid-spid-littleMan-icon"></img>',
-                            '<div class="agid-spid-panel-content-center">',
-                                '<h1 id="spid-enter-title-page" class="agid-fade-in-bottom agid-fade-out-bottom">',this.getI18n('scegli_provider_SPID'),'</h1>',
+                        '<div id="spid-button-panel-content">',
+                            '<img class="spid-button-little-man-icon" src="', this.getResources().assetsBaseUrl, imgPath,'" alt="',this.getI18n('entra_con_SPID'),'" class="spid-button-littleMan-icon"></img>',
+                            '<div class="spid-button-panel-content-center">',
+                                '<h1 id="spid-enter-title-page" class="spid-button-fade-in-bottom spid-button-fade-out-bottom">',this.getI18n('scegli_provider_SPID'),'</h1>',
                                 '<div id="spid-idp-list">',
                                     spidProvidersButtons,
                                 '</div>',
                                 '<div id="spid-non-hai-spid">',
-                                    '<span class="agid-non-hai-spid-font">', this.getI18n("non_hai_SPID"),'</span>',
-                                    '<span id="spid-nonhai-spid" class="agid-spid-link agid-non-hai-spid-font">' ,this.getI18n("scopri_di_piu"),'</span>',
+                                    '<span class="spid-button-non-hai-spid-font">', this.getI18n("non_hai_SPID"),'</span>',
+                                    '<span id="spid-nonhai-spid" class="spid-button-link spid-button-non-hai-spid-font">' ,this.getI18n("scopri_di_piu"),'</span>',
                                 '</div>',
                             '</div>',
                         '</div>',
-                        '<div id="spid-foot-btn" class="agid-spid-circular-shadow">',
-                            '<button id="spid-cancel-access-button" class="agid-font">',
+                        '<div id="spid-foot-btn" class="spid-button-circular-shadow">',
+                            '<button id="spid-cancel-access-button" class="spid-button-font">',
                                 '<span>', this.getI18n('annulla_accesso'), '</span>',
                             '</button>',
                         '</div>',
@@ -98,10 +98,10 @@ var _SPID = (function(languages, providers){
                         }
                     }
                     return [
-                        '<span class="agid-spid-idp">',
+                        '<span class="spid-button-idp">',
                             '<form action="', providerUri, '" method="', providerData.method, '">',
                                 '<button type="submit"',
-                                    'class="agid-spid-idp-button"',
+                                    'class="spid-button-idp-button"',
                                     'title="', providerEntityName, '"',
                                     (providerData.supported) ? '' : 'disabled', '>',
                                     '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="', providerData.entityName, '">',
@@ -112,7 +112,7 @@ var _SPID = (function(languages, providers){
                         ].join('');
                 } else if (providerData.method === 'GET') {
                     return [
-                        '<span class="agid-spid-idp">',
+                        '<span class="spid-button-idp">',
                             '<a title="', providerEntityName, '" href="', providerUri,'"',
                             (providerData.supported) ? '' : 'disabled','>',
                                 '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="', providerData.entityName, '">',
@@ -123,16 +123,16 @@ var _SPID = (function(languages, providers){
             },
 
             spidButton: function (style) {
-                var fluid = style.fluid ? " agid-spid-enter-fluid " : "";
+                var fluid = style.fluid ? " spid-button-fluid " : "";
                 var imgPath = style.colorScheme == 'negative' ? 'img/spid-ico-circle-lb.svg' : 'img/spid-ico-circle-bb.svg';
                 return [
                     '<!-- AGID - SPID BUTTON ', style.size.toUpperCase(), ' * begin * -->',
                     '<div id="spid-enter-button-container">',
-                        '<button class="agid-spid-enter agid-font agid-spid-enter-button-', style.colorScheme, ' agid-spid-enter-button-', style.cornerStyle, ' agid-spid-enter-size-', style.size, fluid,'" hidden>',
-                            '<span aria-hidden="true" class="agid-spid-enter-icon">',
+                        '<button class="spid-button spid-button-font spid-button-', style.colorScheme, ' spid-button-', style.cornerStyle, ' spid-button-size-', style.size, fluid,'" hidden>',
+                            '<span aria-hidden="true" class="spid-button-icon">',
                                 '<img src="', this.getResources().assetsBaseUrl, imgPath,'" alt="',this.getI18n('entra_con_SPID'),'"></img>',
                             '</span>',
-                            '<span class="agid-spid-enter-text">', this.getI18n('entra_con_SPID'), '</span>',
+                            '<span class="spid-button-text">', this.getI18n('entra_con_SPID'), '</span>',
                         '</button>',
                     '</div>',
                     '<!-- AGID - SPID BUTTON ', style.size.toUpperCase(), ' * end * -->'

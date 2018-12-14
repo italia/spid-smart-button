@@ -129,6 +129,7 @@ spid.changeLanguage('en');
 
 ### Configurazione degli Identity Provider
 I dati degli IdP sono riportati staticamente nel codice sorgente dello Smart-Button, che quindi non dovrà interrogare il Registro. Tali dati sono strutturati come segue:
+
 | Parametro | Descrizione |
 | --------- | ----------- |
 | **entityID** | Identificativo dell’Identity Provider |

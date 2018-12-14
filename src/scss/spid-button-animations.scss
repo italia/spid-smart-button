@@ -1,4 +1,4 @@
-.agid-spid-panel-anim {
+.spid-button-panel-anim {
     animation-delay: 0s;
     animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
     animation-iteration-count: 1;
@@ -22,23 +22,23 @@
         transition-delay: 1s;
         pointer-events: none;
 
-        .agid-spid-panel-anim {
+        .spid-button-panel-anim {
             animation-name: anim-panel-out;
             animation-duration: 1s;
 
-            .agid-fade-out-left {
+            .spid-button-fade-out-left {
                 animation-name: spid-button-logo-left-fade-out;
                 animation-duration: 0.5s;
                 animation-fill-mode: both;
             }
 
-            .agid-fade-out-right {
+            .spid-button-fade-out-right {
                 animation-name: spid-button-close-right-fade-out;
                 animation-duration: 0.5s;
                 animation-fill-mode: both;
             }
 
-            .agid-fade-out-bottom {
+            .spid-button-fade-out-bottom {
                 animation-name: spid-button-title-fade-out;
                 animation-duration: 0.5s;
                 animation-fill-mode: both;
@@ -47,26 +47,26 @@
     }
     // FadeIn
     &:not([hidden]) {
-        .agid-spid-panel-anim {
+        .spid-button-panel-anim {
             animation-name: anim-panel-in;
             animation-duration: 2s;
             animation-delay: 0.5s;
 
-            .agid-fade-in-left {
+            .spid-button-fade-in-left {
                 animation-name: spid-button-logo-left-fade-in;
                 animation-duration: 0.5s;
                 animation-delay: 0.5s;
                 animation-fill-mode: both;
             }
 
-            .agid-fade-in-right {
+            .spid-button-fade-in-right {
                 animation-name: spid-button-close-right-fade-in;
                 animation-duration: 0.5s;
                 animation-delay: 1s;
                 animation-fill-mode: both;
             }
 
-            .agid-fade-in-bottom {
+            .spid-button-fade-in-bottom {
                 animation-name: spid-button-title-fade-in;
                 animation-duration: 0.5s;
                 animation-delay: 0.5s;
@@ -76,7 +76,7 @@
     }
 }
 
-.agid-spid-idp-fade-in {
+.spid-button-idp-fade-in {
     animation-name: spid-button-anim-idp-fade-in;
     animation-duration: 0.5s;
     animation-fill-mode: both;
@@ -92,7 +92,7 @@
     }
 }
 
-.agid-spid-idp-fade-out {
+.spid-button-idp-fade-out {
     animation-name: spid-button-anim-idp-fade-out;
     animation-duration: 0.5s;
     animation-fill-mode: both;
@@ -322,44 +322,44 @@ $animIconDistanceEnd: 120;
 }
 
 #spid-enter-button-container {
-    &.agid-enter-transition {
-        .agid-spid-enter {
+    &.spid-button-transition {
+        .spid-button {
             animation-name: fadeOutEnterBtn;
             animation-duration: 1s;
             animation-fill-mode: forwards;
         }
     }
 
-    &.agid-reverse-enter-transition {
-        .agid-spid-enter {
+    &.spid-button-reverse-enter-transition {
+        .spid-button {
             animation-name: fadeInEnterBtn;
             animation-duration: 1s;
         }
     }
 }
 
-.agid-spid-little-man-icon {
+.spid-button-little-man-icon {
     animation-name: spid-show-little-man;
     animation-duration: 1s;
     animation-timing-function: ease;
     animation-fill-mode: forwards;
 }
 
-.agid-spid-enter-icon-animation {
+.spid-button-icon-animation {
     animation-name: spid-button-icon-smaller-logo;
     animation-duration: 1s;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
 
-.agid-spid-enter-icon-animation.in {
+.spid-button-icon-animation.in {
     animation-name: spid-button-icon-bigger-logo;
     animation-duration: 1s;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
 
-.agid-spid-enter-logo-animation-out {
+.spid-button-logo-animation-out {
     animation-name: spid-hide-little-man;
     animation-duration: 1s;
     animation-timing-function: ease;

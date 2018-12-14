@@ -2,7 +2,7 @@ describe('SPID', function () {
 
     var SPID = window.SPID,
         axe = window.axe,
-        agidSpidWrapperID = '#spid-enter-container',
+        spidButtonWrapperID = '#spid-enter-container',
         accediConSpid = 'Accedi a SPID con ',
         supportedProviders = [
             'https://loginspid.aruba.it',
@@ -25,7 +25,7 @@ describe('SPID', function () {
             _selector = selector;
         }
         var spidButtonPlaceholder = document.createElement('div');
-        spidButtonPlaceholder.innerHTML = '<div class="agid-spid-enter-button" id="' + _selector + '" aria-live="polite"></div>';
+        spidButtonPlaceholder.innerHTML = '<div class="spid-button" id="' + _selector + '" aria-live="polite"></div>';
         document.body.appendChild(spidButtonPlaceholder);
     }
 
@@ -34,11 +34,11 @@ describe('SPID', function () {
     }
 
     function domCleanup() {
-        var agidSpidWrapper = document.querySelectorAll('body > section'),
-            spidPlaceholder = document.querySelectorAll('.agid-spid-enter-button');
+        var spidButtonWrapper = document.querySelectorAll('body > section'),
+            spidPlaceholder = document.querySelectorAll('.spid-button');
 
-        Array.from(agidSpidWrapper).forEach(function (agidWrapper) {
-            agidWrapper.remove();
+        Array.from(spidButtonWrapper).forEach(function (sbWrapper) {
+            sbWrapper.remove();
         });
         Array.from(spidPlaceholder).forEach(function (spidButton) {
             spidButton.parentElement.remove();
@@ -80,12 +80,12 @@ describe('SPID', function () {
         describe('init method', function () {
             it('should inject the modal wrapper HTML needed to print the providers popup', function (done) {
                 // GIVEN
-                var agidSpidWrapper;
+                var spidButtonWrapper;
                 // WHEN
                 SPID.init(genericConfig);
-                agidSpidWrapper = document.querySelector(agidSpidWrapperID);
+                spidButtonWrapper = document.querySelector(spidButtonWrapperID);
                 // THEN
-                expect(!!agidSpidWrapper).toBeTruthy();
+                expect(!!spidButtonWrapper).toBeTruthy();
                 done();
 
             });
@@ -104,11 +104,11 @@ describe('SPID', function () {
                 var spid1 = SPID.init(genericConfig);
                 var spid2 = SPID.init(genericConfig);
                 var spid3 = SPID.init(genericConfig);
-                var agidSpidWrapper;
+                var spidButtonWrapper;
                 // WHEN
-                agidSpidWrapper = document.querySelectorAll(agidSpidWrapperID);
+                spidButtonWrapper = document.querySelectorAll(spidButtonWrapperID);
                 // THEN
-                expect(agidSpidWrapper.length).toBe(1);
+                expect(spidButtonWrapper.length).toBe(1);
                 done();
             });
 
@@ -161,7 +161,7 @@ describe('SPID', function () {
                     injectSpidPlaceHolder();
                     // WHEN
                     SPID.init(config);
-                    var spidButtons = document.querySelectorAll('.agid-spid-enter');
+                    var spidButtons = document.querySelectorAll('.spid-button');
                     // THEN
                     expect(spidButtons.length).toBeTruthy();
                     done();
@@ -342,7 +342,7 @@ describe('SPID', function () {
                     // WHEN
 
                     SPID.init(config);
-                    var providers = document.getElementsByClassName('agid-spid-idp'),
+                    var providers = document.getElementsByClassName('spid-button-idp'),
                         generatedUrl;
                     for (var i = 0; i < providers.length; i++) {
                         if (providers[i].childNodes[0].getAttribute('href').indexOf('poste') !== -1) {
@@ -368,7 +368,7 @@ describe('SPID', function () {
                     // WHEN
 
                     SPID.init(config);
-                    var providers = document.getElementsByClassName('agid-spid-idp'),
+                    var providers = document.getElementsByClassName('spid-button-idp'),
                         generatedUrl;
                     for (var i = 0; i < providers.length; i++) {
                         if (providers[i].childNodes[0].getAttribute('action').indexOf('poste') !== -1) {
@@ -508,8 +508,8 @@ describe('SPID', function () {
 
                 SPID.init(genericConfig);
                 // WHEN
-                document.querySelector('.agid-spid-enter-size-medium').click();
-                isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
+                document.querySelector('.spid-button-size-medium').click();
+                isChoiceModalVisible = isElementVisible(spidButtonWrapperID);
                 // THEN
                 expect(isChoiceModalVisible).toBeTruthy();
                 done();
@@ -522,9 +522,9 @@ describe('SPID', function () {
                 // GIVEN
                 injectSpidPlaceHolder();
                 SPID.init(genericConfig);
-                var choiceModal = document.querySelector('#agid-spid-panel-select');
+                var choiceModal = document.querySelector('#spid-button-panel-select');
                 // WHEN
-                document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
+                document.querySelector('.spid-button.spid-button-size-medium').click();
                 // THEN
                 choiceModal.addEventListener('focus', function () {
                     expect(choiceModal).toBe(document.activeElement);
@@ -541,10 +541,10 @@ describe('SPID', function () {
                 SPID.init(genericConfig);
                 var isChoiceModalVisible;
 
-                document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
+                document.querySelector('.spid-button.spid-button-size-medium').click();
                 // WHEN
-                document.querySelector('#agid-spid-panel-close-button').click();
-                isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
+                document.querySelector('#spid-button-panel-close-button').click();
+                isChoiceModalVisible = isElementVisible(spidButtonWrapperID);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
                 done();
@@ -557,10 +557,10 @@ describe('SPID', function () {
                 SPID.init(genericConfig);
                 var isChoiceModalVisible;
 
-                document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
+                document.querySelector('.spid-button.spid-button-size-medium').click();
                 // WHEN
                 document.querySelector('#spid-cancel-access-button').click();
-                isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
+                isChoiceModalVisible = isElementVisible(spidButtonWrapperID);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
                 done();
@@ -573,10 +573,10 @@ describe('SPID', function () {
                 SPID.init(genericConfig);
                 var isChoiceModalVisible;
 
-                document.querySelector('.agid-spid-enter.agid-spid-enter-size-medium').click();
+                document.querySelector('.spid-button.spid-button-size-medium').click();
                 // WHEN
                 triggerKeyEvent(27);
-                isChoiceModalVisible = isElementVisible(agidSpidWrapperID);
+                isChoiceModalVisible = isElementVisible(spidButtonWrapperID);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
                 done();
@@ -593,16 +593,16 @@ describe('SPID', function () {
                         "valid-lang": { enabled: false }
                     }
                 },
-                    agidSpidWrapper,
+                    spidButtonWrapper,
                     report;
                 injectSpidPlaceHolder();
                 // WHEN
                 SPID.init(genericConfig);
                 // Mostra il modale dei providers
-                agidSpidWrapper = document.querySelector(agidSpidWrapperID);
-                agidSpidWrapper.removeAttribute('hidden');
+                spidButtonWrapper = document.querySelector(spidButtonWrapperID);
+                spidButtonWrapper.removeAttribute('hidden');
                 // THEN
-                axe.run(agidSpidWrapper, axeOptions, function (error, result) {
+                axe.run(spidButtonWrapper, axeOptions, function (error, result) {
                     if (result.violations.length) {
                         report = JSON.stringify(result.violations, null, 4);
                     }

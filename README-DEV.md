@@ -40,7 +40,7 @@ ora puoi visitare la pagina http://localhost:9090/  dalla quale puoi raggiungere
 
  - la demo/sviluppo: http://localhost:9090/index.html
  - gli unit test Jasmine: http://localhost:9090/_SpecRunner.html
- - la code coverage Istanbul: http://localhost:9090/reports/coverage/dev/agid-spid-enter.min.js.html
+ - la code coverage Istanbul: http://localhost:9090/reports/coverage/dev/spid-button.min.js.html
 
 I sorgenti si trovano nelle cartelle `src/js` ed `src/scss` e i file minificati prodotti dal task di build sono presenti nella cartella `dist`.
 #### In sviluppo
