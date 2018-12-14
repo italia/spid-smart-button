@@ -15,7 +15,7 @@ h1 {
   font-size: 2rem;
   font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
-.agid-spid-grayscale-compatibility {
+.spid-button-grayscale-compatibility {
   -webkit-filter: grayscale(100%);
   -webkit-filter: grayscale(1);
   filter: grayscale(100%);
@@ -30,7 +30,7 @@ h1 {
   -webkit-box-direction: normal;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap; }
-  #spid-idp-list .agid-spid-idp {
+  #spid-idp-list .spid-button-idp {
     margin: 12px auto;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -42,55 +42,55 @@ h1 {
     width: 40%;
     background: #f5f6f7;
     border-radius: 3px; }
-    #spid-idp-list .agid-spid-idp form {
+    #spid-idp-list .spid-button-idp form {
       height: 100%;
       padding: 10px; }
-      #spid-idp-list .agid-spid-idp form:active {
+      #spid-idp-list .spid-button-idp form:active {
         border: 3px solid #f7910d; }
-      #spid-idp-list .agid-spid-idp form .agid-spid-idp-button {
+      #spid-idp-list .spid-button-idp form .spid-button-idp-button {
         border: 0;
         width: 100%;
         cursor: pointer;
         background: #f5f6f7;
         padding: 5px;
         height: 100%; }
-        #spid-idp-list .agid-spid-idp form .agid-spid-idp-button[disabled] {
+        #spid-idp-list .spid-button-idp form .spid-button-idp-button[disabled] {
           opacity: 0.2;
           cursor: not-allowed; }
-    #spid-idp-list .agid-spid-idp a {
+    #spid-idp-list .spid-button-idp a {
       height: 100%;
       border: 3px solid white;
       padding: 10px;
       background: white; }
-      #spid-idp-list .agid-spid-idp a:active {
+      #spid-idp-list .spid-button-idp a:active {
         border: 3px solid #f7910d; }
-      #spid-idp-list .agid-spid-idp a[disabled] {
+      #spid-idp-list .spid-button-idp a[disabled] {
         opacity: 0.2;
         cursor: not-allowed;
         pointer-events: none; }
 
-.agid-display-logo {
+.spid-button-display-logo {
   float: left;
   width: 50%; }
 
-.agid-display-close {
+.spid-button-display-close {
   float: right;
   margin-top: 5px; }
 
-.agid-font {
+.spid-button-font {
   font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif; }
 
-.agid-non-hai-spid-font {
+.spid-button-non-hai-spid-font {
   margin-right: 5px;
   font-size: 15px;
   font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
-.agid-navigable {
+.spid-button-navigable {
   background: transparent;
   cursor: pointer;
   font-size: 1em; }
 
-.agid-spid-link {
+.spid-button-link {
   cursor: pointer;
   font-weight: bold;
   color: #06c; }
@@ -111,7 +111,7 @@ h1 {
 #spid-enter {
   height: 0; }
 
-.agid-spid-panel {
+.spid-button-panel {
   top: 0;
   left: 0;
   margin-left: 0%;
@@ -124,7 +124,7 @@ h1 {
   z-index: 1;
   overflow: auto; }
 
-.agid-spid-header {
+.spid-button-header {
   background-color: #fff;
   color: #fff;
   display: block;
@@ -132,43 +132,43 @@ h1 {
   position: static;
   min-width: 300px;
   padding: 40px; }
-  .agid-spid-header .agid-spid-display-logo {
+  .spid-button-header .spid-button-display-logo {
     float: left;
     width: 33.33333vw;
     font-size: 30px; }
-  .agid-spid-header .agid-spid-panel-back a,
-  .agid-spid-header .agid-spid-panel-back button,
-  .agid-spid-header .agid-spid-panel-back button a {
+  .spid-button-header .spid-button-panel-back a,
+  .spid-button-header .spid-button-panel-back button,
+  .spid-button-header .spid-button-panel-back button a {
     float: left;
     width: auto;
     border: none;
     outline: none;
     display: block;
     cursor: pointer; }
-  .agid-spid-header .agid-spid-panel-back button:hover,
-  .agid-spid-header .agid-spid-panel-back button:focus,
-  .agid-spid-header .agid-spid-panel-back a:hover,
-  .agid-spid-header .agid-spid-panel-back a:focus {
+  .spid-button-header .spid-button-panel-back button:hover,
+  .spid-button-header .spid-button-panel-back button:focus,
+  .spid-button-header .spid-button-panel-back a:hover,
+  .spid-button-header .spid-button-panel-back a:focus {
     opacity: 0.5; }
-  .agid-spid-header .agid-spid-panel-back img {
+  .spid-button-header .spid-button-panel-back img {
     max-height: 50px; }
-  .agid-spid-header .agid-spid-display-logo img {
+  .spid-button-header .spid-button-display-logo img {
     max-height: 37px; }
-  .agid-spid-header .agid-spid-panel-element {
+  .spid-button-header .spid-button-panel-element {
     min-width: 32px; }
 
-#agid-spid-panel-content {
+#spid-button-panel-content {
   position: relative;
   display: block;
   min-width: 300px;
   background: #fff;
   margin-bottom: 10px; }
-  #agid-spid-panel-content #spid-enter-title-page {
+  #spid-button-panel-content #spid-enter-title-page {
     background: transparent;
     display: block;
     text-align: center; }
 
-.agid-spid-panel-content-center {
+.spid-button-panel-content-center {
   text-align: center;
   margin: auto;
   overflow: auto;
@@ -176,7 +176,7 @@ h1 {
   margin-bottom: 60px;
   max-width: 500px; }
 
-#agid-spid-panel-footer {
+#spid-button-panel-footer {
   display: block;
   position: fixed;
   bottom: 0;
@@ -187,58 +187,58 @@ h1 {
   background-color: #06c;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden; }
-  #agid-spid-panel-footer img {
+  #spid-button-panel-footer img {
     max-width: 200px;
     margin: 5px; }
 
-.agid-spid-enter-icon {
+.spid-button-icon {
   border: none;
   padding-right: 8px;
   vertical-align: middle;
   display: inline-block; }
-  .agid-spid-enter-icon svg {
+  .spid-button-icon svg {
     fill: #fff; }
 
-.agid-spid-little-man-icon {
+.spid-button-little-man-icon {
   width: 32px;
   opacity: 0;
   position: absolute; }
 
 @media screen and (max-width: 767px) {
-  .agid-spid-little-man-icon {
+  .spid-button-little-man-icon {
     display: none; } }
 
-.agid-spid-enter-text {
+.spid-button-text {
   vertical-align: top; }
 
-.agid-spid-enter-size-small {
+.spid-button-size-small {
   font-size: 14px;
   height: 40px;
   padding: 10px 20px; }
-  .agid-spid-enter-size-small > span img {
+  .spid-button-size-small > span img {
     width: 16px;
     height: 16px;
     border: 0; }
 
-.agid-spid-enter-size-medium {
+.spid-button-size-medium {
   font-size: 16px;
   height: 48px;
   padding: 12px 24px; }
-  .agid-spid-enter-size-medium > span img {
+  .spid-button-size-medium > span img {
     width: 24px;
     height: 24px;
     border: 0; }
 
-.agid-spid-enter-size-large {
+.spid-button-size-large {
   font-size: 18px;
   height: 56px;
   padding: 12px 28px; }
-  .agid-spid-enter-size-large > span img {
+  .spid-button-size-large > span img {
     width: 32px;
     height: 32px;
     border: 0; }
 
-.agid-spid-enter-fluid {
+.spid-button-fluid {
   width: 100%;
   max-width: 400px; }
 
@@ -271,9 +271,9 @@ h1 {
     -webkit-box-shadow: inset 0 0 0 1px #c9cedc;
     box-shadow: inset 0 0 0 1px #c9cedc; }
 
-.agid-spid-circular-shadow {
+.spid-button-circular-shadow {
   position: relative; }
-  .agid-spid-circular-shadow::after {
+  .spid-button-circular-shadow::after {
     content: "";
     position: absolute;
     z-index: -1;
@@ -285,22 +285,22 @@ h1 {
     height: 50%;
     border-radius: 100%; }
 
-.agid-spid-col {
+.spid-button-col {
   float: left;
   width: 100vw;
   width: 24.99999%; }
-  .agid-spid-col.xs12 {
+  .spid-button-col.xs12 {
     width: 49.99999%; }
 
 #spid-enter-title-container {
   padding-top: 1.25em; }
 
-#agid-action-button-container {
+#spid-button-action-button-container {
   width: 100%; }
-  #agid-action-button-container button {
+  #spid-button-action-button-container button {
     border: none; }
 
-.agid-action-button {
+.spid-button-action-button {
   width: 49.99999%;
   height: 65px;
   color: #0073e6;
@@ -308,11 +308,11 @@ h1 {
   background-color: #fff;
   display: block;
   float: left; }
-  .agid-action-button span {
+  .spid-button-action-button span {
     position: relative;
     top: -4px; }
 
-.agid-spid-visibile {
+.spid-button-visibile {
   display: block !important;
   opacity: 0; }
 
@@ -335,33 +335,33 @@ h1 {
     border-radius: 50%;
     position: absolute; }
 
-.agid-spid-enter-button-positive {
+.spid-button-positive {
   color: #fff;
   background-color: #0073e6; }
-  .agid-spid-enter-button-positive:hover, .agid-spid-enter-button-positive:focus, .agid-spid-enter-button-positive:active {
+  .spid-button-positive:hover, .spid-button-positive:focus, .spid-button-positive:active {
     background-color: #0059b3;
     color: #fff; }
-  .agid-spid-enter-button-positive:visited {
+  .spid-button-positive:visited {
     background-color: #0073e6;
     color: #fff; }
-  .agid-spid-enter-button-positive svg {
+  .spid-button-positive svg {
     fill: #fff; }
 
-.agid-spid-enter-button-negative {
+.spid-button-negative {
   color: #0073e6;
   background-color: #fff; }
-  .agid-spid-enter-button-negative:hover, .agid-spid-enter-button-negative:focus, .agid-spid-enter-button-negative:active {
+  .spid-button-negative:hover, .spid-button-negative:focus, .spid-button-negative:active {
     background-color: #fff;
     color: #0059b3; }
-  .agid-spid-enter-button-negative:visited {
+  .spid-button-negative:visited {
     background-color: #fff;
     color: #0073e6; }
 
-.agid-spid-enter-button-rounded {
+.spid-button-rounded {
   border-radius: 4px;
   margin: 16px; }
 
-.agid-spid-enter-button-sharp {
+.spid-button-sharp {
   border-radius: 0; }
 
 /*
@@ -370,13 +370,13 @@ h1 {
  * così da evitare di vedere prima i pulsanti "rotti" che poi si aggiustano gradualmente mentre il CSS viene scaricato e parsato
  * in questo modo i pulsanti appaiono pochi istanti dopo correttamente stilizzati, sovrascrivendo l'attributo hidden
  */
-.agid-spid-enter {
+.spid-button {
   position: relative;
   border: 0;
   cursor: pointer;
   display: inline-block;
   font-weight: 600; }
-  .agid-spid-enter .agid-logo {
+  .spid-button .spid-button-logo {
     position: absolute;
     display: block;
     margin: auto;
@@ -402,7 +402,7 @@ h1 {
         -ms-transform: translateX(-50%);
             transform: translateX(-50%); } }
 
-.agid-spid-panel-anim {
+.spid-button-panel-anim {
   -webkit-animation-delay: 0s;
           animation-delay: 0s;
   -webkit-animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
@@ -437,40 +437,40 @@ h1 {
          -o-transition-delay: 1s;
             transition-delay: 1s;
     pointer-events: none; }
-    #spid-enter-container[hidden] .agid-spid-panel-anim {
+    #spid-enter-container[hidden] .spid-button-panel-anim {
       -webkit-animation-name: anim-panel-out;
               animation-name: anim-panel-out;
       -webkit-animation-duration: 1s;
               animation-duration: 1s; }
-      #spid-enter-container[hidden] .agid-spid-panel-anim .agid-fade-out-left {
+      #spid-enter-container[hidden] .spid-button-panel-anim .spid-button-fade-out-left {
         -webkit-animation-name: spid-button-logo-left-fade-out;
                 animation-name: spid-button-logo-left-fade-out;
         -webkit-animation-duration: 0.5s;
                 animation-duration: 0.5s;
         -webkit-animation-fill-mode: both;
                 animation-fill-mode: both; }
-      #spid-enter-container[hidden] .agid-spid-panel-anim .agid-fade-out-right {
+      #spid-enter-container[hidden] .spid-button-panel-anim .spid-button-fade-out-right {
         -webkit-animation-name: spid-button-close-right-fade-out;
                 animation-name: spid-button-close-right-fade-out;
         -webkit-animation-duration: 0.5s;
                 animation-duration: 0.5s;
         -webkit-animation-fill-mode: both;
                 animation-fill-mode: both; }
-      #spid-enter-container[hidden] .agid-spid-panel-anim .agid-fade-out-bottom {
+      #spid-enter-container[hidden] .spid-button-panel-anim .spid-button-fade-out-bottom {
         -webkit-animation-name: spid-button-title-fade-out;
                 animation-name: spid-button-title-fade-out;
         -webkit-animation-duration: 0.5s;
                 animation-duration: 0.5s;
         -webkit-animation-fill-mode: both;
                 animation-fill-mode: both; }
-  #spid-enter-container:not([hidden]) .agid-spid-panel-anim {
+  #spid-enter-container:not([hidden]) .spid-button-panel-anim {
     -webkit-animation-name: anim-panel-in;
             animation-name: anim-panel-in;
     -webkit-animation-duration: 2s;
             animation-duration: 2s;
     -webkit-animation-delay: 0.5s;
             animation-delay: 0.5s; }
-    #spid-enter-container:not([hidden]) .agid-spid-panel-anim .agid-fade-in-left {
+    #spid-enter-container:not([hidden]) .spid-button-panel-anim .spid-button-fade-in-left {
       -webkit-animation-name: spid-button-logo-left-fade-in;
               animation-name: spid-button-logo-left-fade-in;
       -webkit-animation-duration: 0.5s;
@@ -479,7 +479,7 @@ h1 {
               animation-delay: 0.5s;
       -webkit-animation-fill-mode: both;
               animation-fill-mode: both; }
-    #spid-enter-container:not([hidden]) .agid-spid-panel-anim .agid-fade-in-right {
+    #spid-enter-container:not([hidden]) .spid-button-panel-anim .spid-button-fade-in-right {
       -webkit-animation-name: spid-button-close-right-fade-in;
               animation-name: spid-button-close-right-fade-in;
       -webkit-animation-duration: 0.5s;
@@ -488,7 +488,7 @@ h1 {
               animation-delay: 1s;
       -webkit-animation-fill-mode: both;
               animation-fill-mode: both; }
-    #spid-enter-container:not([hidden]) .agid-spid-panel-anim .agid-fade-in-bottom {
+    #spid-enter-container:not([hidden]) .spid-button-panel-anim .spid-button-fade-in-bottom {
       -webkit-animation-name: spid-button-title-fade-in;
               animation-name: spid-button-title-fade-in;
       -webkit-animation-duration: 0.5s;
@@ -498,7 +498,7 @@ h1 {
       -webkit-animation-fill-mode: both;
               animation-fill-mode: both; }
 
-.agid-spid-idp-fade-in {
+.spid-button-idp-fade-in {
   -webkit-animation-name: spid-button-anim-idp-fade-in;
           animation-name: spid-button-anim-idp-fade-in;
   -webkit-animation-duration: 0.5s;
@@ -518,7 +518,7 @@ h1 {
   to {
     opacity: 1; } }
 
-.agid-spid-idp-fade-out {
+.spid-button-idp-fade-out {
   -webkit-animation-name: spid-button-anim-idp-fade-out;
           animation-name: spid-button-anim-idp-fade-out;
   -webkit-animation-duration: 0.5s;
@@ -854,7 +854,7 @@ h1 {
   100% {
     height: 0; } }
 
-#spid-enter-button-container.agid-enter-transition .agid-spid-enter {
+#spid-enter-button-container.spid-button-transition .spid-button {
   -webkit-animation-name: fadeOutEnterBtn;
           animation-name: fadeOutEnterBtn;
   -webkit-animation-duration: 1s;
@@ -862,13 +862,13 @@ h1 {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards; }
 
-#spid-enter-button-container.agid-reverse-enter-transition .agid-spid-enter {
+#spid-enter-button-container.spid-button-reverse-enter-transition .spid-button {
   -webkit-animation-name: fadeInEnterBtn;
           animation-name: fadeInEnterBtn;
   -webkit-animation-duration: 1s;
           animation-duration: 1s; }
 
-.agid-spid-little-man-icon {
+.spid-button-little-man-icon {
   -webkit-animation-name: spid-show-little-man;
           animation-name: spid-show-little-man;
   -webkit-animation-duration: 1s;
@@ -878,7 +878,7 @@ h1 {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards; }
 
-.agid-spid-enter-icon-animation {
+.spid-button-icon-animation {
   -webkit-animation-name: spid-button-icon-smaller-logo;
           animation-name: spid-button-icon-smaller-logo;
   -webkit-animation-duration: 1s;
@@ -888,7 +888,7 @@ h1 {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards; }
 
-.agid-spid-enter-icon-animation.in {
+.spid-button-icon-animation.in {
   -webkit-animation-name: spid-button-icon-bigger-logo;
           animation-name: spid-button-icon-bigger-logo;
   -webkit-animation-duration: 1s;
@@ -898,7 +898,7 @@ h1 {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards; }
 
-.agid-spid-enter-logo-animation-out {
+.spid-button-logo-animation-out {
   -webkit-animation-name: spid-hide-little-man;
           animation-name: spid-hide-little-man;
   -webkit-animation-duration: 1s;
