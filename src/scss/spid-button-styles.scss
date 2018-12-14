@@ -33,6 +33,12 @@ h1 {
         background: #f5f6f7;
         border-radius: 3px;
 
+        img {
+            max-height: 30px;
+            height: 100%;
+            width: auto;
+        }
+
         form {
             height: 100%;
             padding: 10px;
