@@ -165,15 +165,10 @@ var _SPID,
                         spidButtonIdpConfig.entityID = options.mapping[property];
                     }
                 }
-
-                if (!spidButtonIdpConfig.supported) {
-                    if (options.supported.indexOf(spidButtonIdpConfig.entityID) === -1 || spidButtonIdpConfig.protocols.indexOf(options.protocol) === -1) {
-                        spidButtonIdpConfig.supported = false;
-                    } else {
-                        spidButtonIdpConfig.supported = true;
-                    }
-                } else if (spidButtonIdpConfig.protocols.indexOf(options.protocol) === -1) {
-                    spidButtonIdpConfig.supported = false;
+                
+                if (!('_supported' in spidButtonIdpConfig)) {
+                    spidButtonIdpConfig._supported = options.supported.indexOf(spidButtonIdpConfig.entityID) > -1
+                        && spidButtonIdpConfig.protocols.indexOf(options.protocol) > -1;
                 }
 
                 return spidButtonIdpConfig;
@@ -185,7 +180,7 @@ var _SPID,
             if (options.extraProviders) {
                 for (i = 0; i < options.extraProviders.length; i++) {
                     var provider = options.extraProviders[i];
-                    provider.supported = true;
+                    provider._supported = true;
 
                     // set defaults
                     if (!('protocols' in provider)) provider.protocols = ["SAML"];

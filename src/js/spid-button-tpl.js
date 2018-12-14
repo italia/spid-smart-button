@@ -103,7 +103,7 @@ var _SPID = (function(languages, providers){
                                 '<button type="submit"',
                                     'class="spid-button-idp-button"',
                                     'title="', providerEntityName, '"',
-                                    (providerData.supported) ? '' : 'disabled', '>',
+                                    (providerData._supported) ? '' : 'disabled', '>',
                                     '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="', providerData.entityName, '">',
                                 '</button>',
                                 providerPayloadInputs,
@@ -114,7 +114,7 @@ var _SPID = (function(languages, providers){
                     return [
                         '<span class="spid-button-idp">',
                             '<a title="', providerEntityName, '" href="', providerUri,'"',
-                            (providerData.supported) ? '' : 'disabled','>',
+                            (providerData._supported) ? '' : 'disabled','>',
                                 '<img src="', this.getResources().assetsBaseUrl, 'img/idp-logos/', providerData.logo, '" alt="', providerData.entityName, '">',
                             '</a>',
                         '</span>'
