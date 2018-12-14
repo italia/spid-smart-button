@@ -8,7 +8,7 @@ describe('SPID', function () {
             'https://loginspid.aruba.it',
             'https://identity.infocert.it',
             'https://posteid.poste.it',
-            'sielte.it',
+            'https://identity.sieltecloud.it',
             'https://login.id.tim.it/affwebservices/public/saml2sso',
             'https://idp.namirialtsp.com/idp',
             'https://spid.register.it',

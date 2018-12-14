@@ -96,7 +96,7 @@ var spid = SPID.init({
         'https://idp.namirialtsp.com/idp': 7,
     },
     supported: [                  // obbligatorio
-            'sielte.it'
+            'https://identity.sieltecloud.it'
     ],
     extraProviders: [            // opzionale
         {

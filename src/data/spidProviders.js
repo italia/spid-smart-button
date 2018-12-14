@@ -25,7 +25,7 @@ function providers() {
             protocols: ["SAML"],
             entityName: "Sielte",
             logo: "spid-idp-sielteid.svg",
-            entityID: "sielte.it",
+            entityID: "https://identity.sieltecloud.it",
             active: true
         },
         {
