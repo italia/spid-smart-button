@@ -12,7 +12,8 @@ describe('SPID', function () {
             'https://login.id.tim.it/affwebservices/public/saml2sso',
             'https://idp.namirialtsp.com/idp',
             'https://spid.register.it',
-            'https://spid.intesa.it'
+            'https://spid.intesa.it',
+            'https://id.lepida.it/idp/shibboleth'
         ],
         genericConfig = {
             url: '/generic/url/{{idp}}',
