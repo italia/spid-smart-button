@@ -77,21 +77,25 @@ var SPID = (function () {
             }
         };
 
+        var EscKeyHandler;
         spidObj.prototype._showProvidersPanel = function () {
             var spid = this;
             spid._showElement(spid._spidButtonWrapper);
             spid._giveFocusTo(spid._spidPanelSelect);
-            document.addEventListener('keyup', function (event) {
+            EscKeyHandler = function (event) {
                 spid._handleEscKeyEvent(event);
-            });
+            };
+            document.addEventListener('keyup', EscKeyHandler);
         };
 
         spidObj.prototype._hideProvidersPanel = function () {
             var spid = this;
             spid._hideElement(spid._spidButtonWrapper);
-            document.addEventListener('keyup', function (event) {
-                spid._handleEscKeyEvent(event);
-            });
+            spid._exitChoiceModalAnimations();
+
+            // unbind Esc key listener
+            document.removeEventListener('keyup', EscKeyHandler);
+            EscKeyHandler = null;
         };
 
         spidObj.prototype._exitChoiceModalAnimations = function() {
@@ -136,11 +140,9 @@ var SPID = (function () {
             // Vengono creati una sola volta all'init e non necessitano unbind
             document.querySelector('#spid-button-panel-close-button').addEventListener('click', function () {
                 spid._hideProvidersPanel();
-                spid._exitChoiceModalAnimations();
             });
             document.querySelector('#spid-cancel-access-button').addEventListener('click', function () {
                 spid._hideProvidersPanel();
-                spid._exitChoiceModalAnimations();
             });
 
             // update buttons
