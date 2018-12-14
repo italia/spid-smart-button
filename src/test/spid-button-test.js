@@ -418,7 +418,7 @@ describe('SPID', function () {
                     var disabled = document.querySelectorAll('#spid-idp-list a[disabled]'),
                         extraProvider = document.querySelectorAll('#spid-idp-list a[title="Accedi a SPID con Ciccio ID"]');
                     // THEN
-                    expect(disabled.length).toEqual(0);
+                    expect(disabled.length).toEqual(supportedProviders.length);
                     expect(extraProvider.length).toEqual(1);
                     done();
                 });

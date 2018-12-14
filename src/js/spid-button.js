@@ -194,7 +194,8 @@ var SPID = (function () {
 
         // Null safe access, se la label non è trovata non si verificano errori runtime, suggerimento in console
         spidObj.prototype._getI18n = function (labelKey, placeholderValue) {
-            var lang = this.config.lang,
+            var spid = this;
+            var lang = spid.config.lang,
                 copy = SPID.i18n[lang] && SPID.i18n[lang][labelKey],
                 placeholderRegex = /\{\d}/;
 
@@ -259,9 +260,15 @@ var SPID = (function () {
 
         spidObj.prototype._renderProviderButton = function (idp) {
             var spid = this;
+            
+            var isExtraProvider = false;
+            spid.config.extraProviders.forEach(function (idp2) {
+                if (idp.entityID == idp2.entityID) isExtraProvider = true;
+            });
 
-            var isSupported = spid.config.supported.indexOf(idp.entityID) > -1
-                && idp.protocols.indexOf(spid.config.protocol) > -1;
+            var isActive = spid.config.supported.indexOf(idp.entityID) > -1
+                && idp.protocols.indexOf(spid.config.protocol) > -1
+                && (spid.config.extraProviders.length == 0 || isExtraProvider);
 
             var linkTitle = idp.active
                 ? spid._getI18n('accedi_con_idp', idp.entityName)
@@ -286,7 +293,7 @@ var SPID = (function () {
                             '<button type="submit"',
                                 'class="spid-button-idp-button"',
                                 'title="', linkTitle, '"',
-                                isSupported ? '' : 'disabled', '>',
+                                isActive ? '' : 'disabled', '>',
                                 '<img src="', SPID.assetsBaseUrl, 'img/idp-logos/', idp.logo, '" alt="', idp.entityName, '">',
                             '</button>',
                             inputs,
@@ -297,7 +304,7 @@ var SPID = (function () {
                 return [
                     '<span class="spid-button-idp">',
                         '<a title="', linkTitle, '" href="', actionURL,'"',
-                            (isSupported ? '' : 'disabled'),'>',
+                            (isActive ? '' : 'disabled'),'>',
                             '<img src="', SPID.assetsBaseUrl, 'img/idp-logos/', idp.logo, '" alt="', idp.entityName, '">',
                         '</a>',
                     '</span>'
@@ -380,6 +387,7 @@ var SPID = (function () {
                 
                 // clone providers
                 var providers = JSON.parse(JSON.stringify(SPID.providers));
+                config.supported = JSON.parse(JSON.stringify(config.supported));  // we are going to modify it
 
                 // add extra providers  
                 config.extraProviders.forEach(function (idp) {
