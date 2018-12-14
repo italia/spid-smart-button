@@ -427,7 +427,7 @@ describe('SPID', function () {
                     var config = {
                         url: '/Login',
                         supported: supportedProviders,
-                        protocol: ["OIDC"]
+                        protocol: "OIDC"
                     };
                     // WHEN
                     SPID.init(config);

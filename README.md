@@ -29,55 +29,59 @@ Questo repository è mantenuto da AgID - Agenzia per l'Italia Digitale con l'aus
 
 
 ## Utilizzo dello smart-button
-Nel momento in cui lo spid-smart-button sara' disponibile tramite cdn, sara' sufficiente importare lo script presente su CDN nell'applicazione in cui si intende utilizzarlo. Ad es.
-```html
-<script type="text/javascript" src="cdn/spid-button.min.js"></script>
-```
-
-### Come inserire lo spid-smart-button in una applicazione
-E' sufficiente includere in un punto del codice html uno o più placeholder `<div>` che abbiano i seguenti attributi:
-
- - selector: attributo `id` con valore customizzabile dall'utente. Obbligatorio, come valore di default usare `spid-button`
- - accessibilità : attributo `aria-live` con valore `polite` per evitare che il rendering disturbi la navigazione
- - fallback: tag `<noscript>` con messaggio localizzato all'interno del placeholder che avvisa l'utente della necessità di JavaScript abilitato per poter fruire di SPID qualora l'utente stia navigando senza JavaScript.
-
-Ad es.
+Nel momento in cui lo spid-smart-button sara' disponibile tramite CDN, sarà sufficiente importare lo script presente su CDN nella pagina web in cui si intende posizionare il bottone:
 
 ```html
-    <div id ='spid-button' aria-live="polite">
-        <noscript>
-            Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-        </noscript>
-    </div>
+<script type="text/javascript" src="https://XXXXXXXXXXXX/spid-button.min.js"></script>
 ```
 
-### Come configurare lo spid-smart-button
+Nel punto in cui si intende posizionare il bottone si dovrà inserire un placeholder `<div>` come da esempio:
 
-#### `init(config)`
-Questo metodo consente di configurare lo smart-button nel modo desiderato tramite il parametro `config`.
-In caso di successo carica i CSS, mostra gli smartbutton sulla pagina,
-In caso di errori o configurazioni errate, alcuni Warning o messaggi vengono visualizzati in console.
+```html
+<div id="spid-button" aria-live="polite">
+    <noscript>
+        Il login tramite SPID richiede che JavaScript sia abilitato nel browser.
+    </noscript>
+</div>
+```
 
-##### config
-Il parametro `config` serve a configurare l'intera struttura dello smart-button. Allo scopo di rendere flessibile lo smart-button assecondando le diverse applicazioni nelle quali puo' essere inserito sono state definite le seguenti proprieta':
+Si dovrà poi inizializzare il bottone con una chiamata JavaScript:
+
+```javascript
+SPID.init({
+    url: '/Login?idp={{idp}}',
+    supported: [
+        'https://idp1.it',
+        'https://idp2.it'
+    ]
+});
+```
+
+### Configurazione
+
+#### `SPID.init({ ... })`
+
+La funzione `SPID.init()` inizializza il bottone secondo i parametri forniti, che possono essere i seguenti:
 
 | Parametro  | Descrizione        | Esempio |
 | ---------- | ------------------ | ------- |
-| **method** | GET/POST (default: GET) | GET |
-| **url** | URL da chiamare (anche relativo). Il placeholder {{idp}} sarà sostituito con l’entityID dell’IdP selezionato. Se questo parametro è assente, sarà scritto un errore in console.error() | `/spid/login/idp={{idp}}` |
-| **fieldName** | Se method=POST, contiene il nome del campo hidden in cui passiamo l’IdP selezionato (default: idp) | idp |
+| **method** | `GET`/`POST` (default: `GET`) | `"GET"` |
+| **url** | (obbligatorio) URL da chiamare (anche relativo). Il placeholder `{{idp}}` sarà sostituito con l’entityID dell’IdP selezionato (o con il valore custom specificato nel parametro `mapping`). Se questo parametro è assente, sarà scritto un errore in console.error() | `"/spid/login/idp={{idp}}"` |
+| **fieldName** | Se method=POST, contiene il nome del campo hidden in cui passiamo l’IdP selezionato (default: `idp`) | `"idp"` |
 | **extraFields** | Se method=POST, contiene eventuali valori aggiuntivi da passare in campi hidden | `{ foo: "bar" }` |
-| **selector** | Selettore CSS da usare per individuare l’elemento in cui iniettare lo Smart Button (default: #spid-button) | `#spid-button` |
+| **selector** | Selettore CSS da usare per individuare l’elemento in cui iniettare lo Smart Button (default: #spid-button) | `"#spid-button"` |
 | **mapping** | Dizionario di mappatura tra entityID e valori custom, da usare quando un SP identifica gli IdP con chiavi diverse dall’entityID | `{ "https://www.poste.it/spid": "poste" }` |
 | **supported** | (obbligatorio) Array di entityID relativi agli IdP di cui il SP ha i metadati. Gli IdP non presenti saranno mostrati in grigio all’utente. | `[ "https://www.poste.it/spid" ]` |
-| **extraProviders** | Array di oggetti contenenti le configurazioni di ulteriori Identity Provider (di test) non ufficiali che si vogliano abilitare. I provider qui elencati sono automaticamente aggiunti all’elenco supported sopra descritto | `[{ "entityID": "https://testidp.mycorp.com/", "entityName": "Test IdP" }]` |
-| **protocol** | SAML/OIDC. Protocollo usato dal SP per interagire con gli IdP. Dal momento che alcuni IdP potrebbero non supportare OIDC, questo parametro serve per mostrare in grigio gli IdP non supportati (default: SAML) | SAML |
-| **size** | small/medium/large. Dimensione di visualizzazione (default: medium) | medium |
-| **colorScheme** | positive/negative. Schema di colori da adottare in base allo sfondo (default: positive) | positive |
-| **fluid** | true/false. Adatta la larghezza del bottone all’elemento che lo contiene (ma max 400px).  (default: false) | true |
-| **cornerStyle** | rounded/sharp. Stile degli angoli del bottone. Se impostato a sharp, il bottone non avrà margine. (default: rounded) | rounded |
+| **extraProviders** | Array di oggetti contenenti le [configurazioni](#configurazione-degli-identity-provider) di ulteriori Identity Provider (di test) non ufficiali che si vogliano abilitare. I provider qui elencati sono automaticamente aggiunti all’elenco supported sopra descritto.  | `[{ "entityID": "https://testidp.mycorp.com/", "entityName": "Test IdP" }]` |
+| **protocol** | `SAML`/`OIDC`. Protocollo usato dal SP per interagire con gli IdP. Dal momento che alcuni IdP potrebbero non supportare OIDC (ad oggi nessun IdP lo supporta), questo parametro serve per mostrare in grigio gli IdP non supportati (default: `"SAML"`) | `"SAML"` |
+| **size** | `small`/`medium`/`large`. Dimensione di visualizzazione (default: `medium`) | `"medium"` |
+| **colorScheme** | `positive`/`negative`. Schema di colori da adottare in base allo sfondo (default: `positive`) | `"positive"` |
+| **fluid** | `true`/`false`. Adatta la larghezza del bottone all’elemento che lo contiene (ma max 400px).  (default: `false`) | `true` |
+| **cornerStyle** | `rounded`/`sharp`. Stile degli angoli del bottone. Se impostato a `sharp`, il bottone non avrà margine. (default: `rounded`) | `"rounded"` |
 
-ad esempio:
+La funzione `SPID.init()` restituisce un oggetto che può essere ignorato oppure assegnato ad una variabile qualora si intendano chiamare gli altri metodi documentati di seguito.
+
+Esempio completo:
 
 ```javascript
 var spid = SPID.init({
@@ -96,7 +100,7 @@ var spid = SPID.init({
         'https://idp.namirialtsp.com/idp': 7,
     },
     supported: [                  // obbligatorio
-            'https://identity.sieltecloud.it'
+        'https://identity.sieltecloud.it'
     ],
     extraProviders: [            // opzionale
         {
@@ -114,13 +118,14 @@ var spid = SPID.init({
             "active": true
         }
     ],
-    protocol: "SAML",
-    size: "small"
+    protocol: "SAML",           // opzionale
+    size: "small"               // opzionale
 });
 ```
 
 #### `changeLanguage(lang)`
-Questo metodo consente di cambiare la lingua dello smart-button a run-time.
+
+Questo metodo consente di cambiare la lingua dello Smart Button a run-time.
 La stringa `lang` deve essere costituita da due caratteri eg `it`.
 Le lingue supportate sono italiano `it`, inglese `en` e tedesco `de`
 ```javascript
@@ -128,14 +133,20 @@ spid.changeLanguage('en');
 ```
 
 ### Configurazione degli Identity Provider
-I dati degli IdP sono riportati staticamente nel codice sorgente dello Smart-Button, che quindi non dovrà interrogare il Registro. Tali dati sono strutturati come segue:
+
+I dati degli IdP sono riportati staticamente nel codice sorgente dello Smart Button, e pertanto **non è necessario aggiornarli manualmente**. Eventuali variazioni al nome o al logo, così come eventuali rimozioni di Identity Provider, verranno automaticamente recepite dallo Smart Button senza bisogno di alcun intervento.
+
+In caso di **aggiunta di nuovi Identity Provider**, o in caso di variazione di EntityID, il Service Provider dovrà aggiornare il proprio backend con i nuovi metadati e poi aggiungere l'entityID all'array `supported` dello Smart Button che quindi renderà cliccabile il nuovo Identity Provider. Si consiglia, se possibile in base al proprio stack applicativo, di generare la lista `supported` automaticamente a partire dai metadati caricati nell'applicazione.
+
+### Configurazione di Identity Provider di test
+
+Il parametro `extraProviders` permette di configuare ulteriori Identity Provider rispetto a quelli ufficiali. Questa cosa può essere utile per usare un [Identity Provider di test](https://github.com/italia/spid-testenv2). I parametri per la configurazione di ciascun Identity Provider aggiuntivo sono i seguenti:
 
 | Parametro | Descrizione |
 | --------- | ----------- |
-| **entityID** | Identificativo dell’Identity Provider |
-| **entityName** | Nome pubblico dell’Identity Provider da mostrare nella lista |
-| **logo** | URL completo del file PNG raffigurante il logo (default: indicare una immagine generica, distribuita nella CDN, da usare come placeholder) |
-| **protocols** | Array che può contenere i valori SAML e/o OIDC a seconda dei protocolli supportati dall’IdP |
-| **active** | true/false, indica se l’IdP è operativo. Può essere usato per disabilitarne uno temporaneamente in tutta la federazione (default: true) |
+| **entityID** | (obbligatorio) Identificativo dell'Identity Provider |
+| **entityName** | (obbligatorio) Nome pubblico dell'Identity Provider da mostrare nella lista |
+| **logo** | URL completo del file PNG raffigurante il logo |
+| **protocols** | Array che può contenere i valori `SAML` e/o `OIDC` a seconda dei protocolli supportati dall'IdP (default: `["SAML"]`) |
+| **active** | `true`/`false`. Può essere usato per mostrare l'IdP come non attivo (default: `true`) |
 
-Nel caso in cui l’utente configuri ulteriori IdP usando il parametro `extraProviders` all'interno della configurazione in fase di `SPID.init()`, dovrà fornire queste informazioni.
