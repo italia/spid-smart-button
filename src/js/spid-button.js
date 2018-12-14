@@ -184,7 +184,12 @@ var _SPID,
             var i;
             if (options.extraProviders) {
                 for (i = 0; i < options.extraProviders.length; i++) {
-                    options.extraProviders[i].supported = true;
+                    var provider = options.extraProviders[i];
+                    provider.supported = true;
+
+                    // set defaults
+                    if (!('protocols' in provider)) provider.protocols = ["SAML"];
+
                 }
                 spidButtonProvidersList = spidButtonProvidersList.concat(options.extraProviders);
             }
