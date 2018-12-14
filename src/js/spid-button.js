@@ -150,47 +150,6 @@ var _SPID,
             getSelectors();
         };
 
-        function getMergedProvidersData(spidButtonProvidersList, options) {
-            var property;
-            return spidButtonProvidersList.map(function (spidButtonIdpConfig) {
-                spidButtonIdpConfig.url = options.url;
-                spidButtonIdpConfig.method = options.method || 'GET';
-                if (spidButtonIdpConfig.method === 'POST') {
-                    spidButtonIdpConfig.fieldName = options.fieldName;
-                    spidButtonIdpConfig.extraFields = options.extraFields;
-                }
-
-                for (property in options.mapping) {
-                    if (spidButtonIdpConfig.entityID === property) {
-                        spidButtonIdpConfig.entityID = options.mapping[property];
-                    }
-                }
-                
-                if (!('_supported' in spidButtonIdpConfig)) {
-                    spidButtonIdpConfig._supported = options.supported.indexOf(spidButtonIdpConfig.entityID) > -1
-                        && spidButtonIdpConfig.protocols.indexOf(options.protocol) > -1;
-                }
-
-                return spidButtonIdpConfig;
-            });
-        }
-
-        function addExtraProviders(spidButtonProvidersList, options) {
-            var i;
-            if (options.extraProviders) {
-                for (i = 0; i < options.extraProviders.length; i++) {
-                    var provider = options.extraProviders[i];
-                    provider._supported = true;
-
-                    // set defaults
-                    if (!('protocols' in provider)) provider.protocols = ["SAML"];
-
-                }
-                spidButtonProvidersList = spidButtonProvidersList.concat(options.extraProviders);
-            }
-            return spidButtonProvidersList;
-        }
-
         function checkStyleOptions(styleOptions) {
             var supportedSizes = ['small', 'medium', 'large'],
                 supportedColorScheme = ["positive", "negative"],
@@ -248,7 +207,7 @@ var _SPID,
                 return;
             }
             _spid.initResources();
-            options = _spid.getMergedDefaultOptions(options);
+            _spid._options = _spid.getMergedDefaultOptions(options);
             msgStyle = checkStyleOptions(_spid._style);
             if (msgStyle !== true) {
                 console.error(msgStyle);
@@ -256,8 +215,43 @@ var _SPID,
             }
             _spid.initTemplates();
 
-            _spid._availableProviders = addExtraProviders(_spid._availableProviders, options);
-            _spid._availableProviders = getMergedProvidersData(_spid._availableProviders, options);
+            // add extra providers  
+            if ('extraProviders' in options) {
+                for (var i = 0; i < options.extraProviders.length; i++) {
+                    var provider = options.extraProviders[i];
+                    provider._supported = true;
+
+                    // set defaults
+                    if (!('protocols' in provider)) provider.protocols = ["SAML"];
+
+                    _spid._availableProviders.push(provider)
+                }
+            }
+
+            // set defaults
+            _spid._availableProviders = _spid._availableProviders.map(function (idp) {
+                idp.url = options.url;
+                idp.method = options.method || 'GET';
+                if (idp.method === 'POST') {
+                    idp.fieldName = options.fieldName;
+                    idp.extraFields = options.extraFields;
+                }
+
+                var property
+                for (property in options.mapping) {
+                    if (idp.entityID === property) {
+                        idp.entityID = options.mapping[property];
+                    }
+                }
+                
+                if (!('_supported' in idp)) {
+                    idp._supported = options.supported.indexOf(idp.entityID) > -1
+                        && idp.protocols.indexOf(options.protocol) > -1;
+                }
+
+                return idp;
+            });
+            
             _spid.renderModule();
         };
 
