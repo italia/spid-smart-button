@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/italia/spid-smart-button.git"
   },
-  "license": "BSD-3-Clause",
+  "license": "EUPL-1.2",
   "author": {
     "name": "Umberto Rosini",
     "email": "rosini@agid.gov.it",
