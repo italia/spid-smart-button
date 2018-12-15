@@ -542,7 +542,7 @@ describe('SPID', function () {
                 setTimeout(function() {
                     expect(isChoiceModalVisible).toBeFalsy();
                     done();
-                }, 500)
+                }, 3000)
             });
         });
 
