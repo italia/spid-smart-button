@@ -2,23 +2,22 @@
 
 $spid-button-default: #0073e6;
 $spid-button-active: #0059b3;
+$font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 
-body {
+.spid-enter-container {
     min-width: 300px;
-}
 
-h1 {
-    color: #17324d;
-    font-size: 2rem;
-    font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-   // min-width: 400px;
-}
+    a {
+        cursor: pointer;
+        color: #06c;
+    }
 
-.spid-button-grayscale-compatibility {
-  -webkit-filter: grayscale(100%);
-  -webkit-filter: grayscale(1);
-  filter: grayscale(100%);
-  filter: url('../img/gray.svg#grayscale');
+    h1 {
+        color: #17324d;
+        font-size: 2rem;
+        font-family: $font-family;
+       // min-width: 400px;
+    }
 }
 
 .spid-idp-list {
@@ -37,6 +36,13 @@ h1 {
             max-height: 30px;
             height: 100%;
             width: auto;
+        }
+
+        span {
+            padding-top: 5px;
+            font-family: $font-family;
+            font-size: 1.2em;
+            font-weight: bold;
         }
 
         form {
@@ -66,7 +72,7 @@ h1 {
             height: 100%;
             border: 3px solid white;
             padding: 10px;
-            background: white;
+            text-decoration: none;
 
             &:active {
                 border: 3px solid rgb(247, 145, 13);
@@ -92,7 +98,7 @@ h1 {
 }
 
 .spid-button, .spid-cancel-access-button {
-    font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+    font-family: $font-family;
 }
 
 .spid-button-navigable {
@@ -116,13 +122,11 @@ h1 {
     
     text-align: center;
     font-size: 15px;
-    font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-}
+    font-family: $font-family;
 
-.spid-non-hai-spid a {
-    cursor: pointer;
-    font-weight: bold;
-    color: #06c;
+    a {
+        font-weight: bold;
+    }
 }
 
 .spid-enter {
@@ -284,7 +288,7 @@ h1 {
     background-color: #fcfdff;
     padding: 12px 24px;
     color: #50565c;
-    font-family: "Titillium Web", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-family: $font-family;
     font-weight: 600;
     font-size: 16px;
     display: inline-block;

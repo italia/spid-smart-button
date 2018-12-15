@@ -255,9 +255,10 @@ var SPID = (function () {
 
             var isActive = spid.config.supported.indexOf(idp.entityID) > -1
                 && idp.protocols.indexOf(spid.config.protocol) > -1
-                && (spid.config.extraProviders.length == 0 || isExtraProvider);
+                && (spid.config.extraProviders.length == 0 || isExtraProvider)
+                && idp.active !== false;
 
-            var linkTitle = idp.active
+            var linkTitle = isActive
                 ? spid._getI18n('accedi_con_idp', idp.entityName)
                 : spid._getI18n('idp_disabled');
             
@@ -265,9 +266,12 @@ var SPID = (function () {
             var entityID = (idp.entityID in spid.config.mapping)
                 ? spid.config.mapping[idp.entityID]
                 : idp.entityID;
-                idp.entityID;
 
             var actionURL = spid.config.url.replace('{{idp}}', encodeURIComponent(entityID));
+            
+            var buttonContent = idp.logo
+                ? ['<img src="', SPID.assetsBaseUrl, 'img/idp-logos/', idp.logo, '" alt="', idp.entityName, '">'].join('')
+                : ['<span>', idp.entityName, '</span>'].join('');
 
             if (spid.config.method === 'POST') {
                 var inputs = hiddenField(spid.config.fieldName, entityID);
@@ -281,7 +285,7 @@ var SPID = (function () {
                                 'class="spid-button-idp-button"',
                                 'title="', linkTitle, '"',
                                 isActive ? '' : 'disabled', '>',
-                                '<img src="', SPID.assetsBaseUrl, 'img/idp-logos/', idp.logo, '" alt="', idp.entityName, '">',
+                                buttonContent,
                             '</button>',
                             inputs,
                         '</form>',
@@ -292,7 +296,7 @@ var SPID = (function () {
                     '<span class="spid-button-idp">',
                         '<a title="', linkTitle, '" href="', actionURL,'"',
                             (isActive ? '' : 'disabled'),'>',
-                            '<img src="', SPID.assetsBaseUrl, 'img/idp-logos/', idp.logo, '" alt="', idp.entityName, '">',
+                            buttonContent,
                         '</a>',
                     '</span>'
                 ].join('');
