@@ -2,7 +2,7 @@ describe('SPID', function () {
 
     var SPID = window.SPID,
         axe = window.axe,
-        spidButtonWrapperClass = 'spid-enter-container',
+        spidButtonWrapperClass = '.spid-enter-container',
         accediConSpid = 'Accedi a SPID con ',
         supportedProviders = [
             'https://loginspid.aruba.it',
@@ -20,14 +20,11 @@ describe('SPID', function () {
             supported: supportedProviders
         };
 
-    function injectSpidPlaceHolder(selector) {
-        var _selector = 'spid-button';
-        if (selector) {
-            _selector = selector;
-        }
-        var spidButtonPlaceholder = document.createElement('div');
-        spidButtonPlaceholder.innerHTML = '<div class="spid-button" id="' + _selector + '" aria-live="polite"></div>';
-        document.body.appendChild(spidButtonPlaceholder);
+    function injectSpidPlaceHolder(id) {
+        if (!id) id = 'spid-button';
+        var placeholder = document.createElement('div');
+        placeholder.innerHTML = '<div class="spid-test-placeholder" id="' + id + '"></div>';
+        document.body.appendChild(placeholder);
     }
 
     function isElementVisible(selector) {
@@ -35,14 +32,9 @@ describe('SPID', function () {
     }
 
     function domCleanup() {
-        var spidButtonWrapper = document.querySelectorAll('body > section'),
-            spidPlaceholder = document.querySelectorAll('.spid-button');
-
-        Array.from(spidButtonWrapper).forEach(function (sbWrapper) {
-            sbWrapper.remove();
-        });
-        Array.from(spidPlaceholder).forEach(function (spidButton) {
-            spidButton.remove();
+        var placeholders = document.querySelectorAll('.spid-test-placeholder');
+        Array.from(placeholders).forEach(function (elem) {
+            elem.remove();
         });
     }
 
@@ -50,8 +42,7 @@ describe('SPID', function () {
         // Credit to Elger van Boxtel
         // https://elgervanboxtel.nl/site/blog/simulate-keydown-event-with-javascript
         var e = new Event("keyup");
-        e.keyCode = keyCode;
-        e.which = e.keyCode;
+        e.which = e.key = e.keyCode = keyCode;
         e.altKey = false;
         e.ctrlKey = true;
         e.shiftKey = false;
@@ -80,11 +71,10 @@ describe('SPID', function () {
 
         describe('init method', function () {
             it('should inject the modal wrapper HTML needed to print the providers popup', function (done) {
-                // GIVEN
-                var spidButtonWrapper;
                 // WHEN
+                injectSpidPlaceHolder();
                 SPID.init(genericConfig);
-                spidButtonWrapper = document.querySelector(spidButtonWrapperClass);
+                var spidButtonWrapper = document.querySelector(spidButtonWrapperClass);
                 // THEN
                 expect(!!spidButtonWrapper).toBeTruthy();
                 done();
@@ -93,21 +83,22 @@ describe('SPID', function () {
 
             it('should fetch italian language if no option was provided', function (done) {
                 // WHEN
+                injectSpidPlaceHolder();
                 SPID.init(genericConfig);
                 // THEN
-                var text = document.getElementsByClassName('spid-enter-title-page')[0].innerHTML;
+                var text = document.querySelector('.spid-enter-title-page').innerHTML;
                 expect(text).toEqual('Scegli il tuo provider SPID')
                 done();
             });
 
             it('should NOT inject the modal wrapper HTML more than once if SPID are provided with the same selector', function (done) {
                 // GIVEN
+                injectSpidPlaceHolder();
                 var spid1 = SPID.init(genericConfig);
                 var spid2 = SPID.init(genericConfig);
                 var spid3 = SPID.init(genericConfig);
-                var spidButtonWrapper;
                 // WHEN
-                spidButtonWrapper = document.querySelectorAll(spidButtonWrapperClass)[0];
+                var spidButtonWrapper = document.querySelectorAll(spidButtonWrapperClass);
                 // THEN
                 expect(spidButtonWrapper.length).toBe(1);
                 done();
@@ -129,6 +120,7 @@ describe('SPID', function () {
                     supported: supportedProviders
                 };
                 // WHEN
+                injectSpidPlaceHolder();
                 SPID.init(config);
                 // THEN
                 expect(console.warn).toHaveBeenCalled();
@@ -152,22 +144,6 @@ describe('SPID', function () {
             });
 
             describe('when SPID button placeholder are present in the page', function () {
-                it('should render the SPID button if supplied size is valid regardless of the case', function (done) {
-                    // GIVEN
-                    var config = {
-                        url: '/generic/url/{{idp}}',
-                        size: "SMALL",
-                        supported: supportedProviders
-                    };
-                    injectSpidPlaceHolder();
-                    // WHEN
-                    SPID.init(config);
-                    var spidButtons = document.querySelectorAll('.spid-button');
-                    // THEN
-                    expect(spidButtons.length).toBeTruthy();
-                    done();
-                });
-
                 it('should throw an error if supplied SPID button size is invalid', function (done) {
                     // GIVEN
                     var config = {
@@ -176,6 +152,7 @@ describe('SPID', function () {
                         supported: supportedProviders
                     };
                     // WHEN
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     // THEN
                     expect(console.error).toHaveBeenCalled();
@@ -190,6 +167,7 @@ describe('SPID', function () {
                         supported: supportedProviders
                     };
                     // WHEN
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     // THEN
                     expect(console.error).toHaveBeenCalled();
@@ -204,6 +182,7 @@ describe('SPID', function () {
                         supported: supportedProviders
                     };
                     // WHEN
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     // THEN
                     expect(console.error).toHaveBeenCalled();
@@ -218,6 +197,7 @@ describe('SPID', function () {
                         supported: supportedProviders
                     };
                     // WHEN
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     // THEN
                     expect(console.error).toHaveBeenCalled();
@@ -228,6 +208,7 @@ describe('SPID', function () {
             describe('when supplied with a configuration object', function () {
                 it('should not add to providers hidden inputs payload if is a GET', function (done) {
                     // WHEN
+                    injectSpidPlaceHolder();
                     SPID.init(genericConfig);
                     var hiddenInputs = document.querySelectorAll('.spid-idp-list input');
                     // THEN
@@ -244,14 +225,16 @@ describe('SPID', function () {
                     };
 
                     // WHEN
+                    injectSpidPlaceHolder();
                     SPID.init(config);
-                    var title = document.getElementsByClassName('spid-enter-title-page')[0].innerHTML;
+                    var title = document.querySelector('.spid-enter-title-page').innerHTML;
                     expect(title).toEqual('Wähle Ihren SPIDProvider')
                     done();
                 });
 
                 it('should log error message if no config is provided', function (done) {
                     // WHEN
+                    injectSpidPlaceHolder();
                     SPID.init(null);
                     // THEN
                     expect(console.error).toHaveBeenCalled();
@@ -263,6 +246,7 @@ describe('SPID', function () {
                     var config = {
                         supported: supportedProviders
                     };
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     // THEN
                     expect(console.error).toHaveBeenCalled();
@@ -275,29 +259,7 @@ describe('SPID', function () {
                         url: 'url',
                         supported: supportedProviders
                     };
-                    SPID.init(config);
-                    // THEN
-                    expect(console.error).toHaveBeenCalled();
-                    done();
-                });
-
-                it('should log error message if no supported providers are provided', function (done) {
-                    // WHEN
-                    var config = {
-                        url: 'url{{idp}}'
-                    };
-                    SPID.init(config);
-                    // THEN
-                    expect(console.error).toHaveBeenCalled();
-                    done();
-                });
-
-                it('should log error message if is provided an empty array of supported providers', function (done) {
-                    // WHEN
-                    var config = {
-                        url: 'url{{idp}}',
-                        supported: []
-                    };
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     // THEN
                     expect(console.error).toHaveBeenCalled();
@@ -315,17 +277,12 @@ describe('SPID', function () {
                         supported: supportedProviders
                     };
                     // WHEN
-
+                    injectSpidPlaceHolder();
                     SPID.init(config);
-                    var providers = document.querySelectorAll('.spid-idp-list form'),
-                        hiddenInput;
-                    for (var i = 0; i < providers.length; i++) {
-                        if (providers[i][0].getAttribute('title') === accediConSpid + 'Poste ID') {
-                            hiddenInput = providers[i][1];
-                        }
-                    }
+                    var provider = document.querySelector('.spid-idp-list form input[name="testName"][value="poste"]');
+
                     // THEN
-                    expect(hiddenInput.value).toEqual('poste');
+                    expect(provider).toBeDefined();
                     done();
 
                 });
@@ -341,7 +298,7 @@ describe('SPID', function () {
                         supported: supportedProviders
                     };
                     // WHEN
-
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     var providers = document.getElementsByClassName('spid-button-idp'),
                         generatedUrl;
@@ -367,7 +324,7 @@ describe('SPID', function () {
                         supported: supportedProviders
                     };
                     // WHEN
-
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     var providers = document.getElementsByClassName('spid-button-idp'),
                         generatedUrl;
@@ -390,12 +347,14 @@ describe('SPID', function () {
                         ],
                     };
                     // WHEN
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     var providers = document.querySelectorAll('.spid-idp-list a'),
+                        enabled = document.querySelectorAll(".spid-idp-list a:not([disabled])"),
                         disabled = document.querySelectorAll(".spid-idp-list a[disabled]");
                     // THEN
                     expect(disabled.length).toEqual(providers.length - 1);
-                    //expect(enabled.length).toEqual(1);
+                    expect(enabled.length).toEqual(1);
                     done();
                 });
 
@@ -414,6 +373,7 @@ describe('SPID', function () {
                         ]
                     };
                     // WHEN
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     var disabled = document.querySelectorAll('.spid-idp-list a[disabled]'),
                         extraProvider = document.querySelectorAll('.spid-idp-list a[title="Accedi a SPID con Ciccio ID"]');
@@ -430,6 +390,7 @@ describe('SPID', function () {
                         protocol: "OIDC"
                     };
                     // WHEN
+                    injectSpidPlaceHolder();
                     SPID.init(config);
                     var providers = document.querySelectorAll('.spid-idp-list button'),
                         enabled = document.querySelectorAll(".spid-idp-list button:enabled"),
@@ -450,6 +411,7 @@ describe('SPID', function () {
                             supported: supportedProviders
                         };
                         // WHEN
+                        injectSpidPlaceHolder();
                         SPID.init(config);
                         var providers = document.querySelectorAll('.spid-idp-list button'),
                             hiddenInputs = document.querySelectorAll('.spid-idp-list input[name="testName"]');
@@ -471,6 +433,7 @@ describe('SPID', function () {
                             supported: supportedProviders
                         };
                         // WHEN
+                        injectSpidPlaceHolder();
                         SPID.init(config);
                         var providers = document.querySelectorAll('.spid-idp-list button'),
                             hiddenInputs = document.querySelectorAll('.spid-idp-list input[name="testName"]'),
@@ -490,11 +453,12 @@ describe('SPID', function () {
         describe('changeLanguage method', function () {
             it('should call only the i18n endpoint for the new copy', function (done) {
                 // GIVEN
+                injectSpidPlaceHolder();
                 var spid = SPID.init(genericConfig);
                 // WHEN
                 spid.changeLanguage('en');
                 // THEN
-                var title = document.getElementsByClassName('spid-enter-title-page')[0].innerHTML;
+                var title = document.querySelector('.spid-enter-title-page').innerHTML;
                 expect(title).toEqual('Choose your SPID provider');
                 done();
             });
@@ -506,7 +470,6 @@ describe('SPID', function () {
                 var isChoiceModalVisible;
 
                 injectSpidPlaceHolder();
-
                 SPID.init(genericConfig);
                 // WHEN
                 document.querySelector('.spid-button-size-medium').click();
@@ -538,7 +501,6 @@ describe('SPID', function () {
             it('click on the top right X button', function (done) {
                 // GIVEN
                 injectSpidPlaceHolder();
-
                 SPID.init(genericConfig);
                 var isChoiceModalVisible;
 
@@ -554,7 +516,6 @@ describe('SPID', function () {
             it('click on the bottom list cancel button', function (done) {
                 // GIVEN
                 injectSpidPlaceHolder();
-
                 SPID.init(genericConfig);
                 var isChoiceModalVisible;
 
@@ -570,7 +531,6 @@ describe('SPID', function () {
             it('hit on the keyboard esc key', function (done) {
                 // GIVEN
                 injectSpidPlaceHolder();
-
                 SPID.init(genericConfig);
                 var isChoiceModalVisible;
 
@@ -579,8 +539,10 @@ describe('SPID', function () {
                 triggerKeyEvent(27);
                 isChoiceModalVisible = isElementVisible(spidButtonWrapperClass);
                 // THEN
-                expect(isChoiceModalVisible).toBeFalsy();
-                done();
+                setTimeout(function() {
+                    expect(isChoiceModalVisible).toBeFalsy();
+                    done();
+                }, 500)
             });
         });
 

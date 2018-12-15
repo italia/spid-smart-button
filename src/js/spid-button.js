@@ -147,7 +147,8 @@ var SPID = (function () {
                 return;
             }
             placeholder.setAttribute("aria-live", "polite");
-            placeholder.innerHTML += spid._renderButton();
+            // remove any previous content in case we were called multiple times
+            placeholder.innerHTML = spid._renderButton();
 
             spid._btn = placeholder.querySelector('.spid-button');
             spid._btn.addEventListener('click', function (e) {
@@ -216,7 +217,7 @@ var SPID = (function () {
                             imageTag('img/spid-logo', spid._getI18n('alt_logo_SPID')),
                             '</div>',
                             '<div class="spid-button-close-button spid-button-fade-out-right">',
-                                '<button tabindex="0" class="spid-button-panel-close-button spid-button-navigable">',
+                                '<button tabindex="0" class="spid-button-panel-close-button spid-button-navigable" aria-label="', spid._getI18n('naviga_indietro'), '">',
                                 imageTag('img/close', spid._getI18n('naviga_indietro')),
                                 '</button>',
                             '</div>',
