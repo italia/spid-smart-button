@@ -7,22 +7,17 @@
  * Indirizzo di produzione degli assets, inserire indirizzo reale
  */
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700,900);
-body {
+.spid-enter-container {
   min-width: 300px; }
+  .spid-enter-container a {
+    cursor: pointer;
+    color: #06c; }
+  .spid-enter-container h1 {
+    color: #17324d;
+    font-size: 2rem;
+    font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
-h1 {
-  color: #17324d;
-  font-size: 2rem;
-  font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
-
-.spid-button-grayscale-compatibility {
-  -webkit-filter: grayscale(100%);
-  -webkit-filter: grayscale(1);
-  filter: grayscale(100%);
-  -webkit-filter: url("../img/gray.svg#grayscale");
-          filter: url("../img/gray.svg#grayscale"); }
-
-#spid-idp-list {
+.spid-idp-list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -30,7 +25,7 @@ h1 {
   -webkit-box-direction: normal;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap; }
-  #spid-idp-list .spid-button-idp {
+  .spid-idp-list .spid-button-idp {
     margin: 12px auto;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -42,47 +37,51 @@ h1 {
     width: 40%;
     background: #f5f6f7;
     border-radius: 3px; }
-    #spid-idp-list .spid-button-idp form {
+    .spid-idp-list .spid-button-idp img {
+      max-height: 30px;
+      height: 100%;
+      width: auto; }
+    .spid-idp-list .spid-button-idp span {
+      padding-top: 5px;
+      font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+      font-size: 1.2em;
+      font-weight: bold; }
+    .spid-idp-list .spid-button-idp form {
       height: 100%;
       padding: 10px; }
-      #spid-idp-list .spid-button-idp form:active {
+      .spid-idp-list .spid-button-idp form:active {
         border: 3px solid #f7910d; }
-      #spid-idp-list .spid-button-idp form .spid-button-idp-button {
+      .spid-idp-list .spid-button-idp form .spid-button-idp-button {
         border: 0;
         width: 100%;
         cursor: pointer;
         background: #f5f6f7;
         padding: 5px;
         height: 100%; }
-        #spid-idp-list .spid-button-idp form .spid-button-idp-button[disabled] {
+        .spid-idp-list .spid-button-idp form .spid-button-idp-button[disabled] {
           opacity: 0.2;
           cursor: not-allowed; }
-    #spid-idp-list .spid-button-idp a {
+    .spid-idp-list .spid-button-idp a {
       height: 100%;
       border: 3px solid white;
       padding: 10px;
-      background: white; }
-      #spid-idp-list .spid-button-idp a:active {
+      text-decoration: none; }
+      .spid-idp-list .spid-button-idp a:active {
         border: 3px solid #f7910d; }
-      #spid-idp-list .spid-button-idp a[disabled] {
+      .spid-idp-list .spid-button-idp a[disabled] {
         opacity: 0.2;
         cursor: not-allowed;
         pointer-events: none; }
 
-.spid-button-display-logo {
+.spid-button-logo {
   float: left;
   width: 50%; }
 
-.spid-button-display-close {
+.spid-button-close-button {
   float: right;
   margin-top: 5px; }
 
-.spid-button-font {
-  font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif; }
-
-.spid-button-non-hai-spid-font {
-  margin-right: 5px;
-  font-size: 15px;
+.spid-button, .spid-cancel-access-button {
   font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
 .spid-button-navigable {
@@ -90,25 +89,24 @@ h1 {
   cursor: pointer;
   font-size: 1em; }
 
-.spid-button-link {
-  cursor: pointer;
-  font-weight: bold;
-  color: #06c; }
-
-#spid-enter-container {
+.spid-enter-container {
   position: fixed;
   z-index: 999;
   top: 0;
   left: 0; }
 
-#spid-non-hai-spid {
+.spid-non-hai-spid {
   margin-top: 10px;
   margin-bottom: 10px;
-  text-align: center;
   padding-top: 20px;
-  padding-bottom: 20px; }
+  padding-bottom: 20px;
+  text-align: center;
+  font-size: 15px;
+  font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+  .spid-non-hai-spid a {
+    font-weight: bold; }
 
-#spid-enter {
+.spid-enter {
   height: 0; }
 
 .spid-button-panel {
@@ -122,7 +120,8 @@ h1 {
   color: #000;
   position: fixed;
   z-index: 1;
-  overflow: auto; }
+  overflow: auto;
+  background: white; }
 
 .spid-button-header {
   background-color: #fff;
@@ -132,38 +131,37 @@ h1 {
   position: static;
   min-width: 300px;
   padding: 40px; }
-  .spid-button-header .spid-button-display-logo {
+  .spid-button-header .spid-button-logo {
     float: left;
     width: 33.33333vw;
     font-size: 30px; }
-  .spid-button-header .spid-button-panel-back a,
-  .spid-button-header .spid-button-panel-back button,
-  .spid-button-header .spid-button-panel-back button a {
-    float: left;
-    width: auto;
-    border: none;
-    outline: none;
-    display: block;
-    cursor: pointer; }
-  .spid-button-header .spid-button-panel-back button:hover,
-  .spid-button-header .spid-button-panel-back button:focus,
-  .spid-button-header .spid-button-panel-back a:hover,
-  .spid-button-header .spid-button-panel-back a:focus {
-    opacity: 0.5; }
-  .spid-button-header .spid-button-panel-back img {
-    max-height: 50px; }
-  .spid-button-header .spid-button-display-logo img {
-    max-height: 37px; }
-  .spid-button-header .spid-button-panel-element {
+  .spid-button-header .spid-button-panel-back {
     min-width: 32px; }
+    .spid-button-header .spid-button-panel-back a,
+    .spid-button-header .spid-button-panel-back button,
+    .spid-button-header .spid-button-panel-back button a {
+      float: left;
+      width: auto;
+      border: none;
+      outline: none;
+      display: block;
+      cursor: pointer; }
+    .spid-button-header .spid-button-panel-back button:hover,
+    .spid-button-header .spid-button-panel-back button:focus,
+    .spid-button-header .spid-button-panel-back a:hover,
+    .spid-button-header .spid-button-panel-back a:focus {
+      opacity: 0.5; }
+    .spid-button-header .spid-button-panel-back img {
+      max-height: 50px; }
+  .spid-button-header .spid-button-logo img {
+    max-height: 37px; }
 
-#spid-button-panel-content {
+.spid-button-panel-content {
   position: relative;
   display: block;
   min-width: 300px;
-  background: #fff;
   margin-bottom: 10px; }
-  #spid-button-panel-content #spid-enter-title-page {
+  .spid-button-panel-content .spid-enter-title-page {
     background: transparent;
     display: block;
     text-align: center; }
@@ -175,21 +173,6 @@ h1 {
   height: 100%;
   margin-bottom: 60px;
   max-width: 500px; }
-
-#spid-button-panel-footer {
-  display: block;
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
-  overflow: hidden;
-  text-align: center;
-  color: #fff;
-  background-color: #06c;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden; }
-  #spid-button-panel-footer img {
-    max-width: 200px;
-    margin: 5px; }
 
 .spid-button-icon {
   border: none;
@@ -242,11 +225,11 @@ h1 {
   width: 100%;
   max-width: 400px; }
 
-#spid-cancel-access-button {
+.spid-cancel-access-button {
   background-color: #fcfdff;
   padding: 12px 24px;
   color: #50565c;
-  font-family: "Titillium Web", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 600;
   font-size: 16px;
   display: inline-block;
@@ -261,29 +244,15 @@ h1 {
   line-height: 1.5;
   vertical-align: middle;
   cursor: pointer; }
-  #spid-cancel-access-button:active:focus {
+  .spid-cancel-access-button:active:focus {
     -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(92, 111, 130, 0.5);
             box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(92, 111, 130, 0.5); }
-  #spid-cancel-access-button:active {
+  .spid-cancel-access-button:active {
     color: #5c6f82; }
-  #spid-cancel-access-button:hover {
+  .spid-cancel-access-button:hover {
     color: #50565c;
     -webkit-box-shadow: inset 0 0 0 1px #c9cedc;
     box-shadow: inset 0 0 0 1px #c9cedc; }
-
-.spid-button-circular-shadow {
-  position: relative; }
-  .spid-button-circular-shadow::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    -webkit-box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
-    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
-    left: 10%;
-    right: 10%;
-    width: 80%;
-    height: 50%;
-    border-radius: 100%; }
 
 .spid-button-col {
   float: left;
@@ -315,25 +284,6 @@ h1 {
 .spid-button-visibile {
   display: block !important;
   opacity: 0; }
-
-#spid-enter-anim {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden; }
-  #spid-enter-anim::before, #spid-enter-anim::after {
-    content: ''; }
-  #spid-enter-anim::before {
-    width: 180px;
-    height: 48px;
-    background-color: #fff;
-    border-radius: 4px;
-    position: absolute; }
-  #spid-enter-anim::after {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    position: absolute; }
 
 .spid-button-positive {
   color: #fff;
@@ -381,21 +331,32 @@ h1 {
     display: block;
     margin: auto;
     width: 12%;
-    visibility: hidden;
     top: 30%;
     left: 14%; }
 
-#spid-foot-btn {
+.spid-foot-btn {
   text-align: center;
   max-width: 500px;
   bottom: 0;
   background-color: white;
   margin: -40px auto auto auto;
   width: 100%;
-  padding-bottom: 4%; }
+  padding-bottom: 4%;
+  position: relative; }
+  .spid-foot-btn::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    -webkit-box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
+    left: 10%;
+    right: 10%;
+    width: 80%;
+    height: 50%;
+    border-radius: 100%; }
 
 @media screen and (max-width: 767px) {
-  #spid-foot-btn {
+  .spid-foot-btn {
     position: fixed;
     left: 50%;
     -webkit-transform: translateX(-50%);
@@ -414,7 +375,7 @@ h1 {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards; }
 
-#spid-enter-container {
+.spid-enter-container {
   display: block;
   -webkit-transition-duration: 1s;
        -o-transition-duration: 1s;
@@ -425,7 +386,7 @@ h1 {
   -webkit-transition-property: visibility;
   -o-transition-property: visibility;
   transition-property: visibility; }
-  #spid-enter-container[hidden] {
+  .spid-enter-container[hidden] {
     visibility: hidden;
     -webkit-transition-duration: 0s;
          -o-transition-duration: 0s;
@@ -437,40 +398,40 @@ h1 {
          -o-transition-delay: 1s;
             transition-delay: 1s;
     pointer-events: none; }
-    #spid-enter-container[hidden] .spid-button-panel-anim {
+    .spid-enter-container[hidden] .spid-button-panel-anim {
       -webkit-animation-name: anim-panel-out;
               animation-name: anim-panel-out;
       -webkit-animation-duration: 1s;
               animation-duration: 1s; }
-      #spid-enter-container[hidden] .spid-button-panel-anim .spid-button-fade-out-left {
+      .spid-enter-container[hidden] .spid-button-panel-anim .spid-button-fade-out-left {
         -webkit-animation-name: spid-button-logo-left-fade-out;
                 animation-name: spid-button-logo-left-fade-out;
         -webkit-animation-duration: 0.5s;
                 animation-duration: 0.5s;
         -webkit-animation-fill-mode: both;
                 animation-fill-mode: both; }
-      #spid-enter-container[hidden] .spid-button-panel-anim .spid-button-fade-out-right {
+      .spid-enter-container[hidden] .spid-button-panel-anim .spid-button-fade-out-right {
         -webkit-animation-name: spid-button-close-right-fade-out;
                 animation-name: spid-button-close-right-fade-out;
         -webkit-animation-duration: 0.5s;
                 animation-duration: 0.5s;
         -webkit-animation-fill-mode: both;
                 animation-fill-mode: both; }
-      #spid-enter-container[hidden] .spid-button-panel-anim .spid-button-fade-out-bottom {
+      .spid-enter-container[hidden] .spid-button-panel-anim .spid-button-fade-out-bottom {
         -webkit-animation-name: spid-button-title-fade-out;
                 animation-name: spid-button-title-fade-out;
         -webkit-animation-duration: 0.5s;
                 animation-duration: 0.5s;
         -webkit-animation-fill-mode: both;
                 animation-fill-mode: both; }
-  #spid-enter-container:not([hidden]) .spid-button-panel-anim {
+  .spid-enter-container:not([hidden]) .spid-button-panel-anim {
     -webkit-animation-name: anim-panel-in;
             animation-name: anim-panel-in;
     -webkit-animation-duration: 2s;
             animation-duration: 2s;
     -webkit-animation-delay: 0.5s;
             animation-delay: 0.5s; }
-    #spid-enter-container:not([hidden]) .spid-button-panel-anim .spid-button-fade-in-left {
+    .spid-enter-container:not([hidden]) .spid-button-panel-anim .spid-button-fade-in-left {
       -webkit-animation-name: spid-button-logo-left-fade-in;
               animation-name: spid-button-logo-left-fade-in;
       -webkit-animation-duration: 0.5s;
@@ -479,7 +440,7 @@ h1 {
               animation-delay: 0.5s;
       -webkit-animation-fill-mode: both;
               animation-fill-mode: both; }
-    #spid-enter-container:not([hidden]) .spid-button-panel-anim .spid-button-fade-in-right {
+    .spid-enter-container:not([hidden]) .spid-button-panel-anim .spid-button-fade-in-right {
       -webkit-animation-name: spid-button-close-right-fade-in;
               animation-name: spid-button-close-right-fade-in;
       -webkit-animation-duration: 0.5s;
@@ -488,7 +449,7 @@ h1 {
               animation-delay: 1s;
       -webkit-animation-fill-mode: both;
               animation-fill-mode: both; }
-    #spid-enter-container:not([hidden]) .spid-button-panel-anim .spid-button-fade-in-bottom {
+    .spid-enter-container:not([hidden]) .spid-button-panel-anim .spid-button-fade-in-bottom {
       -webkit-animation-name: spid-button-title-fade-in;
               animation-name: spid-button-title-fade-in;
       -webkit-animation-duration: 0.5s;
@@ -854,7 +815,7 @@ h1 {
   100% {
     height: 0; } }
 
-#spid-enter-button-container.spid-button-transition .spid-button {
+.spid-button.spid-button-transition {
   -webkit-animation-name: fadeOutEnterBtn;
           animation-name: fadeOutEnterBtn;
   -webkit-animation-duration: 1s;
@@ -862,7 +823,7 @@ h1 {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards; }
 
-#spid-enter-button-container.spid-button-reverse-enter-transition .spid-button {
+.spid-button.spid-button-reverse-enter-transition {
   -webkit-animation-name: fadeInEnterBtn;
           animation-name: fadeInEnterBtn;
   -webkit-animation-duration: 1s;
@@ -943,12 +904,6 @@ h1 {
       width: 12%; } } }
 
 @-webkit-keyframes spid-hide-little-man {
-  0% {
-    opacity: 0.15;
-    position: absolute;
-    top: 80%;
-    left: 75%;
-    width: 15%; }
   50% {
     opacity: 0; }
   100% {
@@ -956,12 +911,6 @@ h1 {
     left: 0; } }
 
 @keyframes spid-hide-little-man {
-  0% {
-    opacity: 0.15;
-    position: absolute;
-    top: 80%;
-    left: 75%;
-    width: 15%; }
   50% {
     opacity: 0; }
   100% {
