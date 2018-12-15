@@ -2,7 +2,7 @@ describe('SPID', function () {
 
     var SPID = window.SPID,
         axe = window.axe,
-        spidButtonWrapperID = '#spid-enter-container',
+        spidButtonWrapperClass = 'spid-enter-container',
         accediConSpid = 'Accedi a SPID con ',
         supportedProviders = [
             'https://loginspid.aruba.it',
@@ -30,8 +30,8 @@ describe('SPID', function () {
         document.body.appendChild(spidButtonPlaceholder);
     }
 
-    function isElementVisible(elementID) {
-        return !document.querySelector(elementID).hasAttribute('hidden');
+    function isElementVisible(selector) {
+        return !document.querySelector(selector).hasAttribute('hidden');
     }
 
     function domCleanup() {
@@ -42,7 +42,7 @@ describe('SPID', function () {
             sbWrapper.remove();
         });
         Array.from(spidPlaceholder).forEach(function (spidButton) {
-            spidButton.parentElement.remove();
+            spidButton.remove();
         });
     }
 
@@ -84,7 +84,7 @@ describe('SPID', function () {
                 var spidButtonWrapper;
                 // WHEN
                 SPID.init(genericConfig);
-                spidButtonWrapper = document.querySelector(spidButtonWrapperID);
+                spidButtonWrapper = document.querySelector(spidButtonWrapperClass);
                 // THEN
                 expect(!!spidButtonWrapper).toBeTruthy();
                 done();
@@ -95,7 +95,7 @@ describe('SPID', function () {
                 // WHEN
                 SPID.init(genericConfig);
                 // THEN
-                var text = document.getElementById('spid-enter-title-page').innerHTML;
+                var text = document.getElementsByClassName('spid-enter-title-page')[0].innerHTML;
                 expect(text).toEqual('Scegli il tuo provider SPID')
                 done();
             });
@@ -107,7 +107,7 @@ describe('SPID', function () {
                 var spid3 = SPID.init(genericConfig);
                 var spidButtonWrapper;
                 // WHEN
-                spidButtonWrapper = document.querySelectorAll(spidButtonWrapperID);
+                spidButtonWrapper = document.querySelectorAll(spidButtonWrapperClass)[0];
                 // THEN
                 expect(spidButtonWrapper.length).toBe(1);
                 done();
@@ -229,7 +229,7 @@ describe('SPID', function () {
                 it('should not add to providers hidden inputs payload if is a GET', function (done) {
                     // WHEN
                     SPID.init(genericConfig);
-                    var hiddenInputs = document.querySelectorAll('#spid-idp-list input');
+                    var hiddenInputs = document.querySelectorAll('.spid-idp-list input');
                     // THEN
                     expect(hiddenInputs.length).toEqual(0);
                     done();
@@ -245,7 +245,7 @@ describe('SPID', function () {
 
                     // WHEN
                     SPID.init(config);
-                    var title = document.getElementById('spid-enter-title-page').innerHTML;
+                    var title = document.getElementsByClassName('spid-enter-title-page')[0].innerHTML;
                     expect(title).toEqual('Wähle Ihren SPIDProvider')
                     done();
                 });
@@ -317,7 +317,7 @@ describe('SPID', function () {
                     // WHEN
 
                     SPID.init(config);
-                    var providers = document.querySelectorAll('#spid-idp-list form'),
+                    var providers = document.querySelectorAll('.spid-idp-list form'),
                         hiddenInput;
                     for (var i = 0; i < providers.length; i++) {
                         if (providers[i][0].getAttribute('title') === accediConSpid + 'Poste ID') {
@@ -391,8 +391,8 @@ describe('SPID', function () {
                     };
                     // WHEN
                     SPID.init(config);
-                    var providers = document.querySelectorAll('#spid-idp-list a'),
-                        disabled = document.querySelectorAll("#spid-idp-list a[disabled]");
+                    var providers = document.querySelectorAll('.spid-idp-list a'),
+                        disabled = document.querySelectorAll(".spid-idp-list a[disabled]");
                     // THEN
                     expect(disabled.length).toEqual(providers.length - 1);
                     //expect(enabled.length).toEqual(1);
@@ -415,8 +415,8 @@ describe('SPID', function () {
                     };
                     // WHEN
                     SPID.init(config);
-                    var disabled = document.querySelectorAll('#spid-idp-list a[disabled]'),
-                        extraProvider = document.querySelectorAll('#spid-idp-list a[title="Accedi a SPID con Ciccio ID"]');
+                    var disabled = document.querySelectorAll('.spid-idp-list a[disabled]'),
+                        extraProvider = document.querySelectorAll('.spid-idp-list a[title="Accedi a SPID con Ciccio ID"]');
                     // THEN
                     expect(disabled.length).toEqual(supportedProviders.length);
                     expect(extraProvider.length).toEqual(1);
@@ -431,9 +431,9 @@ describe('SPID', function () {
                     };
                     // WHEN
                     SPID.init(config);
-                    var providers = document.querySelectorAll('#spid-idp-list button'),
-                        enabled = document.querySelectorAll("#spid-idp-list button:enabled"),
-                        disabled = document.querySelectorAll("#spid-idp-list button:disabled");
+                    var providers = document.querySelectorAll('.spid-idp-list button'),
+                        enabled = document.querySelectorAll(".spid-idp-list button:enabled"),
+                        disabled = document.querySelectorAll(".spid-idp-list button:disabled");
                     // THEN
                     expect(enabled.length).toEqual(0);
                     expect(disabled.length).toEqual(providers.length);
@@ -451,8 +451,8 @@ describe('SPID', function () {
                         };
                         // WHEN
                         SPID.init(config);
-                        var providers = document.querySelectorAll('#spid-idp-list button'),
-                            hiddenInputs = document.querySelectorAll('#spid-idp-list input[name="testName"]');
+                        var providers = document.querySelectorAll('.spid-idp-list button'),
+                            hiddenInputs = document.querySelectorAll('.spid-idp-list input[name="testName"]');
                         // THEN
                         expect(hiddenInputs.length).toEqual(providers.length);
                         done();
@@ -472,10 +472,10 @@ describe('SPID', function () {
                         };
                         // WHEN
                         SPID.init(config);
-                        var providers = document.querySelectorAll('#spid-idp-list button'),
-                            hiddenInputs = document.querySelectorAll('#spid-idp-list input[name="testName"]'),
-                            fooInput = document.querySelectorAll('#spid-idp-list input[name="foo"]'),
-                            bazInput = document.querySelectorAll('#spid-idp-list input[name="baz"]');
+                        var providers = document.querySelectorAll('.spid-idp-list button'),
+                            hiddenInputs = document.querySelectorAll('.spid-idp-list input[name="testName"]'),
+                            fooInput = document.querySelectorAll('.spid-idp-list input[name="foo"]'),
+                            bazInput = document.querySelectorAll('.spid-idp-list input[name="baz"]');
                         // THEN
                         expect(hiddenInputs.length).toEqual(providers.length);
                         expect(fooInput.length).toEqual(providers.length);
@@ -494,7 +494,7 @@ describe('SPID', function () {
                 // WHEN
                 spid.changeLanguage('en');
                 // THEN
-                var title = document.getElementById('spid-enter-title-page').innerHTML;
+                var title = document.getElementsByClassName('spid-enter-title-page')[0].innerHTML;
                 expect(title).toEqual('Choose your SPID provider');
                 done();
             });
@@ -510,7 +510,7 @@ describe('SPID', function () {
                 SPID.init(genericConfig);
                 // WHEN
                 document.querySelector('.spid-button-size-medium').click();
-                isChoiceModalVisible = isElementVisible(spidButtonWrapperID);
+                isChoiceModalVisible = isElementVisible(spidButtonWrapperClass);
                 // THEN
                 expect(isChoiceModalVisible).toBeTruthy();
                 done();
@@ -523,7 +523,7 @@ describe('SPID', function () {
                 // GIVEN
                 injectSpidPlaceHolder();
                 SPID.init(genericConfig);
-                var choiceModal = document.querySelector('#spid-button-panel-select');
+                var choiceModal = document.querySelector('.spid-button-panel-select');
                 // WHEN
                 document.querySelector('.spid-button.spid-button-size-medium').click();
                 // THEN
@@ -544,8 +544,8 @@ describe('SPID', function () {
 
                 document.querySelector('.spid-button.spid-button-size-medium').click();
                 // WHEN
-                document.querySelector('#spid-button-panel-close-button').click();
-                isChoiceModalVisible = isElementVisible(spidButtonWrapperID);
+                document.querySelector('.spid-button-panel-close-button').click();
+                isChoiceModalVisible = isElementVisible(spidButtonWrapperClass);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
                 done();
@@ -560,8 +560,8 @@ describe('SPID', function () {
 
                 document.querySelector('.spid-button.spid-button-size-medium').click();
                 // WHEN
-                document.querySelector('#spid-cancel-access-button').click();
-                isChoiceModalVisible = isElementVisible(spidButtonWrapperID);
+                document.querySelector('.spid-cancel-access-button').click();
+                isChoiceModalVisible = isElementVisible(spidButtonWrapperClass);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
                 done();
@@ -577,7 +577,7 @@ describe('SPID', function () {
                 document.querySelector('.spid-button.spid-button-size-medium').click();
                 // WHEN
                 triggerKeyEvent(27);
-                isChoiceModalVisible = isElementVisible(spidButtonWrapperID);
+                isChoiceModalVisible = isElementVisible(spidButtonWrapperClass);
                 // THEN
                 expect(isChoiceModalVisible).toBeFalsy();
                 done();
@@ -600,7 +600,7 @@ describe('SPID', function () {
                 // WHEN
                 SPID.init(genericConfig);
                 // Mostra il modale dei providers
-                spidButtonWrapper = document.querySelector(spidButtonWrapperID);
+                spidButtonWrapper = document.querySelector(spidButtonWrapperClass);
                 spidButtonWrapper.removeAttribute('hidden');
                 // THEN
                 axe.run(spidButtonWrapper, axeOptions, function (error, result) {

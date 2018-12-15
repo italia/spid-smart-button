@@ -21,7 +21,7 @@ h1 {
   filter: url('../img/gray.svg#grayscale');
 }
 
-#spid-idp-list {
+.spid-idp-list {
     display: flex;
     flex-flow: row wrap;
 
@@ -81,24 +81,18 @@ h1 {
     }
 }
 
-.spid-button-display-logo {
+.spid-button-logo {
     float: left;
     width: 50%;
 }
 
-.spid-button-display-close {
+.spid-button-close-button {
     float: right;
     margin-top: 5px;
 }
 
-.spid-button-font {
+.spid-button, .spid-cancel-access-button {
     font-family: "Titillium Web", HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
-}
-
-.spid-button-non-hai-spid-font {
-    margin-right: 5px;
-    font-size: 15px;
-    font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .spid-button-navigable {
@@ -107,28 +101,31 @@ h1 {
     font-size: 1em;
 }
 
-.spid-button-link {
-    cursor: pointer;
-    font-weight: bold;
-    color: #06c;
-}
-
-#spid-enter-container {
+.spid-enter-container {
     position: fixed;
     z-index: 999;
     top: 0;
     left: 0;
 }
 
-#spid-non-hai-spid {
+.spid-non-hai-spid {
     margin-top: 10px;
     margin-bottom: 10px;
-    text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
+    
+    text-align: center;
+    font-size: 15px;
+    font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
-#spid-enter {
+.spid-non-hai-spid a {
+    cursor: pointer;
+    font-weight: bold;
+    color: #06c;
+}
+
+.spid-enter {
     height: 0; // fix Safari, non comprime l'altezza del div quando i figli sono nascosti
 }
 
@@ -156,7 +153,7 @@ h1 {
     min-width: 300px;
     padding: 40px;
 
-    .spid-button-display-logo {
+    .spid-button-logo {
         float: left;
         width: 33.33333vw;
         font-size: 30px;
@@ -184,24 +181,22 @@ h1 {
         & img {
             max-height: 50px;
         }
-    }
 
-    .spid-button-display-logo img {
-        max-height: 37px;
-    }
-
-    .spid-button-panel-element {
         min-width: 32px;
+    }
+
+    .spid-button-logo img {
+        max-height: 37px;
     }
 }
 
-#spid-button-panel-content {
+.spid-button-panel-content {
     position: relative;
     display: block;
     min-width: 300px;
     margin-bottom: 10px;
 
-    #spid-enter-title-page {
+    .spid-enter-title-page {
         background: transparent;
         display: block;
         text-align: center;
@@ -215,23 +210,6 @@ h1 {
     height: 100%;
     margin-bottom: 60px;
     max-width: 500px;
-}
-
-#spid-button-panel-footer {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-    overflow: hidden;
-    text-align: center;
-    color: #fff;
-    background-color: #06c;
-    backface-visibility: hidden;
-
-    & img {
-        max-width: 200px;
-        margin: 5px;
-    }
 }
 
 .spid-button-icon {
@@ -302,7 +280,7 @@ h1 {
     max-width: 400px;
 }
 
-#spid-cancel-access-button {
+.spid-cancel-access-button {
     background-color: #fcfdff;
     padding: 12px 24px;
     color: #50565c;
@@ -333,23 +311,6 @@ h1 {
         color: #50565c;
         -webkit-box-shadow: inset 0 0 0 1px #c9cedc;
         box-shadow: inset 0 0 0 1px #c9cedc;
-    }
-}
-
-.spid-button-circular-shadow {
-    position: relative;
-
-    &::after {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        -webkit-box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
-        box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
-        left: 10%;
-        right: 10%;
-        width: 80%;
-        height: 50%;
-        border-radius: 100%;
     }
 }
 
@@ -393,33 +354,6 @@ h1 {
 .spid-button-visibile {
     display: block !important;
     opacity: 0;
-}
-
-#spid-enter-anim {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-
-    &::before,
-    &::after {
-        content: '';
-    }
-
-    &::before {
-        width: 180px;
-        height: 48px;
-        background-color: #fff;
-        border-radius: 4px;
-        position: absolute;
-    }
-
-    &::after {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        position: absolute;
-    }
 }
 
 .spid-button-positive {
@@ -487,13 +421,12 @@ h1 {
         display: block;
         margin: auto;
         width: 12%;
-        visibility: hidden;
         top: 30%;
         left: 14%;
     }
 }
 
-#spid-foot-btn {
+.spid-foot-btn {
     text-align: center;
     max-width: 500px;
     bottom: 0;
@@ -501,10 +434,25 @@ h1 {
     margin: -40px auto auto auto;
     width: 100%;
     padding-bottom: 4%;
+
+    // circular shadow
+    position: relative;
+    &::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        -webkit-box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
+        box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);
+        left: 10%;
+        right: 10%;
+        width: 80%;
+        height: 50%;
+        border-radius: 100%;
+    }
 }
 
 @media screen and (max-width: 767px) {
-    #spid-foot-btn {
+    .spid-foot-btn {
         position: fixed;
         left: 50%;
         transform: translateX(-50%);

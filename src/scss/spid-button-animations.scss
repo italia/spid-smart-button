@@ -6,7 +6,7 @@
     animation-fill-mode: forwards;
 }
 
-#spid-enter-container {
+.spid-enter-container {
     display: block;
     transition-duration: 1s;
     transition-delay: 0.5s;
@@ -321,20 +321,16 @@ $animIconDistanceEnd: 120;
     }
 }
 
-#spid-enter-button-container {
+.spid-button {
     &.spid-button-transition {
-        .spid-button {
-            animation-name: fadeOutEnterBtn;
-            animation-duration: 1s;
-            animation-fill-mode: forwards;
-        }
+        animation-name: fadeOutEnterBtn;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
     }
 
     &.spid-button-reverse-enter-transition {
-        .spid-button {
-            animation-name: fadeInEnterBtn;
-            animation-duration: 1s;
-        }
+        animation-name: fadeInEnterBtn;
+        animation-duration: 1s;
     }
 }
 

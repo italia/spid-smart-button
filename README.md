@@ -38,7 +38,7 @@ Nel momento in cui lo spid-smart-button sara' disponibile tramite CDN, sarà suf
 Nel punto in cui si intende posizionare il bottone si dovrà inserire un placeholder `<div>` come da esempio:
 
 ```html
-<div id="spid-button" aria-live="polite">
+<div id="spid-button">
     <noscript>
         Il login tramite SPID richiede che JavaScript sia abilitato nel browser.
     </noscript>

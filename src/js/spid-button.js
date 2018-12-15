@@ -63,7 +63,7 @@ var SPID = (function () {
             var focusElement = setInterval(function () {
                 element.focus();
             }, 100);
-            spid._spidPanelSelect.addEventListener('focus', function () {
+            element.addEventListener('focus', function () {
                 clearInterval(focusElement);
             });
         }
@@ -80,8 +80,37 @@ var SPID = (function () {
         var EscKeyHandler;
         spidObj.prototype._showProvidersPanel = function () {
             var spid = this;
-            spid._showElement(spid._spidButtonWrapper);
-            spid._giveFocusTo(spid._spidPanelSelect);
+            
+            spid._btn.classList.add("spid-button-transition");
+            spid._showElement(spid._wrapper);
+            spid._giveFocusTo(spid._wrapper.querySelector('.spid-button-panel-select'));
+
+            spid._wrapper.querySelector('.spid-button-logo').classList.add('spid-button-fade-in-left');
+            spid._wrapper.querySelector('.spid-button-close-button').classList.add('spid-button-fade-in-left');
+            spid._wrapper.querySelector('.spid-button-panel-select').classList.add('spid-button-panel-anim');
+            spid._btn.querySelector('.spid-button-icon').classList.add('spid-button-icon-animation');
+            spid._btn.querySelector('.spid-button-icon').classList.add('in');
+            var providerButtons = spid._wrapper.querySelectorAll('.spid-button-idp');
+            var delaySeconds = 1.10;
+            providerButtons.forEach(function(btn) {
+                btn.classList.add('spid-button-idp-fade-in');
+                btn.setAttribute('style', 'animation-delay: ' + delaySeconds + 's');
+                delaySeconds = delaySeconds + 0.10;
+            });
+            
+            setTimeout(function () {
+                spid._btn.classList.remove('spid-button-transition');
+                spid._wrapper.querySelector('.spid-button-logo').classList.remove('spid-button-fade-in-left');
+                spid._wrapper.querySelector('.spid-button-close-button').classList.remove('spid-button-fade-in-left');
+                spid._wrapper.querySelector('.spid-button-panel-select').classList.remove('spid-button-panel-anim');
+                providerButtons.forEach(function(btn) {
+                    btn.classList.remove('spid-button-idp-fade-in');
+                    btn.removeAttribute('style');
+                });
+            }, 2000);
+            
+
+            // setup the Esc Key handler
             EscKeyHandler = function (event) {
                 spid._handleEscKeyEvent(event);
             };
@@ -90,106 +119,64 @@ var SPID = (function () {
 
         spidObj.prototype._hideProvidersPanel = function () {
             var spid = this;
-            spid._hideElement(spid._spidButtonWrapper);
-            spid._exitChoiceModalAnimations();
+
+            spid._hideElement(spid._wrapper);
+            spid._btn.querySelector('.spid-button-icon').classList.remove('in');
+            spid._wrapper.querySelector('.spid-button-little-man-icon').classList.add('spid-button-logo-animation-out');
+            spid._wrapper.querySelector('.spid-button-panel-select').classList.add('spid-button-panel-anim');
+            spid._btn.classList.remove('spid-button-transition');
+            spid._btn.classList.add('spid-button-reverse-enter-transition');
+            setTimeout(function () {
+                spid._btn.classList.remove('spid-button-reverse-enter-transition');
+                spid._wrapper.querySelector('.spid-button-little-man-icon').classList.remove('spid-button-logo-animation-out');
+
+            }, 2000);
 
             // unbind Esc key listener
             document.removeEventListener('keyup', EscKeyHandler);
             EscKeyHandler = null;
         };
 
-        spidObj.prototype._exitChoiceModalAnimations = function() {
-            // TODO: limit this to our markup or namespace
-            var elem = document.getElementsByClassName('choosedButton')[0];
-            document.getElementsByClassName('spid-button-icon')[0].classList.remove('in');
-            document.getElementsByClassName('spid-button-little-man-icon')[0].classList.add('spid-button-logo-animation-out');
-            document.getElementById('spid-button-panel-select').classList.add('spid-button-panel-anim');
-            elem.classList.remove('spid-button-transition');
-            elem.classList.remove('choosedButton');
-            elem.classList.add('spid-button-reverse-enter-transition');
-            setTimeout(function () {
-                elem.classList.remove('spid-button-reverse-enter-transition');
-                //document.getElementsByClassName('agid-spid-enter-icon')[0].classList.remove('agid-spid-enter-icon-animation-out');
-                document.getElementsByClassName('spid-button-little-man-icon')[0].classList.remove('spid-button-logo-animation-out');
-
-            }, 2000);
-        }
-
         spidObj.prototype._render = function () {
             var spid = this;
+            
+            // only the first matching placeholder will be rendered
+            var placeholder = document.querySelector(spid.config.selector);
+            if (!placeholder) {
+                console.warn('Nessun placeholder HTML trovato nella pagina per i pulsanti SPID.');
+                return;
+            }
+            placeholder.setAttribute("aria-live", "polite");
+            placeholder.innerHTML += spid._renderButton();
 
+            spid._btn = placeholder.querySelector('.spid-button');
+            spid._btn.addEventListener('click', function (e) {
+                spid._showProvidersPanel();
+            });
+            
             // render modal containers
-            var wrapperId = 'spid-enter-container';
-
             // if wrapper does not exist, create it
-            if (!document.getElementById(wrapperId)) {
+            if (!spid._btn.querySelector('.spid-enter-container')) {
                 loadStylesheet(SPID.stylesheetUrl);
 
                 // add containers wrapper
-                spid._spidButtonWrapper = document.createElement('section');
-                spid._spidButtonWrapper.id = wrapperId;
-                spid._hideElement(spid._spidButtonWrapper);
-                document.body.insertBefore(spid._spidButtonWrapper, document.body.firstChild);
-                spid._spidButtonWrapper.innerHTML = '<div id="spid-enter"></div>';
+                spid._wrapper = document.createElement('section');
+                spid._wrapper.classList.add('spid-enter-container');
+                spid._hideElement(spid._wrapper);
+                placeholder.insertBefore(spid._wrapper, placeholder.firstChild);
+                spid._wrapper.innerHTML = '<div class="spid-enter"></div>';
             }
 
             // render providers
-            var modal = document.querySelector('#spid-enter');
-            modal.innerHTML = spid._renderProvidersChoiceModal();
-            
+            spid._wrapper.querySelector('.spid-enter').innerHTML = spid._renderProvidersChoiceModal();
+
             // Vengono creati una sola volta all'init e non necessitano unbind
-            document.querySelector('#spid-button-panel-close-button').addEventListener('click', function () {
+            spid._wrapper.querySelector('.spid-button-panel-close-button').addEventListener('click', function (e) {
                 spid._hideProvidersPanel();
             });
-            document.querySelector('#spid-cancel-access-button').addEventListener('click', function () {
+            spid._wrapper.querySelector('.spid-cancel-access-button').addEventListener('click', function (e) {
                 spid._hideProvidersPanel();
             });
-
-            // update buttons
-            var spidButtonsPlaceholders = document.querySelectorAll(spid.config.selector);
-            if (spidButtonsPlaceholders.length == 0) {
-                console.warn('Nessun placeholder HTML trovato nella pagina per i pulsanti SPID.');
-                return;
-            };
-
-            // Binda gli eventi dopo aver renderizzato i pulsanti SPID
-            for (var i = 0; i < spidButtonsPlaceholders.length; i++) {
-                spidButtonsPlaceholders[i].innerHTML = spid._renderButton();
-                var spidButtons = document.querySelectorAll('.spid-button');
-                spidButtons.forEach(function (spidbtn) {
-                    spidbtn.addEventListener('click', function () {
-                        var parent = spidbtn.parentElement;
-                        parent.classList.add("spid-button-transition");
-                        parent.classList.add("choosedButton");
-                        spid._showProvidersPanel();
-
-                        document.getElementById('spid-button-logo').classList.add('spid-button-fade-in-left');
-                        document.getElementById('spid-button-close-button').classList.add('spid-button-fade-in-left');
-                        document.getElementById('spid-button-panel-select').classList.add('spid-button-panel-anim');
-                        document.getElementsByClassName('spid-button-icon')[0].classList.add('spid-button-icon-animation');
-                        document.getElementsByClassName('spid-button-icon')[0].classList.add('in');
-                        var spidProvidersBtn = document.getElementsByClassName('spid-button-idp');
-                        var delaySeconds = 1.10;
-                        for (var j = 0; j < spidProvidersBtn.length; j++) {
-                            spidProvidersBtn[j].classList.add('spid-button-idp-fade-in');
-                            spidProvidersBtn[j].setAttribute('style', 'animation-delay: ' + delaySeconds + 's');
-                            delaySeconds = delaySeconds + 0.10;
-                        }
-                        setTimeout(function () {
-                            parent.classList.remove('spid-button-transition');
-                            document.getElementById('spid-button-logo').classList.remove('spid-button-fade-in-left');
-                            document.getElementById('spid-button-close-button').classList.remove('spid-button-fade-in-left');
-                            document.getElementById('spid-button-panel-select').classList.remove('spid-button-panel-anim');
-                            for (var t = 0; t < spidProvidersBtn.length; t++) {
-                                spidProvidersBtn[t].classList.remove('spid-button-idp-fade-in');
-                                spidProvidersBtn[t].removeAttribute('style');
-                            }
-                        }, 2000);
-                    });
-                });
-            }
-            
-            spid._spidPanelSelect = document.querySelector('#spid-button-panel-select');
         };
 
         // Null safe access, se la label non è trovata non si verificano errori runtime, suggerimento in console
@@ -222,35 +209,35 @@ var SPID = (function () {
             });
 
             return [
-                '<section id="spid-button-panel-select" class="spid-button-panel" aria-labelledby="spid-enter-title-page" tabindex="0">',
+                '<section class="spid-button-panel spid-button-panel-select" aria-label="', spid._getI18n('scegli_provider_SPID'), '" tabindex="0">',
                     '<header class="spid-button-header">',
-                        '<div class="spid-button-panel-back spid-button-panel-element">',
-                            '<div id="spid-button-logo" class="spid-button-display-logo spid-button-fade-out-left">',
+                        '<div class="spid-button-panel-back">',
+                            '<div class="spid-button-logo spid-button-fade-out-left">',
                             imageTag('img/spid-logo', spid._getI18n('alt_logo_SPID')),
                             '</div>',
-                            '<div id="spid-button-close-button" class="spid-button-display-close spid-button-fade-out-right">',
-                                '<button tabindex="0" id="spid-button-panel-close-button" class="spid-button-navigable" aria-labelledby="spid-cancel-access-button">',
+                            '<div class="spid-button-close-button spid-button-fade-out-right">',
+                                '<button tabindex="0" class="spid-button-panel-close-button spid-button-navigable">',
                                 imageTag('img/close', spid._getI18n('naviga_indietro')),
                                 '</button>',
                             '</div>',
                         '</div>',
                     '</header>',
 
-                    '<div id="spid-button-panel-content">',
-                        '<img class="spid-button-little-man-icon" src="', SPID.assetsBaseUrl, imgPath,'" alt="',spid._getI18n('entra_con_SPID'),'" class="spid-button-littleMan-icon"></img>',
+                    '<div class="spid-button-panel-content">',
+                        '<img class="spid-button-little-man-icon" src="', SPID.assetsBaseUrl, imgPath,'" alt="',spid._getI18n('entra_con_SPID'),'"></img>',
                         '<div class="spid-button-panel-content-center">',
-                            '<h1 id="spid-enter-title-page" class="spid-button-fade-in-bottom spid-button-fade-out-bottom">', spid._getI18n('scegli_provider_SPID'),'</h1>',
-                            '<div id="spid-idp-list">',
+                            '<h1 class="spid-enter-title-page spid-button-fade-in-bottom spid-button-fade-out-bottom">', spid._getI18n('scegli_provider_SPID'),'</h1>',
+                            '<div class="spid-idp-list">',
                                 providerButtons,
                             '</div>',
-                            '<div id="spid-non-hai-spid">',
-                                '<span class="spid-button-non-hai-spid-font">', spid._getI18n("non_hai_SPID"),'</span>',
-                                '<a id="spid-nonhai-spid" class="spid-button-link spid-button-non-hai-spid-font" href="https://www.spid.gov.it/richiedi-spid" target="_blank">' , spid._getI18n("scopri_di_piu"),'</a>',
+                            '<div class="spid-non-hai-spid">',
+                                spid._getI18n("non_hai_SPID"),
+                                ' <a href="https://www.spid.gov.it/richiedi-spid" target="_blank">' , spid._getI18n("scopri_di_piu"),'</a>',
                             '</div>',
                         '</div>',
-                        '<div id="spid-foot-btn" class="spid-button-circular-shadow">',
-                            '<button id="spid-cancel-access-button" class="spid-button-font">',
-                                '<span>', spid._getI18n('annulla_accesso'), '</span>',
+                        '<div class="spid-foot-btn">',
+                            '<button class="spid-cancel-access-button">',
+                                spid._getI18n('annulla_accesso'),
                             '</button>',
                         '</div>',
                     '</div>',
@@ -318,14 +305,12 @@ var SPID = (function () {
             var fluid = spid.config.fluid ? " spid-button-fluid " : "";
             var imgPath = spid.config.colorScheme == 'negative' ? 'img/spid-ico-circle-lb.svg' : 'img/spid-ico-circle-bb.svg';
             return [
-                '<div id="spid-enter-button-container">',
-                    '<button class="spid-button spid-button-font spid-button-', spid.config.colorScheme, ' spid-button-', spid.config.cornerStyle, ' spid-button-size-', spid.config.size, fluid,'" hidden>',
-                        '<span aria-hidden="true" class="spid-button-icon">',
-                            '<img src="', SPID.assetsBaseUrl, imgPath,'" alt="', spid._getI18n('entra_con_SPID'),'" />',
-                        '</span>',
-                        '<span class="spid-button-text">', spid._getI18n('entra_con_SPID'), '</span>',
-                    '</button>',
-                '</div>',
+                '<button class="spid-button spid-button-', spid.config.colorScheme, ' spid-button-', spid.config.cornerStyle, ' spid-button-size-', spid.config.size, fluid,'" hidden>',
+                    '<span aria-hidden="true" class="spid-button-icon">',
+                        '<img src="', SPID.assetsBaseUrl, imgPath,'" alt="', spid._getI18n('entra_con_SPID'),'" />',
+                    '</span>',
+                    '<span class="spid-button-text">', spid._getI18n('entra_con_SPID'), '</span>',
+                '</button>',
             ].join('');
         };
 
@@ -358,6 +343,9 @@ var SPID = (function () {
                 if (typeof config !== 'object' || config === null) {
                     error = 'Non è stata fornita la configurazione';
                 } else {
+                    // clone config as we are going to change it
+                    config = JSON.parse(JSON.stringify(config));
+
                     // apply defaults
                     for (var key in defaults)
                         if (!(key in config))
@@ -368,8 +356,6 @@ var SPID = (function () {
                         error = 'Non è stato fornito l\'url obbligatorio in configurazione';
                     } else if (config.method == 'GET' && config.url.indexOf('{{idp}}') === -1) {
                         error = 'L\'url non contiene il placeholder {{idp}}';
-                    } else if (!config.supported || config.supported.length < 1) {
-                        error = 'Non sono stati forniti gli IdP supportati nel parametro \'supported\'';
                     } else if (supportedSizes.indexOf(config.size) === -1) {
                         error = 'Le dimensioni supportate sono ' + supportedSizes + '; valore non valido:' + config.size;
                     } else if (supportedColorScheme.indexOf(config.colorScheme) === -1) {
@@ -387,7 +373,6 @@ var SPID = (function () {
                 
                 // clone providers
                 var providers = JSON.parse(JSON.stringify(SPID.providers));
-                config.supported = JSON.parse(JSON.stringify(config.supported));  // we are going to modify it
 
                 // add extra providers  
                 config.extraProviders.forEach(function (idp) {

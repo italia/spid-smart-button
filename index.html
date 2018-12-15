@@ -10,8 +10,8 @@
     <script type="text/javascript">
         /* eslint-disable indent */
         document.addEventListener('DOMContentLoaded', function () {
-            var spid = SPID.init({
-                lang: 'it',
+            SPID.init({
+                //lang: 'it',
                 selector: '#my-spid-button',  // opzionale
                 method: 'POST',               // opzionale
                 url: '/Login/{{idp}}',
@@ -35,9 +35,21 @@
                     'https://id.lepida.it/idp/shibboleth'
                 ],
                 protocol: "SAML",
-                size: "large",
+                size: "medium",
                 colorScheme: "positive",
                 cornerStyle: "rounded"
+            });
+
+            SPID.init({
+                selector: '#my-spid-button2',  // opzionale
+                url: '/Login/{{idp}}',
+                supported: [],
+                extraProviders: [
+                    {
+                        "entityID": "https://testidp.mycorp.com/",
+                        "entityName": "Test IdP"
+                    }
+                ]
             });
         });
 
@@ -45,14 +57,14 @@
     </script>
 </head>
 
-<body>
-    <section>
-        <div id="my-spid-button" aria-live="polite">
-            <noscript>
-                Il login tramite SPID richiede che JavaScript sia abilitato nel browser
-            </noscript>
-        </div>
-    </section>
+<body style="background-color: #EEE">
+    <div id="my-spid-button">
+        <noscript>
+            Il login tramite SPID richiede che JavaScript sia abilitato nel browser
+        </noscript>
+    </div>
+
+    <div id="my-spid-button2"></div>
 </body>
 
 </html>
