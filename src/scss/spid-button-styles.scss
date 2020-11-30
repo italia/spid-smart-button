@@ -97,7 +97,8 @@ $font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Hel
     margin-top: 5px;
 }
 
-.spid-button, .spid-cancel-access-button {
+.spid-button,
+.spid-cancel-access-button {
     font-family: $font-family;
 }
 
@@ -119,7 +120,6 @@ $font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Hel
     margin-bottom: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
-    
     text-align: center;
     font-size: 15px;
     font-family: $font-family;
@@ -438,9 +438,9 @@ $font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Hel
     margin: -40px auto auto auto;
     width: 100%;
     padding-bottom: 4%;
-
     // circular shadow
     position: relative;
+
     &::after {
         content: "";
         position: absolute;
