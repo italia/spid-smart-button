@@ -77,8 +77,8 @@
     "lighthouse": "^2.7.0",
     "load-grunt-tasks": "^5.1.0",
     "node-sass": "^5.0.0",
-    "promise-polyfill": "^6.0.2",
-    "stylelint": "^8.2.0",
-    "stylelint-config-standard": "^17.0.0"
+    "promise-polyfill": "^8.2.0",
+    "stylelint": "^13.8.0",
+    "stylelint-config-standard": "^20.0.0"
   }
 }
