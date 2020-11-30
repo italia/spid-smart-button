@@ -57,7 +57,7 @@
     "grunt": "grunt"
   },
   "devDependencies": {
-    "axe-core": "^2.4.2",
+    "axe-core": "^4.1.1",
     "eslint-config-crockford": "^2.0.0",
     "eslint-plugin-jasmine": "^4.1.1",
     "grunt": "^1.3.0",
