@@ -1,6 +1,6 @@
 {
   "name": "spid-smart-button",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Pulsante SSO per SPID",
   "engines": {
     "node": ">=6.1.0"
