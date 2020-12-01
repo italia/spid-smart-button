@@ -394,3 +394,4 @@ var SPID = (function () {
             }
         };
     })();
+module.exports = SPID;

@@ -1,5 +1,5 @@
 {
-  "name": "spid-smart-button",
+  "name": "@italia/spid-smart-button",
   "version": "1.1.1",
   "description": "Pulsante SSO per SPID",
   "engines": {
