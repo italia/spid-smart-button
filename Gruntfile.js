@@ -13,10 +13,9 @@ module.exports = function (grunt) {
         umd: {
             all: {
               options: {
-                src: 'src/js/spid-button.js',
-                dest: 'dist/spid-umd-button.js',
+                src: 'dist/spid-button-mix.js',
+                dest: 'dist/spid-button-umd.js',
                 objectToExport: 'SPID', 
-                amdModuleId: 'SPID',
                 globalAlias: 'SPID',
               }
             }
@@ -111,6 +110,21 @@ module.exports = function (grunt) {
 
         // JavaScript minify
         uglify: {
+            mix: {
+                options: {
+                    mangle: false,
+                    beautify: true,
+                    compress: false
+                },
+                files: {
+                    'dist/spid-button-mix.js': [
+                        'src/js/spid-button.js',
+                        'src/js/i18n.js',
+                        'src/js/providers.js',
+                        'src/js/config-dev.js'
+                    ]
+                }
+            },
             dev: {
                 options: {
                     mangle: false,
@@ -119,10 +133,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/spid-button.min.js': [
-                        'dist/spid-umd-button.js',
-                        'src/js/i18n.js',
-                        'src/js/providers.js',
-                        'src/js/config-dev.js'
+                        'dist/spid-button-umd.js',
                     ]
                 }
             },
@@ -136,10 +147,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/spid-button.min.js': [
-                        'dist/spid-umd-button.js',
-                        'src/js/i18n.js',
-                        'src/js/providers.js',
-                        'src/js/config.js'
+                        'dist/spid-button-umd.js',
                     ]
                 }
             }
@@ -191,7 +199,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
-    grunt.registerTask('build:prod', ['sass:prod', 'postcss:prod', 'copy:prod', 'umd:all', 'uglify:prod']);
-    grunt.registerTask('build:dev', ['sass:dev', 'postcss:dev', 'umd:all', 'uglify:dev']);
+    grunt.registerTask('build:prod', ['sass:prod', 'postcss:prod', 'copy:prod', 'uglify:mix', 'umd:all', 'uglify:prod']);
+    grunt.registerTask('build:dev', ['sass:dev', 'postcss:dev', 'uglify:mix', 'umd:all', 'uglify:dev']);
     grunt.registerTask('test', ['jasmine', 'log-jasmine']);
 };
