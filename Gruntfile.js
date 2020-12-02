@@ -10,7 +10,17 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-
+        umd: {
+            all: {
+              options: {
+                src: 'src/js/spid-button.js',
+                dest: 'dist/spid-umd-button.js',
+                objectToExport: 'SPID', 
+                amdModuleId: 'SPID',
+                globalAlias: 'SPID',
+              }
+            }
+        },
 
         watch: {
             build: {
@@ -109,7 +119,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/spid-button.min.js': [
-                        'src/js/spid-button.js',
+                        'dist/spid-umd-button.js',
                         'src/js/i18n.js',
                         'src/js/providers.js',
                         'src/js/config-dev.js'
@@ -126,7 +136,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/spid-button.min.js': [
-                        'src/js/spid-button.js',
+                        'dist/spid-umd-button.js',
                         'src/js/i18n.js',
                         'src/js/providers.js',
                         'src/js/config.js'
@@ -167,6 +177,8 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-umd');
+
     grunt.registerTask('log-jasmine', function () {
         grunt.log.writeln('La pagina specrunner di jasmine si trova in:');
         grunt.log.writeln(localhostUrl + '/_SpecRunner.html');
@@ -179,7 +191,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
-    grunt.registerTask('build:prod', ['sass:prod', 'postcss:prod', 'copy:prod', 'uglify:prod']);
-    grunt.registerTask('build:dev', ['sass:dev', 'postcss:dev', 'uglify:dev']);
+    grunt.registerTask('build:prod', ['sass:prod', 'postcss:prod', 'copy:prod', 'umd:all', 'uglify:prod']);
+    grunt.registerTask('build:dev', ['sass:dev', 'postcss:dev', 'umd:all', 'uglify:dev']);
     grunt.registerTask('test', ['jasmine', 'log-jasmine']);
 };
