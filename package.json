@@ -46,6 +46,7 @@
     "security": "grunt retire",
     "start": "grunt build:prod && grunt serve",
     "serve": "grunt build:dev && grunt serve",
+    "build": "grunt build:prod",
     "build-prod": "grunt build:prod",
     "build-watch": "grunt watch:build",
     "lint": "grunt lint",
@@ -56,6 +57,10 @@
     "prepush": "npm test",
     "grunt": "grunt"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "devDependencies": {
     "axe-core": "^4.1.1",
     "eslint-config-crockford": "^2.0.0",

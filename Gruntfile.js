@@ -1,4 +1,3 @@
-
 module.exports = function (grunt) {
     var fs = require('fs'),
     pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8')),
