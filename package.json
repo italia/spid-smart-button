@@ -42,7 +42,6 @@
     }
   ],
   "scripts": {
-    "preinstall": "node tasksConfig/check-node-version.js",
     "security": "grunt retire",
     "start": "grunt build:prod && grunt serve",
     "serve": "grunt build:dev && grunt serve",
