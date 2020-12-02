@@ -110,7 +110,7 @@ module.exports = function (grunt) {
 
         // JavaScript minify
         uglify: {
-            mix: {
+            mix_dev: {
                 options: {
                     mangle: false,
                     beautify: true,
@@ -122,6 +122,21 @@ module.exports = function (grunt) {
                         'src/js/i18n.js',
                         'src/js/providers.js',
                         'src/js/config-dev.js'
+                    ]
+                }
+            },
+            mix_prod: {
+                options: {
+                    mangle: false,
+                    beautify: true,
+                    compress: false
+                },
+                files: {
+                    'dist/spid-button-mix.js': [
+                        'src/js/spid-button.js',
+                        'src/js/i18n.js',
+                        'src/js/providers.js',
+                        'src/js/config.js'
                     ]
                 }
             },
@@ -199,7 +214,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
-    grunt.registerTask('build:prod', ['sass:prod', 'postcss:prod', 'copy:prod', 'uglify:mix', 'umd:all', 'uglify:prod']);
-    grunt.registerTask('build:dev', ['sass:dev', 'postcss:dev', 'uglify:mix', 'umd:all', 'uglify:dev']);
+    grunt.registerTask('build:prod', ['sass:prod', 'postcss:prod', 'copy:prod', 'uglify:mix_prod', 'umd:all', 'uglify:prod']);
+    grunt.registerTask('build:dev', ['sass:dev', 'postcss:dev', 'uglify:mix_dev', 'umd:all', 'uglify:dev']);
     grunt.registerTask('test', ['jasmine', 'log-jasmine']);
 };
