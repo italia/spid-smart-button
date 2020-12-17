@@ -10,11 +10,6 @@ if (stripNonDigits(supportedNodeVersion) !== stripNonDigits(currentNodeVersion))
     console.log('Questo progetto è stato sviluppato con la versione di node.js', supportedNodeVersion);
 }
 
-if (stripNonDigits(supportedNodeVersion) < stripNonDigits(currentNodeVersion)) {
-    console.log('la versione rilevata è superiore:', currentNodeVersion);
-    console.log('Se ci sono problemi con l\'installazione delle dipendenze prova a fare un downgrade della tua versione di node.js\n\n');
-}
-
 if (stripNonDigits(supportedNodeVersion) > stripNonDigits(currentNodeVersion)) {
     console.log('la versione rilevata è inferiore:', currentNodeVersion);
     console.log('Se ci sono problemi con l\'installazione delle dipendenze prova a fare un upgrade della tua versione di node.js\n\n');
