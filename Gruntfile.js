@@ -1,4 +1,3 @@
-
 module.exports = function (grunt) {
     var fs = require('fs'),
     pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8')),
@@ -10,7 +9,16 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-
+        umd: {
+            all: {
+              options: {
+                src: 'dist/spid-button-mix.js',
+                dest: 'dist/spid-button-umd.js',
+                objectToExport: 'SPID', 
+                globalAlias: 'SPID',
+              }
+            }
+        },
 
         watch: {
             build: {
@@ -101,6 +109,36 @@ module.exports = function (grunt) {
 
         // JavaScript minify
         uglify: {
+            mix_dev: {
+                options: {
+                    mangle: false,
+                    beautify: true,
+                    compress: false
+                },
+                files: {
+                    'dist/spid-button-mix.js': [
+                        'src/js/spid-button.js',
+                        'src/js/i18n.js',
+                        'src/js/providers.js',
+                        'src/js/config-dev.js'
+                    ]
+                }
+            },
+            mix_prod: {
+                options: {
+                    mangle: false,
+                    beautify: true,
+                    compress: false
+                },
+                files: {
+                    'dist/spid-button-mix.js': [
+                        'src/js/spid-button.js',
+                        'src/js/i18n.js',
+                        'src/js/providers.js',
+                        'src/js/config.js'
+                    ]
+                }
+            },
             dev: {
                 options: {
                     mangle: false,
@@ -109,10 +147,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/spid-button.min.js': [
-                        'src/js/spid-button.js',
-                        'src/js/i18n.js',
-                        'src/js/providers.js',
-                        'src/js/config-dev.js'
+                        'dist/spid-button-umd.js',
                     ]
                 }
             },
@@ -126,10 +161,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/spid-button.min.js': [
-                        'src/js/spid-button.js',
-                        'src/js/i18n.js',
-                        'src/js/providers.js',
-                        'src/js/config.js'
+                        'dist/spid-button-umd.js',
                     ]
                 }
             }
@@ -167,6 +199,8 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-umd');
+
     grunt.registerTask('log-jasmine', function () {
         grunt.log.writeln('La pagina specrunner di jasmine si trova in:');
         grunt.log.writeln(localhostUrl + '/_SpecRunner.html');
@@ -179,7 +213,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('lint', ['stylelint', 'eslint']);
-    grunt.registerTask('build:prod', ['sass:prod', 'postcss:prod', 'copy:prod', 'uglify:prod']);
-    grunt.registerTask('build:dev', ['sass:dev', 'postcss:dev', 'uglify:dev']);
+    grunt.registerTask('build:prod', ['sass:prod', 'postcss:prod', 'copy:prod', 'uglify:mix_prod', 'umd:all', 'uglify:prod']);
+    grunt.registerTask('build:dev', ['sass:dev', 'postcss:dev', 'uglify:mix_dev', 'umd:all', 'uglify:dev']);
     grunt.registerTask('test', ['jasmine', 'log-jasmine']);
 };

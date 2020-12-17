@@ -9,7 +9,7 @@ $font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Hel
 
     a {
         cursor: pointer;
-        color: #06c;
+        color: #06c !important;
     }
 
     h1 {
@@ -103,7 +103,7 @@ $font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Hel
 }
 
 .spid-button-navigable {
-    background: transparent;
+    background: transparent !important;
     cursor: pointer;
     font-size: 1em;
 }
@@ -285,9 +285,9 @@ $font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Hel
 }
 
 .spid-cancel-access-button {
-    background-color: #fcfdff;
+    background-color: #fcfdff !important;
     padding: 12px 24px;
-    color: #50565c;
+    color: #50565c !important;
     font-family: $font-family;
     font-weight: 600;
     font-size: 16px;

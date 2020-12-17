@@ -1,6 +1,6 @@
 {
   "name": "spid-smart-button",
-  "version": "1.1.1",
+  "version": "1.1.5",
   "description": "Pulsante SSO per SPID",
   "engines": {
     "node": ">=6.1.0"
@@ -42,10 +42,10 @@
     }
   ],
   "scripts": {
-    "preinstall": "node tasksConfig/check-node-version.js",
     "security": "grunt retire",
     "start": "grunt build:prod && grunt serve",
     "serve": "grunt build:dev && grunt serve",
+    "build": "grunt build:prod",
     "build-prod": "grunt build:prod",
     "build-watch": "grunt watch:build",
     "lint": "grunt lint",
@@ -56,6 +56,10 @@
     "prepush": "npm test",
     "grunt": "grunt"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "devDependencies": {
     "axe-core": "^4.1.1",
     "eslint-config-crockford": "^2.0.0",
@@ -73,6 +77,7 @@
     "grunt-serve": "0.1.6",
     "grunt-string-replace": "^1.3.1",
     "grunt-stylelint": "^0.16.0",
+    "grunt-umd": "^3.0.0",
     "husky": "^4.3.0",
     "lighthouse": "^6.4.1",
     "load-grunt-tasks": "^5.1.0",
@@ -80,5 +85,6 @@
     "promise-polyfill": "^8.2.0",
     "stylelint": "^13.8.0",
     "stylelint-config-standard": "^20.0.0"
-  }
+  },
+  "dependencies": {}
 }
