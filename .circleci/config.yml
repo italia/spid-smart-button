@@ -14,7 +14,7 @@ anchor_1: &job_defaults
 # use it for deploy as well
 anchor_2: &add_ssh_keys
     fingerprints:
-      - "b2:e5:27:3b:20:fa:60:f4:94:87:a0:4c:d6:14:d0:60"
+      - "29:f1:c5:ce:7d:e8:3a:ac:35:43:d8:b5:e8:f9:f4:9f"
 
 version: 2
 jobs:
