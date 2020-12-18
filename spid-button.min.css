@@ -11,7 +11,7 @@
   min-width: 300px; }
   .spid-enter-container a {
     cursor: pointer;
-    color: #06c; }
+    color: #06c !important; }
   .spid-enter-container h1 {
     color: #17324d;
     font-size: 2rem;
@@ -81,11 +81,12 @@
   float: right;
   margin-top: 5px; }
 
-.spid-button, .spid-cancel-access-button {
+.spid-button,
+.spid-cancel-access-button {
   font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
 .spid-button-navigable {
-  background: transparent;
+  background: transparent !important;
   cursor: pointer;
   font-size: 1em; }
 
@@ -226,9 +227,9 @@
   max-width: 400px; }
 
 .spid-cancel-access-button {
-  background-color: #fcfdff;
+  background-color: #fcfdff !important;
   padding: 12px 24px;
-  color: #50565c;
+  color: #50565c !important;
   font-family: "Titillium Web", HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 600;
   font-size: 16px;
@@ -429,8 +430,8 @@
             animation-name: anim-panel-in;
     -webkit-animation-duration: 2s;
             animation-duration: 2s;
-    -webkit-animation-delay: 0.5s;
-            animation-delay: 0.5s; }
+    -webkit-animation-delay: 0s;
+            animation-delay: 0s; }
     .spid-enter-container:not([hidden]) .spid-button-panel-anim .spid-button-fade-in-left {
       -webkit-animation-name: spid-button-logo-left-fade-in;
               animation-name: spid-button-logo-left-fade-in;
