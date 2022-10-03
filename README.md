@@ -6,26 +6,19 @@
 
 > ⚠️ **WORK IN PROGRESS** ⚠️
 
-Lo Smart Button è un'evoluzione del bottone "Entra con SPID" che tutti i fornitori di servizi devono incorporare nei propri siti web per consentire all'utente la scelta del proprio Identity Provider e quindi l'autenticazione.
-
-Ad oggi, ciascun fornitore di servizi adatta al proprio sito il bottone fornito nel repository [italia/spid-sp-access-button](https://github.com/italia/spid-sp-access-button) e lo incorpora staticamente. **Essendo in corso lo sviluppo dello Smart Button, i fornitori di servizi devono ancora seguire tale modalità.**
+Lo SPID Button consente all'utente la scelta del proprio Identity Provider per l'autenticazione.
 
 Con l'utilizzo di spid-smart-button si intende:
 
-* facilitare l'integrazione del bottone "Entra con SPID" riducendo il lavoro di adattamento;
-* fornire un bottone ospitato via CDN senza richiedere l'incorporazione statica dello stesso;
-* semplificare le operazioni di aggiunta/rimozione/modifica degli Identity Provider senza richiedere modifiche manuali a tutti i Service Provider;
-* migliorare l'esperienza utente grazie ad un'interfaccia di accesso più chiara.
-
-## Maintainer
-
-Questo repository è mantenuto da AgID - Agenzia per l'Italia Digitale con l'ausilio del Team per la Trasformazione Digitale.
+* facilitare l'integrazione del bottone "Entra con SPID";
+* fornire un bottone ospitato via CDN;
+* migliorare l'esperienza utente.
 
 ## Link utili
 
-* [Sito ufficiale SPID](https://www.spid.gov.it/)
-* [Sezione SPID su Developers Italia](https://developers.italia.it/it/spid/)
-* [Sezione SPID su AgID](https://www.agid.gov.it/it/piattaforme/spid)
+* [Sito ufficiale SPID](https://www.spid.gov.it/).
+* [Sezione SPID su Developers Italia](https://developers.italia.it/it/spid/).
+* [Sezione SPID su AgID](https://www.agid.gov.it/it/piattaforme/spid).
 
 
 ## Utilizzo dello smart-button
@@ -106,14 +99,14 @@ var spid = SPID.init({
     extraProviders: [            // opzionale
         {
             "protocols": ["SAML"],
-            "entityName": "Ciccio ID",
+            "entityName": "valore de IDP entity ID",
             "logo": "spid-idp-aruba.svg",
             "entityID": "https://loginciccio.it",
             "active": true
         },
         {
             "protocols": ["SAML"],
-            "entityName": "Pippocert ",
+            "entityName": "Foo bar ",
             "logo": "spid-idp-infocertid.svg",
             "entityID": "https://identity.pippocert.it",
             "active": true
