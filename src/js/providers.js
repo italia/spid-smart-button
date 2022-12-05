@@ -61,6 +61,13 @@ SPID.providers = [
         logo: "spid-idp-lepidaid.svg",
         entityID: "https://id.lepida.it/idp/shibboleth",
         active: true
+    },
+    {
+        protocols: ["SAML"],
+        entityName: "TeamSystem ID",
+        logo: "spid-idp-teamsystemid.svg",
+        entityID: "https://spid.teamsystem.com/idp",
+        active: true
     }
 ];
 
