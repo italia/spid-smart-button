@@ -13,7 +13,8 @@ describe('SPID', function () {
             'https://idp.namirialtsp.com/idp',
             'https://spid.register.it',
             'https://spid.intesa.it',
-            'https://id.lepida.it/idp/shibboleth'
+            'https://id.lepida.it/idp/shibboleth',
+            'https://spid.teamsystem.com/idp'
         ],
         genericConfig = {
             url: '/generic/url/{{idp}}',
