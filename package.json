@@ -79,7 +79,7 @@
     "grunt-stylelint": "^0.16.0",
     "grunt-umd": "^3.0.0",
     "husky": "^4.3.0",
-    "lighthouse": "^6.4.1",
+    "lighthouse": "^10.0.0",
     "load-grunt-tasks": "^5.1.0",
     "node-sass": "^5.0.0",
     "promise-polyfill": "^8.2.0",
